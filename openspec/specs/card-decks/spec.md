@@ -69,11 +69,11 @@ Each `Card` SHALL have an `id` (a `CardId`: lowercase kebab-case) and a non-empt
 Card ids SHALL be unique within the full `DeckSet`, not only within a deck, so that a card id alone identifies a card in run records.
 
 #### Scenario: Duplicate within a deck
-- **WHEN** `technique.yaml` contains two cards with id `fm-synthesis`
+- **WHEN** `decks/technique.yaml` contains two cards with id `fm-synthesis`
 - **THEN** validation fails naming the deck and the duplicate id
 
 #### Scenario: Duplicate across decks
-- **WHEN** `tape` appears as a card id in both `medium.yaml` and `historical-artifact.yaml`
+- **WHEN** `tape` appears as a card id in both `decks/medium.yaml` and `decks/historical-artifact.yaml`
 - **THEN** validation fails naming both decks and the duplicate id
 
 ### Requirement: Synonyms are distinct from the name
@@ -87,18 +87,18 @@ A card's synonyms SHALL NOT repeat its name or each other, compared case-insensi
 The `DeckSet` SHALL contain at least the axes `technique`, `medium`, `historical-artifact`, `constraint` and `domain`. Additional axis files SHALL be allowed.
 
 #### Scenario: Missing required axis
-- **WHEN** `decks/` has no `constraint.yaml`
+- **WHEN** `decks/constraint.yaml` does not exist
 - **THEN** validation fails naming the missing axis
 
 #### Scenario: Extra axis
-- **WHEN** `decks/` also contains a valid `tuning.yaml`
+- **WHEN** a valid `decks/tuning.yaml` is added
 - **THEN** the set loads with six decks and no error
 
 ### Requirement: Validation reports every error at once
 Validation SHALL collect all errors across all deck files and report them together, each naming the file and, where applicable, the card id and slot. It SHALL NOT stop at the first error.
 
 #### Scenario: Errors in two files
-- **WHEN** `technique.yaml` has a bad card id and `domain.yaml` is missing its description
+- **WHEN** `decks/technique.yaml` has a bad card id and `decks/domain.yaml` is missing its description
 - **THEN** one validation run reports both errors
 
 ### Requirement: Deterministic deck digests
