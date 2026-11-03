@@ -1,0 +1,115 @@
+@prefix seeker: <https://github.com/brotherclone/seeker/schema/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+seeker:Card a sh:NodeShape ;
+	rdfs:comment "One topic card, the atom of a draw. A draw takes one card from each of several decks and asks whether the collision is a real idea." ;
+	sh:closed true ;
+	sh:ignoredProperties _:c14n0 ;
+	sh:property _:c14n10 , _:c14n13 , _:c14n17 , _:c14n18 , _:c14n2 , _:c14n3 ;
+	sh:targetClass seeker:Card .
+seeker:Deck a sh:NodeShape ;
+	rdfs:comment "All the cards on one axis of the morphological box, loaded from one file in decks/. Axes are independent, so cards from different decks combine freely." ;
+	sh:closed true ;
+	sh:ignoredProperties _:c14n19 ;
+	sh:property _:c14n14 , _:c14n15 , _:c14n16 , _:c14n6 ;
+	sh:targetClass seeker:Deck .
+seeker:DeckSet a sh:NodeShape ;
+	rdfs:comment "Every deck a run draws from. Card ids are unique across the whole set and the set must include the required starting axes: technique, medium, historical-artifact, constraint and domain." ;
+	sh:closed true ;
+	sh:ignoredProperties _:c14n1 ;
+	sh:property _:c14n11 ;
+	sh:targetClass seeker:DeckSet .
+_:c14n0 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:c14n1 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:c14n10 sh:datatype xsd:string ;
+	sh:description "Optional clarification of what the card means or excludes." ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path skos:scopeNote .
+_:c14n11 sh:class seeker:Deck ;
+	sh:description "Every deck in the set, one per axis." ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path seeker:decks .
+_:c14n12 rdf:first "comics" ;
+	rdf:rest _:c14n9 .
+_:c14n13 sh:datatype seeker:CardId ;
+	sh:description "The card's stable identifier, unique across the deck set." ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path seeker:id ;
+	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
+_:c14n14 sh:class seeker:Card ;
+	sh:description "The cards on this axis, in a meaningful order." ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 3 ;
+	sh:path seeker:cards .
+_:c14n15 sh:datatype xsd:string ;
+	sh:description "Human-readable name, as it should appear in prompts and reports." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path skos:prefLabel .
+_:c14n16 sh:datatype xsd:string ;
+	sh:description "One line on what the axis contributes to a draw." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path dcterms:description .
+_:c14n17 sh:datatype xsd:string ;
+	sh:description "Human-readable name, as it should appear in prompts and reports." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path skos:prefLabel .
+_:c14n18 sh:datatype seeker:Synonym ;
+	sh:description "Other names for the card in specialist literatures, used to expand prior-art searches. Must not repeat the name or each other, case-insensitively." ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path skos:altLabel ;
+	sh:pattern "^\\S(.*\\S)?$" .
+_:c14n19 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:c14n2 sh:datatype seeker:Tag ;
+	sh:description "Free-form labels outside the creative-field vocabulary." ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path seeker:tags ;
+	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
+_:c14n20 rdf:first "electronics" ;
+	rdf:rest _:c14n7 .
+_:c14n3 sh:description "The creative fields the card belongs to. Empty means cross-cutting: the card applies to every field." ;
+	sh:in _:c14n4 ;
+	sh:order 3 ;
+	sh:path seeker:fields .
+_:c14n4 rdf:first "music" ;
+	rdf:rest _:c14n5 .
+_:c14n5 rdf:first "visual-art" ;
+	rdf:rest _:c14n8 .
+_:c14n6 sh:datatype seeker:AxisId ;
+	sh:description "The axis this deck holds; must match the deck file's name." ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path seeker:axis ;
+	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
+_:c14n7 rdf:first "writing" ;
+	rdf:rest _:c14n12 .
+_:c14n8 rdf:first "film" ;
+	rdf:rest _:c14n20 .
+_:c14n9 rdf:first "games" ;
+	rdf:rest rdf:nil .
+

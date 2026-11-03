@@ -1,0 +1,7 @@
+extends: recommended
+rules:
+  standard_naming:
+    level: error
+    # CreativeField values are kebab-case to match card data (visual-art).
+    exclude:
+      - visual-art

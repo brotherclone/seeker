@@ -1,0 +1,124 @@
+# Constraint: a hard limit an idea can visibly fail. Schema: schema/seeker.yaml (Deck).
+# Cards with no fields are cross-cutting and apply to every field.
+axis: constraint
+name: Constraint
+description: A hard limit the idea has to survive, one it can visibly fail.
+cards:
+  # --- general and music -------------------------------------------------
+  - id: no-screen
+    name: no screen
+    fields: [electronics, games, music]
+  - id: seven-bit
+    name: 7-bit
+    fields: [music, electronics, writing]
+    note: 7-bit MIDI values or 7-bit ASCII. Either reading counts.
+  - id: real-time-only
+    name: real-time only
+    fields: [music, film, games]
+  - id: one-knob
+    name: one knob
+    fields: [electronics, music]
+  - id: under-4-kb
+    name: under 4 KB
+    synonyms: [4k intro]
+    fields: [games, visual-art, music]
+    tags: [demoscene]
+  - id: no-samples
+    name: no samples
+    fields: [music]
+  - id: mono
+    name: mono
+    synonyms: [single channel]
+    fields: [music]
+  - id: one-take
+    name: one take
+    fields: [music, film]
+  - id: runs-in-a-browser
+    name: runs in a browser
+  - id: offline-only
+    name: offline only
+  - id: playable-by-a-non-musician
+    name: playable by a non-musician
+    fields: [music, games]
+  - id: eight-voices-max
+    name: eight voices max
+    fields: [music]
+  - id: no-keyboard
+    name: no keyboard
+    fields: [electronics, music, games]
+  - id: fits-on-a-46-minute-tape
+    name: fits on a 46-minute tape
+    fields: [music]
+  - id: explainable-in-a-liner-note
+    name: must be explainable in a liner note
+    fields: [writing, music]
+  # --- visual art --------------------------------------------------------
+  - id: one-color
+    name: one color
+    synonyms: [monochrome]
+    fields: [visual-art, comics]
+  - id: single-sheet-of-paper
+    name: a single sheet of paper
+    fields: [visual-art, comics, writing, games]
+  - id: made-on-a-photocopier
+    name: made on a photocopier
+    synonyms: [xerography]
+    fields: [visual-art, comics]
+  # --- film --------------------------------------------------------------
+  - id: one-continuous-shot
+    name: one continuous shot
+    synonyms: [long take, oner]
+    fields: [film]
+  - id: under-15-seconds
+    name: under 15 seconds
+    fields: [film]
+  - id: no-dialogue
+    name: no dialogue
+    fields: [film, comics, games]
+  # --- electronics -------------------------------------------------------
+  - id: under-20-dollars-in-parts
+    name: under $20 in parts
+    synonyms: [low BOM cost]
+    fields: [electronics]
+  - id: battery-powered
+    name: battery powered
+    fields: [electronics]
+  - id: single-sensor
+    name: a single sensor
+    fields: [electronics]
+  # --- writing -----------------------------------------------------------
+  - id: lipogram
+    name: lipogram
+    synonyms: [constrained writing]
+    fields: [writing]
+  - id: second-person-only
+    name: second person only
+    fields: [writing, games]
+  - id: read-aloud
+    name: must be read aloud
+    fields: [writing, music]
+  # --- comics ------------------------------------------------------------
+  - id: wordless
+    name: wordless
+    synonyms: [silent comic, pantomime comic]
+    fields: [comics, film]
+  - id: nine-panel-grid
+    name: nine-panel grid
+    synonyms: [3x3 grid]
+    fields: [comics]
+  - id: one-page
+    name: one page
+    fields: [comics, writing, games]
+  # --- games -------------------------------------------------------------
+  - id: no-randomness
+    name: no randomness
+    synonyms: [zero luck, deterministic play]
+    fields: [games]
+  - id: solo-only
+    name: solo only
+    synonyms: [solitaire, single-player]
+    fields: [games]
+  - id: eighteen-cards
+    name: 18 cards
+    synonyms: [microgame, wallet game]
+    fields: [games]

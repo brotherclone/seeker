@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "seeker"
+version = "0.1.0"
+description = "An idea engine for creative tech: card collisions, prior-art checks, adversarial agent debate."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Gabriel Walsh", email = "brotherclone@gmail.com" }]
+dependencies = [
+  "pydantic>=2.9,<3",
+  "PyYAML>=6.0",
+  "linkml-runtime>=1.9",
+]
+
+[project.optional-dependencies]
+dev = [
+  "linkml>=1.9",
+  "pytest>=8",
+]
+
+[project.scripts]
+seeker-decks = "seeker.decks.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["seeker"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
