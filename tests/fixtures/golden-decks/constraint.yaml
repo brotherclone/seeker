@@ -1,0 +1,34 @@
+# Fixed fixture for the golden-batch test. Do not edit: the expected
+# batch in golden-batch.yaml depends on every byte of content here.
+axis: constraint
+name: Constraint
+description: Golden fixture constraint deck.
+cards:
+- id: limit-music
+  name: music limit
+  fields:
+  - music
+- id: limit-visual-art
+  name: visual-art limit
+  fields:
+  - visual-art
+- id: limit-film
+  name: film limit
+  fields:
+  - film
+- id: limit-electronics
+  name: electronics limit
+  fields:
+  - electronics
+- id: limit-writing
+  name: writing limit
+  fields:
+  - writing
+- id: limit-comics
+  name: comics limit
+  fields:
+  - comics
+- id: limit-games
+  name: games limit
+  fields:
+  - games

@@ -65,6 +65,16 @@ types:
     examples:
       - value: microsound
 
+  Sha256Digest:
+    typeof: string
+    uri: seeker:Sha256Digest
+    description: >-
+      A SHA-256 content digest as 64 lowercase hex characters. Used to pin
+      exactly which deck content a draw or run used.
+    pattern: "^[0-9a-f]{64}$"
+    examples:
+      - value: 41909d46fec8a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a
+
 enums:
   CreativeField:
     description: >-
@@ -151,6 +161,64 @@ slots:
     minimum_cardinality: 1
     slot_uri: seeker:decks
     description: Every deck in the set, one per axis.
+  seed:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:seed
+    description: >-
+      The non-negative integer the draw's random stream is derived from. The
+      same seed, deck content and batch size always produce the same batch.
+  deck_set_digest:
+    range: Sha256Digest
+    required: true
+    slot_uri: seeker:deckSetDigest
+    description: >-
+      Digest of the deck set the batch was drawn from. Replaying against decks
+      with a different digest is an error.
+  draws:
+    range: Draw
+    multivalued: true
+    inlined_as_list: true
+    required: true
+    minimum_cardinality: 1
+    slot_uri: seeker:draws
+    description: The draws in the batch, in position order.
+  position:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:position
+    description: The draw's 1-based position within its batch.
+  axes:
+    range: AxisId
+    multivalued: true
+    required: true
+    minimum_cardinality: 3
+    maximum_cardinality: 3
+    slot_uri: seeker:axes
+    description: >-
+      The three axes the draw's cards come from, constraint first, then the
+      other two in canonical order (technique, medium, historical-artifact,
+      domain). This is the draw's shape.
+  home_field:
+    range: CreativeField
+    required: true
+    slot_uri: seeker:homeField
+    description: >-
+      The creative field this draw is anchored in. At least one of its cards
+      explicitly lists this field.
+  drawn_cards:
+    range: Card
+    inlined: false
+    multivalued: true
+    required: true
+    minimum_cardinality: 3
+    maximum_cardinality: 3
+    slot_uri: seeker:drawnCards
+    description: >-
+      The drawn cards, referenced by card id, one per axis in the same order
+      as axes.
 
 classes:
   Card:
@@ -187,3 +255,24 @@ classes:
       historical-artifact, constraint and domain.
     slots:
       - decks
+  Draw:
+    class_uri: seeker:Draw
+    description: >-
+      One collision: three cards, one from each of three axes, always
+      including a constraint. The raw material the generator turns into a
+      one-sentence idea.
+    slots:
+      - position
+      - axes
+      - home_field
+      - drawn_cards
+  DrawBatch:
+    class_uri: seeker:DrawBatch
+    description: >-
+      A balanced set of draws produced from one seed and one deck set: shapes
+      evenly represented, no card repeated, home fields rotating through the
+      creative fields. Fully reproducible from its seed and deck-set digest.
+    slots:
+      - seed
+      - deck_set_digest
+      - draws

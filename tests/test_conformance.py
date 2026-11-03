@@ -19,7 +19,7 @@ from seeker.ontology import LinkMLString, SeekerModel
 
 SCHEMA = Path(__file__).resolve().parent.parent / "schema" / "seeker.yaml"
 VIEW = SchemaView(str(SCHEMA))
-PRIMITIVES = {"string": str}
+PRIMITIVES = {"string": str, "integer": int}
 
 
 def norm(text: str | None) -> str:
@@ -59,10 +59,34 @@ def unwrap(annotation: object) -> tuple[object, bool, bool]:
     return annotation, False, optional
 
 
-def expected_python_type(range_name: str) -> object:
+def is_inlined(slot: object) -> bool:
+    return bool(slot.inlined or slot.inlined_as_list)
+
+
+def expected_python_type(slot: object) -> object:
+    """The Python item type a slot's range should map to.
+
+    Primitives map to builtins; types, enums and inlined classes map to the
+    ontology class of the same name; a non-inlined class range is a reference,
+    so it maps to the identifier type of that class (``Card`` -> ``CardId``).
+    """
+    range_name = slot.range
     if range_name in PRIMITIVES:
         return PRIMITIVES[range_name]
+    if range_name in VIEW.all_classes() and not is_inlined(slot):
+        identifier = VIEW.get_identifier_slot(range_name)
+        return getattr(ontology, identifier.range, None) if identifier else None
     return getattr(ontology, range_name, None)
+
+
+def constraint_bounds(field: object) -> dict[str, object]:
+    """min_length / max_length / ge declared on a pydantic field."""
+    found: dict[str, object] = {}
+    for item in field.metadata:
+        for name in ("min_length", "max_length", "ge"):
+            if getattr(item, name, None) is not None:
+                found[name] = getattr(item, name)
+    return found
 
 
 def class_problems(class_name: str, model: type[SeekerModel]) -> list[str]:
@@ -95,9 +119,18 @@ def class_problems(class_name: str, model: type[SeekerModel]) -> list[str]:
             problems.append(f"{where}: multivalued {multivalued} != {bool(slot.multivalued)}")
         if optional and required:
             problems.append(f"{where}: optional annotation on a required slot")
-        expected = expected_python_type(slot.range)
+        expected = expected_python_type(slot)
         if item is not expected:
             problems.append(f"{where}: type {item!r} != range {slot.range!r}")
+        bounds = constraint_bounds(field)
+        for linkml_name, pydantic_name in (
+            ("minimum_cardinality", "min_length"),
+            ("maximum_cardinality", "max_length"),
+            ("minimum_value", "ge"),
+        ):
+            wanted = getattr(slot, linkml_name, None)
+            if wanted is not None and bounds.get(pydantic_name) != wanted:
+                problems.append(f"{where}: {pydantic_name} {bounds.get(pydantic_name)!r} != {linkml_name} {wanted!r}")
         if norm(field.description) != norm(slot.description):
             problems.append(f"{where}: description differs")
         if field.title != slot_name:
@@ -174,3 +207,20 @@ def test_conformance_catches_a_changed_description() -> None:
         {"__doc__": "Something else entirely.", "__module__": __name__},
     )
     assert "Deck: docstring differs from class description" in class_problems("Deck", drifted)
+
+
+def test_conformance_catches_an_inlined_reference() -> None:
+    """drawn_cards references cards by id; a model holding whole Cards drifts."""
+    if "Draw" not in VIEW.all_classes(imports=False) or not hasattr(ontology, "Draw"):
+        pytest.skip("Draw not modeled yet")
+    drifted = type(
+        "Draw",
+        (ontology.Draw,),
+        {
+            "__module__": __name__,
+            "__annotations__": {"drawn_cards": tuple[ontology.Card, ...]},
+            "drawn_cards": ontology.Draw.model_fields["drawn_cards"],
+        },
+    )
+    problems = class_problems("Draw", drifted)
+    assert any(p.startswith("Draw.drawn_cards: type") for p in problems), problems

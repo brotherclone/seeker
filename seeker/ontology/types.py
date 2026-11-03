@@ -63,3 +63,22 @@ class Synonym(LinkMLString):
     def folded(self) -> str:
         """Case- and whitespace-insensitive form used for duplicate checks."""
         return " ".join(self.split()).casefold()
+
+
+class Sha256Digest(LinkMLString):
+    """A SHA-256 content digest as 64 lowercase hex characters. Used to pin
+    exactly which deck content a draw or run used."""
+
+    TYPE_URI = "seeker:Sha256Digest"
+    PATTERN = "^[0-9a-f]{64}$"
+    DESCRIPTION = (
+        "A SHA-256 content digest as 64 lowercase hex characters. Used to pin "
+        "exactly which deck content a draw or run used."
+    )
+    EXAMPLES = ("41909d46fec8a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a",)
+    SHORT_LENGTH = 12
+
+    @property
+    def short(self) -> str:
+        """The first 12 hex characters, for display."""
+        return self[: self.SHORT_LENGTH]

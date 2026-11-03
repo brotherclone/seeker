@@ -72,3 +72,37 @@ These are checked by `seeker-decks`:
 - Each file's `axis` matches its file name.
 - All five required axes are present.
 - Card ids are unique across every deck. A concept that belongs on two axes needs two ids, such as `tape` and `phonogene`.
+
+## Drawing
+
+```
+seeker-draw batch --seed 7 --size 12
+```
+
+Every draw is a **triple**: one `constraint` card plus cards from two of technique, medium, historical-artifact and domain. That gives six shapes. The constraint is always there because it's the card that forces a real idea.
+
+A batch is **balanced, not filtered**:
+
+- **Shapes:** each of the six appears equally often, give or take one, so 12 draws use each shape twice.
+- **Cards:** no card repeats within a batch.
+- **Home fields:** each draw has a home field that rotates through the seven creative fields, and at least one of its cards lists it.
+
+Within those rules, which cards land together is uniform, so odd collisions are as likely as tame ones.
+
+### Seeds and replay
+
+A batch is fully determined by its **seed**, the **deck content** and the **size**. Leave out `--seed` and one is chosen and printed, so you can always reproduce what you saw. The random stream is SHA-256 based, so a seed draws the same batch on every Python version. If you edit any card, the deck-set digest changes, and replaying an old batch fails with an error naming both digests rather than silently drawing something else.
+
+### Capacity
+
+No-repeat sets a ceiling on batch size. For these decks it's **30**, because `domain` has 15 cards and appears in half the draws. Asking for more fails with an error naming the limit.
+
+### Which batches to keep
+
+```
+seeker-draw batch --seed 7 --out batches/2026-11-03-round-1.yaml   # keep: commit it
+seeker-draw batch --scratch                                         # throwaway
+```
+
+- **Commit** batches that feed a real run to `batches/YYYY-MM-DD-<label>.yaml`. They're tiny, and together they form the experiment log: each one pins its seed and deck-set digest, sitting in git next to the deck and prompt commits that produced it.
+- **Explore** with `--scratch`, which writes `batches/scratch/<seed>.yaml`. That folder is gitignored. If a scratch draw turns out to matter, redraw its seed with `--out` before you edit the decks.
