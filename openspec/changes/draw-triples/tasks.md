@@ -21,8 +21,14 @@
 
 ## 4. Command line and docs
 
-- [ ] 4.1 Implement `seeker-draw batch [--seed] [--size] [--dir] [--out]` and its console script. Verify CLI tests: a seeded run prints 12 lines plus the summary and exits 0; an unseeded run prints a seed that reproduces the same batch; `--out` writes YAML that validates against the schema as `DrawBatch` (`linkml-validate`) and replays cleanly.
-- [ ] 4.2 Add a "Drawing" section to `decks/README.md`: shapes, balance, seeds, replay, capacity. Verify the documented command runs as written against the seeded decks.
+- [ ] 4.1 Implement `seeker-draw batch [--seed] [--size] [--dir] [--out PATH | --scratch]` and its console script. Add `batches/scratch/` to `.gitignore` and create `batches/` with a `.gitkeep`. Verify CLI tests:
+  - a seeded run prints 12 lines plus the summary and exits 0;
+  - an unseeded run prints a seed that reproduces the same batch;
+  - `--out` writes YAML that validates against the schema as `DrawBatch` (`linkml-validate`) and replays cleanly;
+  - `--scratch` writes `batches/scratch/<seed>.yaml`;
+  - combining `--out` and `--scratch` is rejected;
+  - `git check-ignore batches/scratch/x.yaml` reports the file as ignored.
+- [ ] 4.2 Add a "Drawing" section to `decks/README.md` covering shapes, balance, seeds, replay and capacity, plus which batches to commit (`batches/YYYY-MM-DD-<label>.yaml`) and which to leave in `batches/scratch/`. Verify the documented commands run as written against the seeded decks.
 
 ## 5. Record the decision
 

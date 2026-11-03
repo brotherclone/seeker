@@ -136,8 +136,19 @@ seed 7  decks 41909d46fec8  12 draws
 ```
 
 - With no `--seed`, the seed comes from `secrets.randbelow(2**31)`. That's short enough to type and big enough not to collide in practice.
-- `--out` writes `DrawBatch.model_dump(mode="json")` as YAML.
+- `--out PATH` writes `DrawBatch.model_dump(mode="json")` as YAML to any path.
+- `--scratch` writes to `batches/scratch/<seed>.yaml` instead. It can't be combined with `--out`.
 - The default size is 12, matching plan step 3.
+
+### 6a. Where batch records live
+
+- **`batches/`** holds committed records of batches that feed a real run, named `YYYY-MM-DD-<label>.yaml`. They are the experiment log:
+  - each one pins its seed and deck-set digest, so a replay after decks change fails loudly;
+  - each one sits in git next to the deck and prompt commits that produced it, which is what makes the round-1 versus round-2 comparison meaningful;
+  - when `Idea` arrives, each idea has a stable record to link back to.
+- **`batches/scratch/`** is gitignored. It holds the throwaway draws made while getting a feel for the decks.
+- Records are tiny (seed, digest, card ids), so committing them costs nothing.
+- When the Run change lands, SQLite will hold the full working state, and the YAML record stays as the readable receipt you can diff.
 
 ### 7. Obsidian
 
@@ -156,7 +167,5 @@ seed 7  decks 41909d46fec8  12 draws
 - [Changing the algorithm breaks old replays] → The version string in the stream and the golden test make any change deliberate. A `v2` stream can coexist later.
 - [Card references go stale when a card is renamed] → The digest check catches it on replay, and the error names both digests.
 - [The capacity bound is conservative, since it assumes the extra draws land on the worst axes] → At most this costs a few draws near capacity. Batches are expected to be about 12, well under 30.
+- [A scratch draw that turns out to matter is left uncommitted] → Replaying its seed reproduces it exactly as long as the decks haven't changed. Write it again with `--out batches/...` to keep it.
 
-## Open Questions
-
-- Should batch records go in a conventional folder (`runs/` or `batches/`) before the Run change exists? This can be decided at the CLI without affecting the specs. For now `--out` takes any path.
