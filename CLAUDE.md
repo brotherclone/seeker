@@ -32,3 +32,10 @@ An idea engine for creative tech. The concept of record is `docs/concept.md`; ev
 - `Seeker/Decisions/YYYY-MM-DD <title>.md` records each decision: context, the decision, the alternatives considered, and links to the concepts it touches and to the OpenSpec change.
 - `Seeker/Notes/` holds loose thinking.
 - Use frontmatter with `type` (`hub`, `concept`, `decision`, `note`), `tags` and `openspec` (a change name, when there is one).
+
+## Git workflow (gitflow)
+
+- `main` holds releases only. `develop` is the integration branch.
+- Do all work on `feature/<openspec-change-name>` branches cut from `develop`, one per OpenSpec change. Merge them back into `develop` through a pull request.
+- Releases go `release/<version>` from `develop` → `main`, tagged `v<version>`, then merged back into `develop`. Urgent fixes go `hotfix/<name>` from `main` → `main` and `develop`.
+- Never commit directly to `develop` or `main`. The only exception was the initial OpenSpec setup.
