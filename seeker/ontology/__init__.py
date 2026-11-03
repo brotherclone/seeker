@@ -8,8 +8,9 @@ from seeker.ontology.base import LinkMLString, SeekerModel
 from seeker.ontology.card import Card
 from seeker.ontology.deck import Deck
 from seeker.ontology.deck_set import DeckSet, SharedCardId
+from seeker.ontology.draw import Draw, DrawBatch
 from seeker.ontology.fields import CreativeField
-from seeker.ontology.types import AxisId, CardId, Synonym, Tag
+from seeker.ontology.types import AxisId, CardId, Sha256Digest, Synonym, Tag
 
 __all__ = [
     "AxisId",
@@ -18,8 +19,11 @@ __all__ = [
     "CreativeField",
     "Deck",
     "DeckSet",
+    "Draw",
+    "DrawBatch",
     "LinkMLString",
     "SeekerModel",
+    "Sha256Digest",
     "SharedCardId",
     "Synonym",
     "Tag",

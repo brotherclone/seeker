@@ -9,58 +9,76 @@ seeker:Card a sh:NodeShape ;
 	rdfs:comment "One topic card, the atom of a draw. A draw takes one card from each of several decks and asks whether the collision is a real idea." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n0 ;
-	sh:property _:c14n10 , _:c14n13 , _:c14n17 , _:c14n18 , _:c14n2 , _:c14n3 ;
+	sh:property _:c14n12 , _:c14n17 , _:c14n21 , _:c14n3 , _:c14n4 , _:c14n9 ;
 	sh:targetClass seeker:Card .
 seeker:Deck a sh:NodeShape ;
 	rdfs:comment "All the cards on one axis of the morphological box, loaded from one file in decks/. Axes are independent, so cards from different decks combine freely." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n19 ;
-	sh:property _:c14n14 , _:c14n15 , _:c14n16 , _:c14n6 ;
+	sh:ignoredProperties _:c14n22 ;
+	sh:property _:c14n13 , _:c14n14 , _:c14n16 , _:c14n8 ;
 	sh:targetClass seeker:Deck .
 seeker:DeckSet a sh:NodeShape ;
 	rdfs:comment "Every deck a run draws from. Card ids are unique across the whole set and the set must include the required starting axes: technique, medium, historical-artifact, constraint and domain." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n1 ;
+	sh:ignoredProperties _:c14n2 ;
 	sh:property _:c14n11 ;
 	sh:targetClass seeker:DeckSet .
+seeker:Draw a sh:NodeShape ;
+	rdfs:comment "One collision: three cards, one from each of three axes, always including a constraint. The raw material the generator turns into a one-sentence idea." ;
+	sh:closed true ;
+	sh:ignoredProperties _:c14n15 ;
+	sh:property _:c14n1 , _:c14n10 , _:c14n19 , _:c14n7 ;
+	sh:targetClass seeker:Draw .
+seeker:DrawBatch a sh:NodeShape ;
+	rdfs:comment "A balanced set of draws produced from one seed and one deck set: shapes evenly represented, no card repeated, home fields rotating through the creative fields. Fully reproducible from its seed and deck-set digest." ;
+	sh:closed true ;
+	sh:ignoredProperties _:c14n5 ;
+	sh:property _:c14n18 , _:c14n20 , _:c14n6 ;
+	sh:targetClass seeker:DrawBatch .
 _:c14n0 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:c14n1 rdf:first rdf:type ;
-	rdf:rest rdf:nil .
-_:c14n10 sh:datatype xsd:string ;
-	sh:description "Optional clarification of what the card means or excludes." ;
+_:c14n1 sh:description "The creative field this draw is anchored in. At least one of its cards explicitly lists this field." ;
+	sh:in _:c14n30 ;
 	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:order 2 ;
+	sh:path seeker:homeField .
+_:c14n10 sh:datatype xsd:integer ;
+	sh:description "The draw's 1-based position within its batch." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:minInclusive 1 ;
 	sh:nodeKind sh:Literal ;
-	sh:order 5 ;
-	sh:path skos:scopeNote .
+	sh:order 0 ;
+	sh:path seeker:position .
 _:c14n11 sh:class seeker:Deck ;
 	sh:description "Every deck in the set, one per axis." ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:IRI ;
 	sh:order 0 ;
 	sh:path seeker:decks .
-_:c14n12 rdf:first "comics" ;
-	rdf:rest _:c14n9 .
-_:c14n13 sh:datatype seeker:CardId ;
+_:c14n12 sh:datatype seeker:CardId ;
 	sh:description "The card's stable identifier, unique across the deck set." ;
 	sh:maxCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 0 ;
 	sh:path seeker:id ;
 	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
-_:c14n14 sh:class seeker:Card ;
+_:c14n13 sh:class seeker:Card ;
 	sh:description "The cards on this axis, in a meaningful order." ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:IRI ;
 	sh:order 3 ;
 	sh:path seeker:cards .
-_:c14n15 sh:datatype xsd:string ;
+_:c14n14 sh:datatype xsd:string ;
 	sh:description "Human-readable name, as it should appear in prompts and reports." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 1 ;
 	sh:path skos:prefLabel .
+_:c14n15 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
 _:c14n16 sh:datatype xsd:string ;
 	sh:description "One line on what the axis contributes to a draw." ;
 	sh:maxCount 1 ;
@@ -75,41 +93,104 @@ _:c14n17 sh:datatype xsd:string ;
 	sh:nodeKind sh:Literal ;
 	sh:order 1 ;
 	sh:path skos:prefLabel .
-_:c14n18 sh:datatype seeker:Synonym ;
+_:c14n18 sh:datatype seeker:Sha256Digest ;
+	sh:description "Digest of the deck set the batch was drawn from. Replaying against decks with a different digest is an error." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path seeker:deckSetDigest ;
+	sh:pattern "^[0-9a-f]{64}$" .
+_:c14n19 sh:class seeker:Card ;
+	sh:description "The drawn cards, referenced by card id, one per axis in the same order as axes." ;
+	sh:maxCount 3 ;
+	sh:minCount 3 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 3 ;
+	sh:path seeker:drawnCards .
+_:c14n2 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:c14n20 sh:datatype xsd:integer ;
+	sh:description "The non-negative integer the draw's random stream is derived from. The same seed, deck content and batch size always produce the same batch." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:minInclusive 0 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path seeker:seed .
+_:c14n21 sh:datatype seeker:Synonym ;
 	sh:description "Other names for the card in specialist literatures, used to expand prior-art searches. Must not repeat the name or each other, case-insensitively." ;
 	sh:nodeKind sh:Literal ;
 	sh:order 2 ;
 	sh:path skos:altLabel ;
 	sh:pattern "^\\S(.*\\S)?$" .
-_:c14n19 rdf:first rdf:type ;
+_:c14n22 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:c14n2 sh:datatype seeker:Tag ;
+_:c14n23 rdf:first "music" ;
+	rdf:rest _:c14n24 .
+_:c14n24 rdf:first "visual-art" ;
+	rdf:rest _:c14n25 .
+_:c14n25 rdf:first "film" ;
+	rdf:rest _:c14n26 .
+_:c14n26 rdf:first "electronics" ;
+	rdf:rest _:c14n27 .
+_:c14n27 rdf:first "writing" ;
+	rdf:rest _:c14n28 .
+_:c14n28 rdf:first "comics" ;
+	rdf:rest _:c14n29 .
+_:c14n29 rdf:first "games" ;
+	rdf:rest rdf:nil .
+_:c14n3 sh:datatype seeker:Tag ;
 	sh:description "Free-form labels outside the creative-field vocabulary." ;
 	sh:nodeKind sh:Literal ;
 	sh:order 4 ;
 	sh:path seeker:tags ;
 	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
-_:c14n20 rdf:first "electronics" ;
-	rdf:rest _:c14n7 .
-_:c14n3 sh:description "The creative fields the card belongs to. Empty means cross-cutting: the card applies to every field." ;
-	sh:in _:c14n4 ;
+_:c14n30 rdf:first "music" ;
+	rdf:rest _:c14n31 .
+_:c14n31 rdf:first "visual-art" ;
+	rdf:rest _:c14n32 .
+_:c14n32 rdf:first "film" ;
+	rdf:rest _:c14n33 .
+_:c14n33 rdf:first "electronics" ;
+	rdf:rest _:c14n34 .
+_:c14n34 rdf:first "writing" ;
+	rdf:rest _:c14n35 .
+_:c14n35 rdf:first "comics" ;
+	rdf:rest _:c14n36 .
+_:c14n36 rdf:first "games" ;
+	rdf:rest rdf:nil .
+_:c14n4 sh:description "The creative fields the card belongs to. Empty means cross-cutting: the card applies to every field." ;
+	sh:in _:c14n23 ;
 	sh:order 3 ;
 	sh:path seeker:fields .
-_:c14n4 rdf:first "music" ;
-	rdf:rest _:c14n5 .
-_:c14n5 rdf:first "visual-art" ;
-	rdf:rest _:c14n8 .
-_:c14n6 sh:datatype seeker:AxisId ;
+_:c14n5 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:c14n6 sh:class seeker:Draw ;
+	sh:description "The draws in the batch, in position order." ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 2 ;
+	sh:path seeker:draws .
+_:c14n7 sh:datatype seeker:AxisId ;
+	sh:description "The three axes the draw's cards come from, constraint first, then the other two in canonical order (technique, medium, historical-artifact, domain). This is the draw's shape." ;
+	sh:maxCount 3 ;
+	sh:minCount 3 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path seeker:axes ;
+	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
+_:c14n8 sh:datatype seeker:AxisId ;
 	sh:description "The axis this deck holds; must match the deck file's name." ;
 	sh:maxCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 0 ;
 	sh:path seeker:axis ;
 	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
-_:c14n7 rdf:first "writing" ;
-	rdf:rest _:c14n12 .
-_:c14n8 rdf:first "film" ;
-	rdf:rest _:c14n20 .
-_:c14n9 rdf:first "games" ;
-	rdf:rest rdf:nil .
+_:c14n9 sh:datatype xsd:string ;
+	sh:description "Optional clarification of what the card means or excludes." ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path skos:scopeNote .
 

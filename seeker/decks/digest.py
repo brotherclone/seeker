@@ -13,10 +13,7 @@ import json
 
 from pydantic import ConfigDict, Field
 
-from seeker.ontology import AxisId, Deck, DeckSet, SeekerModel
-
-SHA256_HEX = "^[0-9a-f]{64}$"
-SHORT_LENGTH = 12
+from seeker.ontology import AxisId, Deck, DeckSet, SeekerModel, Sha256Digest
 
 
 def _sha256_of_json(value: object) -> str:
@@ -31,7 +28,7 @@ class DeckDigest(SeekerModel):
 
     axis: AxisId = Field(description="The axis of the digested deck.")
     card_count: int = Field(ge=1, description="How many cards the deck holds.")
-    sha256: str = Field(pattern=SHA256_HEX, description="SHA-256 of the deck's canonical JSON.")
+    sha256: Sha256Digest = Field(description="SHA-256 of the deck's canonical JSON.")
 
     @classmethod
     def of(cls, deck: Deck) -> DeckDigest:
@@ -44,7 +41,7 @@ class DeckDigest(SeekerModel):
     @property
     def short(self) -> str:
         """The first 12 hex characters, for display."""
-        return self.sha256[:SHORT_LENGTH]
+        return self.sha256.short
 
 
 class DeckSetDigest(SeekerModel):
@@ -54,7 +51,7 @@ class DeckSetDigest(SeekerModel):
     model_config = ConfigDict(title="DeckSetDigest")
 
     decks: tuple[DeckDigest, ...] = Field(description="One digest per deck, ordered by axis.")
-    sha256: str = Field(pattern=SHA256_HEX, description="SHA-256 over the ordered deck digests.")
+    sha256: Sha256Digest = Field(description="SHA-256 over the ordered deck digests.")
 
     @classmethod
     def of(cls, deck_set: DeckSet) -> DeckSetDigest:
@@ -70,7 +67,7 @@ class DeckSetDigest(SeekerModel):
 
     @property
     def short(self) -> str:
-        return self.sha256[:SHORT_LENGTH]
+        return self.sha256.short
 
     def for_axis(self, axis: str) -> DeckDigest | None:
         return next((d for d in self.decks if d.axis == axis), None)

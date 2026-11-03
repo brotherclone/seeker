@@ -1,0 +1,34 @@
+# Fixed fixture for the golden-batch test. Do not edit: the expected
+# batch in golden-batch.yaml depends on every byte of content here.
+axis: technique
+name: Technique
+description: Golden fixture technique deck.
+cards:
+- id: technique-music
+  name: music technique
+  fields:
+  - music
+- id: technique-visual-art
+  name: visual-art technique
+  fields:
+  - visual-art
+- id: technique-film
+  name: film technique
+  fields:
+  - film
+- id: technique-electronics
+  name: electronics technique
+  fields:
+  - electronics
+- id: technique-writing
+  name: writing technique
+  fields:
+  - writing
+- id: technique-comics
+  name: comics technique
+  fields:
+  - comics
+- id: technique-games
+  name: games technique
+  fields:
+  - games
