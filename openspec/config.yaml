@@ -12,14 +12,35 @@ context: |
   Scores stay on separate axes (novelty, feasibility, promise), never blended.
   Ideas must be statable as one sentence: an X that does Y because Z.
 
+  Ontology first: every domain concept (card, axis, deck, creative field, idea,
+  role, run...) is defined in the LinkML schema under schema/ before it is coded.
+  The schema is the source of truth; SHACL and OWL are generated from it.
+  Python is object-oriented Pydantic v2: every domain concept is a BaseModel
+  subclass (or StrEnum) carrying rich metadata that matches its LinkML class or
+  slot (title, description, examples, the slot URI). No dataclasses, NamedTuple
+  or TypedDict. No generic typing above the primitive level: no Any, no
+  dict-shaped payloads, no TypeVar/Generic classes; containers hold named
+  domain models, and domain scalars use named constrained types that mirror
+  LinkML types.
+  Design thinking, decisions and concept notes are documented in Gabe's
+  Obsidian vault under Seeker/ as wikilinked notes, one note per ontology class,
+  so the design can be read as a graph.
+
 rules:
   proposal:
     - State which agent role, deck, or engine stage the change touches
     - Say how the change affects run reproducibility or resumability
+    - Name any ontology classes, slots or enums the change adds or alters
+  specs:
+    - Use the LinkML class and slot names as the vocabulary in requirements
   design:
     - Name the model and persona per role when prompts change
+    - Show LinkML schema changes before the Python models that mirror them
+    - Name the Obsidian notes the change creates or updates
   tasks:
     - Keep tasks small enough to review in one sitting
+    - Schema changes come before model code, with a conformance test between them
+    - Include a task to update the Obsidian concept and decision notes
 
 # Project context (optional)
 # Add only constraints that should guide OpenSpec artifacts and workflows.

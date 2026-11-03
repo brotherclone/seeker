@@ -79,9 +79,10 @@ The biggest risk is consensus collapse: agents on the same model agree politely 
 
 A Python orchestrator on the Claude API, with decks and prompts as versioned YAML in git and all run state in SQLite, so runs are resumable and can go overnight.
 
-- `decks/*.yaml`: one file per axis, cards with optional synonyms and tags
+- `schema/seeker.yaml` (LinkML): the ontology of record for cards, axes, decks, creative fields and, later, ideas, roles and runs; SHACL and OWL are generated from it
+- `decks/*.yaml`: one file per axis, cards with optional synonyms, creative fields and tags
 - `prompts/*.yaml`: one per role, with model and persona settings
-- `engine/`: draw, generate, search, debate, judge, mutate
+- `seeker/`: object-oriented Pydantic models mirroring the schema, plus the engine (draw, generate, search, debate, judge, mutate)
 - `ideas.db` (SQLite): ideas, lineage (parent ideas), debate transcripts, citations, Elo history, run metadata
 - `reports/`: top-N survivors per run, written up for human review
 
