@@ -1,0 +1,52 @@
+# Domain to steal from: a field outside the arts to borrow structure,
+# vocabulary or data from. Domain cards list no creative field: each one is
+# cross-cutting by nature. Schema: schema/seeker.yaml (Deck).
+axis: domain
+name: Domain to steal from
+description: A field outside the arts to borrow structure, vocabulary or data from.
+cards:
+  - id: mycology
+    name: mycology
+    synonyms: [mycelial networks, fungal biology]
+  - id: cartography
+    name: cartography
+    synonyms: [mapmaking]
+  - id: liturgy
+    name: liturgy
+    synonyms: [call and response, ritual order of service]
+  - id: tax-law
+    name: tax law
+    synonyms: [tax code]
+  - id: ornithology
+    name: ornithology
+    synonyms: [birdsong, birding]
+  - id: tide-tables
+    name: tide tables
+    synonyms: [tidal prediction]
+  - id: utopian-communes
+    name: utopian communes
+    synonyms: [intentional communities]
+  - id: dendrochronology
+    name: dendrochronology
+    synonyms: [tree-ring dating]
+  - id: beekeeping
+    name: beekeeping
+    synonyms: [apiculture]
+  - id: railroad-timetables
+    name: railroad timetables
+    synonyms: [railway timetables]
+  - id: heraldry
+    name: heraldry
+    synonyms: [blazon]
+  - id: knitting-patterns
+    name: knitting patterns
+    synonyms: [knitting charts]
+  - id: cryptography
+    name: cryptography
+    synonyms: [ciphers]
+  - id: weather-forecasting
+    name: weather forecasting
+    synonyms: [meteorology]
+  - id: local-newspaper-archives
+    name: local newspaper archives
+    synonyms: [newspaper morgue]

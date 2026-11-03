@@ -1,0 +1,65 @@
+"""Named scalar types mirroring the ``types`` section of schema/seeker.yaml."""
+
+from __future__ import annotations
+
+from seeker.ontology.base import LinkMLString
+
+KEBAB_CASE = "^[a-z0-9]+(-[a-z0-9]+)*$"
+
+
+class CardId(LinkMLString):
+    """Stable identifier for a card, unique across every deck in a deck set so a
+    card id alone identifies a card in run records. Lowercase kebab-case."""
+
+    TYPE_URI = "seeker:CardId"
+    PATTERN = KEBAB_CASE
+    DESCRIPTION = (
+        "Stable identifier for a card, unique across every deck in a deck set so a "
+        "card id alone identifies a card in run records. Lowercase kebab-case."
+    )
+    EXAMPLES = ("granular-synthesis", "ben-day-dots")
+
+
+class AxisId(LinkMLString):
+    """Identifier for an axis of the morphological box. Each deck holds exactly
+    one axis, and a deck file is named after its axis. Lowercase kebab-case."""
+
+    TYPE_URI = "seeker:AxisId"
+    PATTERN = KEBAB_CASE
+    DESCRIPTION = (
+        "Identifier for an axis of the morphological box. Each deck holds exactly "
+        "one axis, and a deck file is named after its axis. Lowercase kebab-case."
+    )
+    EXAMPLES = ("technique", "historical-artifact")
+
+
+class Tag(LinkMLString):
+    """Free-form lowercase kebab-case label for grouping or filtering cards,
+    outside the controlled creative-field vocabulary."""
+
+    TYPE_URI = "seeker:Tag"
+    PATTERN = KEBAB_CASE
+    DESCRIPTION = (
+        "Free-form lowercase kebab-case label for grouping or filtering cards, "
+        "outside the controlled creative-field vocabulary."
+    )
+    EXAMPLES = ("demoscene",)
+
+
+class Synonym(LinkMLString):
+    """An alternative name a card goes by in some specialist literature."""
+
+    TYPE_URI = "seeker:Synonym"
+    PATTERN = "^\\S(.*\\S)?$"
+    DESCRIPTION = (
+        "An alternative name a card goes by in some specialist literature. Synonyms "
+        "drive prior-art query expansion, so they should be the words another "
+        "community would actually search for. Non-empty with no leading or "
+        "trailing whitespace."
+    )
+    EXAMPLES = ("microsound",)
+
+    @property
+    def folded(self) -> str:
+        """Case- and whitespace-insensitive form used for duplicate checks."""
+        return " ".join(self.split()).casefold()
