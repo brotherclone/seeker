@@ -1,0 +1,53 @@
+schema: spec-driven
+
+context: |
+  Seeker is the idea engine: a Python orchestrator on the Claude API that draws
+  card triples from independent decks, checks prior art, and runs an adversarial
+  debate (generator, prior-art prosecutor, feasibility skeptic, taste critic,
+  advocate, blind Elo judge) before surfacing survivors for human review.
+  Concept of record: docs/concept.md.
+  Decks and prompts are versioned YAML in git (decks/, prompts/); run state lives
+  in SQLite (ideas.db) and every run must be resumable and record the git commit
+  it used.
+  Scores stay on separate axes (novelty, feasibility, promise), never blended.
+  Ideas must be statable as one sentence: an X that does Y because Z.
+
+rules:
+  proposal:
+    - State which agent role, deck, or engine stage the change touches
+    - Say how the change affects run reproducibility or resumability
+  design:
+    - Name the model and persona per role when prompts change
+  tasks:
+    - Keep tasks small enough to review in one sitting
+
+# Project context (optional)
+# Add only constraints that should guide OpenSpec artifacts and workflows.
+# Include constraints an agent cannot infer by reading the code.
+# Keep general project documentation and discoverable codebase facts out.
+# Example:
+#   context: |
+#     Designs and tasks must cover Windows, macOS, and Linux
+#     Write all artifacts in Spanish
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always state what is out of scope
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
