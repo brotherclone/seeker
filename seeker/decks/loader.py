@@ -9,7 +9,6 @@ Validation runs in two passes and reports every error from both:
 
 from __future__ import annotations
 
-from collections.abc import Iterable
 from pathlib import Path
 
 import yaml
@@ -54,7 +53,7 @@ class DeckDirectory:
         if not sources:
             return ValidationReport(
                 directory=self.path,
-                errors=(DeckError(message=f"no deck files (*.yaml) in {self.path}"),),
+                errors=(DeckError(message=f"no deck files ({DeckSource.patterns()}) in {self.path}"),),
             )
 
         errors: list[DeckError] = []
@@ -144,9 +143,16 @@ class DeckDirectory:
 
     # -- pass two -----------------------------------------------------------
 
-    def _set_errors(self, sources: Iterable[DeckSource], loaded: list[LoadedDeck]) -> list[DeckError]:
+    def _set_errors(self, sources: tuple[DeckSource, ...], loaded: list[LoadedDeck]) -> list[DeckError]:
         errors = [
-            DeckError(message=f"missing required axis {axis!r} (expected {self.path.name}/{axis}.yaml)")
+            DeckError(
+                message=f"axis {axis!r} has more than one deck file: "
+                + ", ".join(str(self._display(source)) for source in sources if source.axis == axis)
+            )
+            for axis in DeckSource.duplicated_axes(sources)
+        ]
+        errors += [
+            DeckError(message=f"missing required axis {axis!r} (expected {self.path.name}/{axis}.yaml or .yml)")
             for axis in DeckSet.missing_axes(source.axis for source in sources)
         ]
         files = {item.deck.axis: self._display(item.source) for item in loaded}

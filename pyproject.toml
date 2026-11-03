@@ -17,7 +17,9 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-  "linkml>=1.9",
+  # Exports in schema/generated/ are compared byte-for-byte, so pin the
+  # generator minor version; bump deliberately and rerun `make schema`.
+  "linkml>=1.12.1,<1.13",
   "pytest>=8",
 ]
 

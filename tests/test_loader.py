@@ -111,7 +111,7 @@ def test_missing_required_axis(tmp_path: Path) -> None:
     directory = valid_directory(tmp_path)
     (directory / "constraint.yaml").unlink()
     assert messages(directory) == [
-        "decks: missing required axis 'constraint' (expected decks/constraint.yaml)"
+        "decks: missing required axis 'constraint' (expected decks/constraint.yaml or .yml)"
     ]
 
 
@@ -158,3 +158,46 @@ def test_load_raises_with_full_report(tmp_path: Path) -> None:
     with pytest.raises(DeckValidationFailed) as exc:
         DeckDirectory(directory).load()
     assert len(exc.value.report.errors) == 2
+
+
+# --- review follow-ups (PR #1) ---------------------------------------------
+
+
+def test_yml_files_load(tmp_path: Path) -> None:
+    directory = valid_directory(tmp_path)
+    technique = directory / "technique.yaml"
+    technique.rename(technique.with_suffix(".yml"))
+    assert DeckDirectory(directory).load().deck("technique") is not None
+
+
+def test_empty_directory_message_names_both_suffixes(tmp_path: Path) -> None:
+    (tmp_path / "decks").mkdir()
+    assert messages(tmp_path / "decks") == [
+        f"decks: no deck files (*.yaml or *.yml) in {tmp_path / 'decks'}"
+    ]
+
+
+def test_missing_axis_message_names_both_suffixes(tmp_path: Path) -> None:
+    directory = valid_directory(tmp_path)
+    (directory / "domain.yaml").unlink()
+    assert messages(directory) == [
+        "decks: missing required axis 'domain' (expected decks/domain.yaml or .yml)"
+    ]
+
+
+def test_same_axis_in_yaml_and_yml_is_reported_not_raised(tmp_path: Path) -> None:
+    directory = valid_directory(tmp_path)
+    (directory / "technique.yml").write_text((directory / "technique.yaml").read_text())
+    report = DeckDirectory(directory).validate()
+    assert not report.ok
+    assert [str(e) for e in report.errors] == [
+        "decks: axis 'technique' has more than one deck file: decks/technique.yaml, decks/technique.yml"
+    ]
+
+
+def test_unhashable_yaml_key_is_reported_not_raised(tmp_path: Path) -> None:
+    directory = valid_directory(tmp_path)
+    write_deck(directory, "domain", "? [axis, name]\n: domain\n")
+    (message,) = messages(directory)
+    assert message.startswith("decks/domain.yaml: invalid YAML:")
+    assert "unhashable key" in message

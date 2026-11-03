@@ -4,6 +4,7 @@ GEN := schema/generated
 .PHONY: schema lint test validate
 
 schema:
+	mkdir -p $(GEN)
 	gen-shacl $(SCHEMA) > $(GEN)/seeker.shacl.ttl
 	gen-owl $(SCHEMA) > $(GEN)/seeker.owl.ttl
 
