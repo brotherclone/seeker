@@ -1,0 +1,13 @@
+# Fixed fixture for the golden-batch test. Do not edit.
+axis: domain
+name: Domain
+description: Golden fixture domain deck.
+cards:
+- id: domain-tides
+  name: tides
+- id: domain-bees
+  name: bees
+- id: domain-maps
+  name: maps
+- id: domain-ciphers
+  name: ciphers

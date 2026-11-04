@@ -1,0 +1,147 @@
+# Medium: what the idea ends up as. Schema: schema/seeker.yaml (Deck).
+axis: medium
+name: Medium
+description: What the idea ends up as, meaning the format, object or platform it ships in.
+cards:
+  # --- music, studio and existing stack ----------------------------------
+  - id: tape
+    name: cassette tape
+    synonyms: [compact cassette]
+    fields: [music]
+  - id: love-game
+    name: LÖVE game
+    synonyms: [LÖVE2D game, Love2D]
+    fields: [games]
+  - id: 500-series-module
+    name: 500-series module
+    synonyms: [API 500 lunchbox module]
+    fields: [music, electronics]
+  - id: web-artifact
+    name: web artifact
+    synonyms: [single-page web app]
+    note: Cross-cutting, so it applies to every field.
+  - id: vst-au-plugin
+    name: VST/AU plugin
+    synonyms: [audio plug-in]
+    fields: [music]
+  - id: max-msp-patch
+    name: Max/MSP patch
+    synonyms: [Max patch, Pure Data patch]
+    fields: [music]
+  - id: midi-file
+    name: MIDI file
+    synonyms: [standard MIDI file, SMF]
+    fields: [music]
+  - id: ace-studio-vocal
+    name: ACE Studio vocal
+    synonyms: [singing voice synthesis, synthetic vocal]
+    fields: [music]
+  - id: raspberry-pi-box
+    name: Raspberry Pi box
+    synonyms: [single-board computer]
+    fields: [electronics]
+  - id: installation
+    name: installation
+    synonyms: [installation art, site-specific work]
+    fields: [visual-art]
+  - id: radio-broadcast
+    name: radio broadcast
+    synonyms: [radio art]
+    fields: [music, writing]
+  - id: zine
+    name: zine
+    synonyms: [fanzine, small-press publication]
+    fields: [writing, comics, visual-art]
+  - id: album-side
+    name: album side
+    synonyms: [LP side]
+    fields: [music]
+  - id: nanokontrol2-mapping
+    name: nanoKONTROL2 mapping
+    synonyms: [MIDI controller mapping]
+    fields: [music, electronics]
+  - id: rails-site
+    name: Rails site
+    synonyms: [Ruby on Rails app]
+    note: Cross-cutting, so it applies to every field.
+  # --- visual art --------------------------------------------------------
+  - id: risograph-print
+    name: risograph print
+    synonyms: [riso, stencil duplicator print]
+    fields: [visual-art, comics]
+  - id: pen-plotter-drawing
+    name: pen-plotter drawing
+    synonyms: [plotter art, AxiDraw drawing]
+    fields: [visual-art, electronics]
+  - id: projection-mapping
+    name: projection mapping
+    synonyms: [video mapping, spatial augmented reality]
+    fields: [visual-art, film]
+  # --- film --------------------------------------------------------------
+  - id: 16mm-loop
+    name: 16mm film loop
+    synonyms: [film loop]
+    fields: [film]
+  - id: vhs-tape
+    name: VHS tape
+    synonyms: [videocassette]
+    fields: [film]
+  - id: vertical-short
+    name: vertical short video
+    synonyms: [vertical video, short-form video]
+    fields: [film]
+  # --- electronics -------------------------------------------------------
+  - id: esp32-board
+    name: ESP32 board
+    synonyms: [microcontroller board]
+    fields: [electronics]
+  - id: led-matrix
+    name: LED matrix
+    synonyms: [dot-matrix display, LED display]
+    fields: [electronics, visual-art]
+  - id: e-ink-display
+    name: e-ink display
+    synonyms: [electronic paper, e-paper, electrophoretic display]
+    fields: [electronics, writing]
+  # --- writing -----------------------------------------------------------
+  - id: twine-story
+    name: Twine story
+    synonyms: [hypertext fiction, interactive fiction]
+    fields: [writing, games]
+  - id: chapbook
+    name: chapbook
+    synonyms: [poetry pamphlet]
+    fields: [writing]
+  - id: audio-drama
+    name: audio drama
+    synonyms: [radio drama, audio play]
+    fields: [writing, music]
+  # --- comics ------------------------------------------------------------
+  - id: minicomic
+    name: minicomic
+    synonyms: [mini-comic]
+    fields: [comics]
+  - id: webcomic
+    name: webcomic
+    synonyms: [online comic]
+    fields: [comics]
+  - id: 24-hour-comic
+    name: 24-hour comic
+    fields: [comics]
+  # --- games -------------------------------------------------------------
+  - id: card-deck
+    name: deck of cards
+    synonyms: [card game deck]
+    fields: [games]
+  - id: board-game
+    name: board game
+    synonyms: [tabletop game]
+    fields: [games]
+  - id: pico-8-cartridge
+    name: PICO-8 cartridge
+    synonyms: [fantasy console cart]
+    fields: [games, music]
+  - id: ttrpg-zine
+    name: TTRPG zine
+    synonyms: [tabletop RPG zine, OSR zine]
+    fields: [games, writing]

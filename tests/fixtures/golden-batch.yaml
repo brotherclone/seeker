@@ -1,0 +1,65 @@
+# Expected output of BatchDrawer.draw(seed=2026, size=6) over golden-decks/.
+# Pinned: if this changes, the draw algorithm changed (bump DrawStream.VERSION).
+seed: 2026
+deck_set_digest: d495b172bb717bf0b1523b47e2303b2214d0af3ecb1ad7ed1f977b83134242da
+draws:
+- position: 1
+  axes:
+  - constraint
+  - technique
+  - historical-artifact
+  home_field: games
+  drawn_cards:
+  - limit-writing
+  - technique-games
+  - artifact-electronics
+- position: 2
+  axes:
+  - constraint
+  - medium
+  - domain
+  home_field: music
+  drawn_cards:
+  - limit-music
+  - medium-comics
+  - domain-ciphers
+- position: 3
+  axes:
+  - constraint
+  - historical-artifact
+  - domain
+  home_field: visual-art
+  drawn_cards:
+  - limit-film
+  - artifact-visual-art
+  - domain-bees
+- position: 4
+  axes:
+  - constraint
+  - medium
+  - historical-artifact
+  home_field: film
+  drawn_cards:
+  - limit-visual-art
+  - medium-music
+  - artifact-film
+- position: 5
+  axes:
+  - constraint
+  - technique
+  - medium
+  home_field: electronics
+  drawn_cards:
+  - limit-electronics
+  - technique-comics
+  - medium-games
+- position: 6
+  axes:
+  - constraint
+  - technique
+  - domain
+  home_field: writing
+  drawn_cards:
+  - limit-comics
+  - technique-writing
+  - domain-maps

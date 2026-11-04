@@ -1,0 +1,157 @@
+# Historical artifact: a real machine, object or work to resurrect, misread or
+# extend. Schema: schema/seeker.yaml (Deck).
+axis: historical-artifact
+name: Historical artifact
+description: A real machine, object or work to resurrect, misread or extend.
+cards:
+  # --- music -------------------------------------------------------------
+  - id: oramics
+    name: Oramics
+    synonyms: [drawn sound, Oramics machine]
+    fields: [music, visual-art]
+    note: Daphne Oram's optical synthesizer, played by drawing on 35mm film strips.
+  - id: telharmonium
+    name: Telharmonium
+    synonyms: [Dynamophone]
+    fields: [music, electronics]
+  - id: votrax-sc-01
+    name: Votrax SC-01
+    synonyms: [Votrax, formant speech synthesizer]
+    fields: [music, electronics]
+  - id: electronium
+    name: Raymond Scott's Electronium
+    synonyms: [Electronium]
+    fields: [music, electronics]
+  - id: trautonium
+    name: Trautonium
+    synonyms: [Mixtur-Trautonium]
+    fields: [music]
+  - id: ans-synthesizer
+    name: ANS synthesizer
+    synonyms: [Murzin ANS, photoelectronic synthesizer]
+    fields: [music, visual-art]
+  - id: mellotron
+    name: Mellotron
+    synonyms: [Chamberlin]
+    fields: [music]
+  - id: rca-mark-ii
+    name: RCA Mark II Sound Synthesizer
+    synonyms: [RCA synthesizer, Columbia-Princeton synthesizer]
+    fields: [music]
+  - id: fairlight-cmi
+    name: Fairlight CMI
+    synonyms: [Fairlight, Page R sequencer]
+    fields: [music]
+  - id: novachord
+    name: Hammond Novachord
+    synonyms: [Novachord]
+    fields: [music]
+  - id: rhythmicon
+    name: Rhythmicon
+    synonyms: [Polyrhythmophone]
+    fields: [music]
+  - id: sonovox
+    name: Sonovox
+    synonyms: [talking guitar]
+    fields: [music]
+    note: The 1939 throat-transducer talk-box ancestor.
+  - id: tms5100
+    name: TMS5100 speech chip
+    synonyms: [Speak & Spell, LPC speech synthesis, linear predictive coding chip]
+    fields: [music, electronics]
+  - id: dudley-vocoder
+    name: Homer Dudley's vocoder
+    synonyms: [channel vocoder]
+    fields: [music]
+  - id: player-piano-roll
+    name: player-piano roll
+    synonyms: [pianola roll, piano roll]
+    fields: [music]
+  # --- visual art --------------------------------------------------------
+  - id: camera-obscura
+    name: camera obscura
+    synonyms: [pinhole camera]
+    fields: [visual-art, film]
+  - id: aaron
+    name: Harold Cohen's AARON
+    synonyms: [AARON]
+    fields: [visual-art]
+  - id: clavilux
+    name: Thomas Wilfred's Clavilux
+    synonyms: [Lumia, color organ]
+    fields: [visual-art, music]
+  # --- film --------------------------------------------------------------
+  - id: zoetrope
+    name: zoetrope
+    synonyms: [daedalum, wheel of life]
+    fields: [film]
+  - id: sensorama
+    name: Morton Heilig's Sensorama
+    synonyms: [Sensorama]
+    fields: [film, electronics]
+  - id: lumigraph
+    name: Oskar Fischinger's Lumigraph
+    synonyms: [Lumigraph, light organ]
+    fields: [film, music, visual-art]
+  # --- electronics -------------------------------------------------------
+  - id: jacquard-loom
+    name: Jacquard loom
+    synonyms: [punched-card loom]
+    fields: [electronics, visual-art]
+    note: Punched-card control of pattern, an ancestor of programmable machines.
+  - id: nixie-tube
+    name: Nixie tube
+    synonyms: [cold-cathode display]
+    fields: [electronics]
+  - id: heathkit
+    name: Heathkit kits
+    synonyms: [Heathkit, electronics kit]
+    fields: [electronics]
+  - id: simon-game
+    name: Simon (1978)
+    synonyms: [Simon electronic game]
+    fields: [electronics, games, music]
+  # --- writing -----------------------------------------------------------
+  - id: lullian-wheels
+    name: Ramon Llull's combinatorial wheels
+    synonyms: [Ars Magna, Lullian circles, volvelle]
+    fields: [writing]
+    note: Thirteenth-century rotating discs for combining concepts. Seeker's own oldest ancestor.
+  - id: hundred-thousand-billion-poems
+    name: Queneau's Cent mille milliards de poèmes
+    synonyms: [Hundred Thousand Billion Poems]
+    fields: [writing]
+  - id: strachey-love-letters
+    name: Strachey's love-letter generator
+    synonyms: [Manchester love letters, M.U.C. love letters]
+    fields: [writing, electronics]
+  - id: choose-your-own-adventure
+    name: Choose Your Own Adventure books
+    synonyms: [gamebook, branching-path novel]
+    fields: [writing, games]
+  # --- comics ------------------------------------------------------------
+  - id: ben-day-dots
+    name: Ben-Day dots
+    synonyms: [Benday process, halftone dots]
+    fields: [comics, visual-art]
+  - id: screentone
+    name: Zip-A-Tone screentone
+    synonyms: [Zip-A-Tone, mechanical tint]
+    fields: [comics]
+  - id: mad-fold-in
+    name: the Mad Fold-In
+    synonyms: [fold-in]
+    fields: [comics, visual-art]
+  # --- games -------------------------------------------------------------
+  - id: kriegsspiel
+    name: Kriegsspiel
+    synonyms: [Prussian wargame]
+    fields: [games]
+  - id: nimatron
+    name: Nimatron (1940)
+    synonyms: [Nim machine]
+    fields: [games, electronics]
+  - id: landlords-game
+    name: The Landlord's Game
+    fields: [games]
+    note: Lizzie Magie's 1904 anti-monopoly game, the ancestor of Monopoly.

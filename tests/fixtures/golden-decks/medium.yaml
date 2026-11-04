@@ -1,0 +1,34 @@
+# Fixed fixture for the golden-batch test. Do not edit: the expected
+# batch in golden-batch.yaml depends on every byte of content here.
+axis: medium
+name: Medium
+description: Golden fixture medium deck.
+cards:
+- id: medium-music
+  name: music medium
+  fields:
+  - music
+- id: medium-visual-art
+  name: visual-art medium
+  fields:
+  - visual-art
+- id: medium-film
+  name: film medium
+  fields:
+  - film
+- id: medium-electronics
+  name: electronics medium
+  fields:
+  - electronics
+- id: medium-writing
+  name: writing medium
+  fields:
+  - writing
+- id: medium-comics
+  name: comics medium
+  fields:
+  - comics
+- id: medium-games
+  name: games medium
+  fields:
+  - games

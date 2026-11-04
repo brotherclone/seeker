@@ -1,0 +1,157 @@
+# Technique: how something is made. Schema: schema/seeker.yaml (Deck).
+axis: technique
+name: Technique
+description: How something is made, as a process, algorithm or craft method.
+cards:
+  # --- music -------------------------------------------------------------
+  - id: granular-synthesis
+    name: granular synthesis
+    synonyms: [microsound, grain cloud, granulation]
+    fields: [music]
+  - id: physical-modeling
+    name: physical modeling synthesis
+    synonyms: [physical modelling]
+    fields: [music]
+  - id: cellular-automata
+    name: cellular automata
+    synonyms: [cellular automaton, Game of Life]
+    fields: [music, visual-art, games]
+  - id: l-systems
+    name: L-systems
+    synonyms: [Lindenmayer systems]
+    fields: [music, visual-art]
+  - id: fm-synthesis
+    name: FM synthesis
+    synonyms: [frequency modulation synthesis]
+    fields: [music]
+  - id: wavetable-synthesis
+    name: wavetable synthesis
+    fields: [music]
+  - id: karplus-strong
+    name: Karplus-Strong
+    synonyms: [plucked-string synthesis]
+    fields: [music]
+  - id: phase-vocoder
+    name: phase vocoder
+    synonyms: [STFT resynthesis]
+    fields: [music]
+  - id: concatenative-synthesis
+    name: concatenative synthesis
+    synonyms: [corpus-based synthesis, audio mosaicing]
+    fields: [music]
+  - id: convolution
+    name: convolution
+    synonyms: [convolution reverb, impulse response, kernel filtering]
+    fields: [music, visual-art]
+  - id: markov-chains
+    name: Markov chains
+    synonyms: [Markov model, n-gram model]
+    fields: [music, writing]
+  - id: genetic-algorithms
+    name: genetic algorithms
+    synonyms: [evolutionary computation, interactive evolution]
+    fields: [music, visual-art, games]
+  - id: dynamic-stochastic-synthesis
+    name: dynamic stochastic synthesis
+    synonyms: [GENDY, GENDYN]
+    fields: [music]
+    note: Xenakis's waveform-level random walks, not stochastic composition in general.
+  - id: spectral-freeze
+    name: spectral freeze
+    synonyms: [spectral hold, spectral sustain]
+    fields: [music]
+  - id: waveguide-reverb
+    name: waveguide reverb
+    synonyms: [feedback delay network, FDN]
+    fields: [music]
+  # --- visual art --------------------------------------------------------
+  - id: reaction-diffusion
+    name: reaction-diffusion
+    synonyms: [Turing patterns, Gray-Scott model]
+    fields: [visual-art]
+  - id: voronoi-tessellation
+    name: Voronoi tessellation
+    synonyms: [Voronoi diagram, Dirichlet tessellation]
+    fields: [visual-art]
+  - id: flow-fields
+    name: flow fields
+    synonyms: [vector field drawing, noise fields]
+    fields: [visual-art]
+  - id: error-diffusion-dithering
+    name: error-diffusion dithering
+    synonyms: [Floyd-Steinberg dithering]
+    fields: [visual-art]
+  # --- film --------------------------------------------------------------
+  - id: datamoshing
+    name: datamoshing
+    synonyms: [I-frame removal, compression glitch]
+    fields: [film, visual-art]
+  - id: slit-scan
+    name: slit-scan
+    synonyms: [slit photography, time displacement]
+    fields: [film, visual-art]
+  - id: rotoscoping
+    name: rotoscoping
+    synonyms: [rotoscope animation]
+    fields: [film]
+  - id: kuleshov-montage
+    name: Kuleshov montage
+    synonyms: [Kuleshov effect, montage editing]
+    fields: [film, comics]
+  # --- electronics -------------------------------------------------------
+  - id: capacitive-sensing
+    name: capacitive sensing
+    synonyms: [capacitive touch, proximity sensing]
+    fields: [electronics, music]
+  - id: circuit-bending
+    name: circuit bending
+    synonyms: [hardware hacking]
+    fields: [electronics, music]
+  - id: piezo-contact-sensing
+    name: piezo contact sensing
+    synonyms: [contact microphone, piezo pickup]
+    fields: [electronics, music]
+  # --- writing -----------------------------------------------------------
+  - id: cut-up
+    name: cut-up technique
+    synonyms: [découpé, fold-in method]
+    fields: [writing, music]
+  - id: n-plus-seven
+    name: N+7
+    synonyms: [S+7, Oulipo substitution]
+    fields: [writing]
+  - id: erasure
+    name: erasure poetry
+    synonyms: [blackout poetry, redaction poetry]
+    fields: [writing, visual-art]
+  - id: procedural-grammar
+    name: procedural grammar
+    synonyms: [replacement grammar, Tracery, context-free grammar generation]
+    fields: [writing, games]
+  # --- comics ------------------------------------------------------------
+  - id: gutter-closure
+    name: closure across the gutter
+    synonyms: [closure, the gutter]
+    fields: [comics, film]
+    note: McCloud's term for what the reader supplies between panels.
+  - id: infinite-canvas
+    name: infinite canvas
+    fields: [comics]
+  - id: braiding
+    name: braiding
+    synonyms: [tressage]
+    fields: [comics]
+    note: Groensteen's term for panels that rhyme across distant pages.
+  # --- games -------------------------------------------------------------
+  - id: wave-function-collapse
+    name: wave function collapse
+    synonyms: [WFC, model synthesis]
+    fields: [games, visual-art]
+  - id: deckbuilding
+    name: deckbuilding
+    synonyms: [deck-building]
+    fields: [games]
+  - id: roll-and-write
+    name: roll-and-write
+    synonyms: [flip-and-write]
+    fields: [games]
