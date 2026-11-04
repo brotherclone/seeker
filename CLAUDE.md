@@ -39,3 +39,10 @@ An idea engine for creative tech. The concept of record is `docs/concept.md`; ev
 - Do all work on `feature/<openspec-change-name>` branches cut from `develop`, one per OpenSpec change. Merge them back into `develop` through a pull request.
 - Releases go `release/<version>` from `develop` → `main`, tagged `v<version>`, then merged back into `develop`. Urgent fixes go `hotfix/<name>` from `main` → `main` and `develop`.
 - Never commit directly to `develop` or `main`. The only exception was the initial OpenSpec setup.
+
+## Running locally
+
+- While Seeker is experimental it runs on Gabe's Mac. The nightly job is a launchd LaunchAgent, and the API key lives in the macOS Keychain or a gitignored `.env`. A run moves to the cloud only once it proves out.
+- Read every location from config (vault, `decks/`, `batches/`, outputs). Never hard-code a path, so moving a run is a config change.
+- The Obsidian vault is the store for captured works and prior art: one note per work, with frontmatter matching the LinkML `Work` class.
+- Nightly spend has a hard cap, $5 by default. The run's cost meter stops cleanly when the cap is reached.

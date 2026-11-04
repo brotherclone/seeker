@@ -22,6 +22,13 @@ context: |
   dict-shaped payloads, no TypeVar/Generic classes; containers hold named
   domain models, and domain scalars use named constrained types that mirror
   LinkML types.
+  Runs are local-first: the nightly run executes on Gabe's Mac (launchd) while
+  Seeker is experimental, and moves to the cloud only once it proves out. Every
+  location (Obsidian vault, decks, batches, outputs) comes from config, never
+  hard-coded paths, so moving a run means changing config, not code.
+  The Obsidian vault is the store for captured works and prior art (notes with
+  frontmatter matching the LinkML Work class); YAML or table exporters come later.
+  Nightly spend is capped (default $5/night) by a cost meter in the run.
   Design thinking, decisions and concept notes are documented in Gabe's
   Obsidian vault under Seeker/ as wikilinked notes, one note per ontology class,
   so the design can be read as a graph.
