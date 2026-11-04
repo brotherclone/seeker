@@ -8,6 +8,7 @@ LinkMLString) with no schema counterpart.
 
 import types
 import typing
+from datetime import datetime
 from pathlib import Path
 
 import pytest
@@ -19,7 +20,7 @@ from seeker.ontology import LinkMLString, SeekerModel
 
 SCHEMA = Path(__file__).resolve().parent.parent / "schema" / "seeker.yaml"
 VIEW = SchemaView(str(SCHEMA))
-PRIMITIVES = {"string": str, "integer": int}
+PRIMITIVES = {"string": str, "integer": int, "float": float, "datetime": datetime}
 
 
 def norm(text: str | None) -> str:
@@ -83,7 +84,7 @@ def constraint_bounds(field: object) -> dict[str, object]:
     """min_length / max_length / ge declared on a pydantic field."""
     found: dict[str, object] = {}
     for item in field.metadata:
-        for name in ("min_length", "max_length", "ge"):
+        for name in ("min_length", "max_length", "ge", "le"):
             if getattr(item, name, None) is not None:
                 found[name] = getattr(item, name)
     return found
@@ -127,6 +128,7 @@ def class_problems(class_name: str, model: type[SeekerModel]) -> list[str]:
             ("minimum_cardinality", "min_length"),
             ("maximum_cardinality", "max_length"),
             ("minimum_value", "ge"),
+            ("maximum_value", "le"),
         ):
             wanted = getattr(slot, linkml_name, None)
             if wanted is not None and bounds.get(pydantic_name) != wanted:
@@ -173,13 +175,24 @@ def test_named_type_matches_schema_type(type_name: str) -> None:
     assert [e.value for e in schema_type.examples] == list(named.EXAMPLES)
 
 
-def test_enums_match_schema() -> None:
-    assert set(VIEW.all_enums(imports=False)) == {"CreativeField"}
-    enum = VIEW.get_enum("CreativeField")
-    assert norm(ontology.CreativeField.__doc__) == norm(enum.description)
+@pytest.mark.parametrize("enum_name", sorted(VIEW.all_enums(imports=False)))
+def test_enums_match_schema(enum_name: str) -> None:
+    enum = VIEW.get_enum(enum_name)
+    model = getattr(ontology, enum_name)
+    assert norm(model.__doc__) == norm(enum.description)
     schema_values = {name: norm(pv.description) for name, pv in enum.permissible_values.items()}
-    model_values = {member.value: norm(member.description) for member in ontology.CreativeField}
+    model_values = {member.value: norm(member.description) for member in model}
     assert model_values == schema_values
+
+
+def test_every_schema_enum_is_exported_and_back() -> None:
+    from enum import StrEnum
+
+    exported_enums = {
+        name for name in ontology.__all__
+        if isinstance(obj := getattr(ontology, name), type) and issubclass(obj, StrEnum) and obj.__members__
+    }
+    assert exported_enums == set(VIEW.all_enums(imports=False))
 
 
 def test_conformance_catches_a_dropped_slot() -> None:
@@ -224,3 +237,19 @@ def test_conformance_catches_an_inlined_reference() -> None:
     )
     problems = class_problems("Draw", drifted)
     assert any(p.startswith("Draw.drawn_cards: type") for p in problems), problems
+
+
+def test_conformance_catches_a_wrong_datetime_type() -> None:
+    if not hasattr(ontology, "Generation"):
+        pytest.skip("Generation not modeled yet")
+    drifted = type(
+        "Generation",
+        (ontology.Generation,),
+        {
+            "__module__": __name__,
+            "__annotations__": {"generated_at": str},
+            "generated_at": ontology.Generation.model_fields["generated_at"],
+        },
+    )
+    problems = class_problems("Generation", drifted)
+    assert any(p.startswith("Generation.generated_at: type") for p in problems), problems

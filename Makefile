@@ -1,19 +1,22 @@
 SCHEMA := schema/seeker.yaml
 GEN := schema/generated
 
-.PHONY: schema lint test validate
+.PHONY: setup schema lint test validate
+
+setup:
+	uv sync
 
 schema:
 	mkdir -p $(GEN)
-	gen-shacl $(SCHEMA) > $(GEN)/seeker.shacl.ttl
-	gen-owl $(SCHEMA) > $(GEN)/seeker.owl.ttl
+	uv run gen-shacl $(SCHEMA) > $(GEN)/seeker.shacl.ttl
+	uv run gen-owl $(SCHEMA) > $(GEN)/seeker.owl.ttl
 
 lint:
-	linkml-lint $(SCHEMA)
+	uv run linkml-lint $(SCHEMA)
 
 validate:
-	seeker-decks validate
-	linkml-validate -s $(SCHEMA) -C Deck decks/*.yaml
+	uv run seeker-decks validate
+	uv run linkml-validate -s $(SCHEMA) -C Deck decks/*.yaml
 
 test:
-	pytest
+	uv run pytest

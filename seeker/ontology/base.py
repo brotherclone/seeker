@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from enum import StrEnum
 from typing import ClassVar
 
 from pydantic import BaseModel, ConfigDict, GetCoreSchemaHandler, GetJsonSchemaHandler
@@ -66,3 +67,17 @@ class LinkMLString(str):
             type_uri=cls.TYPE_URI,
         )
         return json_schema
+
+
+class DescribedStrEnum(StrEnum):
+    """Base for enums mirroring a LinkML enum. Members are declared as
+    ``NAME = "value", "description"`` so every permissible value carries its
+    schema description."""
+
+    description: str
+
+    def __new__(cls, value: str, description: str) -> DescribedStrEnum:
+        member = str.__new__(cls, value)
+        member._value_ = value
+        member.description = description
+        return member

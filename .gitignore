@@ -8,3 +8,4 @@ ideas.db
 ideas.db-*
 reports/*.tmp
 batches/scratch/
+generations/scratch/

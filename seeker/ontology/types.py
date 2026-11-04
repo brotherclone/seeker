@@ -82,3 +82,33 @@ class Sha256Digest(LinkMLString):
     def short(self) -> str:
         """The first 12 hex characters, for display."""
         return self[: self.SHORT_LENGTH]
+
+
+class ModelId(LinkMLString):
+    """Identifier of a Claude model as the API names it. Recorded on every
+    generation so results can be attributed to the model that produced them."""
+
+    TYPE_URI = "seeker:ModelId"
+    PATTERN = "^claude-[a-z0-9-]+$"
+    DESCRIPTION = (
+        "Identifier of a Claude model as the API names it. Recorded on every "
+        "generation so results can be attributed to the model that produced them."
+    )
+    EXAMPLES = ("claude-opus-5-5",)
+
+
+class GitCommit(LinkMLString):
+    """A full git commit hash, suffixed with -dirty when the working tree had
+    uncommitted changes, pinning the code, decks and prompts a run used."""
+
+    TYPE_URI = "seeker:GitCommit"
+    PATTERN = "^[0-9a-f]{40}(-dirty)?$"
+    DESCRIPTION = (
+        "A full git commit hash, suffixed with -dirty when the working tree had "
+        "uncommitted changes, pinning the code, decks and prompts a run used."
+    )
+    EXAMPLES = ("5085562a1b2c3d4e5f60718293a4b5c6d7e8f90a",)
+
+    @property
+    def is_dirty(self) -> bool:
+        return self.endswith("-dirty")

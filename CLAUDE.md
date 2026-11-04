@@ -42,6 +42,7 @@ An idea engine for creative tech. The concept of record is `docs/concept.md`; ev
 
 ## Running locally
 
+- The environment is managed with uv: `uv sync` installs the Python version pinned in `.python-version` plus the locked dependencies, and every command runs through `uv run` (the launchd job included). After changing dependencies in `pyproject.toml`, run `uv lock` and commit `uv.lock`.
 - While Seeker is experimental it runs on Gabe's Mac. The nightly job is a launchd LaunchAgent, and the API key lives in the macOS Keychain or a git-ignored `.env`. A run moves to the cloud only once it proves out.
 - Read every location from config (vault, `decks/`, `batches/`, outputs). Never hard-code a path, so moving a run is a config change.
 - The Obsidian vault is the store for captured works and prior art: one note per work, with frontmatter matching the LinkML `Work` class.

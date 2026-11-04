@@ -52,7 +52,7 @@ The four core decks each keep at least three cards per field, and `tests/test_se
 ## Validating
 
 ```
-seeker-decks validate
+uv run seeker-decks validate
 ```
 
 This prints each axis with its card count and digest, then the digest of the whole deck set. Every error from every file is reported in one run, naming the file, the card and the slot. Use `--dir` to point at another directory.
@@ -62,7 +62,7 @@ A digest changes when any card or the card order changes. Comments, formatting a
 For a second, schema-only check of each file:
 
 ```
-linkml-validate -s schema/seeker.yaml -C Deck decks/*.yaml
+uv run linkml-validate -s schema/seeker.yaml -C Deck decks/*.yaml
 ```
 
 ## Rules the schema can't express
@@ -76,7 +76,7 @@ These are checked by `seeker-decks`:
 ## Drawing
 
 ```
-seeker-draw batch --seed 7 --size 12
+uv run seeker-draw batch --seed 7 --size 12
 ```
 
 Every draw is a **triple**: one `constraint` card plus cards from two of technique, medium, historical-artifact and domain. That gives six shapes. The constraint is always there because it's the card that forces a real idea.
@@ -100,8 +100,8 @@ No-repeat sets a ceiling on batch size. For these decks it's **30**, because `do
 ### Which batches to keep
 
 ```
-seeker-draw batch --seed 7 --out batches/2026-11-03-round-1.yaml   # keep: commit it
-seeker-draw batch --scratch                                         # throwaway
+uv run seeker-draw batch --seed 7 --out batches/2026-11-03-round-1.yaml   # keep: commit it
+uv run seeker-draw batch --scratch                                         # throwaway
 ```
 
 - **Commit** batches that feed a real run to `batches/YYYY-MM-DD-<label>.yaml`. They're tiny, and together they form the experiment log: each one pins its seed and deck-set digest, sitting in git next to the deck and prompt commits that produced it.

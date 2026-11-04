@@ -2,6 +2,20 @@
 
 An idea engine for creative tech: random card triples from independent decks, prior-art checks, and adversarial agent debate before anything reaches a human. See [docs/concept.md](docs/concept.md).
 
+## Setup
+
+Seeker uses [uv](https://docs.astral.sh/uv/), which installs the right Python (pinned in `.python-version`) and every dependency from `uv.lock`:
+
+```
+brew install uv          # or: curl -LsSf https://astral.sh/uv/install.sh | sh
+uv sync                  # creates .venv with Python 3.13, Seeker and the dev tools
+uv run pytest            # 326 tests
+```
+
+Run any Seeker command through `uv run` (for example `uv run seeker-draw batch --seed 7`), or activate `.venv` first and drop the prefix. `make setup|test|lint|validate|schema` wraps the common ones.
+
+For real model calls, put `ANTHROPIC_API_KEY=...` in `.env`, which is git-ignored.
+
 ## Workflow
 
 Changes go through [OpenSpec](https://github.com/Fission-AI/OpenSpec) (`openspec/`). In Claude Code:
