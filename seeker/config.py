@@ -125,7 +125,15 @@ class SeekerConfig(SeekerModel):
     def load(cls, path: Path | None = None) -> SeekerConfig:
         source = path.resolve() if path is not None else cls.find()
         try:
-            raw = yaml.safe_load(source.read_text(encoding="utf-8"))
+            text = source.read_text(encoding="utf-8")
+        except FileNotFoundError as exc:
+            raise ConfigError(f"{source}: no such config file") from exc
+        except OSError as exc:
+            raise ConfigError(f"{source}: cannot read config ({exc.strerror or exc})") from exc
+        except UnicodeDecodeError as exc:
+            raise ConfigError(f"{source}: not UTF-8 text ({exc.reason})") from exc
+        try:
+            raw = yaml.safe_load(text)
         except yaml.YAMLError as exc:
             raise ConfigError(f"{source}: invalid YAML: {' '.join(str(exc).split())}") from exc
         if not isinstance(raw, dict):

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from collections.abc import Sequence
 from datetime import date
@@ -22,6 +23,7 @@ from seeker.models import AnthropicModel, LanguageModel
 from seeker.ontology import DeckSet, DrawBatch, Generation, Reading
 
 ROLE_FILE = "generator.yaml"
+LABEL = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$")
 
 
 class GenerateCommand:
@@ -48,9 +50,23 @@ class GenerateCommand:
         run.add_argument("--config", type=Path, help="seeker.yaml to use (default: found by walking up).")
         target = run.add_mutually_exclusive_group()
         target.add_argument("--out", type=Path, help="Write (or resume) the Generation record at this path.")
-        target.add_argument("--label", help="Write to <generations>/<date>-<label>.yaml (committed).")
+        target.add_argument(
+            "--label",
+            type=self._label,
+            help="Write to <generations>/<date>-<label>.yaml (committed). Letters, digits, '.', '_' and '-' only.",
+        )
         target.add_argument("--scratch", action="store_true", help="Write under <generations>/scratch/ (git-ignored).")
         run.add_argument("--dry-run", action="store_true", help="Print every prompt; make no API call.")
+
+    @staticmethod
+    def _label(value: str) -> str:
+        """A label must be one plain filename component, so it can't escape <generations>/."""
+        if not LABEL.fullmatch(value) or ".." in value:
+            raise argparse.ArgumentTypeError(
+                f"{value!r} is not a valid label: use letters, digits, '.', '_' and '-' "
+                "(no slashes or '..'), starting with a letter or digit"
+            )
+        return value
 
     def run(self, argv: Sequence[str] | None = None) -> int:
         args = self.parser.parse_args(argv)

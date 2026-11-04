@@ -115,3 +115,26 @@ def test_scratch_lands_in_ignored_folder(batch, tmp_path, capsys) -> None:
     if shutil.which("git") and (ROOT / ".git").exists():
         ignored = subprocess.run(["git", "check-ignore", "-q", "generations/scratch/x.yaml"], cwd=ROOT)
         assert ignored.returncode == 0
+
+
+@pytest.mark.parametrize("label", ["../oops", "a/b", "..", ".hidden", "-x", "x..y", "with space", "a" * 81])
+def test_label_must_be_one_safe_filename_component(label: str, capsys) -> None:
+    with pytest.raises(SystemExit) as exc:
+        run(ScriptedModel(()), "--seed", "7", f"--label={label}")
+    assert exc.value.code == 2
+    assert "not a valid label" in capsys.readouterr().err
+
+
+def test_good_label_writes_inside_generations(batch, tmp_path, capsys) -> None:
+    config = tmp_path / "seeker.yaml"
+    text = (ROOT / "seeker.yaml").read_text()
+    text = text.replace("decks: decks", f"decks: {ROOT / 'decks'}").replace("prompts: prompts", f"prompts: {ROOT / 'prompts'}")
+    config.write_text(text)
+    assert GenerateCommand(model=replies(batch)).run(["run", "--config", str(config), "--seed", "7", "--label", "round-1_literal.v2"]) == 0
+    (written,) = (tmp_path / "generations").glob("*-round-1_literal.v2.yaml")
+    assert written.parent == tmp_path / "generations"
+
+
+def test_missing_config_flag_exits_cleanly(capsys) -> None:
+    assert GenerateCommand(model=ScriptedModel(())).run(["run", "--config", "/nope/seeker.yaml", "--seed", "7"]) == 1
+    assert "no such config file" in capsys.readouterr().err

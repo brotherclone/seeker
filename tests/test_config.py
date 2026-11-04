@@ -86,3 +86,22 @@ def test_unpriced_model_and_cost(tmp_path: Path) -> None:
     usage = Usage(input_tokens=1_000_000, output_tokens=500_000, cache_read_tokens=2_000_000, cache_write_tokens=100_000)
     # 4.00 + 10.00 + 0.80 + 0.50
     assert prices.price_for("claude-opus-5-5").cost(usage) == pytest.approx(15.30)
+
+
+def test_missing_config_path_is_a_config_error(tmp_path: Path) -> None:
+    with pytest.raises(ConfigError, match="no such config file"):
+        SeekerConfig.load(tmp_path / "missing.yaml")
+
+
+def test_unreadable_config_is_a_config_error(tmp_path: Path) -> None:
+    folder = tmp_path / "seeker.yaml"
+    folder.mkdir()  # a directory where a file is expected: read_text raises IsADirectoryError
+    with pytest.raises(ConfigError, match="cannot read config"):
+        SeekerConfig.load(folder)
+
+
+def test_non_utf8_config_is_a_config_error(tmp_path: Path) -> None:
+    path = tmp_path / "seeker.yaml"
+    path.write_bytes(b"paths: \xff\xfe\n")
+    with pytest.raises(ConfigError, match="not UTF-8"):
+        SeekerConfig.load(path)
