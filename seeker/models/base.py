@@ -11,7 +11,7 @@ from abc import ABC, abstractmethod
 
 from pydantic import ConfigDict, Field
 
-from seeker.ontology import ModelId, SeekerModel, Usage
+from seeker.ontology import Effort, ModelId, SeekerModel, Usage
 
 
 class ModelCallFailed(Exception):
@@ -49,7 +49,7 @@ class ModelRequest(SeekerModel):
     prompt: str = Field(min_length=1, description="The user message.")
     tool: ToolSpec
     max_tokens: int = Field(ge=1, description="Output token limit.")
-    temperature: float = Field(ge=0, le=1, description="Sampling temperature.")
+    effort: Effort = Field(description="How much effort the model puts into the answer.")
     retry: RetryContext | None = Field(default=None, description="Present when re-asking after an invalid answer.")
 
 

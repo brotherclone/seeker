@@ -39,6 +39,7 @@ types:
 
 enums:
   Reading:  {literal, loose, metaphorical}     # each value described
+  Effort:   {low, medium, high, xhigh, max}    # the API's output_config.effort
   RoleName: {generator}                        # debate-ideas adds prosecutor, skeptic, ...
 
 classes:
@@ -49,7 +50,7 @@ classes:
   Usage:             input_tokens, output_tokens, cache_read_tokens, cache_write_tokens (integers >= 0)
   ReadingGuidance:   reading (Reading), guidance (string)
   Role:              role_name, model, persona, system_prompt,
-                     reading_guidance (ReadingGuidance x3, inlined), max_output_tokens, temperature
+                     reading_guidance (ReadingGuidance x3, inlined), max_output_tokens, effort (Effort)
   Generation:        draw_batch (DrawBatch, inlined), reading, role_name, model,
                      role_digest (Sha256Digest), git_commit (optional), generated_at (datetime),
                      ideas (Idea*), failures (GenerationFailure*), usage (Usage), estimated_cost_usd (float)
@@ -79,7 +80,8 @@ Validation runs in two layers:
 ### 3. The model client
 
 `seeker/models/`:
-- `ModelRequest` holds system blocks, user turns, the tool, max tokens and temperature.
+- `ModelRequest` holds system blocks, user turns, the tool, max tokens and effort.
+- The `anthropic` 2.x SDK has no sampling parameters, so there is no `temperature`. Effort (`low` to `max`) is sent as `output_config.effort`. A test checks every argument against the installed SDK's `Messages.create` signature.
 - `ModelReply` holds the tool input as raw JSON text, the `Usage` and the stop reason.
 - `LanguageModel` is an abstract base class with `reply(request) -> ModelReply`. It has two implementations:
   - `AnthropicModel` wraps the `anthropic` SDK. It maps SDK usage fields to `Usage` and turns SDK errors into a `ModelCallFailed` error. The tool input is serialized with `json.dumps`, so no dict ever leaves the adapter.
@@ -94,7 +96,7 @@ Validation runs in two layers:
 role_name: generator
 model: claude-opus-5-5
 max_output_tokens: 1200
-temperature: 1.0
+effort: high
 persona: >-
   You are an artist-engineer who has shipped instruments, zines, small games,
   installations and odd hardware, mostly alone and on small budgets. You read

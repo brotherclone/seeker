@@ -34,7 +34,7 @@ def request(**overrides: object) -> ModelRequest:
         "prompt": "Say something.",
         "tool": TOOL,
         "max_tokens": 100,
-        "temperature": 0.5,
+        "effort": "low",
         **overrides,
     }
     return ModelRequest(**fields)
@@ -102,7 +102,9 @@ def test_anthropic_request_shape_and_reply_mapping() -> None:
     messages = StubMessages(sdk_response())
     result = stubbed(messages).reply(request())
     sent = messages.calls[0]
-    assert sent["tool_choice"] == {"type": "tool", "name": "submit_idea"}
+    assert sent["tool_choice"] == {"type": "tool", "name": "submit_idea", "disable_parallel_tool_use": True}
+    assert sent["output_config"] == {"effort": "low"}
+    assert "temperature" not in sent
     assert sent["system"][0]["cache_control"] == {"type": "ephemeral"}
     assert sent["tools"][0]["input_schema"]["type"] == "object"
     assert sent["messages"] == [{"role": "user", "content": "Say something."}]
@@ -150,3 +152,28 @@ def test_live_smoke_haiku() -> None:
     result = model.reply(request(prompt="Call submit_idea with statement 'ok'."))
     assert "statement" in json.loads(result.tool_input_json)
     assert result.usage.output_tokens > 0
+
+
+# --- the arguments must match the installed SDK, not just a stub ---------------
+
+
+def test_arguments_match_the_installed_sdk_signature() -> None:
+    """A stub accepts any keyword; this checks against the real SDK so an
+    unsupported argument (like the removed `temperature`) fails here, not live."""
+    import inspect
+    import typing
+
+    from anthropic.resources.messages import Messages
+    from anthropic.types import OutputConfigParam, ToolChoiceToolParam
+
+    retry = RetryContext(tool_use_id="toolu_1", previous_input_json='{"statement": "x"}', feedback="fix it")
+    for req in (request(), request(retry=retry)):
+        arguments = AnthropicModel._arguments(req)
+        accepted = set(inspect.signature(Messages.create).parameters) - {"self"}
+        assert set(arguments) <= accepted, set(arguments) - accepted
+        assert set(arguments["output_config"]) <= set(typing.get_type_hints(OutputConfigParam))
+        assert set(arguments["tool_choice"]) <= set(typing.get_type_hints(ToolChoiceToolParam))
+        effort_values = typing.get_args(typing.get_args(typing.get_type_hints(OutputConfigParam)["effort"])[0])
+        from seeker.ontology import Effort
+
+        assert {e.value for e in Effort} == set(effort_values)

@@ -27,7 +27,7 @@ Only the chosen reading's guidance reaches the prompt. To compare readings fairl
 - the persona;
 - the standing rules;
 - one guidance text per reading;
-- the token limit and temperature.
+- the token limit and effort (`low` to `max`; the generator uses `high`).
 
 Edit it freely. Every generation records the file's SHA-256, so each result can be traced to the exact prompt that produced it. Use `--dry-run` to see the rendered prompts before spending anything.
 

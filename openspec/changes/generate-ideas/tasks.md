@@ -4,7 +4,7 @@
 
 - [x] 1.1 Add the `ModelId` and `GitCommit` types, the `Reading` and `RoleName` enums, and the `Usage`, `CardReading`, `Idea`, `GenerationFailure`, `ReadingGuidance`, `Role` and `Generation` classes with their slots to `schema/seeker.yaml` per design decision 1, every element described. Run `make schema`. Verify that `linkml-lint` and `tests/test_schema.py` pass.
 - [x] 1.2 Extend the conformance test so `datetime` maps to `datetime` and `float` to `float`. Verify that the existing conformance tests still pass and that a planted model with `generated_at: str` fails.
-- [x] 1.3 Implement the Python types, enums and models (`seeker/ontology/generation.py` and `role.py`), with `Usage.__add__`, `Role.guidance_for(reading)` and a `Role` validator requiring exactly one guidance per reading. Export them from `seeker.ontology`. Verify the conformance test passes, and that unit tests cover usage addition, guidance lookup, missing or duplicate guidance, temperature and token bounds, and `GitCommit`/`ModelId` patterns.
+- [x] 1.3 Implement the Python types, enums and models (`seeker/ontology/generation.py` and `role.py`), with `Usage.__add__`, `Role.guidance_for(reading)` and a `Role` validator requiring exactly one guidance per reading. Export them from `seeker.ontology`. Verify the conformance test passes, and that unit tests cover usage addition, guidance lookup, missing or duplicate guidance, effort and token bounds, and `GitCommit`/`ModelId` patterns.
 - [x] 1.4 Write the Obsidian concept notes `Idea`, `Generation`, `Role` and `Reading`, linked to `[[Draw]]`, `[[DrawBatch]]`, `[[Card]]` and the hub. Verify that their slot tables match the schema.
 
 ## 2. Config

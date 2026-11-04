@@ -18,6 +18,7 @@ Seeker can draw balanced, reproducible triples, but nothing turns a triple into 
   - `Usage`, `GenerationFailure` and `ReadingGuidance`.
 - **New enums and types:**
   - `Reading`: `literal`, `loose`, `metaphorical`.
+  - `Effort`: `low` to `max`, the API's replacement for sampling temperature.
   - `RoleName`: `generator` for now; the debate change adds the rest.
   - `ModelId` and `GitCommit`.
 - **`prompts/generator.yaml`:** the generator role as a `Role` instance. The model defaults to Opus, and each reading level has its own guidance text. It is versioned in git, and every generation records the prompt file's digest.

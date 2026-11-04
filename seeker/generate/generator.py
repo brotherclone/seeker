@@ -98,7 +98,7 @@ class IdeaGenerator:
                 prompt=prompt,
                 tool=self.tool,
                 max_tokens=self.role.role.max_output_tokens,
-                temperature=self.role.role.temperature,
+                effort=self.role.role.effort,
                 retry=retry,
             )
             try:

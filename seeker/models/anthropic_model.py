@@ -82,7 +82,7 @@ class AnthropicModel(LanguageModel):
         return {
             "model": str(request.model),
             "max_tokens": request.max_tokens,
-            "temperature": request.temperature,
+            "output_config": {"effort": request.effort.value},
             "system": [{"type": "text", "text": request.system, "cache_control": {"type": "ephemeral"}}],
             "messages": messages,
             "tools": [
@@ -92,5 +92,5 @@ class AnthropicModel(LanguageModel):
                     "input_schema": json.loads(request.tool.input_schema_json),
                 }
             ],
-            "tool_choice": {"type": "tool", "name": request.tool.name},
+            "tool_choice": {"type": "tool", "name": request.tool.name, "disable_parallel_tool_use": True},
         }

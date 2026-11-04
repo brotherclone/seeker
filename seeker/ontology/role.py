@@ -6,7 +6,7 @@ from pydantic import ConfigDict, Field, model_validator
 from pydantic_core import PydanticCustomError
 
 from seeker.ontology.base import SeekerModel
-from seeker.ontology.reading import Reading, RoleName
+from seeker.ontology.reading import Effort, Reading, RoleName
 from seeker.ontology.types import ModelId
 
 
@@ -77,13 +77,14 @@ class Role(SeekerModel):
         examples=[1200],
         json_schema_extra={"slot_uri": "seeker:maxOutputTokens"},
     )
-    temperature: float = Field(
-        title="temperature",
-        ge=0,
-        le=1,
-        description="Sampling temperature for the role's calls, from 0 to 1.",
-        examples=[1.0],
-        json_schema_extra={"slot_uri": "seeker:temperature"},
+    effort: Effort = Field(
+        title="effort",
+        description=(
+            "How much effort the model puts into each call of this role. This is the "
+            "API's output_config.effort, which replaced sampling temperature."
+        ),
+        examples=["high"],
+        json_schema_extra={"slot_uri": "seeker:effort"},
     )
 
     @model_validator(mode="before")

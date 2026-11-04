@@ -11,7 +11,7 @@ from seeker.ontology.deck_set import DeckSet, SharedCardId
 from seeker.ontology.draw import Draw, DrawBatch
 from seeker.ontology.fields import CreativeField
 from seeker.ontology.generation import CardReading, Generation, GenerationFailure, Idea, Usage
-from seeker.ontology.reading import Reading, RoleName
+from seeker.ontology.reading import Effort, Reading, RoleName
 from seeker.ontology.role import ReadingGuidance, Role
 from seeker.ontology.types import AxisId, CardId, GitCommit, ModelId, Sha256Digest, Synonym, Tag
 
@@ -25,6 +25,7 @@ __all__ = [
     "DeckSet",
     "DescribedStrEnum",
     "Draw",
+    "Effort",
     "DrawBatch",
     "Generation",
     "GenerationFailure",

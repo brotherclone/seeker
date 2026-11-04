@@ -79,7 +79,7 @@ def role(**overrides: object) -> dict:
         "system_prompt": "s",
         "reading_guidance": [{"reading": r.value, "guidance": f"{r.value} guidance"} for r in Reading],
         "max_output_tokens": 1200,
-        "temperature": 1.0,
+        "effort": "high",
         **overrides,
     }
 
@@ -114,7 +114,7 @@ def test_role_needs_one_guidance_per_reading(guidance: list) -> None:
 
 @pytest.mark.parametrize(
     "overrides",
-    [{"temperature": 1.5}, {"temperature": -0.1}, {"max_output_tokens": 0}, {"model": "gpt-4"}, {"role_name": "judge"}],
+    [{"effort": "extreme"}, {"temperature": 0.5}, {"max_output_tokens": 0}, {"model": "gpt-4"}, {"role_name": "judge"}],
 )
 def test_role_bounds(overrides: dict) -> None:
     with pytest.raises(ValidationError):

@@ -128,6 +128,21 @@ enums:
         description: Cards may be taken by their spirit as well as their letter.
       metaphorical:
         description: Cards may stand for something they evoke rather than what they name.
+  Effort:
+    description: >-
+      How much effort a model puts into a response, as the Claude API's
+      output_config.effort. Higher effort is more thorough, slower and costlier.
+    permissible_values:
+      low:
+        description: Quickest and cheapest; minimal deliberation.
+      medium:
+        description: Balanced speed and thoroughness.
+      high:
+        description: Thorough; the default for creative roles.
+      xhigh:
+        description: More thorough than high, at higher cost.
+      max:
+        description: The most thorough the model offers; slowest and costliest.
   RoleName:
     description: >-
       The agent roles in Seeker's pipeline. Each role is defined by a YAML file
@@ -382,13 +397,13 @@ slots:
     minimum_value: 1
     slot_uri: seeker:maxOutputTokens
     description: The most output tokens one call of this role may produce.
-  temperature:
-    range: float
+  effort:
+    range: Effort
     required: true
-    minimum_value: 0
-    maximum_value: 1
-    slot_uri: seeker:temperature
-    description: Sampling temperature for the role's calls, from 0 to 1.
+    slot_uri: seeker:effort
+    description: >-
+      How much effort the model puts into each call of this role. This is the
+      API's output_config.effort, which replaced sampling temperature.
   draw_batch:
     range: DrawBatch
     inlined: true
@@ -543,7 +558,7 @@ classes:
       - system_prompt
       - reading_guidance
       - max_output_tokens
-      - temperature
+      - effort
   Generation:
     class_uri: seeker:Generation
     description: >-

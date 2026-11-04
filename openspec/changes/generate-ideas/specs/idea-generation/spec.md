@@ -9,7 +9,7 @@ Turns each `Draw` of a `DrawBatch` into one structured, validated `Idea` at a ch
 ### Requirement: Generation ontology is published in the LinkML schema
 The schema SHALL define:
 - the classes `Idea`, `CardReading`, `Generation`, `GenerationFailure`, `Role`, `ReadingGuidance` and `Usage`;
-- the enums `Reading` and `RoleName`;
+- the enums `Reading`, `Effort` and `RoleName`;
 - the types `ModelId` and `GitCommit`.
 
 Every element SHALL have a description, and each SHALL have a matching Python model or type that passes the conformance test.
@@ -33,7 +33,7 @@ Every element SHALL have a description, and each SHALL have a matching Python mo
 - **THEN** it is rejected, naming the three valid readings
 
 ### Requirement: Roles are versioned YAML files
-A role SHALL be defined by a YAML file in `prompts/` that validates as a `Role`. The file gives the `RoleName`, `ModelId`, persona, system prompt, a positive output-token limit, a temperature between 0 and 1, and exactly one `ReadingGuidance` per `Reading` value.
+A role SHALL be defined by a YAML file in `prompts/` that validates as a `Role`. The file gives the `RoleName`, `ModelId`, persona, system prompt, a positive output-token limit, an `Effort` level, and exactly one `ReadingGuidance` per `Reading` value.
 
 #### Scenario: Generator role loads
 - **WHEN** `prompts/generator.yaml` is loaded
