@@ -102,7 +102,7 @@ A retry is a plain follow-up turn: the rejected JSON as the assistant's message,
 ```yaml
 role_name: generator
 model: claude-opus-5-5
-max_output_tokens: 1200
+max_output_tokens: 4000
 effort: high
 persona: >-
   You are an artist-engineer who has shipped instruments, zines, small games,
