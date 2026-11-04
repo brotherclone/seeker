@@ -1,0 +1,126 @@
+# DrawBatch record (schema/seeker.yaml). The seed and deck-set digest pin this
+# batch exactly: redrawing with the same seed and size from decks with the same
+# digest reproduces it card for card.
+seed: 7
+deck_set_digest: 41909d46fec8ea3d0f3062810e78fd25be91b737e18bab6a19577f9e915a3050
+draws:
+- position: 1
+  axes:
+  - constraint
+  - medium
+  - historical-artifact
+  home_field: music
+  drawn_cards:
+  - no-keyboard
+  - webcomic
+  - lumigraph
+- position: 2
+  axes:
+  - constraint
+  - technique
+  - historical-artifact
+  home_field: visual-art
+  drawn_cards:
+  - single-sensor
+  - datamoshing
+  - ben-day-dots
+- position: 3
+  axes:
+  - constraint
+  - medium
+  - domain
+  home_field: film
+  drawn_cards:
+  - no-dialogue
+  - midi-file
+  - cartography
+- position: 4
+  axes:
+  - constraint
+  - medium
+  - domain
+  home_field: electronics
+  drawn_cards:
+  - one-knob
+  - nanokontrol2-mapping
+  - beekeeping
+- position: 5
+  axes:
+  - constraint
+  - historical-artifact
+  - domain
+  home_field: writing
+  drawn_cards:
+  - read-aloud
+  - lullian-wheels
+  - utopian-communes
+- position: 6
+  axes:
+  - constraint
+  - technique
+  - domain
+  home_field: comics
+  drawn_cards:
+  - one-color
+  - granular-synthesis
+  - dendrochronology
+- position: 7
+  axes:
+  - constraint
+  - medium
+  - historical-artifact
+  home_field: games
+  drawn_cards:
+  - one-page
+  - ttrpg-zine
+  - ans-synthesizer
+- position: 8
+  axes:
+  - constraint
+  - technique
+  - domain
+  home_field: music
+  drawn_cards:
+  - one-take
+  - fm-synthesis
+  - railroad-timetables
+- position: 9
+  axes:
+  - constraint
+  - technique
+  - historical-artifact
+  home_field: visual-art
+  drawn_cards:
+  - playable-by-a-non-musician
+  - rotoscoping
+  - clavilux
+- position: 10
+  axes:
+  - constraint
+  - historical-artifact
+  - domain
+  home_field: film
+  drawn_cards:
+  - real-time-only
+  - camera-obscura
+  - liturgy
+- position: 11
+  axes:
+  - constraint
+  - technique
+  - medium
+  home_field: electronics
+  drawn_cards:
+  - under-20-dollars-in-parts
+  - infinite-canvas
+  - zine
+- position: 12
+  axes:
+  - constraint
+  - technique
+  - medium
+  home_field: writing
+  drawn_cards:
+  - eight-voices-max
+  - erasure
+  - vhs-tape
