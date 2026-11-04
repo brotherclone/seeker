@@ -34,8 +34,7 @@ def replies(batch: DrawBatch) -> ScriptedModel:
     return ScriptedModel(
         tuple(
             ModelReply(
-                tool_use_id=f"t{d.position}",
-                tool_input_json=json.dumps(
+                output_json=json.dumps(
                     {
                         "statement": f"A piece for draw {d.position} that listens because rooms remember.",
                         "subject": "a piece",

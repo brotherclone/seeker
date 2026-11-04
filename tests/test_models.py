@@ -1,29 +1,37 @@
 """The model boundary: ScriptedModel and AnthropicModel (with a stubbed SDK)."""
 
+import inspect
 import json
 import os
+import typing
 from types import SimpleNamespace
 
 import anthropic
 import pytest
-from pydantic import SecretStr
 
+from seeker.generate import IdeaDraft
 from seeker.models import (
     AnthropicModel,
     ModelCallFailed,
     ModelReply,
     ModelRequest,
+    OutputSpec,
     RetryContext,
     ScriptedModel,
     ScriptExhausted,
-    ToolSpec,
 )
-from seeker.ontology import Usage
+from seeker.ontology import Effort, Usage
 
-TOOL = ToolSpec(
-    name="submit_idea",
-    description="Submit one idea.",
-    input_schema_json=json.dumps({"type": "object", "properties": {"statement": {"type": "string"}}}),
+OUTPUT = OutputSpec(
+    name="idea_draft",
+    json_schema_text=json.dumps(
+        {
+            "type": "object",
+            "properties": {"statement": {"type": "string"}},
+            "required": ["statement"],
+            "additionalProperties": False,
+        }
+    ),
 )
 
 
@@ -32,7 +40,7 @@ def request(**overrides: object) -> ModelRequest:
         "model": "claude-haiku-5-5",
         "system": "You are a test.",
         "prompt": "Say something.",
-        "tool": TOOL,
+        "output": OUTPUT,
         "max_tokens": 100,
         "effort": "low",
         **overrides,
@@ -42,8 +50,7 @@ def request(**overrides: object) -> ModelRequest:
 
 def reply(text: str = "hi") -> ModelReply:
     return ModelReply(
-        tool_use_id="toolu_1",
-        tool_input_json=json.dumps({"statement": text}),
+        output_json=json.dumps({"statement": text}),
         usage=Usage(input_tokens=10, output_tokens=5, cache_read_tokens=0, cache_write_tokens=0),
     )
 
@@ -53,8 +60,8 @@ def reply(text: str = "hi") -> ModelReply:
 
 def test_scripted_replays_in_order_and_records() -> None:
     model = ScriptedModel((reply("one"), reply("two")))
-    assert json.loads(model.reply(request()).tool_input_json)["statement"] == "one"
-    assert json.loads(model.reply(request(prompt="again")).tool_input_json)["statement"] == "two"
+    assert json.loads(model.reply(request()).output_json)["statement"] == "one"
+    assert json.loads(model.reply(request(prompt="again")).output_json)["statement"] == "two"
     assert [r.prompt for r in model.requests] == ["Say something.", "again"]
     assert model.remaining == 0
 
@@ -81,16 +88,13 @@ class StubMessages:
         return self.response
 
 
-def sdk_response(name: str = "submit_idea", cache_read: int | None = 900) -> object:
+def sdk_response(text: str = '{"statement": "ünïcode ok"}', stop: str = "end_turn") -> object:
     return SimpleNamespace(
-        content=[
-            SimpleNamespace(type="text", text="thinking"),
-            SimpleNamespace(type="tool_use", id="toolu_9", name=name, input={"statement": "ünïcode ok"}),
-        ],
+        content=[SimpleNamespace(type="thinking", thinking="hm"), SimpleNamespace(type="text", text=text)],
         usage=SimpleNamespace(
-            input_tokens=120, output_tokens=40, cache_read_input_tokens=cache_read, cache_creation_input_tokens=None
+            input_tokens=120, output_tokens=40, cache_read_input_tokens=900, cache_creation_input_tokens=None
         ),
-        stop_reason="tool_use",
+        stop_reason=stop,
     )
 
 
@@ -102,35 +106,31 @@ def test_anthropic_request_shape_and_reply_mapping() -> None:
     messages = StubMessages(sdk_response())
     result = stubbed(messages).reply(request())
     sent = messages.calls[0]
-    assert sent["tool_choice"] == {"type": "tool", "name": "submit_idea", "disable_parallel_tool_use": True}
-    assert sent["output_config"] == {"effort": "low"}
-    assert "temperature" not in sent
+    assert sent["output_config"]["effort"] == "low"
+    assert sent["output_config"]["format"]["type"] == "json_schema"
+    assert sent["output_config"]["format"]["schema"]["additionalProperties"] is False
     assert sent["system"][0]["cache_control"] == {"type": "ephemeral"}
-    assert sent["tools"][0]["input_schema"]["type"] == "object"
     assert sent["messages"] == [{"role": "user", "content": "Say something."}]
-    assert result.tool_use_id == "toolu_9"
-    assert json.loads(result.tool_input_json) == {"statement": "ünïcode ok"}
+    assert not {"tools", "tool_choice", "temperature"} & set(sent)
+    assert json.loads(result.output_json) == {"statement": "ünïcode ok"}
     assert result.usage == Usage(input_tokens=120, output_tokens=40, cache_read_tokens=900, cache_write_tokens=0)
 
 
-def test_anthropic_retry_sends_tool_use_and_error_result() -> None:
+def test_anthropic_retry_is_a_plain_follow_up_turn() -> None:
     messages = StubMessages(sdk_response())
-    retry = RetryContext(tool_use_id="toolu_1", previous_input_json='{"statement": "a. b."}', feedback="two sentences")
+    retry = RetryContext(previous_output='{"statement": "a. b."}', feedback="two sentences")
     stubbed(messages).reply(request(retry=retry))
-    user, assistant, result = messages.calls[0]["messages"]
-    assert assistant["content"][0] == {
-        "type": "tool_use",
-        "id": "toolu_1",
-        "name": "submit_idea",
-        "input": {"statement": "a. b."},
-    }
-    assert result["content"][0]["is_error"] is True
-    assert result["content"][0]["content"] == "two sentences"
+    assert messages.calls[0]["messages"] == [
+        {"role": "user", "content": "Say something."},
+        {"role": "assistant", "content": '{"statement": "a. b."}'},
+        {"role": "user", "content": "two sentences"},
+    ]
 
 
-def test_anthropic_missing_tool_call_fails() -> None:
-    with pytest.raises(ModelCallFailed, match="did not call submit_idea"):
-        stubbed(StubMessages(sdk_response(name="other"))).reply(request())
+@pytest.mark.parametrize(("text", "stop", "match"), [("", "end_turn", "no text"), ("{}", "refusal", "refusal"), ("{", "max_tokens", "max_tokens")])
+def test_anthropic_unusable_answers_fail(text: str, stop: str, match: str) -> None:
+    with pytest.raises(ModelCallFailed, match=match):
+        stubbed(StubMessages(sdk_response(text=text, stop=stop))).reply(request())
 
 
 def test_anthropic_sdk_errors_are_wrapped() -> None:
@@ -144,36 +144,63 @@ def test_anthropic_needs_key_or_client() -> None:
         AnthropicModel()
 
 
-@pytest.mark.skipif(os.environ.get("SEEKER_LIVE") != "1", reason="live API smoke test; set SEEKER_LIVE=1")
-def test_live_smoke_haiku() -> None:
-    from seeker.config import SeekerConfig
-
-    model = AnthropicModel(api_key=SeekerConfig.load().api_key())
-    result = model.reply(request(prompt="Call submit_idea with statement 'ok'."))
-    assert "statement" in json.loads(result.tool_input_json)
-    assert result.usage.output_tokens > 0
-
-
 # --- the arguments must match the installed SDK, not just a stub ---------------
 
 
 def test_arguments_match_the_installed_sdk_signature() -> None:
     """A stub accepts any keyword; this checks against the real SDK so an
     unsupported argument (like the removed `temperature`) fails here, not live."""
-    import inspect
-    import typing
-
     from anthropic.resources.messages import Messages
-    from anthropic.types import OutputConfigParam, ToolChoiceToolParam
+    from anthropic.types import JSONOutputFormatParam, OutputConfigParam
 
-    retry = RetryContext(tool_use_id="toolu_1", previous_input_json='{"statement": "x"}', feedback="fix it")
+    retry = RetryContext(previous_output='{"statement": "x"}', feedback="fix it")
+    accepted = set(inspect.signature(Messages.create).parameters) - {"self"}
     for req in (request(), request(retry=retry)):
         arguments = AnthropicModel._arguments(req)
-        accepted = set(inspect.signature(Messages.create).parameters) - {"self"}
         assert set(arguments) <= accepted, set(arguments) - accepted
         assert set(arguments["output_config"]) <= set(typing.get_type_hints(OutputConfigParam))
-        assert set(arguments["tool_choice"]) <= set(typing.get_type_hints(ToolChoiceToolParam))
-        effort_values = typing.get_args(typing.get_args(typing.get_type_hints(OutputConfigParam)["effort"])[0])
-        from seeker.ontology import Effort
+        assert set(arguments["output_config"]["format"]) <= set(typing.get_type_hints(JSONOutputFormatParam))
+    effort_values = typing.get_args(typing.get_args(typing.get_type_hints(OutputConfigParam)["effort"])[0])
+    assert {e.value for e in Effort} == set(effort_values)
 
-        assert {e.value for e in Effort} == set(effort_values)
+
+def test_idea_draft_schema_is_strict() -> None:
+    """Every object closed, every property required, no keywords strict output rejects."""
+    schema = json.loads(IdeaDraft.output_spec().json_schema_text)
+    banned = {"$ref", "$defs", "title", "examples", "pattern", "minItems", "maxItems", "minLength", "type_uri"}
+
+    def walk(node: object) -> None:
+        if isinstance(node, list):
+            for item in node:
+                walk(item)
+        elif hasattr(node, "items"):
+            assert not banned & set(node), banned & set(node)
+            if node.get("type") == "object":
+                assert node["additionalProperties"] is False
+                assert sorted(node["required"]) == sorted(node["properties"])
+            for value in node.values():
+                walk(value)
+
+    walk(schema)
+    assert set(schema["properties"]) == {"statement", "subject", "behavior", "rationale", "card_readings"}
+
+
+@pytest.mark.skipif(os.environ.get("SEEKER_LIVE") != "1", reason="live API smoke test; set SEEKER_LIVE=1")
+def test_live_smoke_haiku() -> None:
+    """One real call with the actual IdeaDraft schema, so schema rejections show up here."""
+    from seeker.config import SeekerConfig
+
+    model = AnthropicModel(api_key=SeekerConfig.load().api_key())
+    result = model.reply(
+        request(
+            prompt=(
+                "Invent one tiny idea. Use card ids a, b, c for the three card readings, in that order. "
+                "Answer with the JSON object only."
+            ),
+            output=IdeaDraft.output_spec(),
+            max_tokens=800,
+        )
+    )
+    draft, problems = IdeaDraft.parse(result.output_json)
+    assert draft is not None, problems
+    assert result.usage.output_tokens > 0

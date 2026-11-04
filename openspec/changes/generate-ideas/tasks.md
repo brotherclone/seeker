@@ -15,13 +15,13 @@
 ## 3. Model client
 
 - [x] 3.1 Implement `ModelRequest`, `ModelReply`, the `LanguageModel` abstract base class, `ModelCallFailed` and `ScriptedModel` in `seeker/models/`. Verify that tests show `ScriptedModel` replays in order, records requests, and raises when it runs out of scripted replies.
-- [x] 3.2 Implement `AnthropicModel`: forced tool choice, the system block marked for caching, the usage mapping, error wrapping, and the tool input serialized to JSON text. Add `anthropic` to the dependencies. Verify unit tests with the SDK client stubbed, plus an opt-in live smoke test with Haiku (`SEEKER_LIVE=1`) that is skipped by default.
+- [x] 3.2 Implement `AnthropicModel`: native JSON-schema output with `output_config.effort` (a forced tool choice is rejected by current models), the system block marked for caching, the usage mapping, error wrapping, and the tool input serialized to JSON text. Add `anthropic` to the dependencies. Verify unit tests with the SDK client stubbed, plus an opt-in live smoke test with Haiku (`SEEKER_LIVE=1`) that is skipped by default.
 
 ## 4. Generator
 
 - [x] 4.1 Add `prompts/generator.yaml` from design decision 4, and implement `RoleFile` loading with the digest. Verify that the file loads as a `Role` named `generator` with all three readings, and that a fixture missing `metaphorical` fails, naming the file and the reading.
 - [x] 4.2 Implement `DrawPrompt.render()` (home field; each card's axis, name, synonyms, fields and note) and the system block built from the persona, rules and the selected reading's guidance. Verify tests: a card note appears in the prompt; metaphorical prompts contain only the metaphorical guidance; the default reading is literal; an unknown reading is rejected, naming all three.
-- [x] 4.3 Implement `IdeaDraft`, its JSON tool schema, and `problems_for(draw)` (one sentence, at most 60 words, card coverage and order, non-empty parts). Verify unit tests for valid drafts, two sentences, abbreviations that should pass, too long, a missing card, a wrong card, and a wrong order.
+- [x] 4.3 Implement `IdeaDraft`, its strict JSON output schema, and `problems_for(draw)` (one sentence, at most 60 words, card coverage and order, non-empty parts). Verify unit tests for valid drafts, two sentences, abbreviations that should pass, too long, a missing card, a wrong card, and a wrong order.
 - [x] 4.4 Implement `IdeaGenerator.generate` with one retry carrying the problems back, `GenerationFailure` on a second failure or a call error, per-idea usage, totals and estimated cost, and the unpriced-model check before any call. Verify `ScriptedModel` tests: a valid run of 12; recovery on retry, with both calls counted; a double failure at position 4 followed by later positions continuing; totals equal the sums; cost equals the priced totals; an unpriced model makes no calls.
 - [x] 4.5 Implement incremental atomic writes, resume (skipping covered positions) and `ResumeMismatch`, plus the role digest and git-commit provenance. Verify tests: an interrupted run resumes with only the remaining draws sent; a reading mismatch is rejected, naming both readings; editing the role file changes the recorded digest; the record validates with `linkml-validate -C Generation`.
 
@@ -37,7 +37,7 @@
 
 ## 6. Record the decision
 
-- [x] 6.1 Write `Seeker/Decisions/2026-11-04 Generator role and structured ideas.md`, covering structured output through a tool, card readings, the embedded batch, the readings, and cost measured but not enforced. Update the hub. Verify that the note links to the hub, the concept notes and `generate-ideas`.
+- [x] 6.1 Write `Seeker/Decisions/2026-11-04 Generator role and structured ideas.md`, covering native structured output, card readings, the embedded batch, the readings, and cost measured but not enforced. Update the hub. Verify that the note links to the hub, the concept notes and `generate-ideas`.
 
 ## Workflow follow-up
 

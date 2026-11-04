@@ -54,7 +54,7 @@ class IdeaGenerator:
         self.model = model
         self.deck_set = deck_set
         self.price: ModelPrice = price
-        self.tool = IdeaDraft.tool()
+        self.output = IdeaDraft.output_spec()
 
     def prompts(self, batch: DrawBatch, reading: Reading) -> tuple[str, tuple[str, ...]]:
         """The system block and every draw's user prompt, exactly as they would be sent."""
@@ -96,7 +96,7 @@ class IdeaGenerator:
                 model=self.role.role.model,
                 system=system,
                 prompt=prompt,
-                tool=self.tool,
+                output=self.output,
                 max_tokens=self.role.role.max_output_tokens,
                 effort=self.role.role.effort,
                 retry=retry,
@@ -106,16 +106,12 @@ class IdeaGenerator:
             except ModelCallFailed as exc:
                 return GenerationFailure(position=draw.position, reason=f"model call failed: {exc}", usage=spent)
             spent = spent + reply.usage
-            draft, problems = IdeaDraft.parse(reply.tool_input_json)
+            draft, problems = IdeaDraft.parse(reply.output_json)
             if draft is not None:
                 problems = draft.problems_for(draw)
                 if not problems:
                     return draft.to_idea(draw.position, spent)
-            retry = RetryContext(
-                tool_use_id=reply.tool_use_id,
-                previous_input_json=reply.tool_input_json,
-                feedback=DraftProblem.feedback(problems),
-            )
+            retry = RetryContext(previous_output=reply.output_json, feedback=DraftProblem.feedback(problems))
         reason = "; ".join(str(problem) for problem in problems)
         return GenerationFailure(position=draw.position, reason=f"invalid after retry: {reason}", usage=spent)
 

@@ -24,7 +24,7 @@ Seeker can draw balanced, reproducible triples, but nothing turns a triple into 
 - **`prompts/generator.yaml`:** the generator role as a `Role` instance. The model defaults to Opus, and each reading level has its own guidance text. It is versioned in git, and every generation records the prompt file's digest.
 - **The reading setting:** `literal` by default, while round 2 will use `metaphorical`. The chosen reading's guidance goes into the prompt, and the reading is recorded on the `Generation`.
 - **Structured output:**
-  - The generator answers through a tool whose input schema comes from the ontology.
+  - The generator answers in the API's native JSON-schema output format, with the schema generated from the ontology.
   - The response is validated: one sentence, all three cards read, each reading tied to the right card.
   - An invalid response gets one retry with the validation errors sent back. If it fails again, the draw is recorded as a `GenerationFailure` and the batch continues.
 - **Accounting:**

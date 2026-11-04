@@ -14,7 +14,7 @@
 - Patterns the debate roles will reuse unchanged:
   - roles as YAML;
   - a model client with a test double;
-  - structured output through a tool;
+  - structured output through the API's native JSON-schema format;
   - usage and cost accounting;
   - incremental, resumable records.
 - A cheap way to tune prompts: `--dry-run` shows exactly what the model would see.
@@ -61,30 +61,37 @@ classes:
 - **`CardReading` holds an interpretation per card.** Under a metaphorical reading this is the only record of what "Oramics" was taken to mean, and both the critics and Gabe need it.
 - **The conformance test gains `datetime` → `datetime` and `float` → `float`.** Python models live in `seeker/ontology/generation.py` and `role.py`.
 
-### 2. Structured output through a forced tool call
+### 2. Structured output through the native JSON-schema format
 
-The generator receives one tool, `submit_idea`, and `tool_choice` forces the model to call it. The tool's `input_schema` is `IdeaDraft.model_json_schema()`. `IdeaDraft` is a slim model (statement, the three parts, card readings) without usage or position, which are known locally.
+The request sends `output_config.format = {type: json_schema, schema}`, and the model answers with JSON text matching it. The schema comes from `IdeaDraft`, a slim model (statement, the three parts, card readings) without usage or position, which are known locally. `StrictSchema` reduces Pydantic's schema to what strict structured output accepts:
+- plain types;
+- every property required;
+- every object closed (`additionalProperties: false`);
+- `$defs` inlined;
+- no titles, examples, patterns or length bounds.
 
 Validation runs in two layers:
-1. **Shape:** Pydantic parses the tool input JSON into `IdeaDraft`.
+1. **Shape:** Pydantic parses the answer JSON into `IdeaDraft`. This also enforces the patterns and counts that were left out of the schema.
 2. **Meaning:** `IdeaDraft.problems_for(draw)` returns typed `DraftProblem`s, each of which can be read out in plain words:
    - **One sentence:** after trimming there must be no sentence-ending `.`, `!` or `?` followed by whitespace and then more text. Abbreviations like "e.g." are excepted.
    - **Length:** at most 60 words.
    - **Card coverage:** the card readings' ids equal the draw's `drawn_cards`, in order.
    - **Content:** every part and interpretation is non-empty.
 
-*Alternative considered: free text parsed with a regex.* Rejected: brittle, and it can't carry card readings.
+A retry is a plain follow-up turn: the rejected JSON as the assistant's message, then the problems as the user's message.
 
-*Alternative considered: the SDK's native structured-output mode.* It's viable, but forced tool use is the long-standing, well-understood path, and it carries the same Pydantic schema. If the native mode proves simpler, switching later only touches `AnthropicModel`.
+*Changed during apply.* The first design forced a `submit_idea` tool call through `tool_choice`. The first live run showed that current models reject `tool_choice` types `tool` and `any`, so the native format, listed here as the alternative, became the design.
+
+*Alternative considered: free text parsed with a regex.* Rejected: brittle, and it can't carry card readings.
 
 ### 3. The model client
 
 `seeker/models/`:
-- `ModelRequest` holds system blocks, user turns, the tool, max tokens and effort.
+- `ModelRequest` holds the system block, the user prompt, an optional retry turn, the `OutputSpec` (the strict schema as JSON text), max tokens and effort.
 - The `anthropic` 2.x SDK has no sampling parameters, so there is no `temperature`. Effort (`low` to `max`) is sent as `output_config.effort`. A test checks every argument against the installed SDK's `Messages.create` signature.
-- `ModelReply` holds the tool input as raw JSON text, the `Usage` and the stop reason.
+- `ModelReply` holds the answer as JSON text, the `Usage` and the stop reason.
 - `LanguageModel` is an abstract base class with `reply(request) -> ModelReply`. It has two implementations:
-  - `AnthropicModel` wraps the `anthropic` SDK. It maps SDK usage fields to `Usage` and turns SDK errors into a `ModelCallFailed` error. The tool input is serialized with `json.dumps`, so no dict ever leaves the adapter.
+  - `AnthropicModel` wraps the `anthropic` SDK. It sends `output_config.format` and `output_config.effort`, maps SDK usage fields to `Usage`, and turns SDK errors, refusals and truncated answers into a `ModelCallFailed` error. Only JSON text leaves the adapter.
   - `ScriptedModel(replies)` returns scripted replies in order and records the requests it received. All tests use it, so no test needs network access or a key. One opt-in smoke test (`SEEKER_LIVE=1`) calls the real API with Haiku.
 - **Prompt caching:** the system block (persona, rules, reading guidance) is identical for every draw in a generation, so it is marked `cache_control: ephemeral`. Draws 2 to 12 then read it from cache, and that shows up in the cache-read token counts.
 
@@ -105,7 +112,7 @@ persona: >-
 system_prompt: >-
   You receive three cards drawn from Seeker's decks: always one constraint,
   plus two of technique, medium, historical artifact and domain. Collide them
-  into ONE idea and submit it with the submit_idea tool.
+  into ONE idea and answer with a single JSON object in the required shape.
   Rules:
   - State the idea as one sentence of the form "a/an X that does Y because Z".
     Z must be a real reason the idea works or matters, not a restatement.
@@ -191,8 +198,9 @@ seeker-generate run (--batch PATH | --seed N [--size 12]) [--reading literal|loo
 ## Risks / Trade-offs
 
 - [The one-sentence check is a heuristic and can misfire on abbreviations or quotes] → There is an abbreviation allowlist, and a misfire only costs a retry. Unit tests cover the known cases.
-- [The forced tool schema rejects creative formatting] → Intended: the critics need structure. The persona and rules leave all the creativity in the content.
+- [The strict output schema rejects creative formatting] → Intended: the critics need structure. The persona and rules leave all the creativity in the content.
 - [The price table goes stale] → Prices are data with an `as_of` date, and the estimate is labelled as an estimate. The run change can warn when `as_of` is old.
+- [Strict structured output may reject a schema keyword we haven't anticipated] → `StrictSchema` keeps only the core keywords, a test asserts the schema is strict, and the opt-in live smoke test sends the real `IdeaDraft` schema to Haiku.
 - [The draft prompt is a guess] → `--dry-run` and a 12-idea generation at about $0.15 make it cheap to iterate. Each edit shows up as a new role digest, so results stay attributable.
 - [Opus for the generator costs more than needed] → The model is one line in the role file, and the generation records which model ran. Comparing Opus and Sonnet is a one-night experiment.
 

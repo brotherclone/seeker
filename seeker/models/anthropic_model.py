@@ -10,13 +10,17 @@ from pydantic import SecretStr
 from seeker.models.base import LanguageModel, ModelCallFailed, ModelReply, ModelRequest
 from seeker.ontology import Usage
 
+NOT_ANSWERS = frozenset({"refusal", "max_tokens"})
+
 
 class AnthropicModel(LanguageModel):
-    """Calls Claude with a forced tool choice and a cached system block.
+    """Calls Claude with native JSON-schema output and a cached system block.
 
-    ``client`` can be injected (tests pass a stub); otherwise one is built from
-    ``api_key``. SDK objects never leave this class: tool input is serialized to
-    JSON text and usage is mapped to ``Usage``.
+    Forcing a tool call is not supported by current models, so the answer
+    shape is given as ``output_config.format`` instead. ``client`` can be
+    injected (tests pass a stub); otherwise one is built from ``api_key``. SDK
+    objects never leave this class: the answer is returned as JSON text and
+    usage is mapped to ``Usage``.
     """
 
     def __init__(self, api_key: SecretStr | None = None, client: object | None = None) -> None:
@@ -29,25 +33,25 @@ class AnthropicModel(LanguageModel):
     def reply(self, request: ModelRequest) -> ModelReply:
         try:
             response = self._client.messages.create(**self._arguments(request))
-        except anthropic.APIError as exc:
-            raise ModelCallFailed(f"{type(exc).__name__}: {exc}") from exc
         except anthropic.AnthropicError as exc:
             raise ModelCallFailed(f"{type(exc).__name__}: {exc}") from exc
 
-        call = next((block for block in response.content if block.type == "tool_use"), None)
-        if call is None or call.name != request.tool.name:
-            raise ModelCallFailed(f"model did not call {request.tool.name} (stop reason: {response.stop_reason})")
+        stop = str(response.stop_reason)
+        if stop in NOT_ANSWERS:
+            raise ModelCallFailed(f"no usable answer for {request.output.name} (stop reason: {stop})")
+        text = "".join(block.text for block in response.content if block.type == "text").strip()
+        if not text:
+            raise ModelCallFailed(f"model returned no text for {request.output.name} (stop reason: {stop})")
         usage = response.usage
         return ModelReply(
-            tool_use_id=call.id,
-            tool_input_json=json.dumps(call.input, ensure_ascii=False),
+            output_json=text,
             usage=Usage(
                 input_tokens=usage.input_tokens,
                 output_tokens=usage.output_tokens,
                 cache_read_tokens=getattr(usage, "cache_read_input_tokens", None) or 0,
                 cache_write_tokens=getattr(usage, "cache_creation_input_tokens", None) or 0,
             ),
-            stop_reason=str(response.stop_reason),
+            stop_reason=stop,
         )
 
     @staticmethod
@@ -56,41 +60,16 @@ class AnthropicModel(LanguageModel):
         messages = [{"role": "user", "content": request.prompt}]
         if request.retry is not None:
             messages += [
-                {
-                    "role": "assistant",
-                    "content": [
-                        {
-                            "type": "tool_use",
-                            "id": request.retry.tool_use_id,
-                            "name": request.tool.name,
-                            "input": json.loads(request.retry.previous_input_json),
-                        }
-                    ],
-                },
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "tool_result",
-                            "tool_use_id": request.retry.tool_use_id,
-                            "is_error": True,
-                            "content": request.retry.feedback,
-                        }
-                    ],
-                },
+                {"role": "assistant", "content": request.retry.previous_output},
+                {"role": "user", "content": request.retry.feedback},
             ]
         return {
             "model": str(request.model),
             "max_tokens": request.max_tokens,
-            "output_config": {"effort": request.effort.value},
             "system": [{"type": "text", "text": request.system, "cache_control": {"type": "ephemeral"}}],
             "messages": messages,
-            "tools": [
-                {
-                    "name": request.tool.name,
-                    "description": request.tool.description,
-                    "input_schema": json.loads(request.tool.input_schema_json),
-                }
-            ],
-            "tool_choice": {"type": "tool", "name": request.tool.name, "disable_parallel_tool_use": True},
+            "output_config": {
+                "effort": request.effort.value,
+                "format": {"type": "json_schema", "schema": json.loads(request.output.json_schema_text)},
+            },
         }

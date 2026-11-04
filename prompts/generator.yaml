@@ -12,7 +12,7 @@ persona: >-
 system_prompt: |-
   You receive three cards drawn from Seeker's decks: always one constraint,
   plus two of technique, medium, historical artifact and domain. Collide them
-  into ONE idea and submit it with the submit_idea tool.
+  into ONE idea and answer with a single JSON object in the required shape.
 
   Rules:
   - State the idea as one sentence of the form "a/an X that does Y because Z".

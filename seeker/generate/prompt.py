@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from seeker.ontology import Card, DeckSet, Draw, Reading, Role
 
-TOOL_NAME = "submit_idea"
 
 
 class SystemPrompt:
@@ -54,7 +53,7 @@ class DrawPrompt:
         order = ", ".join(self.draw.drawn_cards)
         lines += [
             "",
-            f"Collide these three cards into one idea and submit it with {TOOL_NAME}. "
+            "Collide these three cards into one idea and answer with the JSON object only. "
             f"Give exactly one card reading per card, in this order of ids: {order}.",
         ]
         return "\n".join(lines)

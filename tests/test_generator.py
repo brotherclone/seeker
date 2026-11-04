@@ -58,7 +58,7 @@ def answer(draw: Draw, statement: str | None = None, cards: tuple[str, ...] | No
         "rationale": "paper is a speaker",
         "card_readings": [{"card": c, "interpretation": f"read {c}"} for c in (cards or draw.drawn_cards)],
     }
-    return ModelReply(tool_use_id=f"toolu_{draw.position}", tool_input_json=json.dumps(body), usage=CALL)
+    return ModelReply(output_json=json.dumps(body), usage=CALL)
 
 
 def generator(role: LoadedRole, model: ScriptedModel, deck_set: DeckSet, config: SeekerConfig) -> IdeaGenerator:
@@ -133,11 +133,11 @@ def test_sentence_boundaries(statement: str, breaks: int) -> None:
 
 def test_draft_problems(batch: DrawBatch) -> None:
     draw = batch.draws[0]
-    good = IdeaDraft.model_validate_json(answer(draw).tool_input_json)
+    good = IdeaDraft.model_validate_json(answer(draw).output_json)
     assert good.problems_for(draw) == ()
 
     def problems(**kw: object) -> list[str]:
-        draft = IdeaDraft.model_validate_json(answer(draw, **kw).tool_input_json)
+        draft = IdeaDraft.model_validate_json(answer(draw, **kw).output_json)
         return [p.field for p in draft.problems_for(draw)]
 
     assert problems(statement="A zine. It hums.") == ["statement"]
@@ -163,7 +163,7 @@ def test_twelve_ideas(role, config, deck_set, batch) -> None:
     assert result.usage == Usage.total(tuple(i.usage for i in result.ideas))
     price = config.prices.price_for("claude-opus-5-5")
     assert result.estimated_cost_usd == pytest.approx(price.cost(result.usage))
-    assert all(r.tool.name == "submit_idea" for r in model.requests)
+    assert all(r.output.name == "idea_draft" for r in model.requests)
 
 
 def test_recovers_on_retry_and_counts_both_calls(role, config, deck_set, batch) -> None:
@@ -174,7 +174,7 @@ def test_recovers_on_retry_and_counts_both_calls(role, config, deck_set, batch) 
     assert result.idea_at(1).usage == CALL + CALL
     retry = model.requests[1].retry
     assert retry is not None and "one sentence" in retry.feedback
-    assert retry.tool_use_id == "toolu_1"
+    assert retry.previous_output == replies[0].output_json
 
 
 def test_double_failure_is_recorded_and_the_batch_continues(role, config, deck_set, batch) -> None:
