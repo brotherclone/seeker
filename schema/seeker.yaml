@@ -75,6 +75,25 @@ types:
     examples:
       - value: 41909d46fec8a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a
 
+  ModelId:
+    typeof: string
+    uri: seeker:ModelId
+    description: >-
+      Identifier of a Claude model as the API names it. Recorded on every
+      generation so results can be attributed to the model that produced them.
+    pattern: "^claude-[a-z0-9-]+$"
+    examples:
+      - value: claude-opus-5-5
+  GitCommit:
+    typeof: string
+    uri: seeker:GitCommit
+    description: >-
+      A full git commit hash, suffixed with -dirty when the working tree had
+      uncommitted changes, pinning the code, decks and prompts a run used.
+    pattern: "^[0-9a-f]{40}(-dirty)?$"
+    examples:
+      - value: 5085562a1b2c3d4e5f60718293a4b5c6d7e8f90a
+
 enums:
   CreativeField:
     description: >-
@@ -97,6 +116,25 @@ enums:
         description: Comics, sequential art, strips, webcomics and minicomics.
       games:
         description: Board, card, tabletop role-playing and electronic games.
+
+  Reading:
+    description: >-
+      How freely the generator may interpret the cards it is dealt. Round 1
+      reads literally; round 2 varies only this setting.
+    permissible_values:
+      literal:
+        description: Cards mean exactly what they name.
+      loose:
+        description: Cards may be taken by their spirit as well as their letter.
+      metaphorical:
+        description: Cards may stand for something they evoke rather than what they name.
+  RoleName:
+    description: >-
+      The agent roles in Seeker's pipeline. Each role is defined by a YAML file
+      in prompts/. Only the generator exists so far; the debate adds the rest.
+    permissible_values:
+      generator:
+        description: Turns one draw into one idea stated as a single sentence.
 
 slots:
   id:
@@ -220,6 +258,178 @@ slots:
       The drawn cards, referenced by card id, one per axis in the same order
       as axes.
 
+  statement:
+    range: string
+    required: true
+    slot_uri: seeker:statement
+    description: >-
+      The idea as one sentence of the form "a/an X that does Y because Z", at
+      most 60 words.
+  subject:
+    range: string
+    required: true
+    slot_uri: seeker:subject
+    description: The X of the statement, meaning the thing being made.
+  behavior:
+    range: string
+    required: true
+    slot_uri: seeker:behavior
+    description: The Y of the statement, meaning what the thing does.
+  rationale:
+    range: string
+    required: true
+    slot_uri: seeker:rationale
+    description: >-
+      The Z of the statement, meaning why the idea works or matters, as a real
+      reason rather than a restatement.
+  card_readings:
+    range: CardReading
+    multivalued: true
+    inlined_as_list: true
+    required: true
+    minimum_cardinality: 3
+    maximum_cardinality: 3
+    slot_uri: seeker:cardReadings
+    description: How the generator read each drawn card, in the draw's card order.
+  card:
+    range: Card
+    inlined: false
+    required: true
+    slot_uri: seeker:card
+    description: The card being interpreted, referenced by card id.
+  interpretation:
+    range: string
+    required: true
+    slot_uri: seeker:interpretation
+    description: One line on how the card was taken in this idea.
+  usage:
+    range: Usage
+    inlined: true
+    required: true
+    slot_uri: seeker:usage
+    description: Tokens consumed by the model calls this record accounts for.
+  reason:
+    range: string
+    required: true
+    slot_uri: seeker:reason
+    description: Why no idea was recorded for this draw.
+  input_tokens:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:inputTokens
+    description: Uncached input tokens billed at the model's input rate.
+  output_tokens:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:outputTokens
+    description: Output tokens billed at the model's output rate.
+  cache_read_tokens:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:cacheReadTokens
+    description: Input tokens served from the prompt cache.
+  cache_write_tokens:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:cacheWriteTokens
+    description: Input tokens written to the prompt cache.
+  reading:
+    range: Reading
+    required: true
+    slot_uri: seeker:reading
+    description: How freely the cards may be interpreted.
+  guidance:
+    range: string
+    required: true
+    slot_uri: seeker:guidance
+    description: The prompt text that tells the model how to read the cards at this setting.
+  role_name:
+    range: RoleName
+    required: true
+    slot_uri: seeker:roleName
+    description: Which role in the pipeline this is.
+  model:
+    range: ModelId
+    required: true
+    slot_uri: seeker:model
+    description: The Claude model the role runs on.
+  persona:
+    range: string
+    required: true
+    slot_uri: seeker:persona
+    description: Who the role speaks as, which sets its taste and its blind spots.
+  system_prompt:
+    range: string
+    required: true
+    slot_uri: seeker:systemPrompt
+    description: The role's standing instructions and rules.
+  reading_guidance:
+    range: ReadingGuidance
+    multivalued: true
+    inlined_as_list: true
+    required: true
+    minimum_cardinality: 3
+    maximum_cardinality: 3
+    slot_uri: seeker:readingGuidance
+    description: Exactly one guidance text per Reading value.
+  max_output_tokens:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:maxOutputTokens
+    description: The most output tokens one call of this role may produce.
+  temperature:
+    range: float
+    required: true
+    minimum_value: 0
+    maximum_value: 1
+    slot_uri: seeker:temperature
+    description: Sampling temperature for the role's calls, from 0 to 1.
+  draw_batch:
+    range: DrawBatch
+    inlined: true
+    required: true
+    slot_uri: seeker:drawBatch
+    description: The batch the ideas were generated from, embedded so the record stands alone.
+  role_digest:
+    range: Sha256Digest
+    required: true
+    slot_uri: seeker:roleDigest
+    description: SHA-256 of the role file's bytes, so any prompt edit is visible.
+  git_commit:
+    range: GitCommit
+    slot_uri: seeker:gitCommit
+    description: The repository commit the generation ran from, when known.
+  generated_at:
+    range: datetime
+    required: true
+    slot_uri: seeker:generatedAt
+    description: When the generation started.
+  ideas:
+    range: Idea
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:ideas
+    description: The ideas produced, in draw position order.
+  failures:
+    range: GenerationFailure
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:failures
+    description: Draws that produced no valid idea, in position order.
+  estimated_cost_usd:
+    range: float
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:estimatedCostUsd
+    description: >-
+      The total usage priced with the configured price table. It is an
+      estimate, because prices change and are kept as data.
+
 classes:
   Card:
     class_uri: seeker:Card
@@ -276,3 +486,79 @@ classes:
       - seed
       - deck_set_digest
       - draws
+  Usage:
+    class_uri: seeker:Usage
+    description: >-
+      Token counts for one or more model calls, split the way they are billed.
+    slots:
+      - input_tokens
+      - output_tokens
+      - cache_read_tokens
+      - cache_write_tokens
+  CardReading:
+    class_uri: seeker:CardReading
+    description: >-
+      How the generator interpreted one drawn card. Under a metaphorical
+      reading this is the only record of what a card was taken to mean.
+    slots:
+      - card
+      - interpretation
+  Idea:
+    class_uri: seeker:Idea
+    description: >-
+      One idea generated from one draw: a single sentence of the form "a/an X
+      that does Y because Z", its three parts, and how each card was read.
+    slots:
+      - position
+      - statement
+      - subject
+      - behavior
+      - rationale
+      - card_readings
+      - usage
+  GenerationFailure:
+    class_uri: seeker:GenerationFailure
+    description: >-
+      A draw for which no valid idea was produced, even after a retry.
+    slots:
+      - position
+      - reason
+      - usage
+  ReadingGuidance:
+    class_uri: seeker:ReadingGuidance
+    description: The prompt text a role uses for one Reading setting.
+    slots:
+      - reading
+      - guidance
+  Role:
+    class_uri: seeker:Role
+    description: >-
+      One agent role in the pipeline, defined by a versioned YAML file in
+      prompts/: its model, persona, standing instructions and per-reading
+      guidance.
+    slots:
+      - role_name
+      - model
+      - persona
+      - system_prompt
+      - reading_guidance
+      - max_output_tokens
+      - temperature
+  Generation:
+    class_uri: seeker:Generation
+    description: >-
+      One generator pass over a draw batch: the ideas and failures it
+      produced, every input pinned (batch, reading, model, role digest,
+      commit), and its token usage and estimated cost.
+    slots:
+      - draw_batch
+      - reading
+      - role_name
+      - model
+      - role_digest
+      - git_commit
+      - generated_at
+      - ideas
+      - failures
+      - usage
+      - estimated_cost_usd
