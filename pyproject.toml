@@ -16,10 +16,11 @@ dependencies = [
   "anthropic>=2.0,<3",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
+# Installed by default with `uv sync`. Exports in schema/generated/ are compared
+# byte-for-byte, so pin the generator minor version; bump deliberately and rerun
+# `make schema`.
 dev = [
-  # Exports in schema/generated/ are compared byte-for-byte, so pin the
-  # generator minor version; bump deliberately and rerun `make schema`.
   "linkml>=1.12.1,<1.13",
   "pytest>=8",
 ]

@@ -3,9 +3,9 @@
 The generator role turns each draw of a batch into one idea: a single sentence of the form "a/an X that does Y because Z", plus how each of the three cards was read.
 
 ```
-seeker-generate run --seed 7 --dry-run          # see exactly what the model would see; free
-seeker-generate run --seed 7 --scratch          # a real run, written to generations/scratch/
-seeker-generate run --batch batches/2026-11-04-round-1.yaml --label round-1-literal
+uv run seeker-generate run --seed 7 --dry-run          # see exactly what the model would see; free
+uv run seeker-generate run --seed 7 --scratch          # a real run, written to generations/scratch/
+uv run seeker-generate run --batch batches/2026-11-04-round-1.yaml --label round-1-literal
 ```
 
 ## Readings
