@@ -1,0 +1,485 @@
+# Generation record (schema/seeker.yaml). Inputs are pinned: the embedded draw
+# batch, reading, model, role-file digest and git commit. Rerunning with the same
+# output path resumes, filling in only the positions without an idea.
+draw_batch:
+  seed: 7
+  deck_set_digest: 41909d46fec8ea3d0f3062810e78fd25be91b737e18bab6a19577f9e915a3050
+  draws:
+  - position: 1
+    axes:
+    - constraint
+    - medium
+    - historical-artifact
+    home_field: music
+    drawn_cards:
+    - no-keyboard
+    - webcomic
+    - lumigraph
+  - position: 2
+    axes:
+    - constraint
+    - technique
+    - historical-artifact
+    home_field: visual-art
+    drawn_cards:
+    - single-sensor
+    - datamoshing
+    - ben-day-dots
+  - position: 3
+    axes:
+    - constraint
+    - medium
+    - domain
+    home_field: film
+    drawn_cards:
+    - no-dialogue
+    - midi-file
+    - cartography
+  - position: 4
+    axes:
+    - constraint
+    - medium
+    - domain
+    home_field: electronics
+    drawn_cards:
+    - one-knob
+    - nanokontrol2-mapping
+    - beekeeping
+  - position: 5
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: writing
+    drawn_cards:
+    - read-aloud
+    - lullian-wheels
+    - utopian-communes
+  - position: 6
+    axes:
+    - constraint
+    - technique
+    - domain
+    home_field: comics
+    drawn_cards:
+    - one-color
+    - granular-synthesis
+    - dendrochronology
+  - position: 7
+    axes:
+    - constraint
+    - medium
+    - historical-artifact
+    home_field: games
+    drawn_cards:
+    - one-page
+    - ttrpg-zine
+    - ans-synthesizer
+  - position: 8
+    axes:
+    - constraint
+    - technique
+    - domain
+    home_field: music
+    drawn_cards:
+    - one-take
+    - fm-synthesis
+    - railroad-timetables
+  - position: 9
+    axes:
+    - constraint
+    - technique
+    - historical-artifact
+    home_field: visual-art
+    drawn_cards:
+    - playable-by-a-non-musician
+    - rotoscoping
+    - clavilux
+  - position: 10
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - liturgy
+  - position: 11
+    axes:
+    - constraint
+    - technique
+    - medium
+    home_field: electronics
+    drawn_cards:
+    - under-20-dollars-in-parts
+    - infinite-canvas
+    - zine
+  - position: 12
+    axes:
+    - constraint
+    - technique
+    - medium
+    home_field: writing
+    drawn_cards:
+    - eight-voices-max
+    - erasure
+    - vhs-tape
+reading: metaphorical
+role_name: generator
+model: claude-opus-5-5
+role_digest: dd2d3f56a65d112ac4a905cddb52b8a0d671ed54109fc4720e5b38a421515315
+git_commit: bdb058e8d975fef8f2f89596f83a088aabef9bf7
+generated_at: '2026-11-04T19:40:01.874754Z'
+ideas:
+- position: 1
+  statement: A spandex-and-phone-camera light membrane instrument that turns hand presses into tones and
+    auto-cuts each performance into a weekly webcomic strip of glowing silhouette panels readers swipe
+    to replay, because a Lumigraph-style pressure surface gives continuous, visible gesture without keys,
+    and comic gutters supply phrasing and a serialized audience.
+  subject: A spandex-and-phone-camera light membrane instrument whose performances are published as a
+    swipe-to-replay webcomic
+  behavior: Plays tones from where and how deeply hands push into a backlit spandex screen filmed by an
+    old phone. Each phrase is frozen into a silhouette panel and posted as a weekly strip that readers
+    replay by swiping through it.
+  rationale: Fischinger showed that pressing a body into a membrane makes gesture visible. Pressure on
+    cloth gives continuous pitch and swells that a key grid can't. The comic gutter is a natural rest,
+    so each strip reads as notation anyone can scroll, and a weekly posting schedule forces a solo player
+    to compose and publish steadily.
+  card_readings:
+  - card: no-keyboard
+    interpretation: 'No key grid at all: pitch comes from where a body presses on a surface, not from
+      discrete buttons.'
+  - card: webcomic
+    interpretation: Serialized panels with gutters, taken as phrases separated by rests and published
+      weekly to an audience that scrolls.
+  - card: lumigraph
+    interpretation: 'Fischinger''s rubber membrane played by pressing hands into light: music as visible
+      bodily pressure, made by a lone inventor.'
+  usage:
+    input_tokens: 211
+    output_tokens: 1090
+    cache_read_tokens: 0
+    cache_write_tokens: 1071
+- position: 2
+  statement: A nightly pen plotter that redraws one comic panel in Ben-Day dots onto the same unchanged
+    sheet, displacing each dot by a single photoresistor's daylong light trace, because never replacing
+    the paper withholds the keyframe the way datamoshing does, turning a room's light history into a slowly
+    melting print.
+  subject: A nightly pen plotter that keeps redrawing one Ben-Day-dot comic panel on the same unchanged
+    sheet, driven by a single light sensor.
+  behavior: Each night it redraws the same Lichtenstein-style comic panel as Ben-Day dots onto the same
+    unchanged sheet. Every dot is shifted along a displacement taken from that day's trace of the room's
+    light, recorded by one photoresistor, so over a month the panel smears and melts like a datamoshed
+    clip.
+  rationale: 'Datamoshing only works when the keyframe is withheld and motion is applied to stale pixels.
+    A sheet that is never replaced is a physical I-frame drop. Ben-Day dots make each layer recognizable
+    as print, so the growing smear reads as accumulated time: the room''s own light history, written as
+    glitch.'
+  card_readings:
+  - card: single-sensor
+    interpretation: 'A single honest number about the world: one photoresistor logging the room''s daylight
+      is the machine''s only window, and so its only source of motion.'
+  - card: datamoshing
+    interpretation: The refusal to reset. The paper is never replaced, so no fresh keyframe ever arrives,
+      and each pass stacks new motion onto old residue until the image bleeds.
+  - card: ben-day-dots
+    interpretation: Cheap mass-print dots as the image's atoms. They keep every individual pass legible
+      as 'a comic', which makes the drift readable as damage rather than noise.
+  usage:
+    input_tokens: 219
+    output_tokens: 1053
+    cache_read_tokens: 1071
+    cache_write_tokens: 0
+- position: 3
+  statement: A silent short film whose cuts, camera heights and soundtrack all come from a single MIDI
+    file transcribed from a hand-drawn map of the filmmaker's childhood route, because without dialogue
+    the edit's rhythm must speak, and encoding the map as timed events turns streets into tempo that viewers
+    feel.
+  subject: A dialogue-free short film edited and scored from a MIDI file transcribed from a hand-drawn
+    map
+  behavior: Traces a remembered walking route on a paper map, encodes each street as a MIDI track and
+    each landmark as a note, then uses that one file as both the edit decision list (note-on means cut,
+    pitch sets camera height, length sets shot duration) and the score played under the wordless footage.
+  rationale: 'With no dialogue, the cutting rhythm becomes the narrator. Deriving cuts and music from
+    the same mapped route makes the viewer feel the neighborhood''s geography as tempo: dense blocks become
+    fast cuts and empty lots become held shots. Because the MIDI file is portable instructions, others
+    can ''play'' the same map with their own footage, which tests whether a place survives translation.'
+  card_readings:
+  - card: no-dialogue
+    interpretation: Taken as a refusal to let anyone explain the place, so rhythm and image have to carry
+      the whole story.
+  - card: midi-file
+    interpretation: Taken as a score of instructions rather than sound, an event list that any instrument
+      (here, a camera and an edit) can render.
+  - card: cartography
+    interpretation: 'Taken as the gap between map and territory: a personal, distorted map of a childhood
+      neighborhood that becomes the film''s structure.'
+  usage:
+    input_tokens: 533
+    output_tokens: 1785
+    cache_read_tokens: 2142
+    cache_write_tokens: 0
+- position: 4
+  statement: A one-knob hive synth, an RP2040 running eight swarming square-wave 'bee' voices whose knob
+    acts as a smoker that calms or agitates the colony, because indirect one-to-many control lets a single
+    gesture produce living, emergent sound the way a keeper tends bees without ever commanding one.
+  subject: 'A one-knob hive synth: an RP2040 box with one potentiometer, running eight interacting square-wave
+    ''bee'' voices through a passive filter.'
+  behavior: Turning its only knob doesn't set pitch or volume; it works like a beekeeper's smoker. Low
+    settings calm the eight voices into a slow, consonant hum. High settings agitate them into detuned,
+    flocking buzz. A hidden one-to-many mapping table drives each voice's rate, detune and attraction
+    to its neighbours.
+  rationale: Mapping a single control to many interacting parameters gives an instrument emergent, living
+    behaviour that rewards patient listening over precise commands. A colony tended by smoke is an exact
+    model for that relationship. The circuit is just an RP2040, a pot and an RC filter, so it is cheap
+    and buildable in a weekend.
+  card_readings:
+  - card: one-knob
+    interpretation: 'Taken literally and as a stance: the player gets exactly one input and must coax
+      rather than command.'
+  - card: nanokontrol2-mapping
+    interpretation: Read as the eight channel strips of a mapping layer folded inward, so one gesture
+      fans out across eight hidden 'faders', one per voice.
+  - card: beekeeping
+    interpretation: 'Read as indirect stewardship of a colony: you never control individual bees, you
+      only set the mood of the hive with smoke.'
+  usage:
+    input_tokens: 217
+    output_tokens: 936
+    cache_read_tokens: 1071
+    cache_write_tokens: 0
+- position: 5
+  statement: A spoken-word round for a seated circle in which each reader's handwritten strip of lines
+    passes one seat left after every stanza, so the poem keeps recombining until the strips return home,
+    because a chore wheel and Llull's disc are the same machine and full rotation lets the room hear every
+    voice say every line once.
+  subject: A spoken-word round for a seated circle of readers, structured like a commune's chore wheel
+  behavior: Each reader holds a strip of lines in their own handwriting. After every stanza, spoken aloud
+    in turn around the circle, everyone passes their strip one seat left. The poem recombines each round
+    and ends only when every strip has come home, so the evening's text is never fixed on any page.
+  rationale: The commune's chore wheel and Llull's disc are the same device, rotation as fairness. A poem
+    built from a full rotation guarantees every voice speaks every line exactly once, making equality
+    something the room hears rather than something a charter claims.
+  card_readings:
+  - card: read-aloud
+    interpretation: 'Taken as the oath or liturgy: a text that only becomes binding when a body says it
+      in front of others.'
+  - card: lullian-wheels
+    interpretation: Taken as rotation as a meaning-machine. The seated circle of people is the disc, and
+      passing strips is the turn of the wheel.
+  - card: utopian-communes
+    interpretation: Taken as the rotating chore wheel and shared ownership, where no one keeps a job or
+      a line for themselves.
+  usage:
+    input_tokens: 266
+    output_tokens: 1044
+    cache_read_tokens: 1071
+    cache_write_tokens: 0
+- position: 6
+  statement: A single-ink risograph comic that draws one family's eighty years as one stippled page per
+    year, with hard years rendered as denser grain clouds bleeding to the margin, because with one color
+    only dot density can speak, and the closed book's fore-edge becomes a tree-ring core that readers
+    cross-date against a sibling's volume.
+  subject: A single-ink risograph stipple comic, issued as a pair of volumes, telling one family's eighty
+    years at one page per year
+  behavior: Draws each year as one page in stippled dots, packing hard years into dense grain clouds that
+    bleed to the outer margin, so the closed book's fore-edge shows a dark-and-light banded core sample.
+    A second volume, a sibling's story, can be laid alongside and cross-dated by matching the bands.
+  rationale: With only one ink, density is the only expressive channel, and stipple density is exactly
+    what tree rings use to record time. The book's physical edge becomes a readable chronology, so drought,
+    war or grief years line up across both books before a single panel is read. That turns cross-dating
+    into a real reading act rather than an illustration of it.
+  card_readings:
+  - card: one-color
+    interpretation: A single risograph ink drum, so density is the only variable left to carry time, mood
+      and hardship.
+  - card: granular-synthesis
+    interpretation: Images built from thousands of tiny dot-grains whose density and scatter stretch or
+      compress a moment, the way grain clouds stretch a sound.
+  - card: dendrochronology
+    interpretation: 'Lives read as ring sequences: lean and fat years are laid down in layers, and two
+      separate records are dated by matching their patterns.'
+  usage:
+    input_tokens: 216
+    output_tokens: 981
+    cache_read_tokens: 1071
+    cache_write_tokens: 0
+- position: 7
+  statement: A one-page OSR dungeon zine coated in hand-rubbed black crayon that players scratch away
+    left to right as hours pass and up or down as they change depth, revealing the dungeon as they go,
+    because irreversible scratching makes every choice stick and turns the finished sheet into a backlit
+    score of the whole expedition.
+  subject: A one-page OSR dungeon zine printed on card and hand-coated in black wax crayon, like scratch-art.
+  behavior: Players scratch through the black with a coin to explore, moving left to right as in-game
+    hours pass and up or down as they climb or descend, so their scratches uncover rooms, monsters and
+    treasure printed underneath.
+  rationale: Like Murzin's mastic plates, the scratch can't be undone, so every choice is permanent. The
+    page's two axes, time and depth, turn the finished sheet into both the explored dungeon and a readable
+    score of the expedition. Held to a window afterward, it shows exactly where the party went and when
+    it panicked.
+  card_readings:
+  - card: one-page
+    interpretation: 'The single sheet is the whole game: rules, dungeon, map, and the record of play all
+      on one surface.'
+  - card: ttrpg-zine
+    interpretation: A cheap, hand-made OSR artifact sold folded at a con table, with DIY production as
+      part of the charm.
+  - card: ans-synthesizer
+    interpretation: 'Murzin''s mastic-coated glass, scratched so light could pass, reading left to right
+      as time and bottom to top as pitch: discovery by removing darkness on a visible time-axis score.'
+  usage:
+    input_tokens: 232
+    output_tokens: 975
+    cache_read_tokens: 1071
+    cache_write_tokens: 0
+- position: 8
+  statement: A one-take FM performance score drawn from a real railway's graphical timetable, where each
+    train is an oscillator and every station meeting forces one train to frequency-modulate the other
+    for the length of its dwell, because a timetable's precommitted meetings make FM's unpredictable timbres
+    safe to play live with no second chance.
+  subject: A one-take FM performance score built from a real railway's graphical timetable
+  behavior: A performer plays a two-operator FM box once through, moving a clock-hand slider across a
+    Marey-style graphical timetable cut from a real regional line, compressed to 18 minutes. Every train
+    is an oscillator, and wherever two train lines meet at a station the performer patches the slower
+    train in as modulator of the faster one for exactly the dwell time. A missed connection is final and
+    sounds as a bare, unmodulated sine.
+  rationale: 'FM is famously hard to steer live, because small ratio changes swing the sound wildly. The
+    timetable works the way a real railway timetable does: it settles every encounter in advance so nothing
+    collides, and that makes an unforgiving synth playable in a single take. The audience hears the line''s
+    actual traffic density as timbre, and any lapse by the performer survives as an audible pure-tone
+    mistake.'
+  card_readings:
+  - card: one-take
+    interpretation: 'A departure you can''t call back: the piece runs once in real time, with no restart
+      and no audition, like a train that has left the platform.'
+  - card: fm-synthesis
+    interpretation: 'One clock bending another: two oscillators meet and one deforms the other, and the
+      timbre lives entirely in their brief coupling.'
+  - card: railroad-timetables
+    interpretation: A pre-negotiated choreography of meetings, read through Marey's graphical timetable,
+      where crossing lines are the planned encounters between trains.
+  usage:
+    input_tokens: 198
+    output_tokens: 1116
+    cache_read_tokens: 1071
+    cache_write_tokens: 0
+- position: 9
+  statement: An overhead-projector light organ that turns visitors' grease-pencil tracings of looping
+    found footage into drifting Lumia color forms because tracing a stranger's movement hands an untrained
+    player a ready-made rhythm and phrasing, so anyone can perform composed light without knowing any
+    instrument.
+  subject: An overhead-projector light organ built from a turning acetate disc, a looping film strip,
+    rotating colored glass and warped mylar.
+  behavior: Each visitor traces a looping film of someone's walk or gesture with grease pencils on a turning
+    acetate disc. The disc passes under rotating colored glass and a warped mylar mirror, so their outlines
+    bloom into slow, Wilfred-style Lumia on a gallery wall.
+  rationale: The looping footage gives the tracer tempo, phrasing and form for free, much as sheet music
+    does. Someone who can't keep a beat still produces a rhythmic, composed light performance just by
+    following a stranger's walk.
+  card_readings:
+  - card: playable-by-a-non-musician
+    interpretation: The performance must ask for no trained skill, only something every visitor already
+      knows how to do, like tracing a line.
+  - card: rotoscoping
+    interpretation: 'Borrowing someone else''s lived motion as a ready-made score: you don''t invent the
+      timing, you follow it.'
+  - card: clavilux
+    interpretation: 'Light played as a silent instrument: Lumia''s soft drifting color forms treated as
+      performed composition rather than fixed picture.'
+  usage:
+    input_tokens: 597
+    output_tokens: 1477
+    cache_read_tokens: 2142
+    cache_write_tokens: 0
+- position: 10
+  statement: A weekly vespers screening that lenses the live street, inverted, onto a sheet inside a blacked-out
+    shopfront, where a celebrant reads a fixed order of service of 'shots' that the congregation answers
+    only when the street fulfils each one, because setting an unchanging script against undirectable footage
+    turns waiting into suspense and makes everyone co-editors of an unretakeable film.
+  subject: A weekly live-cinema 'vespers' held in a blacked-out shopfront turned room-sized pinhole camera
+  behavior: Lenses the live street outside, inverted and unrecorded, onto a sheet inside a blacked-out
+    shopfront. A celebrant then works through a fixed printed order of service of 'shots', such as 'Let
+    one cross carrying something red' or 'Let the light change'. The congregation holds each call and
+    answers aloud only when the street delivers it.
+  rationale: Setting an unchanging script against footage nobody can direct turns ordinary waiting into
+    suspense. The audience becomes a collective editor, deciding together when reality has 'answered'
+    each line. Repeated weekly, the identical liturgy makes the street's variations legible as story.
+  card_readings:
+  - card: real-time-only
+    interpretation: 'Taken as the vow of the rite: nothing is recorded, rehearsed or retaken, so the film
+      exists only in the moment it is witnessed.'
+  - card: camera-obscura
+    interpretation: 'Taken as the world entering a dark room uninvited and unedited, upside down: cinema
+      with no camera operator and no cut, only an aperture.'
+  - card: liturgy
+    interpretation: 'Taken as a fixed, repeated order of service and call-and-response: a script that
+      never changes, set against a world that never repeats.'
+  usage:
+    input_tokens: 205
+    output_tokens: 924
+    cache_read_tokens: 1071
+    cache_write_tokens: 0
+- position: 11
+  statement: A cardboard, hand-cranked optical sequencer under $10 that plays a growing paper-roll score
+    as each reader tapes on a hand-drawn section and passes it on, because photocopied black ink reads
+    cleanly on cheap IR sensors and the reader costs less than postage.
+  subject: A cardboard, hand-cranked optical sequencer that plays a paper-roll zine and costs under $10
+    to build.
+  behavior: Readers pull a roll of adding-machine paper through a cardboard reader by hand. Four TCRT5000
+    reflective sensors on an ATtiny85 read the black marks as notes on a piezo speaker. Each person who
+    receives the scroll draws a new section in Sharpie, tapes it onto the tail, and mails or hands it
+    on, so the piece keeps getting longer.
+  rationale: Black ink on white paper reflects infrared very differently, so any copy shop or felt pen
+    can make readable notes. The reader costs less than postage, so it can travel with the scroll and
+    no one needs special gear to take part.
+  card_readings:
+  - card: under-20-dollars-in-parts
+    interpretation: A hard budget of about $8 in parts (an ATtiny85, four IR reflective sensors, a piezo,
+      a coin cell and cardboard), cheap enough that every copy can be given away.
+  - card: infinite-canvas
+    interpretation: 'A work with no page boundary: one continuous strip of paper that grows at the tail
+      instead of ending in a last panel.'
+  - card: zine
+    interpretation: 'Small-press, hand-to-hand circulation: something photocopied, added to and passed
+      on by its readers rather than published once.'
+  usage:
+    input_tokens: 212
+    output_tokens: 1018
+    cache_read_tokens: 1071
+    cache_write_tokens: 0
+- position: 12
+  statement: An erasure chapbook dubbed generation by generation on a photocopier, where each page keeps
+    at most eight visible words and revealing a new word forces blacking out the oldest, because copier
+    blur and overwriting enact taped-over memory, making forgetting the poem's structure rather than its
+    subject.
+  subject: A hand-bound erasure chapbook made by repeatedly photocopying one found letter
+  behavior: Each page is a photocopy of the previous one. On every page the poet blacks out text so that
+    no more than eight words stay visible. To uncover a new word, the oldest surviving word must be redacted,
+    the way a synth steals its oldest note. The copies blur page by page, so the poem drifts as the source
+    decays.
+  rationale: Erasure poems usually freeze one reading of a source. Here the source is rewritten like a
+    dubbed cassette, and the strict eight-word cap forces the poet to give up earlier lines to gain new
+    ones. A reader can follow one sentence being remembered, overwritten and blurred across the book,
+    using only a copier and a marker.
+  card_readings:
+  - card: eight-voices-max
+    interpretation: 'Read as polyphony with voice-stealing: no more than eight words may be audible on
+      a page, and a new one silences the oldest.'
+  - card: erasure
+    interpretation: 'Taken literally as the core writing act: blacking out a found text until a poem remains.'
+  - card: vhs-tape
+    interpretation: 'Read as taping over and generational dub loss: each copy overwrites memory and degrades
+      a little more.'
+  usage:
+    input_tokens: 197
+    output_tokens: 960
+    cache_read_tokens: 1071
+    cache_write_tokens: 0
+failures: []
+usage:
+  input_tokens: 3303
+  output_tokens: 13359
+  cache_read_tokens: 13923
+  cache_write_tokens: 1071
+estimated_cost_usd: 0.291316
