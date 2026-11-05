@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+import re
+
 from seeker.ontology.base import LinkMLString
 
 KEBAB_CASE = "^[a-z0-9]+(-[a-z0-9]+)*$"
+_NON_ALNUM = re.compile("[^a-z0-9]+")
 
 
 class CardId(LinkMLString):
@@ -112,3 +115,37 @@ class GitCommit(LinkMLString):
     @property
     def is_dirty(self) -> bool:
         return self.endswith("-dirty")
+
+
+class WorkId(LinkMLString):
+    """Stable identifier for a work, derived from its note's file name reduced
+    to lowercase kebab-case, so renaming the note renames the work."""
+
+    TYPE_URI = "seeker:WorkId"
+    PATTERN = KEBAB_CASE
+    DESCRIPTION = (
+        "Stable identifier for a work, derived from its note's file name reduced "
+        "to lowercase kebab-case, so renaming the note renames the work."
+    )
+    EXAMPLES = ("oramics-demo-tape-1962",)
+
+    @classmethod
+    def from_note_name(cls, stem: str) -> WorkId | None:
+        """The id for a note named ``stem``: lowercase, with every run of
+        characters outside [a-z0-9] collapsed to one hyphen. None if nothing
+        usable is left."""
+        reduced = "-".join(_NON_ALNUM.split(stem.lower())).strip("-")
+        return cls(reduced) if reduced else None
+
+
+class Url(LinkMLString):
+    """An absolute http or https web address, such as the page a work was
+    captured from."""
+
+    TYPE_URI = "seeker:Url"
+    PATTERN = "^https?://\\S+$"
+    DESCRIPTION = (
+        "An absolute http or https web address, such as the page a work was "
+        "captured from."
+    )
+    EXAMPLES = ("https://daphneoram.org/",)

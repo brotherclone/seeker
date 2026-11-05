@@ -13,10 +13,12 @@ from seeker.ontology.fields import CreativeField
 from seeker.ontology.generation import CardReading, Generation, GenerationFailure, Idea, Usage
 from seeker.ontology.reading import Effort, Reading, RoleName
 from seeker.ontology.role import ReadingGuidance, Role
-from seeker.ontology.types import AxisId, CardId, GitCommit, ModelId, Sha256Digest, Synonym, Tag
+from seeker.ontology.types import AxisId, CardId, GitCommit, ModelId, Sha256Digest, Synonym, Tag, Url, WorkId
+from seeker.ontology.work import CaptureSource, Work, WorkKind
 
 __all__ = [
     "AxisId",
+    "CaptureSource",
     "Card",
     "CardId",
     "CardReading",
@@ -25,8 +27,8 @@ __all__ = [
     "DeckSet",
     "DescribedStrEnum",
     "Draw",
-    "Effort",
     "DrawBatch",
+    "Effort",
     "Generation",
     "GenerationFailure",
     "GitCommit",
@@ -42,5 +44,9 @@ __all__ = [
     "SharedCardId",
     "Synonym",
     "Tag",
+    "Url",
     "Usage",
+    "Work",
+    "WorkId",
+    "WorkKind",
 ]
