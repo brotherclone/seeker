@@ -32,13 +32,13 @@
 
 ## 6. Command line, capture template and docs
 
-- [ ] 6.1 Implement `seeker-works` with `validate`, `sync-cards`, `suggest [--apply]` and `check --batch`, plus the console script. Verify CLI tests against a fixture vault for each subcommand, the exit codes, and the vault-not-configured message.
-- [ ] 6.2 Add `capture/seeker-work.clipper.json` per design decision 7. Verify a test that its property names are `type` or `Work` slots, and that its `path` equals the default works folder.
-- [ ] 6.3 Write `docs/works.md` covering: setup (`SEEKER_VAULT` in `.env`), importing the Web Clipper template, the capture-then-suggest flow, card notes and what Seeker owns in them, `check`, and the frontmatter-comment caveat. Verify that the documented commands run as written against a fixture vault.
+- [x] 6.1 Implement `seeker-works` with `validate`, `sync-cards`, `suggest [--apply]` and `check --batch`, plus the console script. Verify CLI tests against a fixture vault for each subcommand, the exit codes, and the vault-not-configured message.
+- [x] 6.2 Add `capture/seeker-work.clipper.json` per design decision 7. Verify a test that its property names are `type` or `Work` slots, and that its `path` equals the default works folder.
+- [x] 6.3 Write `docs/works.md` covering: setup (`SEEKER_VAULT` in `.env`), importing the Web Clipper template, the capture-then-suggest flow, card notes and what Seeker owns in them, `check`, and the frontmatter-comment caveat. Verify that the documented commands run as written against a fixture vault.
 
 ## 7. Record the decision
 
-- [ ] 7.1 Write `Seeker/Decisions/2026-11-05 Works in the vault.md` and update the hub. Verify that the note links to the hub, `[[Work]]` and `prior-art-works`.
+- [x] 7.1 Write `Seeker/Decisions/2026-11-05 Works in the vault.md` and update the hub. Verify that the note links to the hub, `[[Work]]` and `prior-art-works`.
 
 ## Workflow follow-up
 
