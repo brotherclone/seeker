@@ -14,12 +14,12 @@
 
 ## 3. Works catalog
 
-- [ ] 3.1 Implement `WorkNotes` loading: skip non-work notes; convert wikilinks to ids; derive the id from the file name; treat empty values as absent; validate each note; then the set-level checks (unknown cards against the `DeckSet`, duplicate ids). Collect everything into a `WorksReport`. Verify fixture-vault tests for every loading and validation scenario in the spec, including two problems in two notes reported together.
-- [ ] 3.2 Implement `WorkCatalog`, with lookup and a digest over the normalized works. Verify tests: the digest is stable, unchanged by body-only and key-order edits, and changed by editing `cards`.
+- [x] 3.1 Implement `WorkNotes` loading: skip non-work notes; convert wikilinks to ids; derive the id from the file name; treat empty values as absent; validate each note; then the set-level checks (unknown cards against the `DeckSet`, duplicate ids). Collect everything into a `WorksReport`. Verify fixture-vault tests for every loading and validation scenario in the spec, including two problems in two notes reported together.
+- [x] 3.2 Implement `WorkCatalog`, with lookup and a digest over the normalized works. Verify tests: the digest is stable, unchanged by body-only and key-order edits, and changed by editing `cards`.
 
 ## 4. Card notes
 
-- [ ] 4.1 Implement `CardNotes.sync(deck_set, layout)`. It writes one note per card, with the owned frontmatter keys (`type`, `card_id`, `axis`, `fields`, `tags`, `aliases`) and the managed block, and never deletes. Verify tests:
+- [x] 4.1 Implement `CardNotes.sync(deck_set, layout)`. It writes one note per card, with the owned frontmatter keys (`type`, `card_id`, `axis`, `fields`, `tags`, `aliases`) and the managed block, and never deletes. Verify tests:
   - a first sync creates 153 notes from the seeded decks;
   - `microsound` is in the aliases of `granular-synthesis`;
   - a resync preserves Gabe's paragraph and his `rating` key, while updating the synonyms;
@@ -27,8 +27,8 @@
 
 ## 5. Matching and prior-art check
 
-- [ ] 5.1 Implement `CardMatcher` (whole-word, case-insensitive, with exact case for short single words) and the suggestion and apply flow. Verify tests: "drawn sound" suggests `oramics`; "Karplus-Strong" matches; "CA" doesn't match "ca." inside ordinary words; already-linked cards are skipped; applying adds wikilinks and keeps the rest of the note byte-identical.
-- [ ] 5.2 Implement `PriorArtHit`, `DrawPriorArt` and `BatchCheck`. Verify tests: a pair overlap is found, a full (three-card) hit is marked, the sort order is right, and draws with no prior art are still reported. Run against `batches/2026-11-04-round-1.yaml` with a fixture vault.
+- [x] 5.1 Implement `CardMatcher` (whole-word, case-insensitive, with exact case for short single words) and the suggestion and apply flow. Verify tests: "drawn sound" suggests `oramics`; "Karplus-Strong" matches; "CA" doesn't match "ca." inside ordinary words; already-linked cards are skipped; applying adds wikilinks and keeps the rest of the note byte-identical.
+- [x] 5.2 Implement `PriorArtHit`, `DrawPriorArt` and `BatchCheck`. Verify tests: a pair overlap is found, a full (three-card) hit is marked, the sort order is right, and draws with no prior art are still reported. Run against `batches/2026-11-04-round-1.yaml` with a fixture vault.
 
 ## 6. Command line, capture template and docs
 
