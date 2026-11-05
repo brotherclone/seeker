@@ -57,13 +57,15 @@ classes:
   - The conformance test already reads induced slots, so it checks the usage version.
   - If the LinkML toolchain rejects overriding `minimum_cardinality`, the fallback is a dedicated `linked_cards` slot. That changes only the frontmatter key, and the decision note would record it.
 - **Creators are plain strings**, written as wikilinks in notes (`[[Daphne Oram]]`), so people show up in the graph without a `Creator` class yet. Brackets are removed on read.
-- **The conformance test gains `date` → `datetime.date` and `uri` → a `Url` named type,** a pattern-checked string. The style rules say domain scalars must be named types.
+- **The conformance test gains `date` → `datetime.date`.** `url` ranges over a schema type `Url` (`typeof: uri`, http(s) pattern), mirrored by a `Url` named string type; the style rules say domain scalars must be named types.
+- **`fields` gets a work-specific description** through `slot_usage`, since the shared slot's text talks about cards.
 
 ### 2. Notes are the source of truth, and Seeker owns only what it writes
 
 - **Format.** A work note is YAML frontmatter between `---` lines, then the body.
   - `NoteFile` parses and writes notes, keeping unknown frontmatter keys and their order.
-  - It writes with `yaml.safe_dump(sort_keys=False, allow_unicode=True)`, and only when something changed.
+  - Edits are surgical: setting a key rewrites only that top-level key's lines (with `yaml.safe_dump(allow_unicode=True)`), so every other line keeps its formatting and comments. A new key is appended. It writes only when something changed.
+  - A note whose frontmatter isn't valid YAML is never rewritten: `validate` reports it, and `sync-cards` skips it and says so.
   - Every write is atomic (a temp file, then `os.replace`).
 - **Reading a `Work`:**
   - wikilinks become ids: `[[x]]` and `[[x|label]]` become `x`;
@@ -171,7 +173,7 @@ The generated `Seeker/Cards/` notes become graph nodes in their own right. Card 
 ## Risks / Trade-offs
 
 - [Writing into a hand-edited vault could damage notes] → Seeker owns only named keys and one marked block. Writes are atomic and only happen on change, sync never deletes, and tests cover round-tripping personal content.
-- [YAML round-trips can reformat frontmatter Gabe wrote by hand] → Only `suggest --apply` and `sync-cards` rewrite frontmatter, and only on notes they're changing. Key order is kept. Comments in frontmatter are rare in Obsidian and may be lost, which the docs say.
+- [YAML round-trips can reformat frontmatter Gabe wrote by hand] → Only `suggest --apply` and `sync-cards` write frontmatter, and only the keys they own. Other lines stay byte-identical; a comment on a rewritten key's own lines is lost, which the docs say.
 - [Matching on short synonyms gives false positives] → An exact-case rule for short single words, and a review before `--apply`.
 - [The Web Clipper's variables and filters may differ by version] → The template uses only the basic, documented variables. The manual check catches the rest, and the template is plain JSON that's easy to tweak.
 - [A vault on iCloud or synced elsewhere may show files mid-sync] → Reads tolerate unparseable notes by reporting them, never crashing.
