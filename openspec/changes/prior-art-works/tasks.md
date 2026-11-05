@@ -9,7 +9,7 @@
 
 ## 2. Notes and config
 
-- [ ] 2.1 Add `vault_folders` to `SeekerConfig` (defaulting to `Seeker/Works` and `Seeker/Cards`), plus `VaultLayout` and `VaultNotConfigured`. Document `paths.vault` in `seeker.yaml`, leaving it `null`. Verify unit tests: the defaults, overrides, relative-to-vault resolution, and the not-configured error message.
+- [ ] 2.1 Add `vault_folders` to `SeekerConfig` (defaulting to `Seeker/Works` and `Seeker/Cards`), plus `VaultLayout` and `VaultNotConfigured`. Resolve the vault from `SEEKER_VAULT` (environment, then `.env`), falling back to `paths.vault`. Update the `seeker.yaml` comment to point at `.env`. Verify unit tests: the folder defaults and overrides; a `.env` value; the environment beating both `.env` and `paths.vault`; `~` expansion; relative-to-vault folders; and the not-configured message naming `SEEKER_VAULT`.
 - [ ] 2.2 Implement `NoteFile`: parse frontmatter and body; atomic write only on change; preserve unknown keys and their order; a managed-block helper. Verify round-trip tests: unchanged notes are not rewritten, unknown keys and body text survive, a note with no frontmatter gets some, and Unicode survives.
 
 ## 3. Works catalog
@@ -34,7 +34,7 @@
 
 - [ ] 6.1 Implement `seeker-works` with `validate`, `sync-cards`, `suggest [--apply]` and `check --batch`, plus the console script. Verify CLI tests against a fixture vault for each subcommand, the exit codes, and the vault-not-configured message.
 - [ ] 6.2 Add `capture/seeker-work.clipper.json` per design decision 7. Verify a test that its property names are `type` or `Work` slots, and that its `path` equals the default works folder.
-- [ ] 6.3 Write `docs/works.md` covering: setup (`paths.vault`), importing the Web Clipper template, the capture-then-suggest flow, card notes and what Seeker owns in them, `check`, and the frontmatter-comment caveat. Verify that the documented commands run as written against a fixture vault.
+- [ ] 6.3 Write `docs/works.md` covering: setup (`SEEKER_VAULT` in `.env`), importing the Web Clipper template, the capture-then-suggest flow, card notes and what Seeker owns in them, `check`, and the frontmatter-comment caveat. Verify that the documented commands run as written against a fixture vault.
 
 ## 7. Record the decision
 
@@ -42,5 +42,5 @@
 
 ## Workflow follow-up
 
-- **Manual check by Gabe:** set `paths.vault` locally, run `uv run seeker-works sync-cards`, import the template into the Web Clipper, clip one real page (a Bandcamp or itch.io page, say), then run `uv run seeker-works suggest --apply` and `uv run seeker-works validate`.
+- **Manual check by Gabe:** with `SEEKER_VAULT` already in `.env`, run `uv run seeker-works sync-cards`, import the template into the Web Clipper, clip one real page (a Bandcamp or itch.io page, say), then run `uv run seeker-works suggest --apply` and `uv run seeker-works validate`.
 - Open a PR from `feature/prior-art-works` into `develop`, and archive after merge.

@@ -28,7 +28,7 @@ It is also Swanson's method built into everyday browsing. Cards that keep appear
 - **Local card matching.** `seeker-works suggest` finds card names and synonyms in each work's title, summary and body, and proposes card links. `--apply` adds them to the note. It's free, deterministic and editable, so the capture step can stay simple.
 - **Local prior-art check.** `seeker-works check --batch <file>` lists, for every draw, the works that already combine two or all three of its cards.
 - **Capture template.** A ready-to-import Obsidian Web Clipper template (`capture/seeker-work.clipper.json`) that saves the current page as a `Work` note in the works folder. Its properties come from the page metadata: title, URL, author, published year and description. That settles the plugin question for v1: no custom extension.
-- **Config:** `seeker.yaml` gains `vault_folders` (works and cards, relative to the vault). The vault-reading commands require `paths.vault` and say so clearly when it isn't set.
+- **Config:** the vault root comes from `SEEKER_VAULT` (the environment or the git-ignored `.env`), falling back to `paths.vault`. `seeker.yaml` gains `vault_folders` (works and cards, relative to the vault). The vault commands say clearly when no vault is set.
 
 Out of scope:
 - **The prosecutor:** the debate change will query this catalog and cache what it finds as `CaptureSource: prosecutor` works.

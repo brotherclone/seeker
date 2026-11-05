@@ -96,17 +96,24 @@ SHA-256 over canonical JSON of the `Work` models sorted by id, matching the deck
 
 ### 6. Config
 
+```
+# .env  (git-ignored, machine-specific)
+SEEKER_VAULT=~/Documents/Claude/Projects/Bracers/Projects
+```
+
 ```yaml
+# seeker.yaml  (committed, shared)
 paths:
-  vault: ~/Documents/Claude/Projects/Bracers/Projects     # set in Gabe's local seeker.yaml
+  vault: null              # fallback only; set SEEKER_VAULT in .env instead
 vault_folders:
   works: Seeker/Works
   cards: Seeker/Cards
 ```
 
-- `vault_folders` is optional, and defaults to the values above.
-- `SeekerConfig.vault()` returns a `VaultLayout`, a model with `root`, `works` and `cards`, or raises `VaultNotConfigured`.
-- The repo's `seeker.yaml` keeps `vault: null` with a comment. Gabe sets his own path locally: a personal absolute path doesn't belong in the shared default.
+- **Where the vault root comes from:** `SEEKER_VAULT` in the environment, then `SEEKER_VAULT` in `.env`, then `paths.vault`. This uses the same `.env` reader and precedence as `ANTHROPIC_API_KEY`.
+- **Why `.env`:** the vault path is personal and machine-specific, like the key. In `.env` it never shows up in `git status`, and the eventual cloud move just sets an environment variable.
+- **`vault_folders`** is a shared convention, so it stays in `seeker.yaml`. It's optional and defaults to the values above.
+- **The API:** `SeekerConfig.vault()` returns a `VaultLayout` (`root`, `works`, `cards`), with `~` expanded. If no vault is set, it raises `VaultNotConfigured`, naming `SEEKER_VAULT` and `.env`.
 
 ### 7. The capture template
 

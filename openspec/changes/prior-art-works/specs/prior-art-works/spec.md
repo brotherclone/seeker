@@ -44,12 +44,20 @@ A folder with no problems SHALL produce a `WorkCatalog`.
 - **WHEN** one note has `year: soon` and another lists an unknown card
 - **THEN** one validation run reports both problems
 
-### Requirement: Vault location comes from config
-The vault root SHALL come from `paths.vault` in `seeker.yaml`. The works and cards folders SHALL come from `vault_folders`, relative to the vault. Commands that read or write the vault SHALL fail with a clear message when `paths.vault` is not set, without touching any files.
+### Requirement: Vault location comes from the environment or config
+The vault root SHALL come from `SEEKER_VAULT`, read from the environment or else from the git-ignored `.env` beside `seeker.yaml`. When neither is set, it SHALL fall back to `paths.vault` in `seeker.yaml`. The works and cards folders SHALL come from `vault_folders` in `seeker.yaml`, relative to the vault. Commands that read or write the vault SHALL fail with a clear message when no vault is set, without touching any files.
+
+#### Scenario: Vault from .env
+- **WHEN** `.env` contains `SEEKER_VAULT=~/vault` and `seeker.yaml` has `paths.vault: null`
+- **THEN** the vault root resolves to the expanded `~/vault`
+
+#### Scenario: Environment overrides config
+- **WHEN** `SEEKER_VAULT` is set in the environment and `paths.vault` names a different folder
+- **THEN** the environment value is used
 
 #### Scenario: Vault not configured
-- **WHEN** `seeker-works validate` runs with `paths.vault: null`
-- **THEN** it exits non-zero with a message saying to set `paths.vault` in `seeker.yaml`
+- **WHEN** `seeker-works validate` runs with no `SEEKER_VAULT` and `paths.vault: null`
+- **THEN** it exits non-zero with a message saying to set `SEEKER_VAULT` in `.env`
 
 ### Requirement: Card notes are synced into the vault
 The system SHALL write one note per card in the deck set to the configured cards folder, named `<card-id>.md`. Each note's frontmatter holds `type: card`, the card's `axis`, `fields` and `tags`, and its name and synonyms as `aliases`. The body holds a managed block with the card's name, axis, note and synonyms.
