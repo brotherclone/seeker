@@ -94,6 +94,25 @@ types:
     examples:
       - value: 5085562a1b2c3d4e5f60718293a4b5c6d7e8f90a
 
+  WorkId:
+    typeof: string
+    uri: seeker:WorkId
+    description: >-
+      Stable identifier for a work, derived from its note's file name reduced
+      to lowercase kebab-case, so renaming the note renames the work.
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+    examples:
+      - value: oramics-demo-tape-1962
+  Url:
+    typeof: uri
+    uri: seeker:Url
+    description: >-
+      An absolute http or https web address, such as the page a work was
+      captured from.
+    pattern: "^https?://\\S+$"
+    examples:
+      - value: https://daphneoram.org/
+
 enums:
   CreativeField:
     description: >-
@@ -150,6 +169,45 @@ enums:
     permissible_values:
       generator:
         description: Turns one draw into one idea stated as a single sentence.
+
+  WorkKind:
+    description: >-
+      What sort of thing a captured work is. Coarse on purpose: the cards a
+      work links say what it is about, the kind says what form it takes.
+    permissible_values:
+      piece:
+        description: A finished artwork, composition or comic not better described by another kind.
+      recording:
+        description: A released or archived audio or video recording.
+      instrument:
+        description: A musical instrument or sound-making machine, built or designed.
+      software:
+        description: A program, plugin, tool or code library.
+      game:
+        description: A board, card, tabletop or electronic game.
+      publication:
+        description: A book, zine, magazine, album booklet or other edition.
+      performance:
+        description: A live performance, concert or happening.
+      installation:
+        description: A site-specific or gallery installation.
+      paper:
+        description: A research paper, thesis or technical report.
+      product:
+        description: A commercial device or kit.
+      other:
+        description: Anything else; the capture default until refined by hand.
+  CaptureSource:
+    description: >-
+      Who or what added a work to the vault, so hand-captured works can be told
+      apart from ones agents found or imported in bulk.
+    permissible_values:
+      gabe:
+        description: Captured by hand, usually with the Web Clipper template.
+      prosecutor:
+        description: Found by the prior-art prosecutor during a debate and cached.
+      import:
+        description: Imported in bulk from another catalog.
 
 slots:
   id:
@@ -445,6 +503,48 @@ slots:
       The total usage priced with the configured price table. It is an
       estimate, because prices change and are kept as data.
 
+  title:
+    range: string
+    required: true
+    slot_uri: dcterms:title
+    description: The work's title as its creators give it.
+  creators:
+    range: string
+    multivalued: true
+    slot_uri: dcterms:creator
+    description: >-
+      The people or groups who made the work, as plain names. Notes may write
+      them as wikilinks so they show up in the vault's graph.
+  year:
+    range: integer
+    slot_uri: dcterms:date
+    description: The year the work was made, released or published, when known.
+  url:
+    range: Url
+    slot_uri: seeker:url
+    description: Where the work can be found or was captured from.
+  kind:
+    range: WorkKind
+    required: true
+    slot_uri: dcterms:type
+    description: What form the work takes.
+  summary:
+    range: string
+    slot_uri: dcterms:abstract
+    description: >-
+      A short description of the work. Card suggestions search it along with
+      the title and the note body.
+  captured_by:
+    range: CaptureSource
+    required: true
+    slot_uri: seeker:capturedBy
+    description: Who or what added the work to the vault.
+  captured_on:
+    range: date
+    required: true
+    slot_uri: seeker:capturedOn
+    description: The date the work was added to the vault.
+
 classes:
   Card:
     class_uri: seeker:Card
@@ -577,3 +677,39 @@ classes:
       - failures
       - usage
       - estimated_cost_usd
+  Work:
+    class_uri: seeker:Work
+    description: >-
+      A creative work, instrument, game, publication or paper that already
+      exists, captured as a note in the Obsidian vault and linked to the cards
+      it embodies. Works are Seeker's offline prior art: a draw whose cards a
+      work already combines is not new.
+    see_also:
+      - https://en.wikipedia.org/wiki/Literature-based_discovery
+    slots:
+      - id
+      - title
+      - creators
+      - year
+      - url
+      - kind
+      - fields
+      - cards
+      - summary
+      - captured_by
+      - captured_on
+    slot_usage:
+      id:
+        range: WorkId
+        description: The work's identifier, derived from its note's file name.
+      fields:
+        description: The creative fields the work belongs to, when known.
+      cards:
+        range: Card
+        inlined: false
+        inlined_as_list: false
+        required: false
+        minimum_cardinality: 0
+        description: >-
+          The cards the work embodies, referenced by card id. Empty until
+          linked by hand or by card suggestions.

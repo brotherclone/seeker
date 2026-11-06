@@ -29,6 +29,7 @@ dev = [
 seeker-decks = "seeker.decks.cli:main"
 seeker-draw = "seeker.draw.cli:main"
 seeker-generate = "seeker.generate.cli:main"
+seeker-works = "seeker.works.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["seeker"]

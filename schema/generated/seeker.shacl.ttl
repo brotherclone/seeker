@@ -9,110 +9,194 @@ seeker:Card a sh:NodeShape ;
 	rdfs:comment "One topic card, the atom of a draw. A draw takes one card from each of several decks and asks whether the collision is a real idea." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n0 ;
-	sh:property _:c14n10 , _:c14n13 , _:c14n34 , _:c14n42 , _:c14n47 , _:c14n56 ;
+	sh:property _:c14n13 , _:c14n16 , _:c14n46 , _:c14n56 , _:c14n61 , _:c14n70 ;
 	sh:targetClass seeker:Card .
 seeker:CardReading a sh:NodeShape ;
 	rdfs:comment "How the generator interpreted one drawn card. Under a metaphorical reading this is the only record of what a card was taken to mean." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n12 ;
-	sh:property _:c14n8 , _:c14n9 ;
+	sh:ignoredProperties _:c14n15 ;
+	sh:property _:c14n11 , _:c14n12 ;
 	sh:targetClass seeker:CardReading .
 seeker:Deck a sh:NodeShape ;
 	rdfs:comment "All the cards on one axis of the morphological box, loaded from one file in decks/. Axes are independent, so cards from different decks combine freely." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n61 ;
-	sh:property _:c14n30 , _:c14n43 , _:c14n44 , _:c14n46 ;
+	sh:ignoredProperties _:c14n80 ;
+	sh:property _:c14n38 , _:c14n57 , _:c14n58 , _:c14n60 ;
 	sh:targetClass seeker:Deck .
 seeker:DeckSet a sh:NodeShape ;
 	rdfs:comment "Every deck a run draws from. Card ids are unique across the whole set and the set must include the required starting axes: technique, medium, historical-artifact, constraint and domain." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n5 ;
-	sh:property _:c14n40 ;
+	sh:ignoredProperties _:c14n7 ;
+	sh:property _:c14n53 ;
 	sh:targetClass seeker:DeckSet .
 seeker:Draw a sh:NodeShape ;
 	rdfs:comment "One collision: three cards, one from each of three axes, always including a constraint. The raw material the generator turns into a one-sentence idea." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n45 ;
-	sh:property _:c14n2 , _:c14n28 , _:c14n36 , _:c14n49 ;
+	sh:ignoredProperties _:c14n59 ;
+	sh:property _:c14n2 , _:c14n34 , _:c14n49 , _:c14n63 ;
 	sh:targetClass seeker:Draw .
 seeker:DrawBatch a sh:NodeShape ;
 	rdfs:comment "A balanced set of draws produced from one seed and one deck set: shapes evenly represented, no card repeated, home fields rotating through the creative fields. Fully reproducible from its seed and deck-set digest." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n20 ;
-	sh:property _:c14n24 , _:c14n48 , _:c14n52 ;
+	sh:ignoredProperties _:c14n25 ;
+	sh:property _:c14n29 , _:c14n62 , _:c14n66 ;
 	sh:targetClass seeker:DrawBatch .
 seeker:Generation a sh:NodeShape ;
 	rdfs:comment "One generator pass over a draw batch: the ideas and failures it produced, every input pinned (batch, reading, model, role digest, commit), and its token usage and estimated cost." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n68 ;
-	sh:property _:c14n18 , _:c14n21 , _:c14n22 , _:c14n26 , _:c14n29 , _:c14n31 , _:c14n38 , _:c14n59 , _:c14n63 , _:c14n64 , _:c14n65 ;
+	sh:ignoredProperties _:c14n94 ;
+	sh:property _:c14n23 , _:c14n26 , _:c14n27 , _:c14n32 , _:c14n37 , _:c14n40 , _:c14n51 , _:c14n77 , _:c14n83 , _:c14n86 , _:c14n87 ;
 	sh:targetClass seeker:Generation .
 seeker:GenerationFailure a sh:NodeShape ;
 	rdfs:comment "A draw for which no valid idea was produced, even after a retry." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n35 ;
-	sh:property _:c14n39 , _:c14n57 , _:c14n58 ;
+	sh:ignoredProperties _:c14n48 ;
+	sh:property _:c14n52 , _:c14n71 , _:c14n73 ;
 	sh:targetClass seeker:GenerationFailure .
 seeker:Idea a sh:NodeShape ;
 	rdfs:comment "One idea generated from one draw: a single sentence of the form \"a/an X that does Y because Z\", its three parts, and how each card was read." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n67 ;
-	sh:property _:c14n17 , _:c14n25 , _:c14n4 , _:c14n54 , _:c14n55 , _:c14n69 , _:c14n70 ;
+	sh:ignoredProperties _:c14n91 ;
+	sh:property _:c14n22 , _:c14n30 , _:c14n5 , _:c14n68 , _:c14n69 , _:c14n95 , _:c14n96 ;
 	sh:targetClass seeker:Idea .
 seeker:ReadingGuidance a sh:NodeShape ;
 	rdfs:comment "The prompt text a role uses for one Reading setting." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n53 ;
-	sh:property _:c14n27 , _:c14n33 ;
+	sh:ignoredProperties _:c14n67 ;
+	sh:property _:c14n33 , _:c14n44 ;
 	sh:targetClass seeker:ReadingGuidance .
 seeker:Role a sh:NodeShape ;
 	rdfs:comment "One agent role in the pipeline, defined by a versioned YAML file in prompts/: its model, persona, standing instructions and per-reading guidance." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n3 ;
-	sh:property _:c14n1 , _:c14n11 , _:c14n14 , _:c14n16 , _:c14n6 , _:c14n62 , _:c14n66 ;
+	sh:property _:c14n1 , _:c14n14 , _:c14n17 , _:c14n21 , _:c14n8 , _:c14n82 , _:c14n89 ;
 	sh:targetClass seeker:Role .
 seeker:Usage a sh:NodeShape ;
 	rdfs:comment "Token counts for one or more model calls, split the way they are billed." ;
 	sh:closed true ;
-	sh:ignoredProperties _:c14n32 ;
-	sh:property _:c14n23 , _:c14n41 , _:c14n50 , _:c14n60 ;
+	sh:ignoredProperties _:c14n43 ;
+	sh:property _:c14n28 , _:c14n55 , _:c14n64 , _:c14n78 ;
 	sh:targetClass seeker:Usage .
+seeker:Work a sh:NodeShape ;
+	rdfs:comment "A creative work, instrument, game, publication or paper that already exists, captured as a note in the Obsidian vault and linked to the cards it embodies. Works are Seeker's offline prior art: a draw whose cards a work already combines is not new." ;
+	sh:closed true ;
+	sh:ignoredProperties _:c14n76 ;
+	sh:property _:c14n31 , _:c14n35 , _:c14n4 , _:c14n41 , _:c14n42 , _:c14n6 , _:c14n79 , _:c14n84 , _:c14n88 , _:c14n9 , _:c14n90 ;
+	sh:targetClass seeker:Work .
 _:c14n0 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
 _:c14n1 sh:description "Which role in the pipeline this is." ;
-	sh:in _:c14n77 ;
+	sh:in _:c14n103 ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:order 0 ;
 	sh:path seeker:roleName .
-_:c14n10 sh:datatype seeker:Tag ;
+_:c14n10 rdf:first "xhigh" ;
+	rdf:rest _:c14n50 .
+_:c14n100 rdf:first "literal" ;
+	rdf:rest _:c14n101 .
+_:c14n101 rdf:first "loose" ;
+	rdf:rest _:c14n102 .
+_:c14n102 rdf:first "metaphorical" ;
+	rdf:rest rdf:nil .
+_:c14n103 rdf:first "generator" ;
+	rdf:rest rdf:nil .
+_:c14n104 rdf:first "generator" ;
+	rdf:rest rdf:nil .
+_:c14n105 rdf:first "music" ;
+	rdf:rest _:c14n106 .
+_:c14n106 rdf:first "visual-art" ;
+	rdf:rest _:c14n107 .
+_:c14n107 rdf:first "film" ;
+	rdf:rest _:c14n108 .
+_:c14n108 rdf:first "electronics" ;
+	rdf:rest _:c14n109 .
+_:c14n109 rdf:first "writing" ;
+	rdf:rest _:c14n110 .
+_:c14n11 sh:class seeker:Card ;
+	sh:description "The card being interpreted, referenced by card id." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path seeker:card .
+_:c14n110 rdf:first "comics" ;
+	rdf:rest _:c14n111 .
+_:c14n111 rdf:first "games" ;
+	rdf:rest rdf:nil .
+_:c14n112 rdf:first "music" ;
+	rdf:rest _:c14n113 .
+_:c14n113 rdf:first "visual-art" ;
+	rdf:rest _:c14n114 .
+_:c14n114 rdf:first "film" ;
+	rdf:rest _:c14n115 .
+_:c14n115 rdf:first "electronics" ;
+	rdf:rest _:c14n116 .
+_:c14n116 rdf:first "writing" ;
+	rdf:rest _:c14n117 .
+_:c14n117 rdf:first "comics" ;
+	rdf:rest _:c14n118 .
+_:c14n118 rdf:first "games" ;
+	rdf:rest rdf:nil .
+_:c14n119 rdf:first "music" ;
+	rdf:rest _:c14n120 .
+_:c14n12 sh:datatype xsd:string ;
+	sh:description "One line on how the card was taken in this idea." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path seeker:interpretation .
+_:c14n120 rdf:first "visual-art" ;
+	rdf:rest _:c14n121 .
+_:c14n121 rdf:first "film" ;
+	rdf:rest _:c14n122 .
+_:c14n122 rdf:first "electronics" ;
+	rdf:rest _:c14n123 .
+_:c14n123 rdf:first "writing" ;
+	rdf:rest _:c14n124 .
+_:c14n124 rdf:first "comics" ;
+	rdf:rest _:c14n125 .
+_:c14n125 rdf:first "games" ;
+	rdf:rest rdf:nil .
+_:c14n13 sh:datatype seeker:Tag ;
 	sh:description "Free-form labels outside the creative-field vocabulary." ;
 	sh:nodeKind sh:Literal ;
 	sh:order 4 ;
 	sh:path seeker:tags ;
 	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
-_:c14n11 sh:class seeker:ReadingGuidance ;
+_:c14n14 sh:class seeker:ReadingGuidance ;
 	sh:description "Exactly one guidance text per Reading value." ;
 	sh:maxCount 3 ;
 	sh:minCount 3 ;
 	sh:nodeKind sh:BlankNodeOrIRI ;
 	sh:order 4 ;
 	sh:path seeker:readingGuidance .
-_:c14n12 rdf:first rdf:type ;
+_:c14n15 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:c14n13 sh:description "The creative fields the card belongs to. Empty means cross-cutting: the card applies to every field." ;
-	sh:in _:c14n86 ;
+_:c14n16 sh:description "The creative fields the card belongs to. Empty means cross-cutting: the card applies to every field." ;
+	sh:in _:c14n112 ;
 	sh:order 3 ;
 	sh:path seeker:fields .
-_:c14n14 sh:description "How much effort the model puts into each call of this role. This is the API's output_config.effort, which replaced sampling temperature." ;
-	sh:in _:c14n19 ;
+_:c14n17 sh:description "How much effort the model puts into each call of this role. This is the API's output_config.effort, which replaced sampling temperature." ;
+	sh:in _:c14n24 ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:order 6 ;
 	sh:path seeker:effort .
-_:c14n15 rdf:first "high" ;
-	rdf:rest _:c14n7 .
-_:c14n16 sh:datatype xsd:integer ;
+_:c14n18 rdf:first "performance" ;
+	rdf:rest _:c14n81 .
+_:c14n19 rdf:first "high" ;
+	rdf:rest _:c14n10 .
+_:c14n2 sh:description "The creative field this draw is anchored in. At least one of its cards explicitly lists this field." ;
+	sh:in _:c14n105 ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:order 2 ;
+	sh:path seeker:homeField .
+_:c14n20 rdf:first "software" ;
+	rdf:rest _:c14n75 .
+_:c14n21 sh:datatype xsd:integer ;
 	sh:description "The most output tokens one call of this role may produce." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -120,30 +204,24 @@ _:c14n16 sh:datatype xsd:integer ;
 	sh:nodeKind sh:Literal ;
 	sh:order 5 ;
 	sh:path seeker:maxOutputTokens .
-_:c14n17 sh:datatype xsd:string ;
+_:c14n22 sh:datatype xsd:string ;
 	sh:description "The idea as one sentence of the form \"a/an X that does Y because Z\", at most 60 words." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 1 ;
 	sh:path seeker:statement .
-_:c14n18 sh:description "How freely the cards may be interpreted." ;
-	sh:in _:c14n71 ;
+_:c14n23 sh:description "How freely the cards may be interpreted." ;
+	sh:in _:c14n100 ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:order 1 ;
 	sh:path seeker:reading .
-_:c14n19 rdf:first "low" ;
-	rdf:rest _:c14n51 .
-_:c14n2 sh:description "The creative field this draw is anchored in. At least one of its cards explicitly lists this field." ;
-	sh:in _:c14n79 ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:order 2 ;
-	sh:path seeker:homeField .
-_:c14n20 rdf:first rdf:type ;
+_:c14n24 rdf:first "low" ;
+	rdf:rest _:c14n65 .
+_:c14n25 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:c14n21 sh:datatype xsd:float ;
+_:c14n26 sh:datatype xsd:float ;
 	sh:description "The total usage priced with the configured price table. It is an estimate, because prices change and are kept as data." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -151,14 +229,14 @@ _:c14n21 sh:datatype xsd:float ;
 	sh:nodeKind sh:Literal ;
 	sh:order 10 ;
 	sh:path seeker:estimatedCostUsd .
-_:c14n22 sh:class seeker:Usage ;
+_:c14n27 sh:class seeker:Usage ;
 	sh:description "Tokens consumed by the model calls this record accounts for." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:BlankNodeOrIRI ;
 	sh:order 9 ;
 	sh:path seeker:usage .
-_:c14n23 sh:datatype xsd:integer ;
+_:c14n28 sh:datatype xsd:integer ;
 	sh:description "Output tokens billed at the model's output rate." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -166,34 +244,43 @@ _:c14n23 sh:datatype xsd:integer ;
 	sh:nodeKind sh:Literal ;
 	sh:order 1 ;
 	sh:path seeker:outputTokens .
-_:c14n24 sh:class seeker:Draw ;
+_:c14n29 sh:class seeker:Draw ;
 	sh:description "The draws in the batch, in position order." ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:BlankNodeOrIRI ;
 	sh:order 2 ;
 	sh:path seeker:draws .
-_:c14n25 sh:datatype xsd:string ;
+_:c14n3 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:c14n30 sh:datatype xsd:string ;
 	sh:description "The X of the statement, meaning the thing being made." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 2 ;
 	sh:path seeker:subject .
-_:c14n26 sh:datatype xsd:dateTime ;
+_:c14n31 sh:datatype seeker:Url ;
+	sh:description "Where the work can be found or was captured from." ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path seeker:url ;
+	sh:pattern "^https?://\\S+$" .
+_:c14n32 sh:datatype xsd:dateTime ;
 	sh:description "When the generation started." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 6 ;
 	sh:path seeker:generatedAt .
-_:c14n27 sh:datatype xsd:string ;
+_:c14n33 sh:datatype xsd:string ;
 	sh:description "The prompt text that tells the model how to read the cards at this setting." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 1 ;
 	sh:path seeker:guidance .
-_:c14n28 sh:datatype seeker:AxisId ;
+_:c14n34 sh:datatype seeker:AxisId ;
 	sh:description "The three axes the draw's cards come from, constraint first, then the other two in canonical order (technique, medium, historical-artifact, domain). This is the draw's shape." ;
 	sh:maxCount 3 ;
 	sh:minCount 3 ;
@@ -201,44 +288,76 @@ _:c14n28 sh:datatype seeker:AxisId ;
 	sh:order 1 ;
 	sh:path seeker:axes ;
 	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
-_:c14n29 sh:class seeker:Idea ;
+_:c14n35 sh:datatype xsd:integer ;
+	sh:description "The year the work was made, released or published, when known." ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path dcterms:date .
+_:c14n36 rdf:first "prosecutor" ;
+	rdf:rest _:c14n54 .
+_:c14n37 sh:class seeker:Idea ;
 	sh:description "The ideas produced, in draw position order." ;
 	sh:nodeKind sh:BlankNodeOrIRI ;
 	sh:order 7 ;
 	sh:path seeker:ideas .
-_:c14n3 rdf:first rdf:type ;
-	rdf:rest rdf:nil .
-_:c14n30 sh:datatype seeker:AxisId ;
+_:c14n38 sh:datatype seeker:AxisId ;
 	sh:description "The axis this deck holds; must match the deck file's name." ;
 	sh:maxCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 0 ;
 	sh:path seeker:axis ;
 	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
-_:c14n31 sh:datatype seeker:GitCommit ;
+_:c14n39 rdf:first "piece" ;
+	rdf:rest _:c14n92 .
+_:c14n4 sh:datatype xsd:string ;
+	sh:description "The work's title as its creators give it." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path dcterms:title .
+_:c14n40 sh:datatype seeker:GitCommit ;
 	sh:description "The repository commit the generation ran from, when known." ;
 	sh:maxCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 5 ;
 	sh:path seeker:gitCommit ;
 	sh:pattern "^[0-9a-f]{40}(-dirty)?$" .
-_:c14n32 rdf:first rdf:type ;
+_:c14n41 sh:datatype seeker:WorkId ;
+	sh:description "The work's identifier, derived from its note's file name." ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path seeker:id ;
+	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
+_:c14n42 sh:datatype xsd:string ;
+	sh:description "A short description of the work. Card suggestions search it along with the title and the note body." ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 8 ;
+	sh:path dcterms:abstract .
+_:c14n43 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:c14n33 sh:description "How freely the cards may be interpreted." ;
-	sh:in _:c14n74 ;
+_:c14n44 sh:description "How freely the cards may be interpreted." ;
+	sh:in _:c14n97 ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:order 0 ;
 	sh:path seeker:reading .
-_:c14n34 sh:datatype xsd:string ;
+_:c14n45 rdf:first "paper" ;
+	rdf:rest _:c14n93 .
+_:c14n46 sh:datatype xsd:string ;
 	sh:description "Optional clarification of what the card means or excludes." ;
 	sh:maxCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 5 ;
 	sh:path skos:scopeNote .
-_:c14n35 rdf:first rdf:type ;
+_:c14n47 rdf:first "other" ;
 	rdf:rest rdf:nil .
-_:c14n36 sh:datatype xsd:integer ;
+_:c14n48 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:c14n49 sh:datatype xsd:integer ;
 	sh:description "The draw's 1-based position within its batch." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -246,37 +365,39 @@ _:c14n36 sh:datatype xsd:integer ;
 	sh:nodeKind sh:Literal ;
 	sh:order 0 ;
 	sh:path seeker:position .
-_:c14n37 rdf:first "max" ;
+_:c14n5 sh:datatype xsd:integer ;
+	sh:description "The draw's 1-based position within its batch." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:minInclusive 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path seeker:position .
+_:c14n50 rdf:first "max" ;
 	rdf:rest rdf:nil .
-_:c14n38 sh:class seeker:DrawBatch ;
+_:c14n51 sh:class seeker:DrawBatch ;
 	sh:description "The batch the ideas were generated from, embedded so the record stands alone." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:BlankNodeOrIRI ;
 	sh:order 0 ;
 	sh:path seeker:drawBatch .
-_:c14n39 sh:datatype xsd:string ;
+_:c14n52 sh:datatype xsd:string ;
 	sh:description "Why no idea was recorded for this draw." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 1 ;
 	sh:path seeker:reason .
-_:c14n4 sh:datatype xsd:integer ;
-	sh:description "The draw's 1-based position within its batch." ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:minInclusive 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 0 ;
-	sh:path seeker:position .
-_:c14n40 sh:class seeker:Deck ;
+_:c14n53 sh:class seeker:Deck ;
 	sh:description "Every deck in the set, one per axis." ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:IRI ;
 	sh:order 0 ;
 	sh:path seeker:decks .
-_:c14n41 sh:datatype xsd:integer ;
+_:c14n54 rdf:first "import" ;
+	rdf:rest rdf:nil .
+_:c14n55 sh:datatype xsd:integer ;
 	sh:description "Input tokens served from the prompt cache." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -284,43 +405,49 @@ _:c14n41 sh:datatype xsd:integer ;
 	sh:nodeKind sh:Literal ;
 	sh:order 2 ;
 	sh:path seeker:cacheReadTokens .
-_:c14n42 sh:datatype seeker:CardId ;
+_:c14n56 sh:datatype seeker:CardId ;
 	sh:description "The card's stable identifier, unique across the deck set." ;
 	sh:maxCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 0 ;
 	sh:path seeker:id ;
 	sh:pattern "^[a-z0-9]+(-[a-z0-9]+)*$" .
-_:c14n43 sh:class seeker:Card ;
+_:c14n57 sh:class seeker:Card ;
 	sh:description "The cards on this axis, in a meaningful order." ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:IRI ;
 	sh:order 3 ;
 	sh:path seeker:cards .
-_:c14n44 sh:datatype xsd:string ;
+_:c14n58 sh:datatype xsd:string ;
 	sh:description "Human-readable name, as it should appear in prompts and reports." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 1 ;
 	sh:path skos:prefLabel .
-_:c14n45 rdf:first rdf:type ;
+_:c14n59 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:c14n46 sh:datatype xsd:string ;
+_:c14n6 sh:class seeker:Card ;
+	sh:description "The cards the work embodies, referenced by card id. Empty until linked by hand or by card suggestions." ;
+	sh:minCount 0 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 7 ;
+	sh:path seeker:cards .
+_:c14n60 sh:datatype xsd:string ;
 	sh:description "One line on what the axis contributes to a draw." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 2 ;
 	sh:path dcterms:description .
-_:c14n47 sh:datatype xsd:string ;
+_:c14n61 sh:datatype xsd:string ;
 	sh:description "Human-readable name, as it should appear in prompts and reports." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 1 ;
 	sh:path skos:prefLabel .
-_:c14n48 sh:datatype seeker:Sha256Digest ;
+_:c14n62 sh:datatype seeker:Sha256Digest ;
 	sh:description "Digest of the deck set the batch was drawn from. Replaying against decks with a different digest is an error." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -328,16 +455,14 @@ _:c14n48 sh:datatype seeker:Sha256Digest ;
 	sh:order 1 ;
 	sh:path seeker:deckSetDigest ;
 	sh:pattern "^[0-9a-f]{64}$" .
-_:c14n49 sh:class seeker:Card ;
+_:c14n63 sh:class seeker:Card ;
 	sh:description "The drawn cards, referenced by card id, one per axis in the same order as axes." ;
 	sh:maxCount 3 ;
 	sh:minCount 3 ;
 	sh:nodeKind sh:IRI ;
 	sh:order 3 ;
 	sh:path seeker:drawnCards .
-_:c14n5 rdf:first rdf:type ;
-	rdf:rest rdf:nil .
-_:c14n50 sh:datatype xsd:integer ;
+_:c14n64 sh:datatype xsd:integer ;
 	sh:description "Uncached input tokens billed at the model's input rate." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -345,9 +470,9 @@ _:c14n50 sh:datatype xsd:integer ;
 	sh:nodeKind sh:Literal ;
 	sh:order 0 ;
 	sh:path seeker:inputTokens .
-_:c14n51 rdf:first "medium" ;
-	rdf:rest _:c14n15 .
-_:c14n52 sh:datatype xsd:integer ;
+_:c14n65 rdf:first "medium" ;
+	rdf:rest _:c14n19 .
+_:c14n66 sh:datatype xsd:integer ;
 	sh:description "The non-negative integer the draw's random stream is derived from. The same seed, deck content and batch size always produce the same batch." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -355,36 +480,40 @@ _:c14n52 sh:datatype xsd:integer ;
 	sh:nodeKind sh:Literal ;
 	sh:order 0 ;
 	sh:path seeker:seed .
-_:c14n53 rdf:first rdf:type ;
+_:c14n67 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:c14n54 sh:class seeker:CardReading ;
+_:c14n68 sh:class seeker:CardReading ;
 	sh:description "How the generator read each drawn card, in the draw's card order." ;
 	sh:maxCount 3 ;
 	sh:minCount 3 ;
 	sh:nodeKind sh:BlankNodeOrIRI ;
 	sh:order 5 ;
 	sh:path seeker:cardReadings .
-_:c14n55 sh:datatype xsd:string ;
+_:c14n69 sh:datatype xsd:string ;
 	sh:description "The Z of the statement, meaning why the idea works or matters, as a real reason rather than a restatement." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 4 ;
 	sh:path seeker:rationale .
-_:c14n56 sh:datatype seeker:Synonym ;
+_:c14n7 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:c14n70 sh:datatype seeker:Synonym ;
 	sh:description "Other names for the card in specialist literatures, used to expand prior-art searches. Must not repeat the name or each other, case-insensitively." ;
 	sh:nodeKind sh:Literal ;
 	sh:order 2 ;
 	sh:path skos:altLabel ;
 	sh:pattern "^\\S(.*\\S)?$" .
-_:c14n57 sh:class seeker:Usage ;
+_:c14n71 sh:class seeker:Usage ;
 	sh:description "Tokens consumed by the model calls this record accounts for." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:BlankNodeOrIRI ;
 	sh:order 2 ;
 	sh:path seeker:usage .
-_:c14n58 sh:datatype xsd:integer ;
+_:c14n72 rdf:first "gabe" ;
+	rdf:rest _:c14n36 .
+_:c14n73 sh:datatype xsd:integer ;
 	sh:description "The draw's 1-based position within its batch." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -392,19 +521,18 @@ _:c14n58 sh:datatype xsd:integer ;
 	sh:nodeKind sh:Literal ;
 	sh:order 0 ;
 	sh:path seeker:position .
-_:c14n59 sh:class seeker:GenerationFailure ;
+_:c14n74 rdf:first "publication" ;
+	rdf:rest _:c14n18 .
+_:c14n75 rdf:first "game" ;
+	rdf:rest _:c14n74 .
+_:c14n76 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:c14n77 sh:class seeker:GenerationFailure ;
 	sh:description "Draws that produced no valid idea, in position order." ;
 	sh:nodeKind sh:BlankNodeOrIRI ;
 	sh:order 8 ;
 	sh:path seeker:failures .
-_:c14n6 sh:datatype xsd:string ;
-	sh:description "The role's standing instructions and rules." ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 3 ;
-	sh:path seeker:systemPrompt .
-_:c14n60 sh:datatype xsd:integer ;
+_:c14n78 sh:datatype xsd:integer ;
 	sh:description "Input tokens written to the prompt cache." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -412,22 +540,45 @@ _:c14n60 sh:datatype xsd:integer ;
 	sh:nodeKind sh:Literal ;
 	sh:order 3 ;
 	sh:path seeker:cacheWriteTokens .
-_:c14n61 rdf:first rdf:type ;
+_:c14n79 sh:datatype xsd:string ;
+	sh:description "The people or groups who made the work, as plain names. Notes may write them as wikilinks so they show up in the vault's graph." ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path dcterms:creator .
+_:c14n8 sh:datatype xsd:string ;
+	sh:description "The role's standing instructions and rules." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path seeker:systemPrompt .
+_:c14n80 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:c14n62 sh:datatype xsd:string ;
+_:c14n81 rdf:first "installation" ;
+	rdf:rest _:c14n45 .
+_:c14n82 sh:datatype xsd:string ;
 	sh:description "Who the role speaks as, which sets its taste and its blind spots." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 2 ;
 	sh:path seeker:persona .
-_:c14n63 sh:description "Which role in the pipeline this is." ;
-	sh:in _:c14n78 ;
+_:c14n83 sh:description "Which role in the pipeline this is." ;
+	sh:in _:c14n104 ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:order 2 ;
 	sh:path seeker:roleName .
-_:c14n64 sh:datatype seeker:ModelId ;
+_:c14n84 sh:datatype xsd:date ;
+	sh:description "The date the work was added to the vault." ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 10 ;
+	sh:path seeker:capturedOn .
+_:c14n85 rdf:first "instrument" ;
+	rdf:rest _:c14n20 .
+_:c14n86 sh:datatype seeker:ModelId ;
 	sh:description "The Claude model the role runs on." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -435,7 +586,7 @@ _:c14n64 sh:datatype seeker:ModelId ;
 	sh:order 3 ;
 	sh:path seeker:model ;
 	sh:pattern "^claude-[a-z0-9-]+$" .
-_:c14n65 sh:datatype seeker:Sha256Digest ;
+_:c14n87 sh:datatype seeker:Sha256Digest ;
 	sh:description "SHA-256 of the role file's bytes, so any prompt edit is visible." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -443,7 +594,13 @@ _:c14n65 sh:datatype seeker:Sha256Digest ;
 	sh:order 4 ;
 	sh:path seeker:roleDigest ;
 	sh:pattern "^[0-9a-f]{64}$" .
-_:c14n66 sh:datatype seeker:ModelId ;
+_:c14n88 sh:description "Who or what added the work to the vault." ;
+	sh:in _:c14n72 ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:order 9 ;
+	sh:path seeker:capturedBy .
+_:c14n89 sh:datatype seeker:ModelId ;
 	sh:description "The Claude model the role runs on." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
@@ -451,82 +608,42 @@ _:c14n66 sh:datatype seeker:ModelId ;
 	sh:order 1 ;
 	sh:path seeker:model ;
 	sh:pattern "^claude-[a-z0-9-]+$" .
-_:c14n67 rdf:first rdf:type ;
+_:c14n9 sh:description "What form the work takes." ;
+	sh:in _:c14n39 ;
+	sh:maxCount 1 ;
+	sh:minCount 1 ;
+	sh:order 5 ;
+	sh:path dcterms:type .
+_:c14n90 sh:description "The creative fields the work belongs to, when known." ;
+	sh:in _:c14n119 ;
+	sh:order 6 ;
+	sh:path seeker:fields .
+_:c14n91 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:c14n68 rdf:first rdf:type ;
+_:c14n92 rdf:first "recording" ;
+	rdf:rest _:c14n85 .
+_:c14n93 rdf:first "product" ;
+	rdf:rest _:c14n47 .
+_:c14n94 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:c14n69 sh:class seeker:Usage ;
+_:c14n95 sh:class seeker:Usage ;
 	sh:description "Tokens consumed by the model calls this record accounts for." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:BlankNodeOrIRI ;
 	sh:order 6 ;
 	sh:path seeker:usage .
-_:c14n7 rdf:first "xhigh" ;
-	rdf:rest _:c14n37 .
-_:c14n70 sh:datatype xsd:string ;
+_:c14n96 sh:datatype xsd:string ;
 	sh:description "The Y of the statement, meaning what the thing does." ;
 	sh:maxCount 1 ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:Literal ;
 	sh:order 3 ;
 	sh:path seeker:behavior .
-_:c14n71 rdf:first "literal" ;
-	rdf:rest _:c14n72 .
-_:c14n72 rdf:first "loose" ;
-	rdf:rest _:c14n73 .
-_:c14n73 rdf:first "metaphorical" ;
-	rdf:rest rdf:nil .
-_:c14n74 rdf:first "literal" ;
-	rdf:rest _:c14n75 .
-_:c14n75 rdf:first "loose" ;
-	rdf:rest _:c14n76 .
-_:c14n76 rdf:first "metaphorical" ;
-	rdf:rest rdf:nil .
-_:c14n77 rdf:first "generator" ;
-	rdf:rest rdf:nil .
-_:c14n78 rdf:first "generator" ;
-	rdf:rest rdf:nil .
-_:c14n79 rdf:first "music" ;
-	rdf:rest _:c14n80 .
-_:c14n8 sh:class seeker:Card ;
-	sh:description "The card being interpreted, referenced by card id." ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:nodeKind sh:IRI ;
-	sh:order 0 ;
-	sh:path seeker:card .
-_:c14n80 rdf:first "visual-art" ;
-	rdf:rest _:c14n81 .
-_:c14n81 rdf:first "film" ;
-	rdf:rest _:c14n82 .
-_:c14n82 rdf:first "electronics" ;
-	rdf:rest _:c14n83 .
-_:c14n83 rdf:first "writing" ;
-	rdf:rest _:c14n84 .
-_:c14n84 rdf:first "comics" ;
-	rdf:rest _:c14n85 .
-_:c14n85 rdf:first "games" ;
-	rdf:rest rdf:nil .
-_:c14n86 rdf:first "music" ;
-	rdf:rest _:c14n87 .
-_:c14n87 rdf:first "visual-art" ;
-	rdf:rest _:c14n88 .
-_:c14n88 rdf:first "film" ;
-	rdf:rest _:c14n89 .
-_:c14n89 rdf:first "electronics" ;
-	rdf:rest _:c14n90 .
-_:c14n9 sh:datatype xsd:string ;
-	sh:description "One line on how the card was taken in this idea." ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 1 ;
-	sh:path seeker:interpretation .
-_:c14n90 rdf:first "writing" ;
-	rdf:rest _:c14n91 .
-_:c14n91 rdf:first "comics" ;
-	rdf:rest _:c14n92 .
-_:c14n92 rdf:first "games" ;
+_:c14n97 rdf:first "literal" ;
+	rdf:rest _:c14n98 .
+_:c14n98 rdf:first "loose" ;
+	rdf:rest _:c14n99 .
+_:c14n99 rdf:first "metaphorical" ;
 	rdf:rest rdf:nil .
 

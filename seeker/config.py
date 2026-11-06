@@ -14,13 +14,14 @@ from pathlib import Path
 from typing import ClassVar
 
 import yaml
-from pydantic import ConfigDict, Field, SecretStr, ValidationError
+from pydantic import ConfigDict, Field, SecretStr, ValidationError, field_validator
 
 from seeker.ontology import ModelId, SeekerModel, Usage
 
 CONFIG_NAME = "seeker.yaml"
 CONFIG_ENV = "SEEKER_CONFIG"
 KEY_ENV = "ANTHROPIC_API_KEY"
+VAULT_ENV = "SEEKER_VAULT"
 PER_MILLION = 1_000_000
 FORBIDDEN_KEYS = ("api_key", "anthropic_api_key")
 
@@ -36,6 +37,45 @@ class MissingApiKey(ConfigError):
         )
 
 
+class VaultNotConfigured(ConfigError):
+    def __init__(self, env_file: Path) -> None:
+        super().__init__(
+            f"no Obsidian vault configured: add {VAULT_ENV}=/path/to/vault to {env_file} "
+            f"(git-ignored), or set {VAULT_ENV} in the environment"
+        )
+
+
+class VaultFolders(SeekerModel):
+    """Where Seeker keeps its notes inside the vault, relative to the vault root.
+    A shared convention, so it lives in the committed seeker.yaml."""
+
+    model_config = ConfigDict(title="VaultFolders")
+
+    works: Path = Field(default=Path("Works"), description="One note per captured work.")
+    cards: Path = Field(default=Path("Cards"), description="One synced note per deck card.")
+
+    @field_validator("works", "cards")
+    @classmethod
+    def _relative(cls, folder: Path) -> Path:
+        if folder.is_absolute() or ".." in folder.parts:
+            raise ValueError(f"{folder} must be a folder inside the vault, relative to its root")
+        return folder
+
+
+class VaultLayout(SeekerModel):
+    """The resolved vault: its root and the absolute works and cards folders."""
+
+    model_config = ConfigDict(title="VaultLayout")
+
+    root: Path = Field(description="The Obsidian vault root.")
+    works: Path = Field(description="Absolute works folder.")
+    cards: Path = Field(description="Absolute cards folder.")
+
+    @classmethod
+    def under(cls, root: Path, folders: VaultFolders) -> VaultLayout:
+        return cls(root=root, works=root / folders.works, cards=root / folders.cards)
+
+
 class PathsConfig(SeekerModel):
     """Where Seeker's files live, resolved to absolute paths."""
 
@@ -45,7 +85,9 @@ class PathsConfig(SeekerModel):
     batches: Path = Field(description="Committed draw-batch records.")
     generations: Path = Field(description="Committed generation records.")
     prompts: Path = Field(description="Role files.")
-    vault: Path | None = Field(default=None, description="Obsidian vault root, when used.")
+    vault: Path | None = Field(
+        default=None, description=f"Obsidian vault root; a fallback for {VAULT_ENV}, which wins."
+    )
 
     def resolved(self, root: Path) -> PathsConfig:
         def place(path: Path) -> Path:
@@ -99,11 +141,12 @@ class SeekerConfig(SeekerModel):
 
     model_config = ConfigDict(title="SeekerConfig")
 
-    SECTIONS: ClassVar[tuple[str, ...]] = ("paths", "prices")
+    SECTIONS: ClassVar[tuple[str, ...]] = ("paths", "prices", "vault_folders")
 
     root: Path = Field(description="Folder holding seeker.yaml; relative paths resolve against it.")
     paths: PathsConfig
     prices: PriceTable
+    vault_folders: VaultFolders = Field(default_factory=VaultFolders)
 
     @classmethod
     def find(cls, start: Path | None = None) -> Path:
@@ -160,6 +203,20 @@ class SeekerConfig(SeekerModel):
         if not value:
             raise MissingApiKey(self.env_file)
         return SecretStr(value)
+
+
+    def vault(self) -> VaultLayout:
+        """The vault from $SEEKER_VAULT, else SEEKER_VAULT in .env, else paths.vault.
+        Raises VaultNotConfigured when none is set."""
+        value = os.environ.get(VAULT_ENV) or DotEnv(self.env_file).get(VAULT_ENV)
+        if value:
+            root = Path(value).expanduser()
+            root = root if root.is_absolute() else (self.root / root).resolve()
+        elif self.paths.vault is not None:
+            root = self.paths.vault
+        else:
+            raise VaultNotConfigured(self.env_file)
+        return VaultLayout.under(root, self.vault_folders)
 
 
 class DotEnv:
