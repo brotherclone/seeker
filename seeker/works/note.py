@@ -15,7 +15,7 @@ import tempfile
 from pathlib import Path
 
 import yaml
-from pydantic import ConfigDict, Field
+from pydantic import ConfigDict, Field, PrivateAttr
 
 from seeker.ontology import SeekerModel
 
@@ -113,13 +113,18 @@ class NoteFile(SeekerModel):
         default=None, description="The YAML between the fences, verbatim; None when the note has no frontmatter."
     )
     body: str = Field(default="", description="Everything after the frontmatter, verbatim.")
-    on_disk: str | None = Field(default=None, description="The file's text when read; None for a new note.")
+    # What the file holds now, as far as this note knows: the text read, then
+    # whatever save() last wrote. Private so it can track writes on a frozen model,
+    # and so it stays out of equality and serialization.
+    _on_disk: str | None = PrivateAttr(default=None)
 
     @classmethod
     def read(cls, path: Path) -> NoteFile:
         text = path.read_text(encoding="utf-8")
         frontmatter_text, body = cls._split(text)
-        return cls(path=path, frontmatter_text=frontmatter_text, body=body, on_disk=text)
+        note = cls(path=path, frontmatter_text=frontmatter_text, body=body)
+        note._on_disk = text
+        return note
 
     @classmethod
     def new(cls, path: Path) -> NoteFile:
@@ -160,7 +165,7 @@ class NoteFile(SeekerModel):
 
     @property
     def changed(self) -> bool:
-        return self.text != self.on_disk
+        return self.text != self._on_disk
 
     def with_value(self, key: str, value: object) -> NoteFile:
         """This note with ``key`` set to ``value``. Only that key's lines change;
@@ -225,4 +230,5 @@ class NoteFile(SeekerModel):
         except BaseException:
             Path(temp).unlink(missing_ok=True)
             raise
+        self._on_disk = self.text
         return True

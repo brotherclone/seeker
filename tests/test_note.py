@@ -103,3 +103,23 @@ def test_unterminated_fence_is_body(tmp_path: Path) -> None:
     note = note_at(tmp_path, "---\nnot closed\n")
     assert not note.has_frontmatter
     assert note.frontmatter.entries == ()
+
+
+def test_saving_twice_writes_once(tmp_path: Path) -> None:
+    note = note_at(tmp_path, HAND_WRITTEN).with_value("rating", 4)
+    assert note.save() is True
+    stamp = note.path.stat().st_mtime_ns
+    assert not note.changed
+    assert note.save() is False
+    assert note.path.stat().st_mtime_ns == stamp
+
+
+def test_edits_carry_what_is_on_disk(tmp_path: Path) -> None:
+    note = note_at(tmp_path, "---\nrating: 5\n---\nbody\n")
+    assert note.with_value("rating", 4).changed
+    assert not note.with_value("rating", 4).with_value("rating", 5).changed  # edited back to what's on disk
+
+
+def test_new_note_saved_twice(tmp_path: Path) -> None:
+    note = NoteFile.new(tmp_path / "n.md").with_value("type", "card")
+    assert note.save() is True and note.save() is False
