@@ -117,8 +117,8 @@ class TestVault:
     def test_folder_defaults(self, tmp_path: Path) -> None:
         layout = SeekerConfig.load(write(tmp_path)).vault()
         assert layout.root == Path("~/vault").expanduser()
-        assert layout.works == layout.root / "Seeker" / "Works"
-        assert layout.cards == layout.root / "Seeker" / "Cards"
+        assert layout.works == layout.root / "Works"
+        assert layout.cards == layout.root / "Cards"
 
     def test_folder_overrides(self, tmp_path: Path) -> None:
         text = MINIMAL + "vault_folders: {works: Library/Works, cards: Library/Cards}\n"
@@ -160,4 +160,4 @@ class TestVault:
     def test_repo_config_has_no_vault_committed(self) -> None:
         config = SeekerConfig.load(ROOT / "seeker.yaml")
         assert config.paths.vault is None
-        assert str(config.vault_folders.works) == "Seeker/Works"
+        assert str(config.vault_folders.works) == "Works"

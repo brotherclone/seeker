@@ -32,7 +32,7 @@ def project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 
 def works(vault: Path) -> Path:
-    return vault / "Seeker" / "Works"
+    return vault / "Works"
 
 
 def test_vault_not_configured(project: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -61,7 +61,7 @@ def test_validate_problems(project: Path, capsys: pytest.CaptureFixture[str]) ->
 def test_sync_cards_then_resync(project: Path, capsys: pytest.CaptureFixture[str]) -> None:
     assert main(["sync-cards"]) == 0
     assert capsys.readouterr().out.startswith("153 created, 0 updated, 0 unchanged")
-    assert (project / "Seeker" / "Cards" / "granular-synthesis.md").is_file()
+    assert (project / "Cards" / "granular-synthesis.md").is_file()
     assert main(["sync-cards"]) == 0
     assert capsys.readouterr().out.startswith("0 created, 0 updated, 153 unchanged")
 

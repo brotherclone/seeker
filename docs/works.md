@@ -7,7 +7,7 @@ Seeker's prior art lives in your Obsidian vault. Each work you come across (a re
 Point Seeker at the vault in the git-ignored `.env` beside `seeker.yaml`:
 
 ```
-SEEKER_VAULT=~/Documents/Claude/Projects/Bracers/Projects
+SEEKER_VAULT=~/Documents/Claude/Projects/Seeker
 ```
 
 The order of precedence is:
@@ -19,8 +19,8 @@ The folders inside the vault are a shared convention in `seeker.yaml`:
 
 ```yaml
 vault_folders:
-  works: Seeker/Works
-  cards: Seeker/Cards
+  works: Works
+  cards: Cards
 ```
 
 With no vault set, every `seeker-works` command stops with a message naming `SEEKER_VAULT` and touches nothing.
@@ -31,7 +31,7 @@ With no vault set, every `seeker-works` command stops with a message naming `SEE
 uv run seeker-works sync-cards
 ```
 
-This writes one note per deck card to `Seeker/Cards/<card-id>.md`. Run it again whenever the decks change.
+This writes one note per deck card to `Cards/<card-id>.md`. Run it again whenever the decks change.
 
 What Seeker owns in a card note:
 - the frontmatter keys `type`, `card_id`, `axis`, `fields`, `tags` and `aliases`;
@@ -44,7 +44,7 @@ Everything else is yours: other properties (a `rating`, say), and anything you w
 ## Capturing a work
 
 1. In the Obsidian Web Clipper, go to **Settings → Templates → Import** and choose `capture/seeker-work.clipper.json`.
-2. On a page you want to keep, clip it with the **Seeker work** template. The note lands in `Seeker/Works`.
+2. On a page you want to keep, clip it with the **Seeker work** template. The note lands in `Works/`.
    - The template fills in `title`, `url`, `creators` (the page author, as a wikilink), `year` (the published date) and `summary` (the page description).
    - It sets `type: work`, `kind: other`, `captured_by: gabe` and today's `captured_on`.
    - The Clipper's interpreter writes three sentences about the work into the body. That gives card matching more to go on.

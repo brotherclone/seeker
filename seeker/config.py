@@ -51,8 +51,8 @@ class VaultFolders(SeekerModel):
 
     model_config = ConfigDict(title="VaultFolders")
 
-    works: Path = Field(default=Path("Seeker/Works"), description="One note per captured work.")
-    cards: Path = Field(default=Path("Seeker/Cards"), description="One synced note per deck card.")
+    works: Path = Field(default=Path("Works"), description="One note per captured work.")
+    cards: Path = Field(default=Path("Cards"), description="One synced note per deck card.")
 
     @field_validator("works", "cards")
     @classmethod

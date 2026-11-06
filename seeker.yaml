@@ -9,8 +9,8 @@ paths:
 
 # Seeker's folders inside the vault, relative to its root.
 vault_folders:
-  works: Seeker/Works
-  cards: Seeker/Cards
+  works: Works
+  cards: Cards
 
 # USD per million tokens. Prices are data: update them as they change.
 # Input/output: list prices checked 2026-11-04 (https://computeprices.com/api-pricing/claude).

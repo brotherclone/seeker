@@ -5,11 +5,11 @@
 - [x] 1.1 Add the `WorkId` type, the `WorkKind` and `CaptureSource` enums, the new slots (`title`, `creators`, `year`, `url`, `kind`, `summary`, `captured_by`, `captured_on`), and the `Work` class with `slot_usage` for `id` and `cards` to `schema/seeker.yaml` per design decision 1, every element described. Run `make schema`. Verify that `linkml-lint` and `tests/test_schema.py` pass, or record the fallback to `linked_cards` if the toolchain rejects the `slot_usage`.
 - [x] 1.2 Extend the conformance test: `date` maps to `datetime.date`, `uri` maps to the `Url` named type, and induced `slot_usage` ranges are respected. Verify the existing tests still pass.
 - [x] 1.3 Implement `WorkId`, `Url`, `WorkKind`, `CaptureSource` and `Work` in `seeker/ontology/`, exported, with rich metadata. Verify that the conformance test passes, and that unit tests cover the bounds and the defaults (empty `cards`, `fields` and `creators`; optional `year`, `url` and `summary`).
-- [x] 1.4 Write the Obsidian concept note `Seeker/Ontology/Work.md`, linked to `[[Card]]`, `[[CreativeField]]`, `[[DeckSet]]` and the hub. Verify that its slot table matches the schema.
+- [x] 1.4 Write the Obsidian concept note `Ontology/Work.md`, linked to `[[Card]]`, `[[CreativeField]]`, `[[DeckSet]]` and the hub. Verify that its slot table matches the schema.
 
 ## 2. Notes and config
 
-- [x] 2.1 Add `vault_folders` to `SeekerConfig` (defaulting to `Seeker/Works` and `Seeker/Cards`), plus `VaultLayout` and `VaultNotConfigured`. Resolve the vault from `SEEKER_VAULT` (environment, then `.env`), falling back to `paths.vault`. Update the `seeker.yaml` comment to point at `.env`. Verify unit tests: the folder defaults and overrides; a `.env` value; the environment beating both `.env` and `paths.vault`; `~` expansion; relative-to-vault folders; and the not-configured message naming `SEEKER_VAULT`.
+- [x] 2.1 Add `vault_folders` to `SeekerConfig` (defaulting to `Works` and `Cards`), plus `VaultLayout` and `VaultNotConfigured`. Resolve the vault from `SEEKER_VAULT` (environment, then `.env`), falling back to `paths.vault`. Update the `seeker.yaml` comment to point at `.env`. Verify unit tests: the folder defaults and overrides; a `.env` value; the environment beating both `.env` and `paths.vault`; `~` expansion; relative-to-vault folders; and the not-configured message naming `SEEKER_VAULT`.
 - [x] 2.2 Implement `NoteFile`: parse frontmatter and body; atomic write only on change; preserve unknown keys and their order; a managed-block helper. Verify round-trip tests: unchanged notes are not rewritten, unknown keys and body text survive, a note with no frontmatter gets some, and Unicode survives.
 
 ## 3. Works catalog
@@ -38,7 +38,7 @@
 
 ## 7. Record the decision
 
-- [x] 7.1 Write `Seeker/Decisions/2026-11-05 Works in the vault.md` and update the hub. Verify that the note links to the hub, `[[Work]]` and `prior-art-works`.
+- [x] 7.1 Write `Decisions/2026-11-05 Works in the vault.md` and update the hub. Verify that the note links to the hub, `[[Work]]` and `prior-art-works`.
 
 ## Workflow follow-up
 

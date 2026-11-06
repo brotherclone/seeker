@@ -3,7 +3,7 @@
 ## Context
 
 - The ontology, its conformance test, and the tooling-model pattern (models that declare no `class_uri`) are established. `DeckSet` gives card lookup, and `Card.matches` already compares names and synonyms case-insensitively.
-- `seeker.yaml` has `paths.vault: null`. On Gabe's Mac the vault is `~/Documents/Claude/Projects/Bracers/Projects`, which already holds `Seeker/` notes (the hub, `Ontology/`, `Decisions/`, `Notes/`).
+- `seeker.yaml` has `paths.vault: null`. On Gabe's Mac Seeker has its own vault, `~/Documents/Claude/Projects/Seeker`, holding the hub (`Seeker.md`), `Ontology/`, `Decisions/` and `Notes/` at its root.
 - The Obsidian Web Clipper imports templates as JSON:
   - `schemaVersion`, `name`, `behavior: create`;
   - `noteNameFormat`, `path`, `noteContentFormat`;
@@ -100,7 +100,7 @@ SHA-256 over canonical JSON of the `Work` models sorted by id, matching the deck
 
 ```
 # .env  (git-ignored, machine-specific)
-SEEKER_VAULT=~/Documents/Claude/Projects/Bracers/Projects
+SEEKER_VAULT=~/Documents/Claude/Projects/Seeker
 ```
 
 ```yaml
@@ -108,8 +108,8 @@ SEEKER_VAULT=~/Documents/Claude/Projects/Bracers/Projects
 paths:
   vault: null              # fallback only; set SEEKER_VAULT in .env instead
 vault_folders:
-  works: Seeker/Works
-  cards: Seeker/Cards
+  works: Works
+  cards: Cards
 ```
 
 - **Where the vault root comes from:** `SEEKER_VAULT` in the environment, then `SEEKER_VAULT` in `.env`, then `paths.vault`. This uses the same `.env` reader and precedence as `ANTHROPIC_API_KEY`.
@@ -127,7 +127,7 @@ vault_folders:
   "name": "Seeker work",
   "behavior": "create",
   "noteNameFormat": "{{title|safe_name}}",
-  "path": "Seeker/Works",
+  "path": "Works",
   "properties": [
     {"name": "type",        "value": "work",                         "type": "text"},
     {"name": "title",       "value": "{{title}}",                    "type": "text"},
@@ -164,11 +164,11 @@ Ontology models go in `seeker/ontology/work.py`.
 
 ### 8. Obsidian
 
-- A concept note: `Seeker/Ontology/Work.md`.
+- A concept note: `Ontology/Work.md`.
 - A decision note: `2026-11-05 Works in the vault`.
 - A hub update.
 
-The generated `Seeker/Cards/` notes become graph nodes in their own right. Card notes, work notes and the ontology notes then form one connected graph.
+The generated `Cards/` notes become graph nodes in their own right. Card notes, work notes and the ontology notes then form one connected graph.
 
 ## Risks / Trade-offs
 

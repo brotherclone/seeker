@@ -3,7 +3,7 @@
   "name": "Seeker work",
   "behavior": "create",
   "noteNameFormat": "{{title|safe_name}}",
-  "path": "Seeker/Works",
+  "path": "Works",
   "properties": [
     {"name": "type", "value": "work", "type": "text"},
     {"name": "title", "value": "{{title}}", "type": "text"},

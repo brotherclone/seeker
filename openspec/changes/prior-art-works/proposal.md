@@ -58,7 +58,7 @@ None. Decks, draws and generation only feed this capability; their requirements 
   - Existing slots reused through `slot_usage`: `id` (ranged as `WorkId` for works), `fields`, and `cards` (as card references, not inlined, and optional for works).
   - The conformance test learns `date` and `uri` ranges.
 - **Writes into Gabe's vault:**
-  - `Seeker/Cards/` gets 153 card notes, plus Seeker-managed blocks inside them.
+  - `Cards/` gets 153 card notes, plus Seeker-managed blocks inside them.
   - `suggest --apply` edits the `cards` property of work notes.
   - Nothing else in the vault is touched.
 - **Code:**
