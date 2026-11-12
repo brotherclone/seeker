@@ -82,7 +82,7 @@
   - each record has a model and usage.
 
   Verify fake-model tests for the full flow, critic failure and advocate failure.
-- [ ] 6.6 Implement `CostMeter` and `DebateSink` with resume checks:
+- [x] 6.6 Implement `CostMeter` and `DebateSink` with resume checks:
   - refuse changes to the generation digest, role digests or seed;
   - allow a change to the catalog digest;
   - add `stop_reason` at the budget.
