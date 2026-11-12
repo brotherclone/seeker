@@ -115,12 +115,12 @@
 
 ## 9. Obsidian notes
 
-- [ ] 9.1 Write the `Ontology/` notes for the 13 new classes and 5 new enums (definition, slots with ranges, wikilinks, a link to the hub). Update `Role`, `RoleName`, `Usage`, `CaptureSource`, `Idea`, `Generation` and `Work`. Verify that each slot table matches `schema/seeker.yaml`.
-- [ ] 9.2 Write `Decisions/2026-11-12 Debate shape and blind per-axis Elo.md` (context, decision, alternatives, links to concepts and to `debate-ideas`). Update the `Seeker.md` status and "Next" list. Verify the note links to the hub and the change, and the frontmatter has `type: decision` and `openspec: debate-ideas`.
+- [x] 9.1 Write the `Ontology/` notes for the 13 new classes and 5 new enums (definition, slots with ranges, wikilinks, a link to the hub). Update `Role`, `RoleName`, `Usage`, `CaptureSource`, `Idea`, `Generation` and `Work`. Verify that each slot table matches `schema/seeker.yaml`.
+- [x] 9.2 Write `Decisions/2026-11-12 Debate shape and blind per-axis Elo.md` (context, decision, alternatives, links to concepts and to `debate-ideas`). Update the `Seeker.md` status and "Next" list. Verify the note links to the hub and the change, and the frontmatter has `type: decision` and `openspec: debate-ideas`.
 
 ## 10. Integration
 
-- [ ] 10.1 Run `uv run pytest`, `linkml-lint` and `seeker-debate generations/2026-11-04-round-1-literal.yaml --dry-run`. Verify all pass, and that the dry run reports 12 debates, about 48 debate calls and 66 comparisons.
+- [x] 10.1 Run `uv run pytest`, `linkml-lint` and `seeker-debate generations/2026-11-04-round-1-literal.yaml --dry-run`. Verify all pass, and that the dry run reports 12 debates, about 48 debate calls and 66 comparisons.
 
 ## Workflow follow-up
 
