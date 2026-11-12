@@ -42,11 +42,11 @@
 
 ## 4. Role files
 
-- [ ] 4.1 Write `prompts/prosecutor.yaml`, `skeptic.yaml`, `taste_critic.yaml`, `advocate.yaml` and `judge.yaml` with the models, efforts, `max_searches` and personas from design decision 2, three reading guidances each.
+- [x] 4.1 Write `prompts/prosecutor.yaml`, `skeptic.yaml`, `taste_critic.yaml`, `advocate.yaml` and `judge.yaml` with the models, efforts, `max_searches` and personas from design decision 2, three reading guidances each.
   - The skeptic's gear-and-stack list and the taste critic's persona are drafted from the vault's `Works/` and `Notes/`, and marked `# DRAFT: Gabe to edit`.
 
   Verify that all five load as `Role`s.
-- [ ] 4.2 Implement `seeker/debate/roles.py`. It loads the five roles with their digests and rejects:
+- [x] 4.2 Implement `seeker/debate/roles.py`. It loads the five roles with their digests and rejects:
   - critics that share both model and persona;
   - any unpriced model, before any call.
 
@@ -55,7 +55,7 @@
 
 ## 5. Model boundary: web search
 
-- [ ] 5.1 Extend `ModelRequest` (`max_searches`) and `ModelReply` (`search_results`, search count in `Usage`). In `AnthropicModel`:
+- [x] 5.1 Extend `ModelRequest` (`max_searches`) and `ModelReply` (`search_results`, search count in `Usage`). In `AnthropicModel`:
   - add the web search tool when `max_searches` is above 0;
   - collect result URLs and titles;
   - resume `pause_turn` up to 3 times;

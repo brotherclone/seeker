@@ -155,8 +155,8 @@ def test_arguments_match_the_installed_sdk_signature() -> None:
 
     retry = RetryContext(previous_output='{"statement": "x"}', feedback="fix it")
     accepted = set(inspect.signature(Messages.create).parameters) - {"self"}
-    for req in (request(), request(retry=retry)):
-        arguments = AnthropicModel._arguments(req)
+    for req in (request(), request(retry=retry), request(max_searches=2)):
+        arguments = AnthropicModel._arguments(req, AnthropicModel._messages(req))
         assert set(arguments) <= accepted, set(arguments) - accepted
         assert set(arguments["output_config"]) <= set(typing.get_type_hints(OutputConfigParam))
         assert set(arguments["output_config"]["format"]) <= set(typing.get_type_hints(JSONOutputFormatParam))
@@ -204,3 +204,91 @@ def test_live_smoke_haiku() -> None:
     draft, problems = IdeaDraft.parse(result.output_json)
     assert draft is not None, problems
     assert result.usage.output_tokens > 0
+
+
+# --- debate-ideas 5.1: web search at the boundary ---------------------------------
+
+
+def search_block(*urls: str) -> object:
+    return SimpleNamespace(
+        type="web_search_tool_result",
+        content=[SimpleNamespace(type="web_search_result", url=u, title=f"Title {i}") for i, u in enumerate(urls)],
+    )
+
+
+def searched_response(
+    content: list[object], stop: str = "end_turn", searches: int = 1, text: str = '{"urls": []}'
+) -> object:
+    return SimpleNamespace(
+        content=[*content, SimpleNamespace(type="text", text=text)] if stop != "pause_turn" else content,
+        usage=SimpleNamespace(
+            input_tokens=39_000,
+            output_tokens=800,
+            cache_read_input_tokens=0,
+            cache_creation_input_tokens=0,
+            server_tool_use=SimpleNamespace(web_search_requests=searches, web_fetch_requests=0),
+        ),
+        stop_reason=stop,
+    )
+
+
+class SequenceMessages(StubMessages):
+    def __init__(self, *responses: object) -> None:
+        super().__init__()
+        self.responses = list(responses)
+
+    def create(self, **kwargs: object) -> object:
+        self.calls.append(kwargs)
+        return self.responses.pop(0)
+
+
+def test_no_search_tool_unless_allowed() -> None:
+    messages = StubMessages(sdk_response())
+    stubbed(messages).reply(request())
+    assert "tools" not in messages.calls[0]
+
+
+def test_search_tool_carries_the_limit_and_results_are_collected() -> None:
+    code = SimpleNamespace(type="code_execution_tool_result", content=SimpleNamespace(stdout="filtered"))
+    response = searched_response(
+        [SimpleNamespace(type="server_tool_use"), code, search_block("https://a.org/x", "https://b.org/y")], searches=2
+    )
+    messages = StubMessages(response)
+    result = stubbed(messages).reply(request(max_searches=3))
+    assert messages.calls[0]["tools"] == [{"type": "web_search_20260209", "name": "web_search", "max_uses": 3}]
+    assert [str(r.url) for r in result.search_results] == ["https://a.org/x", "https://b.org/y"]
+    assert result.result_urls == {"https://a.org/x", "https://b.org/y"}
+    assert result.usage.web_search_requests == 2
+    assert json.loads(result.output_json) == {"urls": []}
+
+
+def test_search_error_block_is_no_results() -> None:
+    error = SimpleNamespace(type="web_search_tool_result", content=SimpleNamespace(error_code="max_uses_exceeded"))
+    result = stubbed(StubMessages(searched_response([error], searches=0))).reply(request(max_searches=1))
+    assert result.search_results == ()
+
+
+def test_unusable_result_urls_are_skipped() -> None:
+    result = stubbed(StubMessages(searched_response([search_block("not a url", "https://ok.org")]))).reply(
+        request(max_searches=1)
+    )
+    assert [str(r.url) for r in result.search_results] == ["https://ok.org"]
+
+
+def test_pause_turn_is_resumed_and_usage_summed() -> None:
+    paused = searched_response([search_block("https://a.org")], stop="pause_turn")
+    final = searched_response([search_block("https://b.org")])
+    messages = SequenceMessages(paused, final)
+    result = stubbed(messages).reply(request(max_searches=2))
+    assert len(messages.calls) == 2
+    assert messages.calls[1]["messages"][-1] == {"role": "assistant", "content": paused.content}
+    assert result.usage.input_tokens == 78_000 and result.usage.web_search_requests == 2
+    assert result.result_urls == {"https://a.org", "https://b.org"}
+
+
+def test_pause_turn_gives_up_after_three_resumes() -> None:
+    paused = [searched_response([], stop="pause_turn") for _ in range(4)]
+    messages = SequenceMessages(*paused)
+    with pytest.raises(ModelCallFailed, match="still paused after 3 resumes"):
+        stubbed(messages).reply(request(max_searches=1))
+    assert len(messages.calls) == 4
