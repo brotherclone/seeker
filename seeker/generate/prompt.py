@@ -40,7 +40,8 @@ class DrawPrompt:
             raise KeyError(f"draw {self.draw.position} names card {card_id!r}, which is not in the decks")
         return card
 
-    def render(self) -> str:
+    def card_lines(self) -> list[str]:
+        """The home field and every card with its synonyms, fields and note."""
         lines = [f"Home field: {self.draw.home_field.value}", "", "Cards:"]
         for index, (axis, card) in enumerate(zip(self.draw.axes, self.cards()), start=1):
             lines.append(f"{index}. {axis}: {card.name}  (id: {card.id})")
@@ -50,6 +51,10 @@ class DrawPrompt:
             lines.append(f"   fields: {fields}")
             if card.note:
                 lines.append(f"   note: {card.note}")
+        return lines
+
+    def render(self) -> str:
+        lines = self.card_lines()
         order = ", ".join(self.draw.drawn_cards)
         lines += [
             "",

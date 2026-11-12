@@ -65,9 +65,9 @@
 
 ## 6. Debate stage
 
-- [ ] 6.1 Implement the `CritiqueDraft` parse and checks from design decision 4: the one-sentence `failure` of 8-40 words, the restatement check, the card target, and the prosecutor evidence rules. Verify unit tests for every reject path in the spec: a vague failure, a restatement, an uncited `fatal`, an invented URL, an unknown `WorkId`, and an out-of-draw citation card that is dropped.
-- [ ] 6.2 Implement the `DefenseDraft` parse and checks: one reply per critique, the conceded-fatal rules, and the revision form via the `IdeaDraft` checks. Verify tests for each scenario in the spec's "advocate answers" and "revisions keep the form" requirements.
-- [ ] 6.3 Implement the critic and advocate prompt renderers in `seeker/debate/prompts.py`. The prosecutor's prompt includes the `DrawPriorArt` hits, or an explicit no-hits line. Verify snapshot tests:
+- [x] 6.1 Implement the `CritiqueDraft` parse and checks from design decision 4: the one-sentence `failure` of 8-40 words, the restatement check, the card target, and the prosecutor evidence rules. Verify unit tests for every reject path in the spec: a vague failure, a restatement, an uncited `fatal`, an invented URL, an unknown `WorkId`, and an out-of-draw citation card that is dropped.
+- [x] 6.2 Implement the `DefenseDraft` parse and checks: one reply per critique, the conceded-fatal rules, and the revision form via the `IdeaDraft` checks. Verify tests for each scenario in the spec's "advocate answers" and "revisions keep the form" requirements.
+- [x] 6.3 Implement the critic and advocate prompt renderers in `seeker/debate/prompts.py`. The prosecutor's prompt includes the `DrawPriorArt` hits, or an explicit no-hits line. Verify snapshot tests:
   - no critic prompt contains another critic's text;
   - the reading guidance appears;
   - a catalog hit appears in the prosecutor prompt.
