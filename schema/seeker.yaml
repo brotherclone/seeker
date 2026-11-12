@@ -220,6 +220,69 @@ enums:
       import:
         description: Imported in bulk from another catalog.
 
+  CritiqueTarget:
+    description: >-
+      Which part of an idea a critique says fails. Naming the part keeps a
+      critique from being a general complaint.
+    permissible_values:
+      subject:
+        description: The thing being made (the X) is wrong, vague or not new.
+      behavior:
+        description: What the thing does (the Y) fails or cannot be done.
+      rationale:
+        description: The reason (the Z) is false, circular or does not matter.
+      card_reading:
+        description: One card was read in a way the idea does not earn.
+      constraint:
+        description: The idea does not satisfy its constraint card.
+  Severity:
+    description: >-
+      How badly a critic says an idea fails. Critics set it themselves, so the
+      judge never sees it.
+    permissible_values:
+      fatal:
+        description: If true, the idea should not survive as stated.
+      serious:
+        description: A real problem the idea must answer, short of killing it.
+      minor:
+        description: A small or speculative problem, or no prior art found.
+  DefenseMove:
+    description: How the advocate answers one critique.
+    permissible_values:
+      concede:
+        description: The critique is right.
+      rebut:
+        description: The critique is wrong or does not matter, with an argument why.
+  DefenseOutcome:
+    description: What the advocate does with the idea after answering every critique.
+    permissible_values:
+      defended:
+        description: The idea stands as stated.
+      revised:
+        description: The idea is restated to survive the critiques.
+      withdrawn:
+        description: The advocate gives the idea up; it does not compete.
+  ScoreAxis:
+    description: >-
+      The separate axes ideas are judged on. Each axis keeps its own rating;
+      they are never blended into one score.
+    permissible_values:
+      novelty:
+        description: How far the idea is from its nearest prior art.
+      feasibility:
+        description: Whether one person can build it with Gabe's actual gear, stack and time.
+      promise:
+        description: Whether there is something there worth making.
+  StopReason:
+    description: Why a debate run stopped before or after finishing.
+    permissible_values:
+      finished:
+        description: Every debate and comparison is done.
+      budget:
+        description: The run's estimated spend reached its budget; it can be resumed with more.
+      no_tournament:
+        description: The run was asked to debate only and stopped before the tournament.
+
 slots:
   id:
     identifier: true
@@ -572,6 +635,284 @@ slots:
     required: true
     slot_uri: seeker:capturedOn
     description: The date the work was added to the vault.
+  relevance:
+    range: string
+    required: true
+    slot_uri: seeker:relevance
+    description: One sentence on how close the cited work is to the idea.
+  cited_work:
+    range: WorkId
+    slot_uri: seeker:citedWork
+    description: A captured work cited as prior art, referenced by work id.
+  embodied_cards:
+    range: Card
+    inlined: false
+    multivalued: true
+    slot_uri: seeker:embodiedCards
+    description: >-
+      The cards of the idea's draw that the cited work already embodies,
+      referenced by card id.
+  target:
+    range: CritiqueTarget
+    required: true
+    slot_uri: seeker:target
+    description: Which part of the idea the critique says fails.
+  target_card:
+    range: Card
+    inlined: false
+    slot_uri: seeker:targetCard
+    description: The card whose reading fails, when the target is a card reading.
+  severity:
+    range: Severity
+    required: true
+    slot_uri: seeker:severity
+    description: How badly the critic says the idea fails.
+  failure:
+    range: string
+    required: true
+    slot_uri: seeker:failure
+    description: >-
+      The specific failure, in one sentence that says something the idea's
+      statement does not.
+  argument:
+    range: string
+    required: true
+    slot_uri: seeker:argument
+    description: The reasoning behind a critique or a reply.
+  citations:
+    range: Citation
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:citations
+    description: The evidence a prior-art critique rests on.
+  none_found:
+    range: boolean
+    ifabsent: "false"
+    slot_uri: seeker:noneFound
+    description: >-
+      True when the prosecutor searched and found no prior art. Such a
+      critique carries no citations and is minor.
+  answers:
+    range: RoleName
+    required: true
+    slot_uri: seeker:answers
+    description: The critic role whose critique this reply answers.
+  move:
+    range: DefenseMove
+    required: true
+    slot_uri: seeker:move
+    description: Whether the advocate concedes or rebuts the critique.
+  replies:
+    range: Reply
+    multivalued: true
+    inlined_as_list: true
+    required: true
+    minimum_cardinality: 1
+    maximum_cardinality: 3
+    slot_uri: seeker:replies
+    description: One reply per critique, in critique order.
+  outcome:
+    range: DefenseOutcome
+    required: true
+    slot_uri: seeker:outcome
+    description: What the advocate did with the idea.
+  revision:
+    range: IdeaRevision
+    inlined: true
+    slot_uri: seeker:revision
+    description: The restated idea, present exactly when the outcome is revised.
+  critiques:
+    range: Critique
+    multivalued: true
+    inlined_as_list: true
+    required: true
+    minimum_cardinality: 1
+    maximum_cardinality: 3
+    slot_uri: seeker:critiques
+    description: >-
+      The critiques the idea faced, in role order. Fewer than three means a
+      critic failed and is recorded as a debate failure.
+  defense:
+    range: Defense
+    inlined: true
+    required: true
+    slot_uri: seeker:defense
+    description: The advocate's answer to the critiques.
+  final_statement:
+    range: string
+    required: true
+    slot_uri: seeker:finalStatement
+    description: The statement that competes, the revision's when the idea was revised.
+  failure_reason:
+    range: string
+    required: true
+    slot_uri: seeker:failureReason
+    description: Why a role produced no valid answer, even after a retry.
+  axis_name:
+    range: ScoreAxis
+    required: true
+    slot_uri: seeker:axisName
+    description: The score axis this verdict or rating is on.
+  winner:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:winner
+    description: The position of the idea that won on this axis.
+  ruling:
+    range: string
+    required: true
+    slot_uri: seeker:ruling
+    description: The judge's one-sentence reason for the verdict.
+  first:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:first
+    description: The position of the idea shown to the judge as A.
+  second:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:second
+    description: The position of the idea shown to the judge as B.
+  verdicts:
+    range: AxisVerdict
+    multivalued: true
+    inlined_as_list: true
+    maximum_cardinality: 3
+    slot_uri: seeker:verdicts
+    description: One verdict per score axis; empty when the comparison failed.
+  failed:
+    range: boolean
+    ifabsent: "false"
+    slot_uri: seeker:failed
+    description: True when the judge gave no valid answer even after a retry; ratings are unchanged.
+  rating:
+    range: float
+    required: true
+    slot_uri: seeker:rating
+    description: The Elo rating on this axis after every comparison so far.
+  wins:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:wins
+    description: Comparisons won on this axis.
+  losses:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:losses
+    description: Comparisons lost on this axis.
+  k_factor:
+    range: float
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:kFactor
+    description: How far one comparison moves a rating (the Elo K).
+  initial_rating:
+    range: float
+    required: true
+    slot_uri: seeker:initialRating
+    description: The rating every entrant starts at, on every axis.
+  max_comparisons:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:maxComparisons
+    description: The most comparisons the tournament may schedule.
+  entrants:
+    range: integer
+    multivalued: true
+    slot_uri: seeker:entrants
+    description: The positions of the ideas that competed, in position order.
+  comparisons:
+    range: Comparison
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:comparisons
+    description: The comparisons made, in schedule order.
+  ratings:
+    range: Rating
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:ratings
+    description: One rating per entrant per axis, recomputable from the comparisons.
+  survivors:
+    range: integer
+    multivalued: true
+    slot_uri: seeker:survivors
+    description: The positions of the top entrants by promise, best first.
+  skipped:
+    range: boolean
+    ifabsent: "false"
+    slot_uri: seeker:skipped
+    description: True when fewer than two ideas could compete, so no comparison was made.
+  generation_path:
+    range: string
+    required: true
+    slot_uri: seeker:generationPath
+    description: The generation record debated, relative to the repository root when inside it.
+  generation_digest:
+    range: Sha256Digest
+    required: true
+    slot_uri: seeker:generationDigest
+    description: SHA-256 of the generation record's bytes, so a changed input is caught on resume.
+  role_digests:
+    range: RoleDigest
+    multivalued: true
+    inlined_as_list: true
+    required: true
+    minimum_cardinality: 5
+    maximum_cardinality: 5
+    slot_uri: seeker:roleDigests
+    description: The digest of every debate role file the run used.
+  catalog_digest:
+    range: Sha256Digest
+    required: true
+    slot_uri: seeker:catalogDigest
+    description: >-
+      Digest of the works catalog when the run started. It may change during
+      the run, because the prosecutor's finds are added to the catalog.
+  tournament_seed:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:tournamentSeed
+    description: The integer that pairings, A/B order and objection order are derived from.
+  started_at:
+    range: datetime
+    required: true
+    slot_uri: seeker:startedAt
+    description: When the run first started.
+  budget_usd:
+    range: float
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:budgetUsd
+    description: The estimated spend at which the run stops cleanly, in US dollars.
+  stop_reason:
+    range: StopReason
+    slot_uri: seeker:stopReason
+    description: Why the run last stopped; absent while it is running.
+  debates:
+    range: Debate
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:debates
+    description: The finished debates, in position order.
+  debate_failures:
+    range: DebateFailure
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:debateFailures
+    description: Roles that produced no valid answer, in position then role order.
+  tournament:
+    range: Tournament
+    inlined: true
+    slot_uri: seeker:tournament
+    description: The ranking of the debated ideas, once it has started.
 
 classes:
   Card:
@@ -705,6 +1046,150 @@ classes:
       - generated_at
       - ideas
       - failures
+      - usage
+      - estimated_cost_usd
+  Citation:
+    class_uri: seeker:Citation
+    description: >-
+      One piece of prior-art evidence: a web page the prosecutor's searches
+      returned, or a work already in the vault's catalog.
+    slots:
+      - title
+      - url
+      - cited_work
+      - relevance
+      - embodied_cards
+  Critique:
+    class_uri: seeker:Critique
+    description: >-
+      One critic's attack on one idea, naming the part that fails, how badly,
+      and the failure in one sentence.
+    slots:
+      - role_name
+      - model
+      - target
+      - target_card
+      - severity
+      - failure
+      - argument
+      - citations
+      - none_found
+      - usage
+  Reply:
+    class_uri: seeker:Reply
+    description: The advocate's answer to one critique.
+    slots:
+      - answers
+      - move
+      - argument
+  IdeaRevision:
+    class_uri: seeker:IdeaRevision
+    description: >-
+      An idea restated by the advocate to survive its critiques, in the same
+      one-sentence form and from the same draw.
+    slots:
+      - statement
+      - subject
+      - behavior
+      - rationale
+  Defense:
+    class_uri: seeker:Defense
+    description: >-
+      The advocate's answer to every critique of one idea, and what became of
+      the idea.
+    slots:
+      - model
+      - replies
+      - outcome
+      - revision
+      - usage
+  Debate:
+    class_uri: seeker:Debate
+    description: >-
+      One idea's round of debate: the critiques it faced, the advocate's
+      defense, and the statement that goes on to compete.
+    slots:
+      - position
+      - critiques
+      - defense
+      - final_statement
+  DebateFailure:
+    class_uri: seeker:DebateFailure
+    description: A debate role that produced no valid answer for one idea, even after a retry.
+    slots:
+      - position
+      - role_name
+      - model
+      - failure_reason
+      - usage
+  AxisVerdict:
+    class_uri: seeker:AxisVerdict
+    description: The judge's verdict on one score axis of one comparison.
+    slots:
+      - axis_name
+      - winner
+      - ruling
+  Comparison:
+    class_uri: seeker:Comparison
+    description: >-
+      One blind pairwise judgment between two debated ideas, with a winner on
+      each score axis.
+    slots:
+      - first
+      - second
+      - verdicts
+      - failed
+      - model
+      - usage
+  Rating:
+    class_uri: seeker:Rating
+    description: One idea's Elo rating on one score axis.
+    slots:
+      - position
+      - axis_name
+      - rating
+      - wins
+      - losses
+  Tournament:
+    class_uri: seeker:Tournament
+    description: >-
+      The ranking of a run's debated ideas: the comparisons made, the per-axis
+      Elo ratings they produce, and the survivors.
+    see_also:
+      - https://en.wikipedia.org/wiki/Elo_rating_system
+    slots:
+      - k_factor
+      - initial_rating
+      - max_comparisons
+      - entrants
+      - comparisons
+      - ratings
+      - survivors
+      - skipped
+  RoleDigest:
+    class_uri: seeker:RoleDigest
+    description: The digest of one role file a run used.
+    slots:
+      - role_name
+      - role_digest
+  DebateRun:
+    class_uri: seeker:DebateRun
+    description: >-
+      One debate over a recorded generation: its pinned inputs, every debate
+      and failure, the tournament, and its usage and estimated cost.
+    slots:
+      - generation_path
+      - generation_digest
+      - role_digests
+      - catalog_digest
+      - git_commit
+      - tournament_seed
+      - started_at
+      - budget_usd
+      - stop_reason
+      - debates
+      - debate_failures
+      - tournament
       - usage
       - estimated_cost_usd
   Work:

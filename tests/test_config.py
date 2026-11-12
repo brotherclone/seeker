@@ -161,3 +161,53 @@ class TestVault:
         config = SeekerConfig.load(ROOT / "seeker.yaml")
         assert config.paths.vault is None
         assert str(config.vault_folders.works) == "Works"
+
+
+# --- debate-ideas 2.3: debate paths, budget, tournament and search prices -----------
+
+
+def test_debate_defaults(tmp_path: Path) -> None:
+    config = SeekerConfig.load(write(tmp_path))
+    assert config.paths.debates == tmp_path / "debates"
+    assert config.paths.reports == tmp_path / "reports"
+    assert config.budget_usd == 5.00
+    assert config.tournament.max_comparisons == 66
+
+
+def test_debate_settings_override(tmp_path: Path) -> None:
+    text = MINIMAL.replace("prompts: prompts,", "prompts: prompts, debates: runs, reports: ~/out,")
+    config = SeekerConfig.load(write(tmp_path, text + "budget_usd: 2.5\ntournament: {max_comparisons: 30}\n"))
+    assert config.paths.debates == tmp_path / "runs"
+    assert config.paths.reports == Path.home() / "out"
+    assert config.budget_usd == 2.5
+    assert config.tournament.max_comparisons == 30
+
+
+def test_searches_are_priced(tmp_path: Path) -> None:
+    text = MINIMAL.replace("  models:", "  web_search_per_request: 0.01\n  models:")
+    prices = SeekerConfig.load(write(tmp_path, text)).prices
+    tokens = Usage(input_tokens=1_000_000, output_tokens=0, cache_read_tokens=0, cache_write_tokens=0)
+    searched = tokens.model_copy(update={"web_search_requests": 3})
+    assert prices.cost("claude-opus-5-5", searched) == pytest.approx(prices.cost("claude-opus-5-5", tokens) + 0.03)
+
+
+def test_unpriced_searches_and_models_are_errors(tmp_path: Path) -> None:
+    from seeker.config import UnpricedModelError
+
+    prices = SeekerConfig.load(write(tmp_path)).prices
+    searched = Usage(input_tokens=1, output_tokens=1, cache_read_tokens=0, cache_write_tokens=0, web_search_requests=1)
+    with pytest.raises(ConfigError, match="web_search_per_request"):
+        prices.cost("claude-opus-5-5", searched)
+    with pytest.raises(UnpricedModelError, match="claude-sonnet-5-5"):
+        prices.cost("claude-sonnet-5-5", searched)
+
+
+def test_repo_config_prices_searches() -> None:
+    assert SeekerConfig.load(ROOT / "seeker.yaml").prices.web_search_per_request == 0.01
+
+
+def test_debate_scratch_is_ignored() -> None:
+    import subprocess
+
+    result = subprocess.run(["git", "check-ignore", "-q", "debates/scratch/x.yaml"], cwd=ROOT)
+    assert result.returncode == 0

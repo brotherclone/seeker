@@ -23,20 +23,20 @@
   - both round-1 generation records still load, with `web_search_requests` 0;
   - `prompts/generator.yaml` loads with `max_searches` 0;
   - `max_searches: -1` fails, naming the file and the slot.
-- [ ] 2.3 Add `PriceTable.web_search_per_request` and `PriceTable.cost(model, usage)`, including searches. Add `paths.debates`, `paths.reports`, `budget_usd` (default 5.00) and `tournament.max_comparisons` (default 66) to `SeekerConfig` and `seeker.yaml`. Git-ignore `debates/scratch/`. Verify config tests: the defaults, relative path resolution, and that 3 searches at $0.01 add $0.03; and that `git check-ignore debates/scratch/x.yaml` passes.
+- [x] 2.3 Add `PriceTable.web_search_per_request` and `PriceTable.cost(model, usage)`, including searches. Add `paths.debates`, `paths.reports`, `budget_usd` (default 5.00) and `tournament.max_comparisons` (default 66) to `SeekerConfig` and `seeker.yaml`. Git-ignore `debates/scratch/`. Verify config tests: the defaults, relative path resolution, and that 3 searches at $0.01 add $0.03; and that `git check-ignore debates/scratch/x.yaml` passes.
 
 ## 3. Ontology: debate and tournament classes
 
-- [ ] 3.1 Add the enums `CritiqueTarget`, `Severity`, `DefenseMove`, `DefenseOutcome` and `ScoreAxis`, the classes `Citation`, `Critique`, `Reply`, `IdeaRevision`, `Defense`, `Debate` and `DebateFailure`, and their slots to the schema, all described. Run `make schema`. Verify `linkml-lint` passes.
-- [ ] 3.2 Add `AxisVerdict`, `Comparison`, `Rating`, `Tournament`, `RoleDigest` and `DebateRun` to the schema. Run `make schema`. Verify `linkml-lint` passes.
-- [ ] 3.3 Implement the 3.1 models in `seeker/ontology/debate.py`, with rich `Field` metadata. Include these validators:
+- [x] 3.1 Add the enums `CritiqueTarget`, `Severity`, `DefenseMove`, `DefenseOutcome` and `ScoreAxis`, the classes `Citation`, `Critique`, `Reply`, `IdeaRevision`, `Defense`, `Debate` and `DebateFailure`, and their slots to the schema, all described. Run `make schema`. Verify `linkml-lint` passes.
+- [x] 3.2 Add `AxisVerdict`, `Comparison`, `Rating`, `Tournament`, `RoleDigest` and `DebateRun` to the schema. Run `make schema`. Verify `linkml-lint` passes.
+- [x] 3.3 Implement the 3.1 models in `seeker/ontology/debate.py`, with rich `Field` metadata. Include these validators:
   - `Citation` has exactly one of `url` and `work`;
   - `card` is required when the target is `card_reading`;
   - `none_found` implies `minor` severity and no citations;
   - `revision` is present only for `revised`.
 
   Verify that the conformance test and unit tests cover each validator.
-- [ ] 3.4 Implement the 3.2 models in `seeker/ontology/tournament.py` and `DebateRun`. Verify:
+- [x] 3.4 Implement the 3.2 models in `seeker/ontology/tournament.py` and `DebateRun`. Verify:
   - the conformance test passes;
   - a hand-built `DebateRun` fixture validates against the LinkML schema with `DebateRun` as the target class.
 

@@ -45,6 +45,12 @@ class VaultNotConfigured(ConfigError):
         )
 
 
+class UnpricedModelError(ConfigError):
+    def __init__(self, model: str) -> None:
+        self.model = model
+        super().__init__(f"model {model} has no entry in the price table (seeker.yaml: prices.models)")
+
+
 class VaultFolders(SeekerModel):
     """Where Seeker keeps its notes inside the vault, relative to the vault root.
     A shared convention, so it lives in the committed seeker.yaml."""
@@ -85,6 +91,8 @@ class PathsConfig(SeekerModel):
     batches: Path = Field(description="Committed draw-batch records.")
     generations: Path = Field(description="Committed generation records.")
     prompts: Path = Field(description="Role files.")
+    debates: Path = Field(default=Path("debates"), description="Committed debate-run records.")
+    reports: Path = Field(default=Path("reports"), description="Rendered survivor reports.")
     vault: Path | None = Field(
         default=None, description=f"Obsidian vault root; a fallback for {VAULT_ENV}, which wins."
     )
@@ -99,6 +107,8 @@ class PathsConfig(SeekerModel):
             batches=place(self.batches),
             generations=place(self.generations),
             prompts=place(self.prompts),
+            debates=place(self.debates),
+            reports=place(self.reports),
             vault=place(self.vault) if self.vault is not None else None,
         )
 
@@ -131,9 +141,41 @@ class PriceTable(SeekerModel):
 
     as_of: date = Field(description="When these prices were last checked.")
     models: tuple[ModelPrice, ...] = Field(min_length=1, description="One entry per priced model.")
+    web_search_per_request: float | None = Field(
+        default=None,
+        ge=0,
+        description="US dollars per server-side web search. Unset means searches cannot be priced.",
+    )
 
     def price_for(self, model: str) -> ModelPrice | None:
         return next((price for price in self.models if price.model == model), None)
+
+    def cost(self, model: str, usage: Usage) -> float:
+        """Estimated US dollars for ``usage`` on ``model``: its tokens at that model's rates,
+        plus its web searches at the per-search rate."""
+        price = self.price_for(model)
+        if price is None:
+            raise UnpricedModelError(model)
+        searches = 0.0
+        if usage.web_search_requests:
+            if self.web_search_per_request is None:
+                raise ConfigError(
+                    f"usage has {usage.web_search_requests} web searches but prices.web_search_per_request is not set"
+                )
+            searches = usage.web_search_requests * self.web_search_per_request
+        return price.cost(usage) + searches
+
+
+class TournamentConfig(SeekerModel):
+    """Settings for ranking debated ideas."""
+
+    model_config = ConfigDict(title="TournamentConfig")
+
+    max_comparisons: int = Field(
+        default=66,
+        ge=1,
+        description="The most comparisons one tournament schedules; 66 is round robin for 12 entrants.",
+    )
 
 
 class SeekerConfig(SeekerModel):
@@ -141,12 +183,16 @@ class SeekerConfig(SeekerModel):
 
     model_config = ConfigDict(title="SeekerConfig")
 
-    SECTIONS: ClassVar[tuple[str, ...]] = ("paths", "prices", "vault_folders")
+    SECTIONS: ClassVar[tuple[str, ...]] = ("paths", "prices", "vault_folders", "budget_usd", "tournament")
 
     root: Path = Field(description="Folder holding seeker.yaml; relative paths resolve against it.")
     paths: PathsConfig
     prices: PriceTable
     vault_folders: VaultFolders = Field(default_factory=VaultFolders)
+    budget_usd: float = Field(
+        default=5.00, gt=0, description="Estimated spend at which a run stops cleanly, in US dollars."
+    )
+    tournament: TournamentConfig = Field(default_factory=TournamentConfig)
 
     @classmethod
     def find(cls, start: Path | None = None) -> Path:
