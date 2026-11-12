@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from seeker.config import ConfigError, DotEnv, MissingApiKey, SeekerConfig
+from seeker.config import ConfigError, DotEnv, MissingApiKey, SeekerConfig, VaultNotConfigured
 from seeker.ontology import Usage
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -105,3 +105,59 @@ def test_non_utf8_config_is_a_config_error(tmp_path: Path) -> None:
     path.write_bytes(b"paths: \xff\xfe\n")
     with pytest.raises(ConfigError, match="not UTF-8"):
         SeekerConfig.load(path)
+
+
+class TestVault:
+    @pytest.fixture(autouse=True)
+    def no_vault_env(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.delenv("SEEKER_VAULT", raising=False)
+
+    NO_VAULT = MINIMAL.replace(", vault: ~/vault", "")
+
+    def test_folder_defaults(self, tmp_path: Path) -> None:
+        layout = SeekerConfig.load(write(tmp_path)).vault()
+        assert layout.root == Path("~/vault").expanduser()
+        assert layout.works == layout.root / "Works"
+        assert layout.cards == layout.root / "Cards"
+
+    def test_folder_overrides(self, tmp_path: Path) -> None:
+        text = MINIMAL + "vault_folders: {works: Library/Works, cards: Library/Cards}\n"
+        layout = SeekerConfig.load(write(tmp_path, text)).vault()
+        assert layout.works == layout.root / "Library" / "Works"
+        assert layout.cards == layout.root / "Library" / "Cards"
+
+    @pytest.mark.parametrize("folder", ["/abs/Works", "../outside"])
+    def test_folders_must_stay_inside_the_vault(self, tmp_path: Path, folder: str) -> None:
+        with pytest.raises(ConfigError):
+            SeekerConfig.load(write(tmp_path, MINIMAL + f"vault_folders: {{works: {folder}}}\n"))
+
+    def test_dotenv_value(self, tmp_path: Path) -> None:
+        config = SeekerConfig.load(write(tmp_path, self.NO_VAULT))
+        (tmp_path / ".env").write_text("ANTHROPIC_API_KEY=x\nSEEKER_VAULT=~/notes\n")
+        assert config.vault().root == Path.home() / "notes"
+
+    def test_dotenv_beats_paths_vault(self, tmp_path: Path) -> None:
+        config = SeekerConfig.load(write(tmp_path))
+        (tmp_path / ".env").write_text(f"SEEKER_VAULT={tmp_path / 'from-env'}\n")
+        assert config.vault().root == tmp_path / "from-env"
+
+    def test_environment_beats_dotenv_and_config(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+        config = SeekerConfig.load(write(tmp_path))
+        (tmp_path / ".env").write_text("SEEKER_VAULT=/from/dotenv\n")
+        monkeypatch.setenv("SEEKER_VAULT", str(tmp_path / "from-environment"))
+        assert config.vault().root == tmp_path / "from-environment"
+
+    def test_relative_value_resolves_against_config_folder(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("SEEKER_VAULT", "vault")
+        assert SeekerConfig.load(write(tmp_path, self.NO_VAULT)).vault().root == tmp_path / "vault"
+
+    def test_not_configured(self, tmp_path: Path) -> None:
+        config = SeekerConfig.load(write(tmp_path, self.NO_VAULT))
+        with pytest.raises(VaultNotConfigured, match="SEEKER_VAULT") as caught:
+            config.vault()
+        assert ".env" in str(caught.value)
+
+    def test_repo_config_has_no_vault_committed(self) -> None:
+        config = SeekerConfig.load(ROOT / "seeker.yaml")
+        assert config.paths.vault is None
+        assert str(config.vault_folders.works) == "Works"

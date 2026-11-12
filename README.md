@@ -9,12 +9,12 @@ Seeker uses [uv](https://docs.astral.sh/uv/), which installs the right Python (p
 ```
 brew install uv          # or: curl -LsSf https://astral.sh/uv/install.sh | sh
 uv sync                  # creates .venv with Python 3.13, Seeker and the dev tools
-uv run pytest            # 326 tests
+uv run pytest            # the test suite
 ```
 
 Run any Seeker command through `uv run` (for example `uv run seeker-draw batch --seed 7`), or activate `.venv` first and drop the prefix. `make setup|test|lint|validate|schema` wraps the common ones.
 
-For real model calls, put `ANTHROPIC_API_KEY=...` in `.env`, which is git-ignored.
+For real model calls, put `ANTHROPIC_API_KEY=...` in `.env`, which is git-ignored. To use the works catalog, add `SEEKER_VAULT=/path/to/your/vault` there too (see [docs/works.md](docs/works.md)).
 
 ## Workflow
 

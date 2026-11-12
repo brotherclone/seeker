@@ -26,11 +26,11 @@ An idea engine for creative tech. The concept of record is `docs/concept.md`; ev
 
 ## Obsidian
 
-- Design thinking and decisions go in Gabe's Obsidian vault under `Seeker/`, currently `/Users/gabrielwalsh/Documents/Claude/Projects/Bracers/Projects/Seeker/`. That path tells agents where to write notes. Code never hard-codes it and reads the vault location from config (see Running locally). Use the obsidian-vault MCP when it's connected; otherwise write the markdown files directly.
-- `Seeker/Seeker.md` is the hub. Every other note links back to it.
-- `Seeker/Ontology/<Class>.md` holds one note per LinkML class or enum. Each note gives the definition, its slots (with each slot's range), and `[[wikilinks]]` to the related classes. Update these notes in the same change as the schema.
-- `Seeker/Decisions/YYYY-MM-DD <title>.md` records each decision: context, the decision, the alternatives considered, and links to the concepts it touches and to the OpenSpec change.
-- `Seeker/Notes/` holds loose thinking.
+- Design thinking and decisions go in Seeker's own Obsidian vault, currently `/Users/gabrielwalsh/Documents/Claude/Projects/Seeker/`. Paths below are relative to the vault root. That path tells agents where to write notes. Code never hard-codes it and reads the vault location from config (see Running locally). Use the obsidian-vault MCP when it's connected; otherwise write the markdown files directly.
+- `Seeker.md` is the hub. Every other note links back to it.
+- `Ontology/<Class>.md` holds one note per LinkML class or enum. Each note gives the definition, its slots (with each slot's range), and `[[wikilinks]]` to the related classes. Update these notes in the same change as the schema.
+- `Decisions/YYYY-MM-DD <title>.md` records each decision: context, the decision, the alternatives considered, and links to the concepts it touches and to the OpenSpec change.
+- `Notes/` holds loose thinking.
 - Use frontmatter with `type` (`hub`, `concept`, `decision`, `note`), `tags` and `openspec` (a change name, when there is one).
 
 ## Git workflow (gitflow)

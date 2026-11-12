@@ -8,7 +8,7 @@ LinkMLString) with no schema counterpart.
 
 import types
 import typing
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 
 import pytest
@@ -20,7 +20,9 @@ from seeker.ontology import LinkMLString, SeekerModel
 
 SCHEMA = Path(__file__).resolve().parent.parent / "schema" / "seeker.yaml"
 VIEW = SchemaView(str(SCHEMA))
-PRIMITIVES = {"string": str, "integer": int, "float": float, "datetime": datetime}
+PRIMITIVES = {"string": str, "integer": int, "float": float, "datetime": datetime, "date": date}
+# Schema types may specialize these built-in LinkML types; every one becomes a named str type.
+STRING_TYPEOFS = {"string", "uri"}
 
 
 def norm(text: str | None) -> str:
@@ -168,7 +170,7 @@ def test_every_schema_type_has_a_named_type_and_back() -> None:
 def test_named_type_matches_schema_type(type_name: str) -> None:
     schema_type = VIEW.get_type(type_name)
     named = getattr(ontology, type_name)
-    assert schema_type.typeof == "string"
+    assert schema_type.typeof in STRING_TYPEOFS
     assert named.PATTERN == schema_type.pattern
     assert norm(named.DESCRIPTION) == norm(schema_type.description)
     assert named.TYPE_URI == schema_type.uri
@@ -253,3 +255,37 @@ def test_conformance_catches_a_wrong_datetime_type() -> None:
     )
     problems = class_problems("Generation", drifted)
     assert any(p.startswith("Generation.generated_at: type") for p in problems), problems
+
+
+def test_conformance_catches_a_wrong_date_type() -> None:
+    """captured_on is a LinkML date, so a datetime field drifts."""
+    if not hasattr(ontology, "Work"):
+        pytest.skip("Work not modeled yet")
+    drifted = type(
+        "Work",
+        (ontology.Work,),
+        {
+            "__module__": __name__,
+            "__annotations__": {"captured_on": datetime},
+            "captured_on": ontology.Work.model_fields["captured_on"],
+        },
+    )
+    problems = class_problems("Work", drifted)
+    assert any(p.startswith("Work.captured_on: type") for p in problems), problems
+
+
+def test_conformance_reads_slot_usage() -> None:
+    """Work narrows id to WorkId and makes cards optional through slot_usage."""
+    if not hasattr(ontology, "Work"):
+        pytest.skip("Work not modeled yet")
+    drifted = type(
+        "Work",
+        (ontology.Work,),
+        {
+            "__module__": __name__,
+            "__annotations__": {"id": ontology.CardId},
+            "id": ontology.Work.model_fields["id"],
+        },
+    )
+    problems = class_problems("Work", drifted)
+    assert any(p.startswith("Work.id: type") for p in problems), problems
