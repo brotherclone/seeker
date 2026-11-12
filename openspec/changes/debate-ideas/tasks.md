@@ -109,8 +109,8 @@
 
 ## 8. Command line, report and docs
 
-- [ ] 8.1 Implement `seeker-debate` with `--out`/`--scratch`, `--seed`, `--budget`, `--no-tournament` and `--dry-run` (prompts plus call and comparison counts, no key needed), the per-debate lines and summary, and exit status 3 at the budget. Add the console script. Verify CLI tests for each flag, using the round-1 literal generation.
-- [ ] 8.2 Implement `seeker-debate report RUN`, writing Markdown to `paths.reports`: the survivors with all three ratings, original and revised statements, critiques and replies, and linked citations; then the non-survivors table, provenance and cost. Verify a snapshot test from a fixture run that makes no model call.
+- [x] 8.1 Implement `seeker-debate` with `--out`/`--scratch`, `--seed`, `--budget`, `--no-tournament` and `--dry-run` (prompts plus call and comparison counts, no key needed), the per-debate lines and summary, and exit status 3 at the budget. Add the console script. Verify CLI tests for each flag, using the round-1 literal generation.
+- [x] 8.2 Implement `seeker-debate report RUN`, writing Markdown to `paths.reports`: the survivors with all three ratings, original and revised statements, critiques and replies, and linked citations; then the non-survivors table, provenance and cost. Verify a snapshot test from a fixture run that makes no model call.
 - [ ] 8.3 Write `docs/debating.md`. It covers the roles and why each is on its model, the named-failure rule, the prosecutor's catalog-then-search order and captured works, the budget and resume, the tournament and survivors, and the report. Verify that every documented command runs as written with `--dry-run` or against fixtures.
 
 ## 9. Obsidian notes
