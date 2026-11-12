@@ -91,21 +91,21 @@
 
 ## 7. Tournament stage
 
-- [ ] 7.1 Implement the pairing schedule from design decision 7: round robin up to `max_comparisons`, otherwise k equal seeded opponents with no repeated pair, and A/B order from a SHA-256 stream. Verify tests:
+- [x] 7.1 Implement the pairing schedule from design decision 7: round robin up to `max_comparisons`, otherwise k equal seeded opponents with no repeated pair, and A/B order from a SHA-256 stream. Verify tests:
   - 12 entrants give 66 pairs;
   - 30 entrants give equal counts, at most 66 pairs and no repeats;
   - the same seed gives the same schedule.
-- [ ] 7.2 Implement the judge prompt with blinding (A/B labels, objections shuffled by seed, severities, role names, models and personas stripped) and the `AxisVerdict` draft checks (all three axes, winner in the pair, no ties). Verify:
+- [x] 7.2 Implement the judge prompt with blinding (A/B labels, objections shuffled by seed, severities, role names, models and personas stripped) and the `AxisVerdict` draft checks (all three axes, winner in the pair, no ties). Verify:
   - a test asserting that no role name, model id or persona text appears in any rendered comparison;
   - retry tests for a missing axis and an outside position.
-- [ ] 7.3 Implement the per-axis Elo (K = 32, start 1500, a failed comparison leaves ratings unchanged), recomputation from stored comparisons, and survivors (top 3 by promise, ties broken by wins, then position). Exclude withdrawn ideas, and skip the tournament under two entrants. Verify tests:
+- [x] 7.3 Implement the per-axis Elo (K = 32, start 1500, a failed comparison leaves ratings unchanged), recomputation from stored comparisons, and survivors (top 3 by promise, ties broken by wins, then position). Exclude withdrawn ideas, and skip the tournament under two entrants. Verify tests:
   - the hand-computed Elo for a 3-idea fixture;
   - recompute equals the record;
   - axes move independently;
   - the survivor tie-break;
   - withdrawn ideas are excluded;
   - the skip case.
-- [ ] 7.4 Wire the tournament into the run, saving after each comparison and respecting the meter. Verify a fake-model test that a run interrupted mid-tournament resumes with no repeated comparison.
+- [x] 7.4 Wire the tournament into the run, saving after each comparison and respecting the meter. Verify a fake-model test that a run interrupted mid-tournament resumes with no repeated comparison.
 
 ## 8. Command line, report and docs
 

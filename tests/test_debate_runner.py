@@ -21,6 +21,7 @@ from vault_fixtures import repo_decks
 ROOT = Path(__file__).resolve().parent.parent
 GENERATION = ROOT / "generations" / "2026-11-04-round-1-literal.yaml"
 PRICES = SeekerConfig.load(ROOT / "seeker.yaml").prices
+ROLES_PROMPTS = ROOT / "prompts"
 CALL = Usage(input_tokens=10_000, output_tokens=1_000, cache_read_tokens=0, cache_write_tokens=0)
 SEARCHED = CALL.model_copy(update={"web_search_requests": 1})
 
