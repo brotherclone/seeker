@@ -748,6 +748,14 @@ slots:
     required: true
     slot_uri: seeker:failureReason
     description: Why a role produced no valid answer, even after a retry.
+  discarded_critiques:
+    range: Critique
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:discardedCritiques
+    description: >-
+      When the advocate fails, the critiques it would have answered. The idea
+      does not compete, but they are kept so every call made stays recorded.
   axis_name:
     range: ScoreAxis
     required: true
@@ -1121,6 +1129,7 @@ classes:
       - role_name
       - model
       - failure_reason
+      - discarded_critiques
       - usage
   AxisVerdict:
     class_uri: seeker:AxisVerdict

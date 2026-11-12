@@ -68,7 +68,7 @@ New classes (slots abbreviated):
 | `IdeaRevision` | `statement`, `subject`, `behavior`, `rationale` |
 | `Defense` | `model`, `replies`, `outcome`, `revision` (when `outcome` is `revised`), `usage` |
 | `Debate` | `position`, `critiques` (3), `defense`, `final_statement` |
-| `DebateFailure` | `position`, `role_name`, `model`, `reason`, `usage` |
+| `DebateFailure` | `position`, `role_name`, `model`, `failure_reason`, `discarded_critiques` (the critiques kept when the advocate fails, added during implementation), `usage` |
 | `AxisVerdict` | `axis`, `winner` (position), `reason` |
 | `Comparison` | `first`, `second` (positions as shown, A then B), `verdicts` (3), `failed` (bool), `model`, `usage` |
 | `Rating` | `position`, `axis`, `rating`, `wins`, `losses` |
@@ -180,7 +180,7 @@ Alternatives considered:
 ### 8. Cost meter and budget
 
 - **Prices.** The price table gains a top-level `web_search_per_request` ($10 per 1,000 searches, so 0.01; to be checked against the pricing page when the table is updated). `ModelPrice.cost` stays per model, and `PriceTable.cost(model, usage)` adds searches.
-- **Meter.** A `CostMeter` holds the run's budget. Before each call it checks the spend so far: it compares already-recorded spend against the budget, and does not try to predict the next call's cost. So the overshoot is at most one call (well under $0.10 at these prices), and the spec's "stops before any call once reached" holds.
+- **Meter.** A `CostMeter` holds the run's budget. Before each debate and each comparison it checks the recorded spend so far against the budget; it does not try to predict the next unit's cost. (Revised during implementation: checking before every call would discard a half-finished debate's paid-for critiques when the budget trips between critic and advocate, leaving spend unrecorded. Checking per unit keeps every call in the record, at the cost of overshooting by at most one debate, about $0.40.)
 - **Stopping.** At the budget, the run saves with `stop_reason: budget` and the CLI exits with status 3. Resuming with `--budget` continues.
 
 ### 9. Package layout

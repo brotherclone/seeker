@@ -71,12 +71,12 @@
   - no critic prompt contains another critic's text;
   - the reading guidance appears;
   - a catalog hit appears in the prosecutor prompt.
-- [ ] 6.4 Implement `ProsecutorFindings.capture` (design decision 6): URL normalisation, catalog dedupe and citation rewrite, note creation through `NoteFile.new`, the collision suffix, and a catalog reload. Verify fixture-vault tests:
+- [x] 6.4 Implement `ProsecutorFindings.capture` (design decision 6): URL normalisation, catalog dedupe and citation rewrite, note creation through `NoteFile.new`, the collision suffix, and a catalog reload. Verify fixture-vault tests:
   - a new note loads as a valid `Work` with `captured_by: prosecutor`;
   - a known URL writes nothing;
   - an existing file name gets ` (2)`;
   - existing notes are byte-identical afterwards.
-- [ ] 6.5 Implement `Debater`, the per-idea flow with one retry per role:
+- [x] 6.5 Implement `Debater`, the per-idea flow with one retry per role:
   - a failing critic still gets the advocate;
   - a failing advocate excludes the idea;
   - each record has a model and usage.

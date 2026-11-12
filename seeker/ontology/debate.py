@@ -409,6 +409,15 @@ class DebateFailure(SeekerModel):
         examples=["invalid after retry: failure restates the idea"],
         json_schema_extra={"slot_uri": "seeker:failureReason"},
     )
+    discarded_critiques: tuple[Critique, ...] = Field(
+        default=(),
+        title="discarded_critiques",
+        description=(
+            "When the advocate fails, the critiques it would have answered. The idea does not "
+            "compete, but they are kept so every call made stays recorded."
+        ),
+        json_schema_extra={"slot_uri": "seeker:discardedCritiques"},
+    )
     usage: Usage = Field(
         title="usage",
         description='Tokens consumed by the model calls this record accounts for.',
