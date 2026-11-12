@@ -1,5 +1,6 @@
 """Unit tests for the generation ontology: Usage, Idea, Role, Generation, types."""
 
+from pathlib import Path
 from datetime import datetime, timezone
 
 import pytest
@@ -114,7 +115,7 @@ def test_role_needs_one_guidance_per_reading(guidance: list) -> None:
 
 @pytest.mark.parametrize(
     "overrides",
-    [{"effort": "extreme"}, {"temperature": 0.5}, {"max_output_tokens": 0}, {"model": "gpt-4"}, {"role_name": "judge"}],
+    [{"effort": "extreme"}, {"temperature": 0.5}, {"max_output_tokens": 0}, {"model": "gpt-4"}, {"role_name": "heckler"}],
 )
 def test_role_bounds(overrides: dict) -> None:
     with pytest.raises(ValidationError):
@@ -161,3 +162,28 @@ def test_generation_positions_and_totals() -> None:
 def test_generation_integrity(build: object) -> None:
     with pytest.raises(ValidationError):
         build()
+
+
+# --- debate-ideas 2.2: web searches on Usage ---------------------------------------
+
+
+@pytest.mark.parametrize("name", ["2026-11-04-round-1-literal.yaml", "2026-11-04-round-1-metaphorical.yaml"])
+def test_round_one_records_load_with_no_searches(name: str) -> None:
+    import yaml
+
+    from seeker.ontology import Generation
+
+    path = Path(__file__).resolve().parent.parent / "generations" / name
+    record = Generation.model_validate(yaml.safe_load(path.read_text()))
+    usages = [record.usage, *(i.usage for i in record.ideas), *(f.usage for f in record.failures)]
+    assert all(u.web_search_requests == 0 for u in usages)
+
+
+def test_usage_adds_searches() -> None:
+    from seeker.ontology import Usage
+
+    a = Usage(input_tokens=1, output_tokens=1, cache_read_tokens=0, cache_write_tokens=0, web_search_requests=2)
+    b = Usage(input_tokens=1, output_tokens=1, cache_read_tokens=0, cache_write_tokens=0, web_search_requests=1)
+    assert (a + b).web_search_requests == 3
+    assert Usage.total((a, b)).web_search_requests == 3
+    assert Usage.zero().web_search_requests == 0

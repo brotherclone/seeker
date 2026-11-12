@@ -110,6 +110,15 @@ The first implementation task is a live spike that settles both. **Fallback**, w
 
 Only `seeker/debate/prosecutor.py` would notice. The spec is unaffected, because URLs are still validated against the results of that idea's searches.
 
+**Spike result (2026-11-12, request `req_011CgyFphGRSv3r8ZJN7tzbn`, `claude-sonnet-5-5`, SDK 2.4.0): one call works.**
+- `web_search_20260209` with `max_uses: 2` and a strict `output_config.format` returned `end_turn` with no `pause_turn`.
+- The single final text block was valid JSON with no citations attached, and every URL it gave was among the 10 search results.
+- `usage.server_tool_use.web_search_requests` was 1.
+- The content also held `code_execution_tool_result` blocks. That is the tool's built-in dynamic filtering, which the boundary must skip.
+- Input was 39,013 tokens for one search (about $0.096 for the call). The prosecutor is the run's biggest cost: about $0.10–$0.25 per idea at 1–3 searches. The 12-idea estimate rises to about **$2.50–$4.50**, still under the $5 budget.
+
+So the prosecutor is one call, and the two-call fallback is dropped. If cost becomes a problem, the first lever is `max_searches` 1–2, and the second is trying the basic `web_search_20250305` variant (no dynamic filtering) on Sonnet 5.5.
+
 Alternatives considered:
 - Scraping specialist venues directly: more reach, much more code to maintain. Deferred.
 - Search through MCP: adds a dependency for no gain over the server tool.

@@ -81,8 +81,14 @@ def test_dry_run_needs_no_key_and_makes_no_calls(capsys) -> None:
     assert model.requests == []
 
 
-def test_missing_key_fails_before_any_call(capsys) -> None:
-    assert GenerateCommand().run(["run", "--config", CONFIG, "--seed", "7"]) == 1
+def test_missing_key_fails_before_any_call(tmp_path, capsys) -> None:
+    # A config with no .env beside it. The repo's own seeker.yaml sits next to the real
+    # .env, so using it here would build the real model and spend money.
+    text = (ROOT / "seeker.yaml").read_text()
+    for folder in ("decks", "prompts"):
+        text = text.replace(f"{folder}: {folder}", f"{folder}: {ROOT / folder}")
+    (tmp_path / "seeker.yaml").write_text(text)
+    assert GenerateCommand().run(["run", "--config", str(tmp_path / "seeker.yaml"), "--seed", "7"]) == 1
     assert "ANTHROPIC_API_KEY" in capsys.readouterr().err
 
 

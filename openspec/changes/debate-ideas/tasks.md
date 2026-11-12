@@ -2,23 +2,23 @@
 
 ## 1. Spike: web search with structured output
 
-- [ ] 1.1 Write a throwaway script in `generations/scratch/` (git-ignored). It sends one `claude-sonnet-5-5` request with `web_search_20260209` (`max_uses: 2`) and `output_config.format` set to a small JSON schema with a `urls` array. Record in design decision 3, with a dated note, whether:
+- [x] 1.1 Write a throwaway script in `generations/scratch/` (git-ignored). It sends one `claude-sonnet-5-5` request with `web_search_20260209` (`max_uses: 2`) and `output_config.format` set to a small JSON schema with a `urls` array. Record in design decision 3, with a dated note, whether:
   - the call succeeds;
   - the final text block is valid JSON;
   - `usage.server_tool_use.web_search_requests` is populated;
   - `pause_turn` occurred.
 
   Choose the one-call or the two-call prosecutor accordingly. Verify by the recorded outcome and the request id. Spend is under $0.10.
-- [ ] 1.2 Check the web-search price and the 5.5 cache rates on the official pricing page. Record them in the `seeker.yaml` price comments with the date. Verify the comment cites the page and the date.
+- [x] 1.2 Check the web-search price and the 5.5 cache rates on the official pricing page. Record them in the `seeker.yaml` price comments with the date. Verify the comment cites the page and the date.
 
 ## 2. Ontology: shared changes
 
-- [ ] 2.1 In `schema/seeker.yaml`:
+- [x] 2.1 In `schema/seeker.yaml`:
   - add the five `RoleName` values, `web_search_requests` on `Usage` and `max_searches` on `Role`, with `ifabsent` 0 and descriptions (design decision 1);
   - update the `RoleName` description, which says only the generator exists.
 
   Run `make schema`. Verify `linkml-lint` and `tests/test_schema.py` pass.
-- [ ] 2.2 Mirror the 2.1 changes in `Usage` (including `+`/`total`/`zero`), `Role` and `RoleName`. Verify:
+- [x] 2.2 Mirror the 2.1 changes in `Usage` (including `+`/`total`/`zero`), `Role` and `RoleName`. Verify:
   - the conformance test passes;
   - both round-1 generation records still load, with `web_search_requests` 0;
   - `prompts/generator.yaml` loads with `max_searches` 0;
@@ -61,7 +61,7 @@
   - resume `pause_turn` up to 3 times;
   - treat search error blocks as no results.
 
-  If spike 1.1 chose two calls, the prosecutor handles the split instead. Verify stub-client tests: tool presence and absence, the `max_uses` value, result collection, the search count, `pause_turn` resume and give-up, and an error block.
+  Skip `code_execution_tool_result` blocks (spike 1.1 found them). Verify stub-client tests: tool presence and absence, the `max_uses` value, result collection, the search count, `pause_turn` resume and give-up, and an error block.
 
 ## 6. Debate stage
 
@@ -124,7 +124,7 @@
 
 ## Workflow follow-up
 
-- First live run, by Gabe or with his go-ahead because it spends money: `uv run seeker-debate generations/2026-11-04-round-1-literal.yaml --out debates/2026-11-12-round-1-literal.yaml`, then `seeker-debate report`. Expected cost is $1.50-$3. Review the survivors and the severity spread before tuning prompts.
+- First live run, by Gabe or with his go-ahead because it spends money: `uv run seeker-debate generations/2026-11-04-round-1-literal.yaml --out debates/2026-11-12-round-1-literal.yaml`, then `seeker-debate report`. Expected cost is $2.50-$4.50. Review the survivors and the severity spread before tuning prompts.
 - Debate the metaphorical generation too, on its own baseline branch, to answer the reading-per-axis question.
 - Open a PR from `feature/debate-ideas` into `develop` after PR #12 merges, and archive after merge.
 - Next changes: `mutate-survivors`, then the run-and-scheduling change.

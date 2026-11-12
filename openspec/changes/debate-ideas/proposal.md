@@ -75,7 +75,7 @@ Elo ratings are recomputed deterministically from the stored comparisons, in see
   - a decision note on the debate shape and blind per-axis Elo;
   - a hub update.
   - Runs also write prosecutor-found `Work` notes into `Works/`.
-- **Cost:** a 12-idea run is estimated at $1.50-$3:
+- **Cost:** a 12-idea run is estimated at $2.50-$4.50 (revised after the task 1.1 spike: each search pulls about 39k input tokens):
   - about 48 debate calls plus up to 36 searches;
   - 66 judge comparisons.
 - **Dependencies:** none new. This uses the `anthropic` SDK already pinned.

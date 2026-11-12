@@ -165,10 +165,21 @@ enums:
   RoleName:
     description: >-
       The agent roles in Seeker's pipeline. Each role is defined by a YAML file
-      in prompts/. Only the generator exists so far; the debate adds the rest.
+      in prompts/. The generator states ideas; the critics, advocate and judge
+      debate and rank them.
     permissible_values:
       generator:
         description: Turns one draw into one idea stated as a single sentence.
+      prosecutor:
+        description: Argues an idea has been done, citing catalog works and web results.
+      skeptic:
+        description: Argues an idea cannot be built with Gabe's gear, stack and time.
+      taste_critic:
+        description: Argues an idea is boring even if it is new and buildable.
+      advocate:
+        description: Answers every critique and may revise or withdraw the idea.
+      judge:
+        description: Compares two debated ideas blind and picks a winner on each axis.
 
   WorkKind:
     description: >-
@@ -410,6 +421,23 @@ slots:
     minimum_value: 0
     slot_uri: seeker:cacheWriteTokens
     description: Input tokens written to the prompt cache.
+  web_search_requests:
+    range: integer
+    minimum_value: 0
+    ifabsent: int(0)
+    slot_uri: seeker:webSearchRequests
+    description: >-
+      Web searches the model ran through the server-side search tool, billed
+      per search on top of tokens. Absent in records written before searches
+      existed, which means none.
+  max_searches:
+    range: integer
+    minimum_value: 0
+    ifabsent: int(0)
+    slot_uri: seeker:maxSearches
+    description: >-
+      The most web searches one call of this role may run. Zero means the
+      role is not offered the search tool.
   reading:
     range: Reading
     required: true
@@ -610,6 +638,7 @@ classes:
       - output_tokens
       - cache_read_tokens
       - cache_write_tokens
+      - web_search_requests
   CardReading:
     class_uri: seeker:CardReading
     description: >-
@@ -659,6 +688,7 @@ classes:
       - reading_guidance
       - max_output_tokens
       - effort
+      - max_searches
   Generation:
     class_uri: seeker:Generation
     description: >-

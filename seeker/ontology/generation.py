@@ -49,6 +49,17 @@ class Usage(SeekerModel):
         examples=[900],
         json_schema_extra={"slot_uri": "seeker:cacheWriteTokens"},
     )
+    web_search_requests: int = Field(
+        default=0,
+        title="web_search_requests",
+        ge=0,
+        description=(
+            "Web searches the model ran through the server-side search tool, billed per search on top "
+            "of tokens. Absent in records written before searches existed, which means none."
+        ),
+        examples=[2],
+        json_schema_extra={"slot_uri": "seeker:webSearchRequests"},
+    )
 
     @classmethod
     def zero(cls) -> Usage:
@@ -60,6 +71,7 @@ class Usage(SeekerModel):
             output_tokens=self.output_tokens + other.output_tokens,
             cache_read_tokens=self.cache_read_tokens + other.cache_read_tokens,
             cache_write_tokens=self.cache_write_tokens + other.cache_write_tokens,
+            web_search_requests=self.web_search_requests + other.web_search_requests,
         )
 
     @classmethod

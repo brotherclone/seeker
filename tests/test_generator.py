@@ -83,6 +83,18 @@ def test_role_missing_guidance(tmp_path: Path) -> None:
     assert str(broken) in str(exc.value) and "metaphorical" in str(exc.value)
 
 
+def test_generator_role_has_no_searches(role: LoadedRole) -> None:
+    assert role.role.max_searches == 0
+
+
+def test_negative_search_limit_names_file_and_slot(tmp_path: Path) -> None:
+    broken = tmp_path / "generator.yaml"
+    broken.write_text(ROLE_PATH.read_text() + "max_searches: -1\n")
+    with pytest.raises(RoleFileError) as exc:
+        LoadedRole.load(broken)
+    assert str(broken) in str(exc.value) and "max_searches" in str(exc.value)
+
+
 # --- 4.2 prompts -------------------------------------------------------------------
 
 

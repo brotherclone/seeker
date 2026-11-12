@@ -86,6 +86,17 @@ class Role(SeekerModel):
         examples=["high"],
         json_schema_extra={"slot_uri": "seeker:effort"},
     )
+    max_searches: int = Field(
+        default=0,
+        title="max_searches",
+        ge=0,
+        description=(
+            "The most web searches one call of this role may run. Zero means the role is not "
+            "offered the search tool."
+        ),
+        examples=[3],
+        json_schema_extra={"slot_uri": "seeker:maxSearches"},
+    )
 
     @model_validator(mode="before")
     @classmethod
