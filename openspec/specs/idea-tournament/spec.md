@@ -1,10 +1,9 @@
-# Spec Delta
+# idea-tournament Specification
 
 ## Purpose
-
 Ranks the debated ideas of a `DebateRun` through blind pairwise `Comparison`s. Each comparison updates one Elo ladder per `ScoreAxis` (novelty, feasibility, promise), and the axes are never blended. The top survivors go into a report for Gabe's review.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: Tournament ontology is published in the LinkML schema
 The schema SHALL define the classes `AxisVerdict`, `Comparison`, `Rating` and `Tournament` and the enum `ScoreAxis`. Each SHALL have a description and a matching Python model or enum that passes the conformance test. `ScoreAxis` SHALL have exactly the values `novelty`, `feasibility` and `promise`.
@@ -25,7 +24,7 @@ The judge SHALL see two debated ideas labelled only `A` and `B`. For each, it se
 
 #### Scenario: No role names reach the judge
 - **WHEN** a comparison prompt is rendered
-- **THEN** it contains none of the role names, model ids or persona texts of the debate roles
+- **THEN** it contains none of the role names, `ModelId`s or persona texts of the debate roles
 
 #### Scenario: Seeded order
 - **WHEN** the same debate run's tournament is rendered twice with the same seed
