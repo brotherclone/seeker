@@ -24,7 +24,7 @@ The judge SHALL see two debated ideas labelled only `A` and `B`. For each, it se
 
 #### Scenario: No role names reach the judge
 - **WHEN** a comparison prompt is rendered
-- **THEN** it contains none of the role names, model ids or persona texts of the debate roles
+- **THEN** it contains none of the role names, `ModelId`s or persona texts of the debate roles
 
 #### Scenario: Seeded order
 - **WHEN** the same debate run's tournament is rendered twice with the same seed

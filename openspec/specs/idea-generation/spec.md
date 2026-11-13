@@ -112,7 +112,7 @@ A `Generation` SHALL record:
 
 #### Scenario: Pinned inputs
 - **WHEN** a generation is written
-- **THEN** its record contains the batch's seed and deck-set digest, the reading, the model id and the role-file digest
+- **THEN** its record contains the batch's seed and deck-set digest, the reading, the `ModelId` and the role-file digest
 
 #### Scenario: Prompt change is visible
 - **WHEN** `prompts/generator.yaml` is edited and another generation is run

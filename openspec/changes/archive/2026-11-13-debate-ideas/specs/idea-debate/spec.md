@@ -41,7 +41,7 @@ For each `Idea` in the `Generation`, the debate SHALL obtain exactly one `Critiq
 
 #### Scenario: One critic fails
 - **WHEN** the skeptic's critique is recorded as a `DebateFailure`
-- **THEN** the advocate still answers the two remaining critiques, and the idea still enters the tournament, flagged as short a critique
+- **THEN** the advocate still answers the two remaining critiques, and the idea still enters the tournament; the command output and the survivors report note that it faced only two critiques
 
 #### Scenario: Advocate fails
 - **WHEN** the advocate's defense is recorded as a `DebateFailure`
