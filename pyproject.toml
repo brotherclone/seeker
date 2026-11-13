@@ -26,6 +26,7 @@ dev = [
 ]
 
 [project.scripts]
+seeker-debate = "seeker.debate.cli:main"
 seeker-decks = "seeker.decks.cli:main"
 seeker-draw = "seeker.draw.cli:main"
 seeker-generate = "seeker.generate.cli:main"

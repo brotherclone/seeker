@@ -45,7 +45,7 @@ For each `Idea` in the `Generation`, the debate SHALL obtain exactly one `Critiq
 
 #### Scenario: Advocate fails
 - **WHEN** the advocate's defense is recorded as a `DebateFailure`
-- **THEN** the idea has no `Debate` and does not enter the tournament
+- **THEN** the idea has no `Debate` and does not enter the tournament, and the critiques it faced are kept on the advocate's `DebateFailure` as `discarded_critiques`, so their cost stays recorded
 
 ### Requirement: Critiques name a specific failure
 Each `Critique` SHALL give:
@@ -172,7 +172,7 @@ When writing to a file, the run SHALL save the `DebateRun` after each `Debate` a
 - **THEN** the resume is rejected, naming the `skeptic` role digest
 
 ### Requirement: Runs stop at their budget
-A run SHALL stop before any model call that would start once the run's estimated cost has reached its budget. The budget is `budget_usd` from config, or `--budget` on the command line. A stopped run SHALL be saved with its stop reason and SHALL be resumable with a higher budget.
+A run SHALL check its estimated cost before starting each debate and each comparison, and SHALL stop without starting it once the cost has reached its budget. The overshoot is therefore at most one debate or comparison, and every call made stays recorded. The budget is `budget_usd` from config, or `--budget` on the command line. A stopped run SHALL be saved with its stop reason and SHALL be resumable with a higher budget.
 
 #### Scenario: Budget reached
 - **WHEN** a run with a $1.00 budget has spent $1.02 after its seventh debate

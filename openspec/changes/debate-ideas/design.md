@@ -68,7 +68,7 @@ New classes (slots abbreviated):
 | `IdeaRevision` | `statement`, `subject`, `behavior`, `rationale` |
 | `Defense` | `model`, `replies`, `outcome`, `revision` (when `outcome` is `revised`), `usage` |
 | `Debate` | `position`, `critiques` (3), `defense`, `final_statement` |
-| `DebateFailure` | `position`, `role_name`, `model`, `reason`, `usage` |
+| `DebateFailure` | `position`, `role_name`, `model`, `failure_reason`, `discarded_critiques` (the critiques kept when the advocate fails, added during implementation), `usage` |
 | `AxisVerdict` | `axis`, `winner` (position), `reason` |
 | `Comparison` | `first`, `second` (positions as shown, A then B), `verdicts` (3), `failed` (bool), `model`, `usage` |
 | `Rating` | `position`, `axis`, `rating`, `wins`, `losses` |
@@ -109,6 +109,15 @@ The first implementation task is a live spike that settles both. **Fallback**, w
 2. A structured call with no tools, given those notes and the result list.
 
 Only `seeker/debate/prosecutor.py` would notice. The spec is unaffected, because URLs are still validated against the results of that idea's searches.
+
+**Spike result (2026-11-12, request `req_011CgyFphGRSv3r8ZJN7tzbn`, `claude-sonnet-5-5`, SDK 2.4.0): one call works.**
+- `web_search_20260209` with `max_uses: 2` and a strict `output_config.format` returned `end_turn` with no `pause_turn`.
+- The single final text block was valid JSON with no citations attached, and every URL it gave was among the 10 search results.
+- `usage.server_tool_use.web_search_requests` was 1.
+- The content also held `code_execution_tool_result` blocks. That is the tool's built-in dynamic filtering, which the boundary must skip.
+- Input was 39,013 tokens for one search (about $0.096 for the call). The prosecutor is the run's biggest cost: about $0.10–$0.25 per idea at 1–3 searches. The 12-idea estimate rises to about **$2.50–$4.50**, still under the $5 budget.
+
+So the prosecutor is one call, and the two-call fallback is dropped. If cost becomes a problem, the first lever is `max_searches` 1–2, and the second is trying the basic `web_search_20250305` variant (no dynamic filtering) on Sonnet 5.5.
 
 Alternatives considered:
 - Scraping specialist venues directly: more reach, much more code to maintain. Deferred.
@@ -171,7 +180,7 @@ Alternatives considered:
 ### 8. Cost meter and budget
 
 - **Prices.** The price table gains a top-level `web_search_per_request` ($10 per 1,000 searches, so 0.01; to be checked against the pricing page when the table is updated). `ModelPrice.cost` stays per model, and `PriceTable.cost(model, usage)` adds searches.
-- **Meter.** A `CostMeter` holds the run's budget. Before each call it checks the spend so far: it compares already-recorded spend against the budget, and does not try to predict the next call's cost. So the overshoot is at most one call (well under $0.10 at these prices), and the spec's "stops before any call once reached" holds.
+- **Meter.** A `CostMeter` holds the run's budget. Before each debate and each comparison it checks the recorded spend so far against the budget; it does not try to predict the next unit's cost. (Revised during implementation: checking before every call would discard a half-finished debate's paid-for critiques when the budget trips between critic and advocate, leaving spend unrecorded. Checking per unit keeps every call in the record, at the cost of overshooting by at most one debate, about $0.40.)
 - **Stopping.** At the budget, the run saves with `stop_reason: budget` and the CLI exits with status 3. Resuming with `--budget` continues.
 
 ### 9. Package layout
@@ -212,7 +221,7 @@ Alternatives considered:
 - **[The judge prefers longer or more fluent debates]** → Objections are blinded and shuffled, and the reply argument length is capped by the output token limit. Comparisons are stored so a length-bias check can be run later.
 - **[Prosecutor notes clutter the vault]** → They are tagged `captured_by: prosecutor`. `seeker-works validate` already treats them as normal works, and Gabe can bulk-delete by that key.
 - **[Elo depends on order]** → The order is seeded and recorded, and ratings are exactly recomputable. With 66 comparisons for 12 entrants, order effects on the top 3 are small.
-- **[Persona and gear lists are guesses]** → They are drafted, then Gabe edits them before the first live run (task 3.4). The role digest makes every later edit traceable.
+- **[Persona and gear lists are guesses]** → They are drafted, then Gabe edits them before the first live run (task 4.3). The role digest makes every later edit traceable.
 
 ## Migration Plan
 

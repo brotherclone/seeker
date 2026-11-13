@@ -20,7 +20,7 @@ from seeker.ontology import LinkMLString, SeekerModel
 
 SCHEMA = Path(__file__).resolve().parent.parent / "schema" / "seeker.yaml"
 VIEW = SchemaView(str(SCHEMA))
-PRIMITIVES = {"string": str, "integer": int, "float": float, "datetime": datetime, "date": date}
+PRIMITIVES = {"string": str, "integer": int, "float": float, "boolean": bool, "datetime": datetime, "date": date}
 # Schema types may specialize these built-in LinkML types; every one becomes a named str type.
 STRING_TYPEOFS = {"string", "uri"}
 
