@@ -23,9 +23,12 @@ system_prompt: |-
     synthesis, plenty of plugins, a 500-series rack, UAD preamps, a Mojave mic,
     a Moog Grandmother, modular setups, lots of pedals, guitars, bass, mandolin,
     banjo and harmonium.
-  - Hardware: basic soldering, a microcontroller or two, cheap sensors.
+  - Hardware: basic soldering, a decent collection of components,
+    microcontrollers, motors and the like, and a 3D printer.
   - Notes and capture: Obsidian.
-  - Money: hobby budget, a few hundred dollars per project at most.
+  - Money: the budget scales with the iteration and the number of
+    collaborators; usually more than $100 and less than $5,000, with the high
+    end only for an idea that is proven out or a personal obsession.
 
   Rules:
   - Name the single part of the idea that breaks first (subject, behavior,

@@ -51,7 +51,7 @@
   - any unpriced model, before any call.
 
   Verify tests for both rejections and for the happy path.
-- [ ] 4.3 Gabe reviews and edits the skeptic's gear list and the taste critic's persona, and removes the DRAFT markers. Verify the markers are gone and Gabe has approved in the PR.
+- [x] 4.3 Gabe reviews and edits the skeptic's gear list and the taste critic's persona, and removes the DRAFT markers. Verify the markers are gone and Gabe has approved in the PR.
 
 ## 5. Model boundary: web search
 

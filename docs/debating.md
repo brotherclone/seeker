@@ -25,7 +25,7 @@ Each idea faces three critics, who never see each other, and then the advocate. 
 
 No two critics may share both model and persona, and every role's model must be in the price table. Either problem stops the run before any call.
 
-The skeptic's gear list and the taste critic's persona are drafts, marked `# DRAFT`, until Gabe edits them.
+The skeptic's gear list and the taste critic's persona are Gabe's own. Edit them in `prompts/` as the setup or taste changes; each run records the new digest.
 
 ## Named failures
 

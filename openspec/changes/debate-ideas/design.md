@@ -221,7 +221,7 @@ Alternatives considered:
 - **[The judge prefers longer or more fluent debates]** → Objections are blinded and shuffled, and the reply argument length is capped by the output token limit. Comparisons are stored so a length-bias check can be run later.
 - **[Prosecutor notes clutter the vault]** → They are tagged `captured_by: prosecutor`. `seeker-works validate` already treats them as normal works, and Gabe can bulk-delete by that key.
 - **[Elo depends on order]** → The order is seeded and recorded, and ratings are exactly recomputable. With 66 comparisons for 12 entrants, order effects on the top 3 are small.
-- **[Persona and gear lists are guesses]** → They are drafted, then Gabe edits them before the first live run (task 3.4). The role digest makes every later edit traceable.
+- **[Persona and gear lists are guesses]** → They are drafted, then Gabe edits them before the first live run (task 4.3). The role digest makes every later edit traceable.
 
 ## Migration Plan
 
