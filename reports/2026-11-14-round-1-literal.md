@@ -1,4 +1,4 @@
-# Debate report: 2026-11-04-round-1-literal
+# Debate report: 2026-11-14 run of 2026-11-04-round-1-literal
 
 ## Survivors
 

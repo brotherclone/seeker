@@ -25,7 +25,7 @@ class SurvivorReport:
         return path
 
     def render(self) -> str:
-        lines = [f"# Debate report: {Path(self.run.generation_path).stem}", ""]
+        lines = [f"# Debate report: {self.run.started_at:%Y-%m-%d} run of {Path(self.run.generation_path).stem}", ""]
         lines += self._survivors()
         lines += self._others()
         lines += self._unranked()
