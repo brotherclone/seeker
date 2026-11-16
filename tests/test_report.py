@@ -93,3 +93,17 @@ def test_mutated_round_report_shows_lineage(tmp_path: Path) -> None:
     assert "**#13 (was #10):**" in text and "carried #10" in text
     assert "## Lineage" in text and "1 of 2 pairs split" not in text
     assert "role files changed since the parent run (skeptic)" in text
+
+
+def test_a_tie_with_the_parent_is_neither_up_nor_down(tmp_path: Path) -> None:
+    from seeker.debate.elo import Ratings
+    from tests.mutation_fixtures import mutated_generation
+
+    generation = Generation.model_validate(yaml.safe_load(mutated_generation(tmp_path / "r2.yaml").read_text()))
+    run = DebateRun.model_validate(yaml.safe_load(RUN.read_text()))
+    entrants = tuple(range(1, 16))
+    ratings = Ratings.recompute(entrants, (), 32.0, 1500.0)  # nobody judged yet: every rating ties at 1500
+    tournament = run.tournament.model_copy(update={"entrants": entrants, "comparisons": (), "ratings": ratings})
+    report = SurvivorReport(run.model_copy(update={"tournament": tournament}), generation, DECKS, CONFIG.prices)
+    assert report.lineage_tag(1) == "reworking of #10 ="
+    assert report.lineage_tag(13) == "carried #10"

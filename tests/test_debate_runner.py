@@ -181,3 +181,30 @@ def test_drawn_generation_carries_nothing() -> None:
     from seeker.debate.carried import CarriedDebates
 
     assert CarriedDebates.for_generation(source().generation, ROOT).debates == ()
+
+
+def test_relative_parent_path_cannot_escape_the_root(tmp_path: Path) -> None:
+    from seeker.debate.carried import CarriedDebates, ParentRunOutsideRoot
+    from seeker.ontology import MutationOrigin
+
+    root = tmp_path / "repo"
+    root.mkdir()
+    (tmp_path / "secret.yaml").write_text("x: 1\n")
+    escaping = MutationOrigin(parent_run_path="../secret.yaml", parent_run_digest="0" * 64, mutation_seed=7, round=2)
+    with pytest.raises(ParentRunOutsideRoot, match=r"\.\./secret\.yaml"):
+        CarriedDebates.parent_path(escaping, root)
+    inside = escaping.model_copy(update={"parent_run_path": "debates/run.yaml"})
+    assert CarriedDebates.parent_path(inside, root) == (root / "debates" / "run.yaml").resolve()
+    absolute = escaping.model_copy(update={"parent_run_path": str(tmp_path / "secret.yaml")})
+    assert CarriedDebates.parent_path(absolute, root) == tmp_path / "secret.yaml"
+
+
+def test_escaping_parent_path_is_refused_before_reading(tmp_path: Path) -> None:
+    from seeker.debate.carried import CarriedDebates, ParentRunOutsideRoot
+    from tests.mutation_fixtures import mutated_generation
+
+    generation = GenerationInput.read(mutated_generation(tmp_path / "round-2.yaml"), ROOT).generation
+    origin = generation.mutation.model_copy(update={"parent_run_path": "../../etc/passwd"})
+    tampered = generation.model_copy(update={"mutation": origin})
+    with pytest.raises(ParentRunOutsideRoot):
+        CarriedDebates.for_generation(tampered, ROOT)

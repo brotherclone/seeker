@@ -228,7 +228,7 @@ class SurvivorReport:
         return self.ideas[position]
 
     def lineage_tag(self, position: int) -> str | None:
-        """How an idea of a mutated generation relates to its parent, with ↑/↓ against the parent's promise."""
+        """How an idea of a mutated generation relates to its parent: ↑, ↓ or = against the parent's promise."""
         lineage = self.ideas[position].lineage
         if lineage is None:
             return None
@@ -236,7 +236,7 @@ class SurvivorReport:
             return f"carried #{lineage.parent_position}"
         kind = "reworking" if lineage.mutation_kind is MutationKind.REWORKING else f"card swap ({lineage.swapped_axis})"
         mine, theirs = self._promise(position), self._promise(self.carried.get(lineage.parent_position, 0))
-        arrow = "" if mine is None or theirs is None else (" ↑" if mine > theirs else " ↓")
+        arrow = "" if mine is None or theirs is None else (" ↑" if mine > theirs else " ↓" if mine < theirs else " =")
         return f"{kind} of #{lineage.parent_position}{arrow}"
 
     def _promise(self, position: int) -> float | None:

@@ -211,7 +211,7 @@ class DebateCommand:
             print(f"{run.generation_path} has changed since the run; the report may not match", file=sys.stderr)
         parent = None
         if (origin := source.generation.mutation) is not None:
-            parent_path = config.root / origin.parent_run_path
+            parent_path = CarriedDebates.parent_path(origin, config.root)
             parent = DebateFile(parent_path).read() if parent_path.is_file() else None
         report = SurvivorReport(run, source.generation, deck_set, config.prices, parent=parent)
         path = report.write(config.paths.reports, args.run.stem)

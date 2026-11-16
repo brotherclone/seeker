@@ -96,7 +96,7 @@ The works catalog is allowed to change, because the run's own captures change it
 `seeker-debate report RUN` writes `reports/<run>.md` without calling any model. It holds:
 - each survivor, with its three ratings and its cards, its original statement if it was revised, and every critique with the advocate's reply and linked citations;
 - a table of the rest, by promise;
-- for a mutated round, each idea's lineage (`reworking`, `card swap` or `carried`, with ↑ or ↓ against its parent's promise rating), and a section per parent listing its children;
+- for a mutated round, each idea's lineage (`reworking`, `card swap` or `carried`, with ↑, ↓ or = against its parent's promise rating), and a section per parent listing its children;
 - the ideas that weren't ranked, and why;
 - judge health: how often the idea shown as A won on each axis, how many pairs the two orders split, each critic's severities and the advocate's outcomes;
 - the run's provenance and cost.
