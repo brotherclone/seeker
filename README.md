@@ -19,7 +19,8 @@ For real model calls, put `ANTHROPIC_API_KEY=...` in `.env`, which is git-ignore
 The pipeline:
 - `seeker-draw` draws card triples;
 - `seeker-generate` turns each triple into an idea ([docs/generating.md](docs/generating.md));
-- `seeker-debate` puts the ideas through critics, an advocate and a blind tournament, and reports the survivors ([docs/debating.md](docs/debating.md)).
+- `seeker-debate` puts the ideas through critics, an advocate and a blind tournament, and reports the survivors ([docs/debating.md](docs/debating.md));
+- `seeker-mutate` breeds the next round from a finished run's survivors, which `seeker-debate` then debates and ranks against their parents ([docs/mutating.md](docs/mutating.md)).
 
 ## Workflow
 

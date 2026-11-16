@@ -95,6 +95,22 @@
 | 11 | A photocopied zine whose pages print an entire infinite-canvas comic as a map too small to read, with a $9 cover OLED lens panned by two thumb pots that resolves any spot into legible drawing, because splitting layout onto paper and reading onto a keyhole lets the reader see McCloud's whole landscape yet travel through it at thumb pace. | 1434 | 1520 | 1389 | revised |
 | 7 | A one-page scratch-off TTRPG zine set inside Murzin's ANS plate that has a referee sweep a pencil scan line rightward each round while the table hums the party's exposed path, letting the light gain whenever the hum breaks, because on the ANS every removal of darkness became sound the machine played. | 1607 | 1490 | 1360 | revised |
 
+## Judge health
+
+Pairs judged in one order. How often the idea shown as A won:
+
+- novelty: A won 44 of 66 (67%)
+- feasibility: A won 29 of 66 (44%)
+- promise: A won 34 of 66 (52%)
+
+Critique severities (this run's debates):
+
+- prosecutor: fatal 0, serious 1, minor 11
+- skeptic: fatal 0, serious 12, minor 0
+- taste_critic: fatal 0, serious 12, minor 0
+
+Defense outcomes: defended 0, revised 12, withdrawn 0
+
 ## Provenance
 
 - Generation: `generations/2026-11-04-round-1-literal.yaml` (sha256 `3d7f2643c02a`)

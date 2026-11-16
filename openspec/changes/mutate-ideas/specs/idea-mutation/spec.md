@@ -94,14 +94,14 @@ Each child `Idea` SHALL carry a `Lineage` naming its parent's position in the pa
 - **THEN** the mutated generation's `MutationOrigin` has round 2
 
 ### Requirement: Parents are carried into the mutated generation
-After the children, the mutated generation SHALL hold each parent as an `Idea` identical to its parent-generation `Idea`, except for its new position and a `Lineage` of kind `carried`. Parents take the positions after the children, in survivor order, and their draws are copied unchanged. Carrying a parent SHALL make no model call.
+After the children, the mutated generation SHALL hold each parent as an `Idea` identical to its parent-generation `Idea`, except for its new position, a `Lineage` of kind `carried`, and zero usage, since its cost was spent in the parent round. Parents take the positions after the children, in survivor order, and their draws are copied unchanged. Carrying a parent SHALL make no model call.
 
 #### Scenario: Carried parents
 - **WHEN** a mutated generation is made from three survivors
 - **THEN** positions 13 to 15 hold the three parents in survivor order, each with lineage kind `carried`, and no model call was made for them
 
 ### Requirement: Mutated generations are written incrementally and can be resumed
-When writing to a file, mutation SHALL save the `Generation` after each child. Rerunning with the same output path, parent run digest, seed, mutator digest, model and deck set SHALL skip covered positions. Any mismatch SHALL be refused, naming the field.
+When writing to a file, mutation SHALL save the `Generation` after each child. Rerunning with the same output path, parent run digest, seed, mutator digest, model and deck set SHALL skip the positions that already have an idea, so a failed child is tried again. Any mismatch SHALL be refused, naming the field.
 
 #### Scenario: Resume after interruption
 - **WHEN** mutation is interrupted after 5 children and rerun with the same output path

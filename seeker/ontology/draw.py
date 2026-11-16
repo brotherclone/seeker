@@ -80,7 +80,10 @@ class Draw(SeekerModel):
 class DrawBatch(SeekerModel):
     """A balanced set of draws produced from one seed and one deck set: shapes
     evenly represented, no card repeated, home fields rotating through the
-    creative fields. Fully reproducible from its seed and deck-set digest."""
+    creative fields. Fully reproducible from its seed and deck-set digest.
+    A mutated generation's batch is the exception: it is rebuilt from the
+    generation's mutation origin, its seed is the mutation seed, and parent
+    cards repeat by design."""
 
     model_config = ConfigDict(title="DrawBatch", json_schema_extra={"class_uri": "seeker:DrawBatch"})
 

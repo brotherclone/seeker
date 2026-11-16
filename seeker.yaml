@@ -36,6 +36,13 @@ prices:
 # A run stops cleanly once its estimated spend reaches this, in US dollars.
 budget_usd: 5.00
 
-# Debate tournament: the most comparisons one run schedules (66 = round robin for 12).
+# Debate tournament: the most judge calls one run schedules. With both_orders,
+# every pair is judged twice (A/B, then B/A), so 132 = round robin for 12.
 tournament:
-  max_comparisons: 66
+  max_comparisons: 132
+  both_orders: true
+
+# Mutation: per survivor, this many reworkings on the same cards, plus one card
+# swap per non-constraint card.
+mutation:
+  reworkings: 2

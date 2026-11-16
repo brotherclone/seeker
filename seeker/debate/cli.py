@@ -9,6 +9,7 @@ from datetime import date
 from pathlib import Path
 
 from seeker.config import ConfigError, SeekerConfig, VaultNotConfigured
+from seeker.debate.carried import CarriedDebates, CarryError
 from seeker.debate.debater import Debater, DebateOutcome
 from seeker.debate.meter import CostMeter
 from seeker.debate.prompts import CriticPrompt, ProsecutorPrompt
@@ -73,7 +74,7 @@ class DebateCommand:
         except WorksInvalid as invalid:
             print(invalid, file=sys.stderr)
             return 1
-        except (ConfigError, RoleFileError, DebateRoleError, DebateResumeMismatch, OSError) as error:
+        except (ConfigError, RoleFileError, DebateRoleError, DebateResumeMismatch, CarryError, OSError) as error:
             print(error, file=sys.stderr)
             return 1
 
@@ -86,8 +87,9 @@ class DebateCommand:
         roles = DebateRoles.load(config.paths.prompts, config.prices)
         seed = args.seed if args.seed is not None else source.generation.draw_batch.seed
         budget = args.budget if args.budget is not None else config.budget_usd
+        carried = CarriedDebates.for_generation(source.generation, config.root)
         if args.dry_run:
-            return self._dry_run(config, deck_set, source, roles, seed)
+            return self._dry_run(config, deck_set, source, roles, seed, carried)
         if args.out is None and not args.scratch:
             self.parser.error("give --out PATH or --scratch, so the run can be saved and resumed")
         works = WorkNotes(folder=config.vault().works, deck_set=deck_set)
@@ -100,7 +102,9 @@ class DebateCommand:
         record = sink.read() if sink.exists() else None
         if record is not None:
             print(f"resuming {sink.path}: {len(record.debates)} debates recorded")
-        progress = runner.debate_all(source, seed, sink=sink, record=record, git_commit=GitRepo(config.root).commit())
+        progress = runner.debate_all(
+            source, seed, sink=sink, record=record, git_commit=GitRepo(config.root).commit(), carried=carried
+        )
         for outcome in progress.debated:
             print(self._debate_line(outcome))
         current = progress.run
@@ -110,7 +114,12 @@ class DebateCommand:
                 sink.save(current)
             else:
                 tournament = TournamentRunner(
-                    roles.role(RoleName.JUDGE), model, reading, meter, config.tournament.max_comparisons
+                    roles.role(RoleName.JUDGE),
+                    model,
+                    reading,
+                    meter,
+                    config.tournament.max_comparisons,
+                    config.tournament.both_orders,
                 )
                 current = tournament.play(current, source.generation, sink)
         self._summary(current)
@@ -118,7 +127,13 @@ class DebateCommand:
         return EXIT_BUDGET if current.stop_reason is StopReason.BUDGET else 0
 
     def _dry_run(
-        self, config: SeekerConfig, deck_set: DeckSet, source: GenerationInput, roles: DebateRoles, seed: int
+        self,
+        config: SeekerConfig,
+        deck_set: DeckSet,
+        source: GenerationInput,
+        roles: DebateRoles,
+        seed: int,
+        carried: CarriedDebates,
     ) -> int:
         reading = source.generation.reading
         try:
@@ -132,19 +147,26 @@ class DebateCommand:
             print(f"=== system: {name.value} ({loaded.role.model}, {reading.value}, role {loaded.digest[:12]}) ===")
             print(SystemPrompt(loaded.role, reading).render())
         draws = {draw.position: draw for draw in source.generation.draw_batch.draws}
+        for debate in carried.debates:
+            print(f"\n=== idea {debate.position}: carried from parent position {debate.carried_from}; no calls ===")
         for idea in source.generation.ideas:
+            if idea.position in carried.positions:
+                continue
             draw = draws[idea.position]
             print(f"\n=== idea {idea.position}: prosecutor ===")
             print(ProsecutorPrompt(idea, draw, deck_set, DrawPriorArt.of(catalog, draw)).render())
             print(f"\n=== idea {idea.position}: skeptic and taste critic ===")
             print(CriticPrompt(idea, draw, deck_set).render())
-        debates = len(source.generation.ideas)
+        debates = len(source.generation.ideas) - len(carried.debates)
         positions = tuple(idea.position for idea in source.generation.ideas)
-        comparisons = len(Schedule.build(positions, seed, config.tournament.max_comparisons))
+        comparisons = len(
+            Schedule.build(positions, seed, config.tournament.max_comparisons, config.tournament.both_orders)
+        )
         searches = debates * roles.role(RoleName.PROSECUTOR).role.max_searches
         print(
-            f"\ndry run: {debates} debates, {debates * CALLS_PER_DEBATE} debate calls (up to {searches} searches), "
-            f"up to {comparisons} comparisons if none is withdrawn; no API calls"
+            f"\ndry run: {debates} debates, {len(carried.debates)} carried, "
+            f"{debates * CALLS_PER_DEBATE} debate calls (up to {searches} searches), "
+            f"up to {comparisons} comparisons among {len(positions)} entrants if none is withdrawn; no API calls"
         )
         return 0
 
@@ -187,7 +209,12 @@ class DebateCommand:
         source = GenerationInput.read(config.root / run.generation_path, config.root)
         if source.digest != run.generation_digest:
             print(f"{run.generation_path} has changed since the run; the report may not match", file=sys.stderr)
-        path = SurvivorReport(run, source.generation, deck_set, config.prices).write(config.paths.reports, args.run.stem)
+        parent = None
+        if (origin := source.generation.mutation) is not None:
+            parent_path = config.root / origin.parent_run_path
+            parent = DebateFile(parent_path).read() if parent_path.is_file() else None
+        report = SurvivorReport(run, source.generation, deck_set, config.prices, parent=parent)
+        path = report.write(config.paths.reports, args.run.stem)
         print(f"wrote {path}")
         return 0
 

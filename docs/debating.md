@@ -86,7 +86,8 @@ The works catalog is allowed to change, because the run's own captures change it
 
 - **Who competes.** Ideas whose debate ended `defended` or `revised`. Withdrawn ideas, and ideas whose advocate failed, sit out.
 - **Blind.** The judge sees two ideas labelled only A and B, each with its objections in a seeded shuffled order and the replies to them. Role names, models, personas and severities are stripped. Severities are self-reported, and the judge should read the arguments, not count labels.
-- **Pairings.** A round robin while it fits in `tournament.max_comparisons` (66 by default: 12 ideas). Above that, every idea gets the same number of seeded opponents, with no pair repeated. The tournament seed sets the pairing, the A/B order and the objection order. It defaults to the generation's batch seed; set it with `--seed`.
+- **Pairings.** A round robin while it fits in `tournament.max_comparisons`, which counts judge calls. Above that, every idea gets the same number of seeded opponents, with no pair repeated. The tournament seed sets the pairing, the A/B order and the objection order. It defaults to the generation's batch seed; set it with `--seed`.
+- **Both orders.** With `tournament.both_orders: true` (the default), each pair is judged twice, back to back: first in the seeded A/B order, then reversed. Each judgment is one Elo game, so a judge that prefers whichever idea is shown first can't decide the ratings. The default of 132 calls is round robin for 12 ideas; a 15-entrant round 2 gets 8 opponents each (120 calls). A run keeps the setting it started with, so the round-1 run (single order) still resumes as recorded.
 - **Ratings.** One Elo ladder per axis: novelty, feasibility and promise. Every idea starts at 1500 and K is 32. The axes are never blended. Ratings can be recomputed exactly from the stored comparisons. A failed comparison changes nothing.
 - **Survivors.** The top three by promise rating, with ties broken by promise wins, then position.
 
@@ -95,7 +96,9 @@ The works catalog is allowed to change, because the run's own captures change it
 `seeker-debate report RUN` writes `reports/<run>.md` without calling any model. It holds:
 - each survivor, with its three ratings and its cards, its original statement if it was revised, and every critique with the advocate's reply and linked citations;
 - a table of the rest, by promise;
+- for a mutated round, each idea's lineage (`reworking`, `card swap` or `carried`, with ↑ or ↓ against its parent's promise rating), and a section per parent listing its children;
 - the ideas that weren't ranked, and why;
+- judge health: how often the idea shown as A won on each axis, how many pairs the two orders split, each critic's severities and the advocate's outcomes;
 - the run's provenance and cost.
 
 ## Cost

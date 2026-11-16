@@ -225,6 +225,17 @@ class Tournament(SeekerModel):
         examples=[False],
         json_schema_extra={"slot_uri": "seeker:skipped"},
     )
+    both_orders: bool = Field(
+        default=False,
+        title="both_orders",
+        description=(
+            "True when every scheduled pair is judged twice, as A/B and then as B/A, so the judge's "
+            "preference for one position cancels out. Absent in tournaments recorded before two-order "
+            "judging, which means false."
+        ),
+        examples=[True],
+        json_schema_extra={"slot_uri": "seeker:bothOrders"},
+    )
 
     SURVIVOR_COUNT: ClassVar[int] = 3
 

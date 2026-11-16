@@ -171,7 +171,8 @@ def test_debate_defaults(tmp_path: Path) -> None:
     assert config.paths.debates == tmp_path / "debates"
     assert config.paths.reports == tmp_path / "reports"
     assert config.budget_usd == 5.00
-    assert config.tournament.max_comparisons == 66
+    assert config.tournament.max_comparisons == 132
+    assert config.tournament.both_orders is True
 
 
 def test_debate_settings_override(tmp_path: Path) -> None:
@@ -211,3 +212,31 @@ def test_debate_scratch_is_ignored() -> None:
 
     result = subprocess.run(["git", "check-ignore", "-q", "debates/scratch/x.yaml"], cwd=ROOT)
     assert result.returncode == 0
+
+
+# --- mutate-ideas 2.1: mutation settings and two-order judging ------------------------
+
+
+def test_mutation_defaults(tmp_path: Path) -> None:
+    config = SeekerConfig.load(write(tmp_path))
+    assert config.mutation.reworkings == 2
+
+
+def test_mutation_and_order_overrides(tmp_path: Path) -> None:
+    text = MINIMAL + "mutation: {reworkings: 3}\ntournament: {both_orders: false}\n"
+    config = SeekerConfig.load(write(tmp_path, text))
+    assert config.mutation.reworkings == 3
+    assert config.tournament.both_orders is False
+    assert config.tournament.max_comparisons == 132
+
+
+def test_zero_reworkings_rejected(tmp_path: Path) -> None:
+    with pytest.raises(ConfigError, match="reworkings"):
+        SeekerConfig.load(write(tmp_path, MINIMAL + "mutation: {reworkings: 0}\n"))
+
+
+def test_repo_config_judges_both_orders() -> None:
+    config = SeekerConfig.load(ROOT / "seeker.yaml")
+    assert config.tournament.both_orders is True
+    assert config.tournament.max_comparisons == 132
+    assert config.mutation.reworkings == 2

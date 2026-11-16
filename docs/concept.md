@@ -98,11 +98,13 @@ Run one test batch by hand first to tune decks and prompts, then build the stand
 4. **Review.** Gabe judges whether the survivors are worth having; adjust decks, roles and scoring.
 5. **Standalone tool.** Build the orchestrator from the architecture sketch; resumable overnight runs.
 
-- [ ] Seed decks
-- [ ] Draft role prompts
-- [ ] Run test batch
+- [x] Seed decks
+- [x] Draft role prompts
+- [x] Run test batch (round 1, debated and ranked 2026-11-14)
 - [ ] Review survivors
-- [ ] Scaffold orchestrator in the repo
+- [x] Scaffold orchestrator in the repo
+- [x] Mutate survivors into the next round (`seeker-mutate`)
+- [ ] Nightly run: launchd, the spend cap, nightly notes
 
 ## Open questions
 
