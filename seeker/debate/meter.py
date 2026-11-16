@@ -22,12 +22,14 @@ class RunCost(SeekerModel):
 
     model_config = ConfigDict(title="RunCost")
 
-    charges: tuple[Charge, ...] = Field(default=(), description="One per critique, defense, failure and comparison.")
+    charges: tuple[Charge, ...] = Field(default=(), description="One per critique, defense, failure and comparison; carried debates are not charged.")
 
     @classmethod
     def of(cls, run: DebateRun) -> RunCost:
         charges: list[Charge] = []
         for debate in run.debates:
+            if debate.carried_from is not None:
+                continue  # copied from the parent run, which already paid for it
             charges += [Charge(model=c.model, usage=c.usage) for c in debate.critiques]
             charges.append(Charge(model=debate.defense.model, usage=debate.defense.usage))
         for failure in run.debate_failures:

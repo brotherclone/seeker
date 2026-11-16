@@ -48,6 +48,10 @@ class Pairing(SeekerModel):
     def key(self) -> frozenset[int]:
         return frozenset((self.first, self.second))
 
+    def reversed(self) -> Pairing:
+        """The same two ideas with A and B swapped."""
+        return Pairing(first=self.second, second=self.first)
+
 
 class Schedule(SeekerModel):
     """The seeded order of comparisons for a set of entrants."""
@@ -58,17 +62,23 @@ class Schedule(SeekerModel):
     per_entrant: int = Field(ge=0, description="How many comparisons each entrant gets.")
 
     @classmethod
-    def build(cls, entrants: tuple[int, ...], seed: int, max_comparisons: int) -> Schedule:
+    def build(cls, entrants: tuple[int, ...], seed: int, max_comparisons: int, both_orders: bool = False) -> Schedule:
+        """The seeded schedule. With ``both_orders``, at most ``max_comparisons // 2`` pairs are chosen
+        and each pairing is followed directly by its reverse, so every comparison is still one judge call."""
         ordered = tuple(sorted(set(entrants)))
         n = len(ordered)
-        if n < 2:
+        budget = max_comparisons // 2 if both_orders else max_comparisons
+        if n < 2 or budget < 1:
             return cls(per_entrant=0)
         everyone = tuple(combinations(ordered, 2))
-        if len(everyone) <= max_comparisons:
+        if len(everyone) <= budget:
             pairs, per_entrant = everyone, n - 1
         else:
-            pairs, per_entrant = cls._regular(ordered, seed, max_comparisons)
-        return cls(pairings=cls._ordered(pairs, seed), per_entrant=per_entrant)
+            pairs, per_entrant = cls._regular(ordered, seed, budget)
+        pairings = cls._ordered(pairs, seed)
+        if both_orders:
+            pairings = tuple(p for pairing in pairings for p in (pairing, pairing.reversed()))
+        return cls(pairings=pairings, per_entrant=per_entrant)
 
     @staticmethod
     def _regular(entrants: tuple[int, ...], seed: int, max_comparisons: int) -> tuple[tuple[tuple[int, int], ...], int]:

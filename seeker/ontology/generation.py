@@ -10,6 +10,7 @@ from pydantic_core import PydanticCustomError
 
 from seeker.ontology.base import SeekerModel
 from seeker.ontology.draw import DrawBatch
+from seeker.ontology.mutation import Lineage, MutationOrigin
 from seeker.ontology.reading import Reading, RoleName
 from seeker.ontology.types import CardId, GitCommit, ModelId, Sha256Digest
 
@@ -162,6 +163,15 @@ class Idea(SeekerModel):
         description="Tokens consumed by the model calls this record accounts for.",
         json_schema_extra={"slot_uri": "seeker:usage"},
     )
+    lineage: Lineage | None = Field(
+        default=None,
+        title="lineage",
+        description=(
+            "Where the idea came from, when it belongs to a mutated generation. Absent for ideas "
+            "generated straight from a draw."
+        ),
+        json_schema_extra={"slot_uri": "seeker:lineage"},
+    )
 
     @property
     def cards(self) -> tuple[CardId, ...]:
@@ -270,6 +280,15 @@ class Generation(SeekerModel):
         examples=[0.21],
         json_schema_extra={"slot_uri": "seeker:estimatedCostUsd"},
     )
+    mutation: MutationOrigin | None = Field(
+        default=None,
+        title="mutation",
+        description=(
+            "The debate run this generation was bred from, when it is a mutated generation. Absent "
+            "for generations drawn from a batch."
+        ),
+        json_schema_extra={"slot_uri": "seeker:mutation"},
+    )
 
     @model_validator(mode="after")
     def _consistent(self) -> Generation:
@@ -286,7 +305,17 @@ class Generation(SeekerModel):
             raise PydanticCustomError("unordered", "ideas and failures must be in position order")
         if self.usage != Usage.total(tuple(r.usage for r in (*self.ideas, *self.failures))):
             raise PydanticCustomError("usage_total", "usage must equal the sum of the ideas' and failures' usage")
+        mutated = self.mutation is not None
+        if any((idea.lineage is not None) != mutated for idea in self.ideas):
+            raise PydanticCustomError(
+                "lineage", "ideas carry a lineage exactly when the generation is mutated"
+            )
         return self
+
+    @property
+    def round(self) -> int:
+        """1 for a generation drawn from a batch; a mutated generation's recorded round."""
+        return self.mutation.round if self.mutation is not None else 1
 
     @property
     def covered_positions(self) -> frozenset[int]:

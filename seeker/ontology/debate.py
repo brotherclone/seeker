@@ -351,6 +351,17 @@ class Debate(SeekerModel):
         examples=["A webcomic that plays a chord as you scroll because panels are bars of time."],
         json_schema_extra={"slot_uri": "seeker:finalStatement"},
     )
+    carried_from: int | None = Field(
+        default=None,
+        title="carried_from",
+        ge=1,
+        description=(
+            "For a debate copied from the parent run with a carried idea, the position it had in the "
+            "parent run."
+        ),
+        examples=[10],
+        json_schema_extra={"slot_uri": "seeker:carriedFrom"},
+    )
 
     CRITICS: ClassVar[tuple[RoleName, ...]] = (RoleName.PROSECUTOR, RoleName.SKEPTIC, RoleName.TASTE_CRITIC)
 

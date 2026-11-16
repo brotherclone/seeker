@@ -28,7 +28,7 @@ class Effort(DescribedStrEnum):
 class RoleName(DescribedStrEnum):
     """The agent roles in Seeker's pipeline. Each role is defined by a YAML file
     in prompts/. The generator states ideas; the critics, advocate and judge
-    debate and rank them."""
+    debate and rank them; the mutator breeds new ideas from the survivors."""
 
     GENERATOR = "generator", "Turns one draw into one idea stated as a single sentence."
     PROSECUTOR = "prosecutor", "Argues an idea has been done, citing catalog works and web results."
@@ -36,3 +36,7 @@ class RoleName(DescribedStrEnum):
     TASTE_CRITIC = "taste_critic", "Argues an idea is boring even if it is new and buildable."
     ADVOCATE = "advocate", "Answers every critique and may revise or withdraw the idea."
     JUDGE = "judge", "Compares two debated ideas blind and picks a winner on each axis."
+    MUTATOR = (
+        "mutator",
+        "Breeds new ideas from a debated survivor, by reworking it or swapping one of its cards.",
+    )

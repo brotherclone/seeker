@@ -172,9 +172,28 @@ class TournamentConfig(SeekerModel):
     model_config = ConfigDict(title="TournamentConfig")
 
     max_comparisons: int = Field(
-        default=66,
+        default=132,
         ge=1,
-        description="The most comparisons one tournament schedules; 66 is round robin for 12 entrants.",
+        description=(
+            "The most judge calls one tournament schedules. With both_orders, 132 is round robin for "
+            "12 entrants, each pair judged twice."
+        ),
+    )
+    both_orders: bool = Field(
+        default=True,
+        description="Judge every pair twice, as A/B and then as B/A, so position bias cancels out.",
+    )
+
+
+class MutationConfig(SeekerModel):
+    """Settings for breeding a new round from a debate run's survivors."""
+
+    model_config = ConfigDict(title="MutationConfig")
+
+    reworkings: int = Field(
+        default=2,
+        ge=1,
+        description="Children per survivor that keep its cards and rework the idea after its debate.",
     )
 
 
@@ -183,7 +202,9 @@ class SeekerConfig(SeekerModel):
 
     model_config = ConfigDict(title="SeekerConfig")
 
-    SECTIONS: ClassVar[tuple[str, ...]] = ("paths", "prices", "vault_folders", "budget_usd", "tournament")
+    SECTIONS: ClassVar[tuple[str, ...]] = (
+        "paths", "prices", "vault_folders", "budget_usd", "tournament", "mutation"
+    )
 
     root: Path = Field(description="Folder holding seeker.yaml; relative paths resolve against it.")
     paths: PathsConfig
@@ -193,6 +214,7 @@ class SeekerConfig(SeekerModel):
         default=5.00, gt=0, description="Estimated spend at which a run stops cleanly, in US dollars."
     )
     tournament: TournamentConfig = Field(default_factory=TournamentConfig)
+    mutation: MutationConfig = Field(default_factory=MutationConfig)
 
     @classmethod
     def find(cls, start: Path | None = None) -> Path:

@@ -5,15 +5,41 @@ from __future__ import annotations
 from pathlib import Path
 
 from seeker.config import PriceTable
-from seeker.ontology import Critique, Debate, DebateRun, DeckSet, Generation, Idea, ScoreAxis
+from seeker.debate.health import JudgeHealth
+from seeker.ontology import (
+    Critique,
+    Debate,
+    DebateRun,
+    DeckSet,
+    Generation,
+    Idea,
+    MutationKind,
+    RoleName,
+    ScoreAxis,
+    Severity,
+)
 
 
 class SurvivorReport:
     """A DebateRun with the generation it debated, as one Markdown document."""
 
-    def __init__(self, run: DebateRun, generation: Generation, deck_set: DeckSet, prices: PriceTable) -> None:
+    def __init__(
+        self,
+        run: DebateRun,
+        generation: Generation,
+        deck_set: DeckSet,
+        prices: PriceTable,
+        parent: DebateRun | None = None,
+    ) -> None:
         self.run = run
+        self.generation = generation
+        self.parent = parent
         self.ideas = {idea.position: idea for idea in generation.ideas}
+        self.carried = {
+            idea.lineage.parent_position: idea.position
+            for idea in generation.ideas
+            if idea.lineage is not None and idea.lineage.mutation_kind is MutationKind.CARRIED
+        }
         self.draws = {draw.position: draw for draw in generation.draw_batch.draws}
         self.deck_set = deck_set
         self.prices = prices
@@ -28,7 +54,9 @@ class SurvivorReport:
         lines = [f"# Debate report: {self.run.started_at:%Y-%m-%d} run of {Path(self.run.generation_path).stem}", ""]
         lines += self._survivors()
         lines += self._others()
+        lines += self._lineage()
         lines += self._unranked()
+        lines += self._health()
         lines += self._provenance()
         return "\n".join(lines).rstrip() + "\n"
 
@@ -46,6 +74,8 @@ class SurvivorReport:
             lines += [f"### {rank}. #{position}: {debate.final_statement}", ""]
             lines.append(f"- **Ratings:** {self._ratings(position)}")
             lines.append(f"- **Cards:** {self._cards(position)}")
+            if (tag := self.lineage_tag(position)) is not None:
+                lines.append(f"- **Lineage:** {tag}")
             if debate.defense.revision is not None:
                 lines.append(f"- **Original:** {idea.statement}")
             if debate.short_a_critique:
@@ -88,13 +118,65 @@ class SurvivorReport:
         if not others:
             return []
         ranked = sorted(others, key=lambda p: -tournament.rating_of(p, ScoreAxis.PROMISE).rating)
-        lines = ["## The rest, by promise", "", "| # | Idea | Novelty | Feasibility | Promise | Outcome |", "|---|---|---|---|---|---|"]
+        mutated = self.generation.mutation is not None
+        header = "| # | Idea | Novelty | Feasibility | Promise | Outcome |" + (" Lineage |" if mutated else "")
+        lines = ["## The rest, by promise", "", header, "|---" * (7 if mutated else 6) + "|"]
         for position in ranked:
             debate = self.run.debate_at(position)
             cells = [f"{tournament.rating_of(position, axis).rating:.0f}" for axis in ScoreAxis]
             statement = debate.final_statement.replace("|", "\\|")
-            lines.append(f"| {position} | {statement} | {' | '.join(cells)} | {debate.defense.outcome.value} |")
+            row = f"| {position} | {statement} | {' | '.join(cells)} | {debate.defense.outcome.value} |"
+            if mutated:
+                row += f" {self.lineage_tag(position) or ''} |"
+            lines.append(row)
         return [*lines, ""]
+
+    def _lineage(self) -> list[str]:
+        """Each carried parent with its children, by promise. Only for a mutated generation."""
+        tournament = self.run.tournament
+        if self.generation.mutation is None or tournament is None or tournament.skipped:
+            return []
+        lines = ["## Lineage", ""]
+        for parent_position, here in self.carried.items():
+            lines.append(f"**#{here} (was #{parent_position}):** {self.run.debate_at(here).final_statement}")
+            lines.append(f"- promise {self._promise_text(here)}")
+            children = [
+                idea.position
+                for idea in self.generation.ideas
+                if idea.lineage is not None
+                and idea.lineage.parent_position == parent_position
+                and idea.lineage.mutation_kind is not MutationKind.CARRIED
+            ]
+            ranked = sorted(children, key=lambda p: -(self._promise(p) or float("-inf")))
+            for position in ranked:
+                lines.append(f"- #{position} {self.lineage_tag(position)}, promise {self._promise_text(position)}")
+            lines.append("")
+        if self.parent is not None and self._roles_changed():
+            changed = ", ".join(self._roles_changed())
+            lines += [f"Note: role files changed since the parent run ({changed}), so carried debates used older prompts.", ""]
+        return lines
+
+    def _health(self) -> list[str]:
+        tournament = self.run.tournament
+        if tournament is None or tournament.skipped:
+            return []
+        health = JudgeHealth.of(self.run)
+        lines = ["## Judge health", ""]
+        order = "both orders" if health.both_orders else "one order"
+        lines.append(f"Pairs judged in {order}. How often the idea shown as A won:")
+        lines.append("")
+        for bias in health.axes:
+            line = f"- {bias.axis.value}: A won {bias.a_wins} of {bias.judged} ({bias.a_share:.0%})"
+            if bias.splits is not None:
+                line += f"; {bias.splits} of {bias.pairs} pairs split between the two orders"
+            lines.append(line)
+        lines += ["", "Critique severities (this run's debates):", ""]
+        for critic in (RoleName.PROSECUTOR, RoleName.SKEPTIC, RoleName.TASTE_CRITIC):
+            counts = ", ".join(f"{severity.value} {health.severity_count(critic, severity)}" for severity in Severity)
+            lines.append(f"- {critic.value}: {counts}")
+        outcomes = ", ".join(f"{o.outcome.value} {o.count}" for o in health.outcomes)
+        lines += ["", f"Defense outcomes: {outcomes}", ""]
+        return lines
 
     def _unranked(self) -> list[str]:
         withdrawn = [d for d in self.run.debates if not d.competes]
@@ -123,7 +205,7 @@ class SurvivorReport:
             f"- Catalog at start: `{run.catalog_digest[:12]}`",
             f"- Started: {run.started_at.isoformat()}",
             f"- Stop reason: {run.stop_reason.value if run.stop_reason else 'running'}",
-            f"- Roles: " + ", ".join(f"{d.role_name.value} `{d.role_digest[:12]}`" for d in run.role_digests),
+            "- Roles: " + ", ".join(f"{d.role_name.value} `{d.role_digest[:12]}`" for d in run.role_digests),
             f"- Usage: {usage.input_tokens:,} in / {usage.output_tokens:,} out tokens, {usage.web_search_requests} searches",
             f"- Estimated cost: ${run.estimated_cost_usd:.2f} of a ${run.budget_usd:.2f} budget",
         ]
@@ -144,3 +226,31 @@ class SurvivorReport:
 
     def idea(self, position: int) -> Idea:
         return self.ideas[position]
+
+    def lineage_tag(self, position: int) -> str | None:
+        """How an idea of a mutated generation relates to its parent: ↑, ↓ or = against the parent's promise."""
+        lineage = self.ideas[position].lineage
+        if lineage is None:
+            return None
+        if lineage.mutation_kind is MutationKind.CARRIED:
+            return f"carried #{lineage.parent_position}"
+        kind = "reworking" if lineage.mutation_kind is MutationKind.REWORKING else f"card swap ({lineage.swapped_axis})"
+        mine, theirs = self._promise(position), self._promise(self.carried.get(lineage.parent_position, 0))
+        arrow = "" if mine is None or theirs is None else (" ↑" if mine > theirs else " ↓" if mine < theirs else " =")
+        return f"{kind} of #{lineage.parent_position}{arrow}"
+
+    def _promise(self, position: int) -> float | None:
+        tournament = self.run.tournament
+        rating = tournament.rating_of(position, ScoreAxis.PROMISE) if tournament is not None else None
+        return rating.rating if rating is not None else None
+
+    def _promise_text(self, position: int) -> str:
+        promise = self._promise(position)
+        return f"{promise:.0f}" if promise is not None else "not ranked"
+
+    def _roles_changed(self) -> tuple[str, ...]:
+        if self.parent is None:
+            return ()
+        return tuple(
+            d.role_name.value for d in self.run.role_digests if self.parent.digest_of(d.role_name) != d.role_digest
+        )

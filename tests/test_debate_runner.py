@@ -6,6 +6,7 @@ from datetime import date
 from pathlib import Path
 
 import pytest
+import yaml
 
 from seeker.config import SeekerConfig
 from seeker.debate import DebateRoles
@@ -132,3 +133,78 @@ def test_catalog_change_does_not_block_resume(tmp_path: Path) -> None:
     record = sink.read()
     resumed = runner(ScriptedModel(one_round()), tmp_path / "vault").debate_all(source(2), seed=7, record=record).run
     assert resumed.catalog_digest == record.catalog_digest
+
+
+# --- mutate-ideas 5.1: carried debates ----------------------------------------------
+
+
+def test_carried_debates_are_copied_not_debated(tmp_path: Path) -> None:
+    from seeker.debate.carried import CarriedDebates
+    from seeker.debate.meter import RunCost
+    from seeker.ontology import DebateRun
+    from tests.mutation_fixtures import ROUND_ONE_RUN, mutated_generation
+
+    path = mutated_generation(tmp_path / "round-2.yaml")
+    mutated = GenerationInput.read(path, ROOT)
+    carried = CarriedDebates.for_generation(mutated.generation, ROOT)
+    assert sorted(carried.positions) == [13, 14, 15]
+    model = ScriptedModel(one_round() * 12)
+    run = runner(model, tmp_path / "vault").debate_all(mutated, 7, carried=carried).run
+    assert len(model.requests) == 48 and model.remaining == 0
+    parent = DebateRun.model_validate(yaml.safe_load(ROUND_ONE_RUN.read_text()))
+    for position, parent_position in ((13, 10), (14, 6), (15, 3)):
+        copy = run.debate_at(position)
+        assert copy.carried_from == parent_position
+        original = parent.debate_at(parent_position)
+        assert copy.model_dump(exclude={"position", "carried_from"}) == original.model_dump(
+            exclude={"position", "carried_from"}
+        )
+    children = run.model_copy(update={"debates": tuple(d for d in run.debates if d.carried_from is None)})
+    assert run.usage == RunCost.of(children).usage
+
+
+def test_tampered_parent_run_is_refused(tmp_path: Path) -> None:
+    import shutil
+
+    from seeker.debate.carried import CarriedDebates, ParentRunChanged
+    from tests.mutation_fixtures import ROUND_ONE_RUN, mutated_generation
+
+    copy = tmp_path / ROUND_ONE_RUN.name
+    shutil.copy(ROUND_ONE_RUN, copy)
+    mutated = GenerationInput.read(mutated_generation(tmp_path / "round-2.yaml", copy, tmp_path), tmp_path)
+    copy.write_text(copy.read_text() + "\n# edited\n")
+    with pytest.raises(ParentRunChanged, match=ROUND_ONE_RUN.name):
+        CarriedDebates.for_generation(mutated.generation, tmp_path)
+
+
+def test_drawn_generation_carries_nothing() -> None:
+    from seeker.debate.carried import CarriedDebates
+
+    assert CarriedDebates.for_generation(source().generation, ROOT).debates == ()
+
+
+def test_relative_parent_path_cannot_escape_the_root(tmp_path: Path) -> None:
+    from seeker.debate.carried import CarriedDebates, ParentRunOutsideRoot
+    from seeker.ontology import MutationOrigin
+
+    root = tmp_path / "repo"
+    root.mkdir()
+    (tmp_path / "secret.yaml").write_text("x: 1\n")
+    escaping = MutationOrigin(parent_run_path="../secret.yaml", parent_run_digest="0" * 64, mutation_seed=7, round=2)
+    with pytest.raises(ParentRunOutsideRoot, match=r"\.\./secret\.yaml"):
+        CarriedDebates.parent_path(escaping, root)
+    inside = escaping.model_copy(update={"parent_run_path": "debates/run.yaml"})
+    assert CarriedDebates.parent_path(inside, root) == (root / "debates" / "run.yaml").resolve()
+    absolute = escaping.model_copy(update={"parent_run_path": str(tmp_path / "secret.yaml")})
+    assert CarriedDebates.parent_path(absolute, root) == tmp_path / "secret.yaml"
+
+
+def test_escaping_parent_path_is_refused_before_reading(tmp_path: Path) -> None:
+    from seeker.debate.carried import CarriedDebates, ParentRunOutsideRoot
+    from tests.mutation_fixtures import mutated_generation
+
+    generation = GenerationInput.read(mutated_generation(tmp_path / "round-2.yaml"), ROOT).generation
+    origin = generation.mutation.model_copy(update={"parent_run_path": "../../etc/passwd"})
+    tampered = generation.model_copy(update={"mutation": origin})
+    with pytest.raises(ParentRunOutsideRoot):
+        CarriedDebates.for_generation(tampered, ROOT)

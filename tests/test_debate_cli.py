@@ -53,7 +53,7 @@ def judgment() -> ModelReply:
     )
 
 
-def full_script(ideas: int = 3, comparisons: int = 3) -> ScriptedModel:
+def full_script(ideas: int = 3, comparisons: int = 6) -> ScriptedModel:
     return ScriptedModel(one_round() * ideas + tuple(judgment() for _ in range(comparisons)))
 
 
@@ -62,7 +62,7 @@ def test_dry_run_needs_no_key_and_makes_no_calls(config, capsys) -> None:
     generation = ROOT / "generations" / "2026-11-04-round-1-literal.yaml"
     assert DebateCommand(model).run([str(generation), "--dry-run", "--config", str(config)]) == 0
     out = capsys.readouterr().out
-    assert "12 debates, 48 debate calls (up to 36 searches), up to 66 comparisons" in out
+    assert "12 debates, 0 carried, 48 debate calls (up to 36 searches), up to 132 comparisons among 12 entrants" in out
     assert out.count("=== idea") == 24 and model.requests == []
 
 
@@ -71,7 +71,8 @@ def test_run_out_writes_debates_tournament_and_survivors(config, generation, tmp
     model = full_script()
     assert DebateCommand(model).run(["run", str(generation), "--out", str(out), "--config", str(config)]) == 0
     record = DebateFile(out).read()
-    assert len(record.debates) == 3 and len(record.tournament.comparisons) == 3
+    assert len(record.debates) == 3 and len(record.tournament.comparisons) == 6
+    assert record.tournament.both_orders is True
     assert record.stop_reason is StopReason.FINISHED and record.tournament_seed == 7
     assert record.generation_path == "generations/three.yaml"
     printed = capsys.readouterr().out
@@ -85,9 +86,9 @@ def test_no_tournament_stops_before_ranking(config, generation, tmp_path) -> Non
     ) == 0
     record = DebateFile(out).read()
     assert record.stop_reason is StopReason.NO_TOURNAMENT and record.tournament is None
-    model = ScriptedModel(tuple(judgment() for _ in range(3)))
+    model = ScriptedModel(tuple(judgment() for _ in range(6)))
     assert DebateCommand(model).run([str(generation), "--out", str(out), "--config", str(config)]) == 0
-    assert len(DebateFile(out).read().tournament.comparisons) == 3 and model.remaining == 0
+    assert len(DebateFile(out).read().tournament.comparisons) == 6 and model.remaining == 0
 
 
 def test_budget_stop_exits_three_and_resumes(config, generation, tmp_path, capsys) -> None:
@@ -95,7 +96,7 @@ def test_budget_stop_exits_three_and_resumes(config, generation, tmp_path, capsy
     status = DebateCommand(full_script()).run([str(generation), "--out", str(out), "--budget", "0.0001", "--config", str(config)])
     assert status == 3 and DebateFile(out).read().stop_reason is StopReason.BUDGET
     assert "higher --budget" in capsys.readouterr().out
-    rest = ScriptedModel(one_round() * 2 + tuple(judgment() for _ in range(3)))
+    rest = ScriptedModel(one_round() * 2 + tuple(judgment() for _ in range(6)))
     assert DebateCommand(rest).run([str(generation), "--out", str(out), "--budget", "50", "--config", str(config)]) == 0
     assert DebateFile(out).read().stop_reason is StopReason.FINISHED
 
@@ -124,3 +125,26 @@ def test_report_from_a_finished_run(config, generation, tmp_path, capsys) -> Non
     report = (tmp_path / "reports" / "run.md").read_text()
     assert report.count("### ") == 3 and "**prosecutor**" in report and "*Advocate rebuts:*" in report
     assert "novelty" in report and "## Provenance" in report and model.requests == []
+
+
+# --- mutate-ideas 5.2: dry run on a mutated generation ------------------------------
+
+
+def test_dry_run_on_mutated_generation_skips_carried(config, tmp_path, capsys) -> None:
+    import shutil
+
+    from tests.mutation_fixtures import ROUND_ONE_RUN, mutated_generation
+
+    (tmp_path / "debates").mkdir()
+    parent = tmp_path / "debates" / ROUND_ONE_RUN.name
+    shutil.copy(ROUND_ONE_RUN, parent)
+    path = mutated_generation(tmp_path / "generations" / "round-2.yaml", parent, tmp_path)
+    model = ScriptedModel(())
+    assert DebateCommand(model).run([str(path), "--dry-run", "--config", str(config)]) == 0
+    out = capsys.readouterr().out
+    assert "12 debates, 3 carried, 48 debate calls" in out
+    assert "comparisons among 15 entrants" in out
+    for position, parent_position in ((13, 10), (14, 6), (15, 3)):
+        assert f"=== idea {position}: carried from parent position {parent_position}; no calls ===" in out
+        assert f"=== idea {position}: prosecutor ===" not in out
+    assert out.count(": prosecutor ===") == 12 and model.requests == []

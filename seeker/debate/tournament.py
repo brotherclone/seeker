@@ -23,13 +23,20 @@ class TournamentRunner:
     """Judges the scheduled comparisons a run's record does not have yet, saving after each one."""
 
     def __init__(
-        self, judge: LoadedRole, model: LanguageModel, reading: Reading, meter: CostMeter, max_comparisons: int
+        self,
+        judge: LoadedRole,
+        model: LanguageModel,
+        reading: Reading,
+        meter: CostMeter,
+        max_comparisons: int,
+        both_orders: bool = False,
     ) -> None:
         self.judge = judge
         self.model = model
         self.reading = reading
         self.meter = meter
         self.max_comparisons = max_comparisons
+        self.both_orders = both_orders
 
     @staticmethod
     def entrants(run: DebateRun, generation: Generation) -> tuple[Entrant, ...]:
@@ -37,25 +44,30 @@ class TournamentRunner:
         ideas = {idea.position: idea for idea in generation.ideas}
         return tuple(Entrant(idea=ideas[d.position], debate=d) for d in run.debates if d.competes)
 
+    def orders(self, run: DebateRun) -> bool:
+        """Whether this run judges both orders: its recorded choice on resume, else this runner's."""
+        return run.tournament.both_orders if run.tournament is not None else self.both_orders
+
     def schedule(self, run: DebateRun, generation: Generation) -> Schedule:
         positions = tuple(e.position for e in self.entrants(run, generation))
-        return Schedule.build(positions, run.tournament_seed, self.max_comparisons)
+        return Schedule.build(positions, run.tournament_seed, self.max_comparisons, self.orders(run))
 
     def play(self, run: DebateRun, generation: Generation, sink: DebateSink | None = None) -> DebateRun:
         entrants = self.entrants(run, generation)
         positions = tuple(e.position for e in entrants)
+        both = self.orders(run)
         if len(positions) < 2:
-            skipped = self._tournament(positions, (), skipped=True)
+            skipped = self._tournament(positions, (), skipped=True, both_orders=both)
             return self._save(run, skipped, StopReason.FINISHED, sink)
-        schedule = Schedule.build(positions, run.tournament_seed, self.max_comparisons)
+        schedule = Schedule.build(positions, run.tournament_seed, self.max_comparisons, both)
         done = self._played(run, schedule, positions)
         system = SystemPrompt(self.judge.role, self.reading).render()
         for pairing in schedule.pairings[len(done) :]:
             if self.meter.reached(run):
-                return self._save(run, self._tournament(positions, done), StopReason.BUDGET, sink)
+                return self._save(run, self._tournament(positions, done, both_orders=both), StopReason.BUDGET, sink)
             done += (self._judge(pairing, entrants, run.tournament_seed, system),)
-            run = self._save(run, self._tournament(positions, done), None, sink)
-        final = self._tournament(positions, done)
+            run = self._save(run, self._tournament(positions, done, both_orders=both), None, sink)
+        final = self._tournament(positions, done, both_orders=both)
         final = final.model_copy(update={"survivors": Survivors.pick(final.ratings)})
         return self._save(run, Tournament.model_validate(final.model_dump()), StopReason.FINISHED, sink)
 
@@ -105,7 +117,13 @@ class TournamentRunner:
     def _no_answer() -> tuple[DraftProblem, ...]:
         return (DraftProblem(field="answer", message="give one verdict per axis"),)
 
-    def _tournament(self, positions: tuple[int, ...], comparisons: tuple[Comparison, ...], skipped: bool = False) -> Tournament:
+    def _tournament(
+        self,
+        positions: tuple[int, ...],
+        comparisons: tuple[Comparison, ...],
+        skipped: bool = False,
+        both_orders: bool = False,
+    ) -> Tournament:
         return Tournament(
             k_factor=K_FACTOR,
             initial_rating=INITIAL_RATING,
@@ -115,6 +133,7 @@ class TournamentRunner:
             ratings=() if skipped else Ratings.recompute(positions, comparisons, K_FACTOR, INITIAL_RATING),
             survivors=(),
             skipped=skipped,
+            both_orders=both_orders,
         )
 
     def _save(self, run: DebateRun, tournament: Tournament, stop: StopReason | None, sink: DebateSink | None) -> DebateRun:

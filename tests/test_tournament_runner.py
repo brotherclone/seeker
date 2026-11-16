@@ -106,3 +106,47 @@ def test_budget_stops_the_tournament(tmp_path: Path) -> None:
     model = ScriptedModel(tuple(judgment() for _ in range(6)))
     stopped = tournament(model, budget=run.estimated_cost_usd + 0.000001).play(run, generation)
     assert stopped.stop_reason is StopReason.BUDGET and len(stopped.tournament.comparisons) == 1
+
+
+# --- mutate-ideas 5.4: two-order tournaments ----------------------------------------
+
+
+def two_order(model: ScriptedModel, budget: float = 100.0) -> TournamentRunner:
+    runner_ = tournament(model, budget, max_comparisons=132)
+    runner_.both_orders = True
+    return runner_
+
+
+def test_new_run_records_both_orders(tmp_path: Path) -> None:
+    run, generation = debated(tmp_path, 3)
+    done = two_order(ScriptedModel(tuple(judgment() for _ in range(6)))).play(run, generation)
+    played = done.tournament
+    assert played.both_orders is True and len(played.comparisons) == 6
+    for first, reverse in zip(played.comparisons[0::2], played.comparisons[1::2]):
+        assert (reverse.first, reverse.second) == (first.second, first.first)
+    # The judge always picks A, so each idea wins once per pair: every pair splits and ratings stay close.
+    wins = {r.position: r.wins for r in played.ratings if r.axis_name is ScoreAxis.NOVELTY}
+    assert set(wins.values()) == {2}
+
+
+def test_resumed_single_order_run_keeps_its_schedule(tmp_path: Path) -> None:
+    run, generation = debated(tmp_path, 4)
+    sink = DebateFile(tmp_path / "run.yaml")
+    with pytest.raises(Exception):
+        tournament(ScriptedModel(tuple(judgment() for _ in range(2)))).play(run, generation, sink)
+    model = ScriptedModel(tuple(judgment() for _ in range(4)))
+    done = two_order(model).play(sink.read(), generation, sink)
+    assert done.tournament.both_orders is False and len(done.tournament.comparisons) == 6
+    assert model.remaining == 0
+
+
+def test_budget_stop_between_a_pair_and_its_reverse(tmp_path: Path) -> None:
+    run, generation = debated(tmp_path, 3)
+    sink = DebateFile(tmp_path / "run.yaml")
+    stopped = two_order(ScriptedModel((judgment(),)), budget=run.estimated_cost_usd + 0.000001).play(run, generation, sink)
+    assert stopped.stop_reason is StopReason.BUDGET and len(stopped.tournament.comparisons) == 1
+    model = ScriptedModel(tuple(judgment() for _ in range(5)))
+    done = two_order(model).play(sink.read(), generation, sink)
+    first, reverse = done.tournament.comparisons[:2]
+    assert (reverse.first, reverse.second) == (first.second, first.first)
+    assert len(done.tournament.comparisons) == 6 and model.remaining == 0

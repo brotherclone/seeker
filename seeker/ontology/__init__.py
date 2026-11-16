@@ -24,6 +24,7 @@ from seeker.ontology.deck_set import DeckSet, SharedCardId
 from seeker.ontology.draw import Draw, DrawBatch
 from seeker.ontology.fields import CreativeField
 from seeker.ontology.generation import CardReading, Generation, GenerationFailure, Idea, Usage
+from seeker.ontology.mutation import Lineage, MutationKind, MutationOrigin
 from seeker.ontology.reading import Effort, Reading, RoleName
 from seeker.ontology.role import ReadingGuidance, Role
 from seeker.ontology.run import DebateRun, RoleDigest, StopReason
@@ -60,8 +61,11 @@ __all__ = [
     "GitCommit",
     "Idea",
     "IdeaRevision",
+    "Lineage",
     "LinkMLString",
     "ModelId",
+    "MutationKind",
+    "MutationOrigin",
     "Rating",
     "Reading",
     "ReadingGuidance",

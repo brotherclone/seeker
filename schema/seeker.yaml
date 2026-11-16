@@ -166,7 +166,7 @@ enums:
     description: >-
       The agent roles in Seeker's pipeline. Each role is defined by a YAML file
       in prompts/. The generator states ideas; the critics, advocate and judge
-      debate and rank them.
+      debate and rank them; the mutator breeds new ideas from the survivors.
     permissible_values:
       generator:
         description: Turns one draw into one idea stated as a single sentence.
@@ -180,6 +180,8 @@ enums:
         description: Answers every critique and may revise or withdraw the idea.
       judge:
         description: Compares two debated ideas blind and picks a winner on each axis.
+      mutator:
+        description: Breeds new ideas from a debated survivor, by reworking it or swapping one of its cards.
 
   WorkKind:
     description: >-
@@ -282,6 +284,19 @@ enums:
         description: The run's estimated spend reached its budget; it can be resumed with more.
       no_tournament:
         description: The run was asked to debate only and stopped before the tournament.
+  MutationKind:
+    description: How an idea in a mutated generation relates to its parent.
+    permissible_values:
+      reworking:
+        description: >-
+          The parent's three cards, rewritten into a different idea after
+          reading the parent's debate.
+      card_swap:
+        description: >-
+          The parent's draw with one non-constraint card replaced by a seeded
+          card from the same deck.
+      carried:
+        description: The parent itself, carried into the next round with its debate.
 
 slots:
   id:
@@ -921,6 +936,80 @@ slots:
     inlined: true
     slot_uri: seeker:tournament
     description: The ranking of the debated ideas, once it has started.
+  lineage:
+    range: Lineage
+    inlined: true
+    slot_uri: seeker:lineage
+    description: >-
+      Where the idea came from, when it belongs to a mutated generation.
+      Absent for ideas generated straight from a draw.
+  mutation:
+    range: MutationOrigin
+    inlined: true
+    slot_uri: seeker:mutation
+    description: >-
+      The debate run this generation was bred from, when it is a mutated
+      generation. Absent for generations drawn from a batch.
+  carried_from:
+    range: integer
+    minimum_value: 1
+    slot_uri: seeker:carriedFrom
+    description: >-
+      For a debate copied from the parent run with a carried idea, the
+      position it had in the parent run.
+  both_orders:
+    range: boolean
+    ifabsent: "false"
+    slot_uri: seeker:bothOrders
+    description: >-
+      True when every scheduled pair is judged twice, as A/B and then as B/A,
+      so the judge's preference for one position cancels out. Absent in
+      tournaments recorded before two-order judging, which means false.
+  parent_position:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:parentPosition
+    description: The parent idea's position in the parent debate run.
+  mutation_kind:
+    range: MutationKind
+    required: true
+    slot_uri: seeker:mutationKind
+    description: How the idea was made from its parent.
+  swapped_axis:
+    range: AxisId
+    slot_uri: seeker:swappedAxis
+    description: For a card swap, the axis whose card was replaced.
+  replaced_card:
+    range: CardId
+    slot_uri: seeker:replacedCard
+    description: For a card swap, the parent's card that was replaced, referenced by card id.
+  parent_run_path:
+    range: string
+    required: true
+    slot_uri: seeker:parentRunPath
+    description: The parent debate run, relative to the repository root when inside it.
+  parent_run_digest:
+    range: Sha256Digest
+    required: true
+    slot_uri: seeker:parentRunDigest
+    description: >-
+      SHA-256 of the parent run's bytes, so a changed parent is caught on
+      resume and when its debates are carried.
+  mutation_seed:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:mutationSeed
+    description: The integer the card swaps are drawn from.
+  round:
+    range: integer
+    required: true
+    minimum_value: 2
+    slot_uri: seeker:round
+    description: >-
+      Which round of the loop this generation is. A generation drawn from a
+      batch is round 1; each mutation adds one.
 
 classes:
   Card:
@@ -974,6 +1063,9 @@ classes:
       A balanced set of draws produced from one seed and one deck set: shapes
       evenly represented, no card repeated, home fields rotating through the
       creative fields. Fully reproducible from its seed and deck-set digest.
+      A mutated generation's batch is the exception: it is rebuilt from the
+      generation's mutation origin, its seed is the mutation seed, and parent
+      cards repeat by design.
     slots:
       - seed
       - deck_set_digest
@@ -1009,6 +1101,7 @@ classes:
       - rationale
       - card_readings
       - usage
+      - lineage
   GenerationFailure:
     class_uri: seeker:GenerationFailure
     description: >-
@@ -1056,6 +1149,7 @@ classes:
       - failures
       - usage
       - estimated_cost_usd
+      - mutation
   Citation:
     class_uri: seeker:Citation
     description: >-
@@ -1121,6 +1215,7 @@ classes:
       - critiques
       - defense
       - final_statement
+      - carried_from
   DebateFailure:
     class_uri: seeker:DebateFailure
     description: A debate role that produced no valid answer for one idea, even after a retry.
@@ -1175,6 +1270,7 @@ classes:
       - ratings
       - survivors
       - skipped
+      - both_orders
   RoleDigest:
     class_uri: seeker:RoleDigest
     description: The digest of one role file a run used.
@@ -1201,6 +1297,26 @@ classes:
       - tournament
       - usage
       - estimated_cost_usd
+  Lineage:
+    class_uri: seeker:Lineage
+    description: >-
+      Where an idea in a mutated generation came from: its parent in the
+      parent debate run, and how it was made from it.
+    slots:
+      - parent_position
+      - mutation_kind
+      - swapped_axis
+      - replaced_card
+  MutationOrigin:
+    class_uri: seeker:MutationOrigin
+    description: >-
+      The debate run a mutated generation was bred from, pinned by path and
+      digest, with the seed its card swaps came from and its round number.
+    slots:
+      - parent_run_path
+      - parent_run_digest
+      - mutation_seed
+      - round
   Work:
     class_uri: seeker:Work
     description: >-

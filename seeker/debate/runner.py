@@ -9,6 +9,7 @@ from pathlib import Path
 import yaml
 from pydantic import ConfigDict, Field
 
+from seeker.debate.carried import CarriedDebates
 from seeker.debate.debater import Debater, DebateOutcome
 from seeker.debate.meter import CostMeter
 from seeker.debate.record import DebateSink, ResumeCheck
@@ -76,13 +77,15 @@ class DebateRunner:
         sink: DebateSink | None = None,
         record: DebateRun | None = None,
         git_commit: GitCommit | None = None,
+        carried: CarriedDebates | None = None,
     ) -> RunProgress:
-        """Debate every idea not yet in the record. Stops cleanly at the budget."""
+        """Debate every idea not yet in the record, after copying any carried debates. Stops cleanly at the budget."""
         if record is not None:
             self.resume_check(source, seed).verify(record)
             current = record.model_copy(update={"budget_usd": self.meter.budget_usd, "stop_reason": None})
         else:
             current = self.start(source, seed, git_commit)
+        current = self._carry(current, carried or CarriedDebates(), sink)
         done = {d.position for d in current.debates} | {f.position for f in current.debate_failures}
         draws = {draw.position: draw for draw in source.generation.draw_batch.draws}
         debated: list[DebateOutcome] = []
@@ -98,6 +101,16 @@ class DebateRunner:
             captured += [work.work_id for work in outcome.captured]
             current = self._saved(self._with(current, outcome), sink)
         return RunProgress(run=current, debated=tuple(debated), captured=tuple(captured))
+
+    def _carry(self, run: DebateRun, carried: CarriedDebates, sink: DebateSink | None) -> DebateRun:
+        """The run with every carried debate it lacks, saved if anything was added. No call is made."""
+        have = {d.position for d in run.debates}
+        missing = tuple(d for d in carried.debates if d.position not in have)
+        if not missing:
+            return run
+        debates = sorted((*run.debates, *missing), key=lambda d: d.position)
+        updated = DebateRun.model_validate({**run.model_dump(), "debates": [d.model_dump() for d in debates]})
+        return self._saved(updated, sink)
 
     def _with(self, run: DebateRun, outcome: DebateOutcome) -> DebateRun:
         debates = run.debates + ((outcome.debate,) if outcome.debate is not None else ())
