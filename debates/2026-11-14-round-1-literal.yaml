@@ -1,0 +1,3515 @@
+# Debate-run record (schema/seeker.yaml: DebateRun). Inputs are pinned: the
+# generation file's digest, every role file's digest and the tournament seed.
+# Rerunning with the same output path resumes where the run stopped.
+generation_path: generations/2026-11-04-round-1-literal.yaml
+generation_digest: 3d7f2643c02a0e38d25c478a1a5d0b38b642e761baed66a6b0a1dfa850d078b0
+role_digests:
+- role_name: prosecutor
+  role_digest: e4822ddf19ef5467485c5d6937b71b0d890671e4712fc24bea1d7527d91db280
+- role_name: skeptic
+  role_digest: 8164f2d71972990429f798bc341566cf9bf224ff5bacd5608e2fae1ab0b75f05
+- role_name: taste_critic
+  role_digest: 4555b2340ed16c9962109d015a0fd1d5e75049ec3b7d9a66bc3687d0417f8240
+- role_name: advocate
+  role_digest: dbe648b1672afa833141ac273196db91c497257cb58fc3e7c0d2e0c595073064
+- role_name: judge
+  role_digest: e74ed5f6b18b3e04a01a8d84a9e5575c64140dfe2ffa30c7ac6b5337edeca70e
+catalog_digest: 0b7dcb2ed0fddac22846a804b8b5baec2d28070a89245e5fceca1ad39160dd24
+git_commit: d1eebcb55629376eea75d222d7f6c4b2d3760690
+tournament_seed: 7
+started_at: '2026-11-14T13:16:32.679092Z'
+budget_usd: 5.0
+stop_reason: finished
+debates:
+- position: 1
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: behavior
+    severity: minor
+    failure: No verified prior art was found for the full combination, though touch Lumigraph homages
+      and sound-reactive comics probably exist separately and the reveal-by-touch mechanic is likely not
+      novel on its own.
+    argument: My web searches failed because the search tool hit its usage limit, so I have no verified
+      URLs to cite. The catalog has no work linking any two of these cards. I will not invent precedent.
+      I suspect touch-based Lumigraph homages and interactive music comics exist separately. I could not
+      confirm any single work that combines a dark-panel reveal, contact-area chords and a comic whose
+      panel order sets the harmony.
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 862
+      output_tokens: 697
+      cache_read_tokens: 22330
+      cache_write_tokens: 8080
+      web_search_requests: 3
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: constraint
+    severity: serious
+    failure: The builder's Mac desktop has no touchscreen, and browsers report touch radius and force
+      inconsistently, so contact-area sound control cannot be tested without buying a touch device.
+    argument: The idea's core mechanic, sounding chords from contact area and pressure, depends on a touchscreen
+      that the builder does not own. The Mac desktop is listed with no touch display, and the rationale
+      assumes a touch device that can report reliable area and force. Without that hardware the sound
+      design cannot be tested, and buying a touch display or tablet is an unbudgeted step that the one-person,
+      few-months plan does not account for.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 725
+      output_tokens: 1156
+      cache_read_tokens: 0
+      cache_write_tokens: 1264
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: behavior
+    severity: serious
+    failure: It is a touch-to-reveal ambient toy in which the story is hidden under a flashlight mask,
+      so the comic and the instrument each dilute the other and the mechanism is exhausted within one
+      panel.
+    argument: 'Meeting the finished thing, you touch a black screen, a smear of colored light blooms under
+      your thumb, a drone swells, and a drawing peeks out. Within thirty seconds you have the whole trick,
+      and every panel repeats it. It is the standard ''touch to reveal, touch to play'' mobile art toy,
+      in the lineage of Bloom, Pixelphonia and a hundred museum-kiosk instruments, with a comic as the
+      skin. The comic is the weak point. A webcomic''s job is narrative, and here the story is hidden
+      behind a flashlight, so the reader fumbles for a drawing while the sound does its own thing. Neither
+      half gets room to move you. Nothing is strange or uncanny: no wrong note, no drawing that responds
+      with menace or tenderness. The rationale is also tidy to a fault. Panel order fixes harmony, hands
+      set rhythm, every reading is a performance. That is a design-doc claim, and in practice most readers
+      will wave their fingers around and get pleasant ambient pads. The Lumigraph itself was ecstatic,
+      abstract and hypnotic. Here it is demoted to a reveal mask over illustrations, so the abstraction
+      that made it dreamlike is replaced by literal pictures. The result is a polite, tasteful interactive
+      piece you admire once and forget, with no absurd or heartbreaking turn, only a mechanism with a
+      nice pedigree.'
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 725
+      output_tokens: 551
+      cache_read_tokens: 0
+      cache_write_tokens: 1019
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: concede
+      argument: Conceded as far as it goes. Touch-to-reveal and touch-to-play are not novel mechanics,
+        and I won't claim them. The claim worth defending was never the mask. It is a comic whose authored
+        panel content fixes the harmony and whose story is told through what the reader's body can physically
+        hold. The revision moves the novelty there, which an unverified suspicion of separate homages
+        does not touch.
+    - answers: skeptic
+      move: concede
+      argument: Half right. Building on radiusX and force was a mistake. Those values are inconsistent
+        or simply missing across browsers, so contact-area chords would sound different on every device.
+        I'm cutting them. Sound and light will depend only on finger count, finger position and the distance
+        between fingers, which every touchscreen reports reliably. The hardware objection does not hold,
+        though. The test device is any smartphone, which a solo builder already carries or can buy used
+        for the price of a sketchbook. I can debug it remotely from the Mac with Safari or Chrome DevTools,
+        and I can prototype the single-touch logic with the mouse before that.
+    - answers: taste_critic
+      move: concede
+      argument: 'This is the fatal one, and it is right. A flashlight mask over illustrations is a kiosk
+        toy with a comic skin. The trick is exhausted in one panel, and it demotes the Lumigraph to a
+        reveal effect. The better idea inside it is the Lumigraph''s real rule: light exists only while
+        a body presses. So you can never see a whole panel, only what you are willing to hold. Make the
+        story about two estranged people. Each figure glows and sounds its own chord tone only under a
+        fingertip, and the panels pull them apart until you have to stretch your hand, then use both hands,
+        to keep them lit together. Only then does the chord resolve. Now the mechanism is the story rather
+        than diluting it. The ache is physical, and there is an emotional turn: let go and they vanish.'
+    outcome: revised
+    revision:
+      statement: A webcomic played like Fischinger's Lumigraph that lights each drawn figure, and sounds
+        its chord tone, only while a fingertip rests on it, so two estranged characters drawn far apart
+        resolve only if the reader stretches to hold both, because the Lumigraph made light exist only
+        under bodily contact, so reach enacts the story's distance.
+      subject: A Lumigraph-style touch webcomic about two estranged people
+      behavior: Each panel loads black. A drawn figure, a face, a hand or a lamp, glows in Lumigraph-colored
+        light only while a fingertip rests on it, and it sounds that figure's composed chord tone. Lifting
+        the finger drops both the figure and the note back into darkness. The story follows two estranged
+        people, and its panels place them progressively farther apart, until the final panels need both
+        hands, and then fingers across the whole screen, to keep them lit together. Only then does the
+        harmony resolve. Lifting every finger turns the page. Sound and light are driven only by how many
+        fingers are down, where they are and how far apart they spread, never by force or touch radius.
+      rationale: The Lumigraph let light exist only under bodily contact. Here that becomes narrative.
+        You can never see a whole panel, only what you are willing to hold, so the strain of reaching
+        across the glass becomes the strain between the characters. Because every figure carries an authored
+        chord tone, the harmony is composed, not a stream of random pads, and the resolution has to be
+        earned physically. Finger count, position and spread behave the same on any phone, so one person
+        can build it with canvas, Pointer Events, Web Audio and hand-drawn art, testing it on a phone
+        with remote debugging from the Mac.
+    usage:
+      input_tokens: 1767
+      output_tokens: 2785
+      cache_read_tokens: 0
+      cache_write_tokens: 1310
+      web_search_requests: 0
+  final_statement: A webcomic played like Fischinger's Lumigraph that lights each drawn figure, and sounds
+    its chord tone, only while a fingertip rests on it, so two estranged characters drawn far apart resolve
+    only if the reader stretches to hold both, because the Lumigraph made light exist only under bodily
+    contact, so reach enacts the story's distance.
+- position: 2
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: rationale
+    severity: minor
+    failure: Proximity-triggered glitching of a projected image is a familiar interactive-art move, so
+      the idea's novelty rests only on the halftone-versus-codec analogy, which a single ultrasonic trigger
+      does not make visible.
+    argument: I could not run any web searches because the search tool hit its use limit, and the catalog
+      gave me no hits. I have no verified citations, so this critique rests on general knowledge. Datamoshing
+      is a well-known glitch technique, and live or interactive datamosh pieces have been shown before.
+      Sensor-triggered glitch installations are also a familiar genre. The halftone-versus-codec link
+      is the one angle I can't point to a precedent for. The strongest objection is that the idea combines
+      three known pieces and the novelty lies only in the rationale. I did not verify even that.
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 897
+      output_tokens: 617
+      cache_read_tokens: 21125
+      cache_write_tokens: 1293
+      web_search_requests: 3
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: card_reading
+    target_card: datamoshing
+    severity: serious
+    failure: Live I-frame removal from a playing H.264 stream on a Raspberry Pi needs custom bitstream
+      rewriting, which no stock tool provides and which a solo builder would have to write from scratch.
+    argument: The datamoshing reading requires dropping I-frames from a pre-encoded H.264 stream while
+      it plays, toggled by a sensor. Off-the-shelf players and ffmpeg don't do this live. The Pi's hardware
+      decoder hides the bitstream, so the builder would have to parse and rewrite NAL units in real time,
+      a codec-level job that could take months of evenings and weekends.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 762
+      output_tokens: 853
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: behavior
+    severity: serious
+    failure: The lean-in-and-it-glitches interaction announces its whole meaning in ten seconds, and the
+      content under the smear is generic comic texture with no character or story whose damage could actually
+      feel like anything.
+    argument: Walking up to a screen and watching it glitch is the oldest proximity-sensor trick in new-media
+      art, and the datamosh smear of Lichtenstein-style dots is an aesthetic every glitch Tumblr already
+      ran through. The meeting is predictable. You approach, the image breaks, you step back, it heals.
+      Within ten seconds you have the whole piece, and nothing else is there to find. The idea's best
+      sentence, that both halftone and codecs are compression cheats that only cohere from afar, is clever,
+      but the piece just illustrates it like a museum wall label. Nothing is uncanny, nothing is funny,
+      nothing aches. The comic panels are never given a story to damage, so the smear has no character
+      to wound and no panel whose content matters. A hand-registered Lichtenstein-pop surface is gestured
+      at, but it stays decoration, since the dots could be any texture. The viewer who leans in gets a
+      lesson, not a dream. It is a tidy thesis-demo that people photograph once for Instagram and forget.
+      It would take a real psychic payload, like a panel that is actually a face or a scene that pleads,
+      to turn the 'closeness exposes the cheat' mechanic into feeling. As specified, it is a well-behaved
+      gimmick.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 762
+      output_tokens: 499
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: concede
+      argument: I concede the parts are familiar and that the novelty lives in the halftone-versus-codec
+        link. I rebut that a single trigger can't make the link visible. At wall scale the hand-registered
+        dot grid and the 16-pixel macroblock grid are literally both on screen and literally tearing against
+        each other, so the analogy is something you see. The real weakness was that it illustrated a thesis
+        instead of making it cost something. The revision fixes that by putting a person in the image.
+    - answers: skeptic
+      move: rebut
+      argument: The failure assumes the NAL parsing has to happen live. It doesn't. I pre-split the encoded
+        loop offline into one file per frame and tag the IDR frames, which is a one-off ffmpeg and script
+        job. At runtime a Python loop just writes files into a pipe to a software decoder (ffplay or mpv
+        at modest resolution) and skips the tagged ones when the sensor fires. Encoding with no periodic
+        intra refresh and tolerant error concealment gives the classic smear. That is a weekend of work,
+        not months of codec work, and it is still literal I-frame removal toggled live by the one sensor.
+    - answers: taste_critic
+      move: concede
+      argument: 'This is right and it is the better idea hiding in mine. Generic panels give the smear
+        nothing to wound, and instant healing means the piece is spent in ten seconds. The revision gives
+        the dots a face: a hand-dotted romance-comic heroine, the genre Ben-Day dots belong to. The datamosh
+        drags her face into the motion of her own leaving. Healing is slowed and scaled to how long you
+        lingered. Leaning in now has a cost that outlasts the gesture, and a second visit plays differently
+        from the first.'
+    outcome: revised
+    revision:
+      statement: A wall projection of a hand-dotted romance-comic heroine that, whenever its single ultrasonic
+        sensor finds a viewer leaning in, skips keyframes so her Ben-Day face is dragged into the motion
+        of her walking away, because halftone and codec both cohere only at a distance, and here wanting
+        to be close is what dissolves her.
+      subject: A Raspberry Pi wall projection of a scanned, hand-registered Ben-Day romance-comic close-up,
+        driven by one HC-SR04 ultrasonic sensor
+      behavior: A Raspberry Pi plays a pre-encoded loop that holds on a scanned, hand-registered Ben-Day
+        close-up of a romance-comic heroine, then pans across panels of her turning and walking out of
+        frame. The H.264 stream is pre-split offline into one file per frame, and a short script pipes
+        those files into a software decoder. When the HC-SR04 reads a viewer within about a metre, the
+        script skips every I-frame. Her dotted face is no longer reset, so the motion vectors of her leaving
+        drag it across the wall. Clean keyframes return only after the viewer has kept their distance
+        for a while, scaled to how long they stood close. Linger, and she stays smeared long after you
+        step back.
+      rationale: 'Halftone printing and video codecs both send the eye less than it believes it sees,
+        and both cohere only from afar. A romance-comic heroine is the form Ben-Day dots were made to
+        render, and pairing her with her own departure gives the trick a cost: wanting to be close to
+        her is exactly what dissolves her. The dot grid and macroblock grid colliding becomes a wound
+        rather than a wall-label demonstration.'
+    usage:
+      input_tokens: 1820
+      output_tokens: 2659
+      cache_read_tokens: 1310
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: A wall projection of a hand-dotted romance-comic heroine that, whenever its single
+    ultrasonic sensor finds a viewer leaning in, skips keyframes so her Ben-Day face is dragged into the
+    motion of her walking away, because halftone and codec both cohere only at a distance, and here wanting
+    to be close is what dissolves her.
+- position: 3
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: behavior
+    severity: serious
+    failure: Plotting MIDI pitch and time as pen-plotter lines is already routine, so the idea's only
+      novelty is relabelling the piano-roll plot as a map, and the claimed sync benefit is built into
+      any MIDI visualiser.
+    argument: I found no catalog work linking these cards. On the web, two open-source projects already
+      send MIDI to a pen plotter. jskjott/midi-plotter draws MIDI notes with pitch and duration as geometry.
+      revdancatt/plotter-sounds uses MIDI and audio to drive plotter drawings. So the MIDI-to-plotted-line
+      mapping, with pitch as one axis and time as the other, is an established hobbyist technique. Piano-roll
+      notation is the same pitch-by-time plot, and the idea's core step is to read it as a map. What remains
+      is the cartographic framing (tracks as roads, velocity as road class) and the stop-motion film wrapper.
+      I did not find a film that combines them, but both halves have close neighbours. The synced-score
+      rationale is also weak. Any plotter or piano-roll visualisation driven by one MIDI file already
+      stays in sync with that file's playback.
+    citations:
+    - title: 'GitHub - jskjott/midi-plotter: realtime midi visualisation with the pen plotter'
+      url: https://github.com/jskjott/midi-plotter
+      relevance: Plots MIDI note pitch and duration as pen-plotter drawings, which is the idea's core
+        MIDI-to-plotter mapping without the map framing or film.
+      embodied_cards:
+      - midi-file
+    - title: 'GitHub - revdancatt/plotter-sounds: playing with midi and audio to control the pen plotter'
+      url: https://github.com/revdancatt/plotter-sounds
+      relevance: Uses MIDI and audio input to drive pen-plotter generative drawings, so MIDI-controlled
+        plotting is already established practice.
+      embodied_cards:
+      - midi-file
+    none_found: false
+    usage:
+      input_tokens: 804
+      output_tokens: 1290
+      cache_read_tokens: 38309
+      cache_write_tokens: 2801
+      web_search_requests: 2
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: behavior
+    severity: serious
+    failure: The plotter's physical speed and pen lifts cannot keep pace with dense MIDI ticks, so frame-exact
+      sync with playback is impossible without changing the music.
+    argument: A pen plotter moves at a fixed physical speed and must lift and lower its pen between strokes.
+      Stop-motion means the plotter draws in shutter-driven steps, not in real time, so the drawn map
+      cannot track the MIDI playback clock. The builder would need to write firmware that maps ticks to
+      plotter moves, then hold the synth and the stepper timing together through a sync rig. Dense MIDI
+      tracks will demand more pen travel per second of music than the plotter can physically manage, forcing
+      the music to slow or the map to be simplified. That is a months-long firmware and mechanics problem
+      on top of the plotter build.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 665
+      output_tokens: 1045
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: rationale
+    severity: serious
+    failure: The 'map' is just a piano roll with renamed axes, so the film is a self-explaining process
+      demo whose perfect machine sync leaves no tension, no place, and no uncanny gap between picture
+      and sound.
+    argument: Meeting the finished thing, you watch a pen scratch a squiggly line across paper while a
+      General MIDI piano plays the notes that are the line. It is a piano-roll visualizer filmed slowly.
+      A piano roll is already pitch on one axis and time on the other, so calling the result a 'map' only
+      renames the axes. The viewer never encounters a territory, a place, a landmark or a shape that means
+      anything, because the image is the music's own graph and there is nothing uncanny in the gap between
+      the two. The sync is the rationale's selling point, but it is guaranteed by construction. A guarantee
+      gives no tension, no drift, no surprise. Nothing can go wrong, so nothing is felt. The cliché is
+      the generative-art or data-sonification demo, where a process is the whole show and the output is
+      whatever it happens to be. The General MIDI synth makes it worse. It is the stock, beige sound of
+      every ringtone, and it is a missing opportunity for a dreamlike or strange sonic world. Stop-motion
+      normally brings handmade warmth and a ghost of the animator's body. Here a machine plots the line,
+      so the labor, the tactility and the human error that would make stop-motion tender are removed.
+      The 'no dialogue' constraint costs nothing, since a plotter drawing to music never wanted words.
+      The cartographic legend and reveal are asserted but never given anything to reveal. The concept
+      is clever and the film is a lecture on its own method, a gimmick that explains itself in one sentence
+      and is exhausted by the time you've understood it.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 665
+      output_tokens: 591
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: concede
+      argument: 'Conceded. With pitch on one axis and ticks on the other, my ''map'' was the piano roll
+        that midi-plotter already draws, so the only new step was a relabelling. The fix reverses the
+        direction: a real surveyed territory comes first, and the MIDI file is derived from it. The drawing
+        then shows the roads in plan view, which is not a piano roll. The file carries elevation, so it
+        is a separate measurement of the same place rather than a replot of the music.'
+    - answers: skeptic
+      move: rebut
+      argument: This misreads stop-motion. Shooting frame by frame removes any need for the plotter to
+        keep pace with playback. Each tick converts to a frame number (tick to seconds, times 24), and
+        I photograph whatever state the drawing should be in at that frame. Pen speed and pen lifts happen
+        between exposures and never appear on screen. No sync rig or firmware is needed, only a frame
+        table generated from the file. The revision also drops the plotter for a hand-drawn line, which
+        removes the mechanics entirely.
+    - answers: taste_critic
+      move: concede
+      argument: 'Conceded, and this critique points to the better film. A graph of the music contains
+        no place, and redundant picture and sound leave nothing to feel. The revision gives the map a
+        real territory: a village drowned by a reservoir, so the reveal is of a place that no longer exists.
+        The sound encodes elevation that the plan view cannot show, which opens an honest gap: the ear
+        hears hills that the eye sees as flat lines. Hand animation restores the animator''s body and
+        errors. A self-playing piano replaces the beige General MIDI patch with keys moving under no hands,
+        which suits a vanished village.'
+    outcome: revised
+    revision:
+      statement: A hand-drawn stop-motion short with no dialogue that maps, road by road, a village later
+        drowned by a reservoir while a Standard MIDI File built from its old survey plays on a self-playing
+        piano, because the file encodes each road's elevation as pitch, so the ear hears hills the flat
+        drawing cannot show.
+      subject: A hand-drawn stop-motion short with no dialogue mapping a drowned village, scored by a
+        Standard MIDI File built from its survey
+      behavior: 'Takes the old survey of a real village later flooded by a reservoir and builds one Standard
+        MIDI File from it: each road is a track, distance along the road is ticks, the road''s elevation
+        is pitch, and road class is velocity. The animator hand-draws the plan-view road map one stop-motion
+        frame at a time, pacing each stroke to the ticks. A legend with no words, made of line weights
+        each paired with a timbre, is drawn first. The film is screened while the same file plays on a
+        self-playing piano.'
+      rationale: Picture and sound now carry different information about one real place. The plan-view
+        drawing shows where the roads ran, and the pitch line gives their rise and fall, which a flat
+        map cannot show. With no dialogue, the viewer reads the drowned valley's terrain by ear. Hand
+        animation restores stop-motion's human touch. Shooting each frame at a precomputed tick position
+        keeps the sync exact without any machine.
+    usage:
+      input_tokens: 5461
+      output_tokens: 3676
+      cache_read_tokens: 2620
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: A hand-drawn stop-motion short with no dialogue that maps, road by road, a village
+    later drowned by a reservoir while a Standard MIDI File built from its old survey plays on a self-playing
+    piano, because the file encodes each road's elevation as pitch, so the ear hears hills the flat drawing
+    cannot show.
+- position: 4
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: subject
+    severity: minor
+    failure: Without verified searches I can only say that in-hive microphone monitoring of piping and
+      queenless bands is well known, so the idea's novelty is limited to the one-knob nanoKONTROL2 and
+      Teensy sweep interface.
+    argument: The search tool was unavailable, so I could not retrieve or verify any URLs. I am not citing
+      anything I could not confirm. From memory, acoustic hive monitoring is well established. Examples
+      are the Woodrow/Bromenshenk-style hive-sound research, the Open Source Beehives project, and the
+      Hive Tracks and Arnia commercial monitors. All of these use in-hive microphones to track piping
+      and queenless-colony frequency bands. The beekeeping-acoustics half of this idea is therefore not
+      new. What I could not check is the combination of a single nanoKONTROL2 knob, a Teensy USB host
+      and a live bandpass sweep to headphones.
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 963
+      output_tokens: 678
+      cache_read_tokens: 21206
+      cache_write_tokens: 1382
+      web_search_requests: 3
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: card_reading
+    target_card: beekeeping
+    severity: serious
+    failure: The beekeeping card's contact mic must be wedged between brood frames, so installing it means
+      opening the very hive the idea says it avoids disturbing.
+    argument: The idea's stated benefit is avoiding opening the box, but the beekeeping card reading requires
+      wedging a contact mic between brood frames, which means the lid is opened to install it and any
+      repositioning later. The builder would need a hive-entry cable or a permanent in-hive sensor that
+      survives propolis, humidity and brood-chamber temperature for a whole season, which the idea never
+      addresses. Its cost and build time are unstated, and a 100-1000 Hz tuned listening rig gives no
+      way to validate the claimed swarm and queenless signatures without a season of labeled colony recordings.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 828
+      output_tokens: 946
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: rationale
+    severity: serious
+    failure: It reduces an eerie, rich collision (a hive's sound, a studio controller) to a utilitarian
+      bandpass-EQ diagnostic, so the finished object is a competent bee-monitoring gadget with nothing
+      uncanny or strange in it.
+    argument: 'Meeting the finished thing: a beekeeper in a veil twists a knob on a taped-over Korg controller
+      and hears a slightly more or less muffled buzz in headphones. It is a graphic-EQ sweep with a bee
+      sticker on it. The idea is earnest, useful and entirely legible from the first sentence, which is
+      the problem: nothing in it is strange. The nanoKONTROL2 has 8 faders, 16 knobs, and a wall of transport
+      buttons, and the idea''s one gesture is to tape all that over, so the Korg is merely a cheap knob
+      housing. The bees, the most uncanny collaborator imaginable, are treated as a diagnostic signal
+      source, a sick patient to auscultate. It falls into the cliché of ''sonify the natural system for
+      utility'': hive-monitoring, bee-hum-analysis, citizen-science gadgetry. There is no dreamlike turn,
+      no wrongness, no moment where the hum becomes a voice or a choir or a haunting. Queen piping is
+      a genuinely eerie sound, and the idea buries it under a pragmatic rationale about chilling brood.
+      A one-knob radio dial through a hive could be a séance or a pirate broadcast from a tiny monarchy;
+      here it is a stethoscope, which is the most obvious name for the most obvious thing. Fine and tame,
+      but the encounter leaves no residue.'
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 828
+      output_tokens: 562
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: concede
+      argument: 'True. Microphones in hives tracking piping and queenless bands are established, and beekeepers
+        were putting an ear to the box long before Arnia. I never claimed the bee acoustics as new. The
+        idea is the instrument: a single human-tuned dial with a person''s ear doing the classifying,
+        in place of a logger and a cloud classifier. That interface is unclaimed in what you recalled,
+        and it is the part I''m keeping and sharpening.'
+    - answers: skeptic
+      move: concede
+      argument: 'The contradiction is real as written: the mic between brood frames means opening the
+        box. The honest claim is narrower. The mic goes in once, during an inspection that happens anyway
+        in spring. It is a piezo sealed in heat-shrink and dipped in beeswax, with its cable led out through
+        a notch under the inner cover. Every listen after that costs no lid-lift. The bees will propolize
+        it, which glues it in place rather than killing it. Your validation point does not hold, though.
+        No classifier is claimed. Piping is distinctive enough to hear through a hive wall, and the listener
+        calibrates their ear against what each inspection finds.'
+    - answers: taste_critic
+      move: concede
+      argument: You found the better idea. 'Stethoscope' framed it as auscultating a patient, and a gentle
+        bandpass makes the result a muffled EQ sweep. Crank the filter to near-resonance and the hum stops
+        being noise and rings into pitched tones. The knob becomes a radio dial with hiss between stations,
+        and the queen's tooting arrives like a broadcast from a tiny monarchy. That is uncanny and still
+        useful. I won't give up the one taped-over knob, because the constraint demands it. The fifteen
+        dead knobs are part of the joke.
+    outcome: revised
+    revision:
+      statement: A one-knob hive radio that maps a nanoKONTROL2 knob to a high-Q resonant bandpass swept
+        over a sealed contact mic between brood frames, so a gloved beekeeper tunes the colony's hum like
+        a shortwave dial until queen piping rings in as a voice, because those states are narrowband and
+        listening between inspections spares the brood.
+      subject: 'A one-knob hive radio: a Teensy 4.1 USB-host box with a nanoKONTROL2 whose only live control
+        is knob 1, fed by a beeswax-sealed piezo wedged between brood frames, its cable led out under
+        the inner cover.'
+      behavior: Knob 1's CC on the nanoKONTROL2 maps, via the Teensy's USB-host MIDI handler, to the center
+        of a very high-Q resonant bandpass swept from 100 to 1000 Hz over the in-hive contact mic, sent
+        to headphones. At that Q the broadband hum rings into pitched tones, with hiss between them. Queen
+        tooting, quacking and the queenless roar lock in like a station on a dial.
+      rationale: Piping and the queenless roar are narrowband. A resonant filter isolates them and also
+        exaggerates them into distinct voices an ear can learn, checked against what each inspection reveals.
+        The sealed mic goes in once during a routine inspection, so every later listen spares the brood.
+        One knob works through gloves and a veil.
+    usage:
+      input_tokens: 2030
+      output_tokens: 2577
+      cache_read_tokens: 1310
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: A one-knob hive radio that maps a nanoKONTROL2 knob to a high-Q resonant bandpass swept
+    over a sealed contact mic between brood frames, so a gloved beekeeper tunes the colony's hum like
+    a shortwave dial until queen piping rings in as a voice, because those states are narrowband and listening
+    between inspections spares the brood.
+- position: 5
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: rationale
+    severity: minor
+    failure: The literal combination of a charter-fragment volvelle and a read-aloud rule was not found,
+      and the claim that speaking a rule makes it a real proposal is an assumption the idea never tests.
+    argument: My web searches failed (tool limit exceeded), so I have no verified citations. The catalog
+      holds no work linking two of the three cards. From memory, rotating-wheel sentence generators that
+      combine clauses are an old form, descended from Llull's wheels, and games that spin up random laws
+      also exist. I could not confirm a specific work that combines commune charters with a volvelle and
+      a spoken-debate rule, so I am not claiming one.
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 910
+      output_tokens: 461
+      cache_read_tokens: 13318
+      cache_write_tokens: 1164
+      web_search_requests: 3
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: subject
+    severity: serious
+    failure: Real founding charters from five communes must be sourced, transcribed and cut into four
+      rings, which a lone builder cannot finish in three months of evenings.
+    argument: The idea needs real historical charter text cut into rings, and the builder works alone
+      with no archive access or transcription pipeline. Assembling accurate clause fragments from five
+      communes' founding documents is a research project of many weekends, and the rings would be hand-cut
+      paper that fails under repeated spinning. The spoken-debate loop also needs other people in the
+      room, which a solo builder does not have.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 777
+      output_tokens: 206
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: behavior
+    severity: serious
+    failure: The rings produce tidy grammatical rules that get a chuckle and a seminar-style debate, so
+      the spoken act never costs anyone anything and the communes' coercion, grief and collapse are absent.
+    argument: 'Meeting this thing means sitting around a table, turning a paper wheel, and hearing a stilted
+      sentence like ''The elder shall confiscate the bread unless the moon is full.'' Everyone chuckles,
+      someone says ''honestly, fair,'' and the group debates it for a minute in the voice of a seminar.
+      That is a Mad Libs party game with a history-museum gift-shop gloss. The rings are subject, verb,
+      object, condition, so the output is always a grammatical, tidy rule, and the grammar keeps the machine
+      safe. Nothing is uncanny, because the result is just a quirky sentence. Nothing hurts either: Oneida''s
+      mutual criticism and the Shakers'' celibacy were bound up with coercion, grief and failure, and
+      the idea skips all of it for ''debate whether to live by it.'' The utopian-commune material is just
+      a source of quotable fragments, which makes this a juxtaposition. Read-aloud adds nothing the game
+      wouldn''t already have, since a group game is spoken anyway. The rationale is also a tidy pitch
+      about how voicing makes a rule real, and it asserts the effect without staging it. It is the standard
+      ''recombine historical text with a wheel'' move, with civics-class debate as the payoff. Pleasant
+      and educational, it would be forgotten by the walk home. A version that held my attention would
+      let the wheel pronounce something that wounds or haunts a real room, perhaps a rule the group then
+      has to keep for the night. This one stays polite.'
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 777
+      output_tokens: 576
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: concede
+      argument: I concede the rationale asserted that voicing a rule makes it a real proposal without
+        staging or testing that. The finding of no prior art leaves the idea's novelty intact, and the
+        gap is minor. The revision closes it by building consequence into the mechanism. The spoken law
+        binds the room until breakfast, so the claim is enacted every time the wheel is played, not argued
+        in a pitch.
+    - answers: skeptic
+      move: concede
+      argument: 'The scope critique is right about five communes and four rings. Sourcing that much is
+        a research project, so I cut it to two sources that are digitized and public domain: the Shaker
+        Millennial Laws of 1845 and the Handbook of the Oneida Community. Pulling a few dozen clause fragments
+        from those is a few evenings of work, not an archive trip. Rings in cardstock on a brass split
+        pin survive spinning; I have built volvelles that way before. The point about needing other people
+        does not hold. This is an object for a gathering, and a builder who makes party-scale work has
+        a dinner table to test it at.'
+    - answers: taste_critic
+      move: concede
+      argument: 'This is the fatal one, and it points at the better idea. Debating whether to live by
+        the rule kept everything safe and seminar-like, and the four tidy grammatical rings produced Mad
+        Libs. The revision drops the debate: the spoken law is obeyed by the whole room until breakfast,
+        and breakers face Oneida-style spoken criticism. That is where Shaker and Oneida coercion actually
+        lived. The fragments are verbatim, so their strangeness belongs to the source texts rather than
+        to a template. Reading aloud stops being incidental, because the reader''s exact spoken words,
+        stumbles included, become the law. Someone may end up silent at dinner, or separated from their
+        partner for the night, because of what a friend said aloud.'
+    outcome: revised
+    revision:
+      statement: A cardstock volvelle of verbatim Shaker Millennial Laws and Oneida rules that, spun at
+        an overnight gathering, yields one law a chosen reader speaks aloud and the whole room must obey
+        until breakfast, because Shakers heard their laws read as binding and Oneida enforced them by
+        spoken criticism, so the voiced rule costs everyone something real.
+      subject: A hand-cut cardstock volvelle of verbatim Shaker and Oneida rule fragments, used to bind
+        an overnight gathering
+      behavior: Three rings carry verbatim clause fragments transcribed from two public-domain sources,
+        the Shaker Millennial Laws of 1845 and the Handbook of the Oneida Community of 1867. At the start
+        of an overnight gathering, one turn of the wheel yields a single law, and a chosen reader speaks
+        it aloud to the room. Whatever the reader actually says, slips included, becomes the law; there
+        is no written copy. Everyone present must obey it until breakfast, when anyone who broke it faces
+        a short spoken mutual-criticism round in the Oneida manner.
+      rationale: Shaker members heard the Millennial Laws read to them as binding rule, not as material
+        for debate. Oneida enforced its order through spoken mutual criticism. Llull's wheels produced
+        propositions that had to be answered. Binding the room to the voiced law for a whole night, with
+        spoken accountability in the morning, gives the reading real consequences. The group feels a small,
+        real version of commune discipline instead of discussing it, and the reading aloud is what makes
+        the rule law.
+    usage:
+      input_tokens: 1826
+      output_tokens: 2025
+      cache_read_tokens: 1310
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: A cardstock volvelle of verbatim Shaker Millennial Laws and Oneida rules that, spun
+    at an overnight gathering, yields one law a chosen reader speaks aloud and the whole room must obey
+    until breakfast, because Shakers heard their laws read as binding and Oneida enforced them by spoken
+    criticism, so the voiced rule costs everyone something real.
+- position: 6
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: rationale
+    severity: minor
+    failure: Tree-ring-to-sound mappings and image-to-grain scores are each familiar, so the idea's novelty
+      rests only on the comic-panel framing, and the claim that one ink gives the scanner a clean value
+      is unproven.
+    argument: I could not run web searches because the search tool hit its use limit, so I have no verified
+      URLs to cite. The catalog also holds no work linking any two of the cards. From general knowledge,
+      the parts exist separately. Tree-ring sonification is an established practice, and so are image-as-score
+      tools such as UPIC and Metasynth. Granular resynthesis driven by scanned images is also common.
+      I cannot cite a specific work that combines them, so I am not claiming prior art for the full combination.
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 920
+      output_tokens: 464
+      cache_read_tokens: 13318
+      cache_write_tokens: 1148
+      web_search_requests: 3
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: constraint
+    severity: serious
+    failure: The risograph print run, which the builder's gear list omits, is the step that makes the
+      single-ink page real and it needs an outside shop.
+    argument: The idea needs a cross-dated oak ring-width series, which the builder can only get from
+      an archive or a collaborator, and a Pure Data grain engine driven by scanner output. The builder
+      has Python and a Mac, so the patch is buildable, but a risograph press is not in the gear list.
+      Printing a one-ink comic with panel widths tied to measured rings needs an outside print shop and
+      several proof runs at real money.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 787
+      output_tokens: 206
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: behavior
+    severity: serious
+    failure: The idea is a tidy data-to-sound mapping that makes drought sparse and wet years lush, so
+      the result is predictable, pleasant, nature-documentary ambience with no uncanny turn or emotional
+      wound, and the felled-tree-as-archive heartbreak goes unused.
+    argument: 'Meeting the finished thing, you get a wordless nature comic about an oak, a scan-to-sound
+      pipeline, and a gallery placard explaining that rings are like grains. The mapping is a data-sonification
+      recipe: width becomes duration, darkness becomes density, drought becomes sparse and wet becomes
+      lush. Every output is predictable from the input, so nothing in the work can surprise, curdle or
+      ache. The soundtrack is wind in oak leaves, the most agreeable ambient sound there is, so the result
+      is a tasteful drone that reads as a TED-talk-adjacent art-science collaboration. The comic is hostage
+      to its data, since panel widths are fixed by a published series and the story is just a tree growing,
+      surviving drought and recovering. That is an arc anyone could predict, and it has no uncanny turn,
+      no absurdity and no loss. The one real heartbreak available, a tree''s whole life as an archive
+      that only becomes legible when it is cut down, is mentioned nowhere in the idea. As written it is
+      a clever correspondence demo that wants admiration for its rigor and gives no dream or wound to
+      remember. The earnest ''both store time as thin slices'' rationale is the cliché: the pleasing analogy
+      treated as if it were the work.'
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 787
+      output_tokens: 527
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: rebut
+      argument: Partly rebut. The separate parts (tree-ring sonification, image-as-score tools like UPIC
+        and Metasynth) are familiar, and I never claimed otherwise. What is new is a page that works both
+        as a readable narrative and as an exact score, with the grid itself being the chronology. The
+        revision moves further from those precedents, since its sound source and story structure come
+        from the felling, not from a generic mapping. I concede that 'one clean density value' is an engineering
+        claim, not a proven one. But black toner on cream is about the easiest thing a scanner can threshold,
+        and per-panel coverage is a few lines of Python averaging over a known panel box. That is easy
+        to verify in an afternoon, not a weakness in the idea.
+    - answers: skeptic
+      move: concede
+      argument: 'Conceded: I tied the one-color card to a risograph, which the card never asked for, and
+        that put an outside shop and costly proofing on the critical path. The constraint is one color,
+        not a particular press. A black-toner photocopied zine meets it literally, gives an even harder
+        black for the scanner, and costs pocket change per proof. So I''ve dropped riso from the idea.
+        The ring data still comes from a public archive such as the ITRDB, which is a download, not a
+        collaboration.'
+    - answers: taste_critic
+      move: concede
+      argument: 'Conceded, and this was the better idea hiding inside mine. Wind in oak leaves turned
+        the piece into agreeable ambience, and a forward drought-and-recovery arc is predictable. The
+        wound was sitting in the domain unused: rings only become legible once the tree is felled. The
+        revision reverses the reading so the comic starts at the saw cut and walks inward to the seedling.
+        It also makes the felling recording the only sound material, so every year of the tree''s life
+        is rebuilt from the grains of its death. The mapping stays rigorous, but now the rigor serves
+        an ache: the further back you read, the further the saw dissolves, until the seedling is almost
+        silence.'
+    outcome: revised
+    revision:
+      statement: A one-ink photocopied comic that tells a felled oak's life backward from saw cut to seedling,
+        one panel per year sized to a cross-dated ring series, while its scans drive a granular patch
+        built only from the felling's recording, because a tree's chronology becomes legible only once
+        cut, so its death supplies the sound of its life.
+      subject: A black-toner photocopied comic that is also the score for a granular-synthesis patch made
+        from a recording of an oak's felling
+      behavior: 'Opens on the cut: a full-bleed panel of the fresh stump, read as the raw saw recording
+        played whole. Then it moves inward, one wordless panel per year back to the seedling, each panel''s
+        width set by a published cross-dated oak ring-width series. A Pure Data grain engine reads the
+        scanned pages and builds every year only from grains of that same felling recording: panel width
+        sets grain duration and ink coverage sets grain density. The saw dissolves year by year into crackle
+        and cloud until the seedling year is one faint grain. Printed in black toner on cream stock on
+        any photocopier.'
+      rationale: A tree's chronology is written all along but can only be read once the tree is cut. Building
+        the whole life only from the sound of its death makes the data mapping carry loss rather than
+        just illustrate it. A reader moving inward is literally moving away from the wound, and hears
+        it thin out. One ink keeps darkness as the single value the scanner reads, the way a dendrochronologist
+        reads dark latewood against light earlywood.
+    usage:
+      input_tokens: 1821
+      output_tokens: 2753
+      cache_read_tokens: 1310
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: A one-ink photocopied comic that tells a felled oak's life backward from saw cut to
+    seedling, one panel per year sized to a cross-dated ring series, while its scans drive a granular
+    patch built only from the felling's recording, because a tree's chronology becomes legible only once
+    cut, so its death supplies the sound of its life.
+- position: 7
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: rationale
+    severity: minor
+    failure: The ANS pitch-and-time mapping is only a score-reading convention applied after play, so
+      the scratch-off exploration and the humming don't depend on each other.
+    argument: I could not run any searches, because the search tool hit its use limit, so I found no verified
+      prior art. I know of scratch-off dungeon and map games and of ANS-inspired scratch-to-sound tools,
+      but I can't cite them without URLs my searches returned. The specific pairing here (one scratch-off
+      TTRPG page whose exposed marks are hummed as a score) may well be new. Dungeon exploration as irreversible
+      removal of darkness is a fairly natural metaphor, though. The idea's weakest part is probably the
+      rationale, since the ANS link rests on a metaphor and not on a mechanic that needs it.
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 849
+      output_tokens: 491
+      cache_read_tokens: 13318
+      cache_write_tokens: 1082
+      web_search_requests: 3
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: card_reading
+    target_card: ans-synthesizer
+    severity: serious
+    failure: The ANS reading demands a glass plate under black mastic with a light path, an optical build
+      the builder's soldering, components and 3D printer cannot deliver.
+    argument: The idea needs a scratch-off black coating applied to a printed page, and the builder has
+      no coating supply or process listed; the ANS reading requires a glass plate with black mastic and
+      a light path, which is an optical instrument the builder cannot assemble with a 3D printer and basic
+      soldering alone. A one-page game also has to hold rules, map and score on a sheet that is consumed
+      in play, leaving no spare copy, so every playtest burns a page. Reproducing the photoelectronic
+      plate is a physical build that falls outside the stated kit.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 716
+      output_tokens: 268
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: subject
+    severity: serious
+    failure: The scratch-off mechanic is a clever analogy, but the derelict Soviet station is stock wallpaper
+      and the hummed score is a procedural readout, so the finished thing is a one-use novelty with no
+      dread or strangeness.
+    argument: 'The idea is a neat mechanical equation (scratching = exploring = composing), but the Soviet
+      research station is a stock setting. Derelict Soviet outposts are the default flavor of ''spooky
+      cold-war ruin'' in games, from Stalker to a thousand OSR zines, and nothing in the ANS ties to it
+      beyond nationality. So the setting is wallpaper while the scratch-off is the actual machine. Meeting
+      the finished thing, you get a lottery-ticket page, you scratch some lines, you map a dungeon that
+      is really just a few squiggles, and then a table of adults hums a drone at a pencil moving across
+      a page. That is a charming five minutes of novelty, then a one-use object with a polite ''huh, neat''
+      reaction. The uncanny is never reached: the humming is a procedural readout, not a haunting. There
+      is no dread, no absurdity, no heartbreak, no sense that the station is listening back. The rationale
+      sells ''every path is an audible compositional choice'' but the player choosing where to scratch
+      is mostly choosing for dungeon reasons, so the music is incidental noise from a map. The idea sounds
+      like a clever conference-talk analogy (irreversible removal of darkness) that has been dressed as
+      a game. It is a gimmick with a real idea buried in it: the ANS as a haunted instrument that the
+      station itself plays, with the party as the scan line, is nowhere in the draft.'
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 716
+      output_tokens: 561
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: concede
+      argument: Conceded. Humming the page only after play is a reading convention bolted onto a crawl,
+        and nothing in the exploration needs it. The fix is to make the score happen during play and make
+        it dangerous. A scan line advances each round, the table hums whatever the party has exposed in
+        that column, and a broken hum costs them. Every scratch then has a musical consequence while they
+        are still choosing where to go.
+    - answers: skeptic
+      move: rebut
+      argument: 'This misreads what has to be built. The ANS card is the historical artifact the page
+        imitates and the fiction takes place inside; no one is building a photoelectronic instrument.
+        Scratch-off coating on paper is ordinary zine craft: two coats of acrylic and dish soap over a
+        laminated or waxed print, applied by hand like the reading already says. Burning a photocopy per
+        playtest costs pennies and is the whole point of a consumable page. No optics, soldering or printing
+        in plastic is needed.'
+    - answers: taste_critic
+      move: concede
+      argument: Conceded, and this is the better idea hiding in the draft. The Soviet station was wallpaper,
+        and humming afterwards was a readout, not a haunting. The fix is to drop the station and set the
+        game inside Murzin's plate. The party are lost in the mastic, and the machine's light sweeps left
+        to right as the plate is played. The table's own humming is the thing hunting them. Scratching
+        wide, loud chords makes escape harder, so the music is no longer incidental noise. The station
+        listening back is now literally the instrument playing the party's path.
+    outcome: revised
+    revision:
+      statement: A one-page scratch-off TTRPG zine set inside Murzin's ANS plate that has a referee sweep
+        a pencil scan line rightward each round while the table hums the party's exposed path, letting
+        the light gain whenever the hum breaks, because on the ANS every removal of darkness became sound
+        the machine played.
+      subject: A one-page scratch-off TTRPG zine printed as a replica ANS plate, where the party is lost
+        inside the black mastic.
+      behavior: Players scratch their route through the coating, which works as the dungeon. Each round
+        the referee drags a pencil scan line one column rightward, and the table must hum every exposed
+        mark under it as a chord, with height setting pitch. If the hum breaks, the light advances an
+        extra column toward the party, so tall branching scratches become dangerous chords.
+      rationale: Murzin's plate made sound only from darkness removed. Here every path the party opens
+        becomes a note the machine plays at them, so map choices are musical choices with stakes during
+        play. The station is replaced by the instrument itself, and the finished page is both the record
+        of the expedition and its score.
+    usage:
+      input_tokens: 1865
+      output_tokens: 1986
+      cache_read_tokens: 1310
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: A one-page scratch-off TTRPG zine set inside Murzin's ANS plate that has a referee
+    sweep a pencil scan line rightward each round while the table hums the party's exposed path, letting
+    the light gain whenever the hum breaks, because on the ANS every removal of darkness became sound
+    the machine played.
+- position: 8
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: rationale
+    severity: minor
+    failure: The idea assumes integer headways map cleanly onto FM ratios, but headways are durations
+      in minutes, not frequencies, so the harmonic-versus-clangorous contrast comes from the performer's
+      chosen mapping, not from the timetable.
+    argument: I could not run any searches because the search tool hit its use limit, so I have no verified
+      citations. I know of loosely related practices, including timetable sonification, train-schedule
+      scores, and FM ratio-to-harmony mappings. I can't point to a specific work that combines them, so
+      I am not claiming prior art for the exact combination.
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 883
+      output_tokens: 512
+      cache_read_tokens: 21083
+      cache_write_tokens: 1245
+      web_search_requests: 3
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: behavior
+    severity: serious
+    failure: Riding several line indices by hand on a stock DX7 with two hands cannot be done live, so
+      the one-hour performance needs custom control hardware first.
+    argument: The behavior needs one performer to ride several modulation indices at once while playing
+      a full day of timetable in an hour. A stock DX7 has no per-operator faders, only a mod wheel, pitch
+      stick and data entry, so the builder would need a custom MIDI fader surface, firmware or patching
+      work, and a used unit. None of that is in the kit list, and the one-take rule leaves no room to
+      recover from a missed cue.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 748
+      output_tokens: 915
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: behavior
+    severity: serious
+    failure: It is a plain parameter-mapping sonification whose payoff, with consonance for on-time and
+      clang for late, is announced in advance, so there is no mystery, no human drama, and nothing the
+      listener discovers.
+    argument: 'This is a data-sonification recipe: take a dataset, map a number to a synth parameter,
+      press record. Meeting the finished thing, you''d get an hour of two-operator DX7 tones drifting
+      between consonance and clang, which is what any FM patch sounds like when ratios move between integer
+      and non-integer values. The rationale is tidy, but the tidiness is the problem. The idea tells you
+      the answer in advance: on-time is pretty, late is ugly. No train, station or passenger ever enters
+      the sound. There is no dread of the missed connection, no tannoy voice, no 4am platform, no Swiss-watch
+      uncanniness. A lonely DX7 could be a ghostly commuter ghost-ship, but the idea won''t let it be
+      anything except a lab demo. ''Missed cues left in'' is a nod toward heartbreak, but it is a stated
+      rule, not a feeling. The ending is also predictable. It resembles a conference talk or an Ableton-meets-Excel
+      gallery piece, a clever mapping with a tidy explanation card on the wall. You get it in thirty seconds,
+      and the remaining fifty-nine minutes are execution. The surreal and absurd potential, such as a
+      performer frantically riding faders as a freight train blocks the 8:15, is only implied. As written
+      it is a diligent, earnest, forgettable exercise in sonifying a spreadsheet.'
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 748
+      output_tokens: 543
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: rebut
+      argument: 'Partly true. A headway is a period, and turning it into a frequency ratio is my choice.
+        But the choice preserves the timetable''s real structure rather than inventing one. A Taktfahrplan
+        is a periodic system whose lines sit in integer ratios to a common hour, and that is exactly what
+        carrier harmonics of one fixed-frequency modulator are. The consonance is the network''s coordination
+        carried over intact. The clang is any path that falls outside that coordination. The revision
+        makes the mapping structural: one shared fixed modulator stands for the hub''s pulse. That replaces
+        the arbitrary per-line ratio settings of the original.'
+    - answers: skeptic
+      move: concede
+      argument: 'Conceded, and it is fatal as written. A stock DX7 has no per-operator faders, and riding
+        many indices by hand in a single take needs hardware I never listed. The fix uses what the DX7
+        already has. Each train becomes a held key and key velocity sets its modulation index. Fixed-frequency
+        modulator mode gives each line its ratio through key choice alone. No custom surface, firmware
+        or patching is needed: one used DX7 and two hands.'
+    - answers: taste_critic
+      move: concede
+      argument: Conceded. The original told you the answer in advance and kept the human out of it. The
+        real drama sat in the critic's own image of a frantic performer, and the revision makes that image
+        the mechanism. A train sounds only while a finger holds it, and the player has ten fingers and
+        no sustain pedal. At the morning and evening peaks more trains are running than one body can carry.
+        The performer has to decide, live and in one take, which trains to drop. The listener cannot predict
+        which trains vanish or how far the hub chord frays. What they hear is a person physically losing
+        the network, not a spreadsheet mapping.
+    outcome: revised
+    revision:
+      statement: A one-take performance on a stock used DX7 of a regional clock-face timetable's day compressed
+        to an hour, each train a key held from departure to arrival at a harmonic of a fixed-frequency
+        modulator set by its line's headway, because integer headways sound as chords and rush hour demands
+        more held trains than ten fingers allow.
+      subject: A one-take, one-performer DX7 performance of a regional clock-face timetable, in which
+        every train is a held key
+      behavior: 'One performer sight-reads a real printed regional clock-face timetable, such as a Swiss
+        Taktfahrplan, compressing a service day into one hour on a stock used DX7 with no sustain pedal
+        and no extra controllers. The patch is one two-operator FM voice. The modulator is in fixed-frequency
+        mode, tuned to the network''s hourly pulse. The carrier tracks the keyboard, so each line has
+        its own key, and the carrier-to-modulator ratio follows the line''s headway: 1 for hourly, 2 for
+        half-hourly, 4 for quarter-hourly. Irregular freight paths get non-integer keys. Each train is
+        a key pressed at departure and released at arrival, and key velocity sets its modulation index.
+        At rush hour more trains are running than the player has fingers, so the player must choose which
+        trains to drop. Everything is recorded in one unedited take, and every dropped train stays dropped.'
+      rationale: 'With a fixed-frequency modulator, a line''s FM ratio depends on its key, so the integer
+        relations between headways (15, 30 and 60 minutes giving 4:2:1) become literal harmonic relations.
+        The coordinated network therefore sounds as one chord, and off-pattern paths clang against it.
+        The single take and ten fingers then give the piece its subject: the listener hears the chord
+        thin out and fray each rush hour, as the network outruns one person.'
+    usage:
+      input_tokens: 1759
+      output_tokens: 3125
+      cache_read_tokens: 1310
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: A one-take performance on a stock used DX7 of a regional clock-face timetable's day
+    compressed to an hour, each train a key held from departure to arrival at a harmonic of a fixed-frequency
+    modulator set by its line's headway, because integer headways sound as chords and rush hour demands
+    more held trains than ten fingers allow.
+- position: 9
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: rationale
+    severity: minor
+    failure: Wilfred's own consumer Home Clavilux played prerecorded lumia, so the claim that Lumia needed
+      live-invented motion may not hold; I could not verify this by search.
+    argument: My searches could not run because the search tool's usage limit was exceeded, and the catalog
+      has no hits for this draw. I have no citable evidence, so I am declaring none_found instead of inventing
+      sources. From memory, Wilfred's 1930 Home Clavilux, Fischinger's Lumigraph and hand-drawn disc projectors
+      are neighbours. I could not verify any of them here, and none is known to use rotoscoped smoke and
+      hand footage. This is an absence of evidence, not evidence of novelty.
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 2169
+      output_tokens: 1567
+      cache_read_tokens: 42350
+      cache_write_tokens: 2911
+      web_search_requests: 6
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: behavior
+    severity: serious
+    failure: Hand-tracing enough frames of smoke and dancers onto acetate to fill an instrument takes
+      far longer than three months of evenings, before any projector is built.
+    argument: Hand-rotoscoping many frames of smoke and dancers' hands onto acetate discs is a slow, skilled
+      animation job. Each disc needs dozens to hundreds of hand-traced frames, plus registration, inking
+      and a projection rig with a motor, lamp, and lens. The builder has a 3D printer and soldering, but
+      no hand-animation or optical-printing workflow, and evenings and weekends give about three months.
+      The idea implicitly assumes a finished instrument, not one prototype.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 747
+      output_tokens: 250
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: behavior
+    severity: serious
+    failure: Once the traced smoke and hands are slowed, blended and blurred through a warped lens, the
+      rotoscoping disappears, leaving a generic psychedelic mood-lamp with speed, color and blur dials
+      and no uncanny or surprising behavior.
+    argument: 'Meeting the finished thing: a dim room, a wall of soft blurry smoke-and-hand shapes drifting
+      in tinted LED color, a crank that makes it faster or slower. That is a lava lamp crossed with an
+      oil-wheel projector, the 1960s psychedelic light-show look reheated as a museum-gift-shop object.
+      The idea''s own rationale undermines it. Wilfred''s Lumia was strange because the player improvised
+      form in real time. Here the forms are canned, and the player only gets speed, color and blur, which
+      are the dials on every screensaver. Rotoscoped smoke and dancers'' hands are chosen for being ''alive,''
+      but once they are slowed, blended and defocused through a warped lens, the rotoscoping is invisible.
+      Nobody in the room can tell traced footage from any other drift. The uncanny, the hand that seems
+      to belong to no body, the smoke that behaves like a gesture, is never pushed. It is smoothed away
+      into ambient wallpaper. ''Anyone can play it'' also means nothing can go wrong or surprise, so there
+      is no risk, no absurdity, no heartbreak. The three cards are stacked rather than fused: the constraint
+      just strips the instrument down, rotoscoping supplies loops, and Clavilux supplies the name. A pleasant,
+      forgettable mood-lamp that stays tame.'
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 747
+      output_tokens: 553
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: concede
+      argument: 'Conceded. I remember the Home Clavilux, or Clavilux Junior, playing pre-made lumia records,
+        so ''Lumia needed live-invented motion'' overstates the history and cannot carry the rationale.
+        It also exposes a deeper problem: my original was the Home Clavilux plus tracings, which is not
+        much of an idea. The revision moves the novelty off ''prerecorded motion'' and onto the player
+        phasing two traced bodies against each other. That holds up whatever the exact Home Clavilux details
+        turn out to be.'
+    - answers: skeptic
+      move: concede
+      argument: Conceded. 'Discs' plural, with smoke and hands, blending and focus, implied a library
+        of hundreds of inked frames plus an optical rig, and that does not fit three months of evenings.
+        The revision fixes the count at two discs of 24 frames each, 48 tracings in total. I would trace
+        from phone footage printed at disc size onto acetate with a registration jig I can 3D print. A
+        hall sensor and a strobed LED replace a lens-and-shutter optical system, which suits a builder
+        who solders and prints better than an optical printer would.
+    - answers: taste_critic
+      move: concede
+      argument: 'Conceded, and this critique points at the better idea. Slowing, blending and defocusing
+        through a warped lens erases the very thing rotoscoping contributes, which is the exact, slightly
+        wrong timing of a real body. It turns the instrument into an oil-wheel lamp. The fix is to strobe
+        each frame sharp, drop the blur, and fuse the cards rather than stack them. The player''s one
+        real act is bringing a disembodied traced hand into phase with traced smoke so the smoke seems
+        to answer it. That is a hand belonging to no body and smoke behaving like a gesture, the uncanny
+        the critic asked for. It can also fail visibly: out of phase, the pairing falls apart. A non-musician
+        can still tell when the two lock.'
+    outcome: revised
+    revision:
+      statement: A tabletop Clavilux that strobes two acetate discs, 24 rotoscoped frames each of a dancer's
+        hand and of smoke, which a player cranks into and out of phase so the smoke seems to obey the
+        hand, because traced real timing only reads as alive when kept crisp and when the player can catch
+        it.
+      subject: A tabletop Clavilux-style light organ with two strobed, hand-rotoscoped acetate discs
+      behavior: Projects two stacked acetate discs on a wall in a dark room. One disc holds 24 hand-rotoscoped
+        frames of a dancer's hand; the other holds 24 frames of smoke traced from footage shot in the
+        same session. A hall sensor strobes a colored LED once per frame, so every traced line stays sharp
+        rather than blurred. Each disc has its own crank. When the player brings the two into phase, the
+        smoke appears to rise from and obey the hand; out of phase, the two drift apart as strangers.
+        A single slider sets the color of each disc.
+      rationale: Canned lumia is not new. Wilfred's own Home Clavilux played prerecorded discs. What is
+        new is that the rotoscoped timing of two real bodies becomes the thing being played. The trace
+        is only uncanny when kept crisp, and only alive when the player can catch it. Locking a hand to
+        smoke is a judgment anyone makes by eye, with no notes or rhythm training. At 48 frames on two
+        discs, the tracing fits a few weekends of evenings.
+    usage:
+      input_tokens: 1843
+      output_tokens: 2001
+      cache_read_tokens: 1310
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: A tabletop Clavilux that strobes two acetate discs, 24 rotoscoped frames each of a
+    dancer's hand and of smoke, which a player cranks into and out of phase so the smoke seems to obey
+    the hand, because traced real timing only reads as alive when kept crisp and when the player can catch
+    it.
+- position: 10
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: subject
+    severity: minor
+    failure: Without verified sources, no specific prior art can be named; the walk-in camera obscura
+      and ritual-performance strands are likely each covered separately, but I found no evidence of their
+      combination.
+    argument: 'I could not run a working web search, so I have no verified citations. The catalog has
+      no work that links two of the cards. Separate strands of precedent probably exist: walk-in tent
+      camera obscuras and live-projection performance, and liturgical or ritual structures in live cinema.
+      I cannot point to a source that combines them, so I am not claiming that this exact combination
+      exists.'
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 800
+      output_tokens: 433
+      cache_read_tokens: 13318
+      cache_write_tokens: 1054
+      web_search_requests: 3
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: subject
+    severity: serious
+    failure: A portable tent that projects a readable daylight street needs a large, heavy lens and a
+      long throw, so it is not the light-tight, portable chapel the statement describes.
+    argument: A useful outdoor camera obscura needs a large lens or aperture to throw a bright enough
+      street image onto a table in daylight. A lens that size is heavy, costly and hard to keep light-tight
+      inside a tent, so the portable, one-person chapel as described is a different and harder build than
+      the idea assumes.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 667
+      output_tokens: 684
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: card_reading
+    target_card: liturgy
+    severity: serious
+    failure: The liturgy is borrowed only as a scaffold of call and response, so the street's events become
+      cute cues for murmured answers, and nothing is ever at stake, strange, or sacred.
+    argument: 'Meeting the finished thing: you duck into a dark tent, watch an upside-down street on a
+      white table, read from a printed program, and murmur ''Amen'' when a pigeon crosses. It''s tasteful
+      and polite, and it stays entirely within the art-school installation register of mindfulness. The
+      cliché is ''attention as the real film'': Cage''s 4''33", slow-cinema contemplation, Quaker silence
+      with a lens. Liturgy is read as pure format, with an order of service, responses and a dismissal,
+      and none of its charge: no sin, grief, absolution, or dread. The street is treated as neutral and
+      benign, so nothing risks anything. There is no uncanny misfire, such as the congregation answering
+      a call that never comes, a response that sours when a funeral passes, or the street starting to
+      answer back. There is no absurdity either, no commercial or pop debris to curdle the solemnity,
+      and no heartbreak. The calls are generic (''a figure crossing, the light dimming''), so the ritual
+      could be applied to any window. The rationale''s claim that it ''trains attention'' is a self-improvement
+      pitch, and I distrust that. The result is a pleasant, earnest, forgettable afternoon.'
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 667
+      output_tokens: 483
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: rebut
+      argument: Agreed, and it costs the idea nothing. Walk-in obscuras and ritualized live cinema each
+        have precedent. No one has claimed this combination, and no verified source shows that it exists.
+        The novelty is not that the strands are new. It is what the liturgy does to the projected strangers,
+        and the revision makes that sharper.
+    - answers: skeptic
+      move: rebut
+      argument: This overstates the optics. Portable tent obscuras were sold commercially in the 18th
+        century, and Kepler used one in the field. A roughly 100 mm meniscus lens with a 1.5–2 m focal
+        length, under a 45° mirror in a rotating turret, throws a readable daylight street onto a white
+        table. That is the Bristol and Dumfries design scaled down, and the lens is hand-held in weight
+        and cost. A tall tent supplies the throw. Light-tightness comes from blackout fabric and a sleeved
+        turret collar, which is a sewing problem, not an engineering one. It is buildable by one person
+        on a small budget. The real optical limit is dusk, when the image fades. The revision uses that
+        limit as the structure.
+    - answers: taste_critic
+      move: concede
+      argument: 'Conceded, and this is the critique that matters. I took liturgy''s skeleton and left
+        out its charge. ''Amen when a pigeon crosses'' is mindfulness with a program sheet, and generic
+        cues would fit any window. The better idea uses a liturgy that has stakes: a litany of intercession
+        at evensong. Every stranger who crosses the inverted street is named aloud by what they carry
+        and prayed for by people they will never know about and who will never see them again. Empty street
+        means the call doesn''t come, and the congregation must wait. A funeral, a fight or an ad truck
+        enters the same litany unedited. The service ends when daylight can no longer form an image. Nothing
+        here trains anyone. You plead for strangers you cannot keep, and that act is uncomfortably close
+        to surveillance.'
+    outcome: revised
+    revision:
+      statement: A camera obscura tent holding an evensong litany of intercession for strangers crossing
+        its live projected street, the officiant naming each passerby and the congregation answering 'Lord,
+        have mercy' until daylight fails, because people seen once, inverted and unrecorded, can only
+        be held by being prayed for while they pass.
+      subject: A portable camera obscura tent used as a dusk chapel for a live litany of intercession
+      behavior: 'At dusk the officiant turns the lens turret across the street. Each stranger who enters
+        the projected circle is a call: the officiant names them by what is visible (''for the man running
+        for the bus'', ''for the woman carrying flowers''), and the congregation answers ''Lord, have
+        mercy.'' When the street empties, the litany waits in silence, however long, until someone comes.
+        As the light dims, the names come slower. The dismissal is spoken when the image is too dark to
+        read, and no one is named after that.'
+      rationale: Real-time-only is the theological premise here, not a technical limit. These people are
+        seen once, inverted, without their knowledge, and they cannot be kept. Intercession is the one
+        liturgical act whose purpose is to hold an absent stranger before something larger. Because the
+        projection fails at sunset, there is a fixed end, so every name carries the weight of a last chance.
+        Watching strangers without their knowledge is close to surveillance, and the mercy is real only
+        if the attention is. That tension stays live.
+    usage:
+      input_tokens: 1576
+      output_tokens: 1998
+      cache_read_tokens: 1310
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: A camera obscura tent holding an evensong litany of intercession for strangers crossing
+    its live projected street, the officiant naming each passerby and the congregation answering 'Lord,
+    have mercy' until daylight fails, because people seen once, inverted and unrecorded, can only be held
+    by being prayed for while they pass.
+- position: 11
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: subject
+    severity: minor
+    failure: The idea's likeliest weak point is the pan-by-pots OLED reader itself, since small-display
+      scrolling image viewers are a common hobby build, though I could not verify any specific precedent.
+    argument: The web search tool was unavailable, so I verified no prior art. The catalog links no two
+      of the cards. I am not inventing precedent. Distant cousins such as OLED image scrollers, copper-tape
+      paper circuits and web infinite-canvas comics probably exist, but I confirmed none of them.
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 2237
+      output_tokens: 961
+      cache_read_tokens: 36552
+      cache_write_tokens: 1851
+      web_search_requests: 3
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: card_reading
+    target_card: zine
+    severity: serious
+    failure: Copper-tape traces running across the staple and fold lines of a photocopied booklet will
+      crack or short within a few handlings, so it cannot be a durable circuit board.
+    argument: The zine card is read as the enclosure and circuit board, with copper-tape traces on the
+      inside cover. Those traces must cross the staple and the folds of a stapled booklet, and paper flexes
+      at each fold. The pots and OLED are mounted on that same paper with no rigid backing, so the traces
+      will crack, lift or short after a few hand-to-hand sales. Fixing it means adding a rigid PCB or
+      a 3D-printed carrier, which turns the zine into a hybrid object the card does not describe. The
+      builder can make one prototype, but a sellable edition of durable zines is a different job.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 843
+      output_tokens: 1539
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: behavior
+    severity: serious
+    failure: The OLED keyhole turns an infinite canvas about spatial layout into a pan-and-scroll gadget,
+      and nothing in the comic or the interaction makes the tiny window strange, haunting or meaningful
+      beyond novelty.
+    argument: 'Meeting the finished thing, you hold a zine, notice a postage-stamp OLED, twist two knobs,
+      and scroll a comic through a 128x64 keyhole. It is a novelty gadget with a comic inside it. The
+      window shows maybe a thumbnail''s worth of drawing at once, so the infinite canvas, which was about
+      seeing layout, spatial rhythm and the whole page-as-landscape, collapses into a Google Maps pan
+      with worse resolution. The idea never asks what a keyhole view does to a story. It does not exploit
+      the uncanny: nothing haunts the window, nothing is lost or misread, nothing gets stranger as you
+      pan. The ''hints about which way the story branches'' printed on the cardstock are decoration, not
+      a mechanism. The rationale is a spec sheet (''4MB flash, cheap, offline, no maintenance'') plus
+      a sales pitch for cartoonists at fairs, and it falls into the cliché of ''put a tiny screen in a
+      analog object to make it magic''. Under that sits a real idea, which is the thumbs-as-pacing line,
+      but nothing in the design pursues it. The result is a tidy, competent maker-fair curiosity. You
+      would say ''neat'' once, scroll for a minute, and then wonder why this isn''t just a book.'
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 843
+      output_tokens: 527
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: rebut
+      argument: 'Agreed: no precedent was found, and the severity is minor. An OLED image scroller is
+        a common hobby build, and I don''t claim novelty for it. The new part is giving the viewer a specific
+        job against a printed artifact. In the revision the paper carries the whole canvas as an unreadable
+        map and the screen is the only lens that makes it legible. A generic scroller has no printed counterpart
+        it depends on.'
+    - answers: skeptic
+      move: concede
+      argument: Conceded. Copper tape that crosses a staple or fold line will fatigue and crack, and pots
+        levered against floppy paper will tear their pads. The fix doesn't need a PCB or a printed carrier.
+        Put every component and trace on the front cover leaf alone, laminated from two glued layers of
+        cardstock so it stays stiff like a card. Nothing electrical crosses the spine. The OLED module
+        and supermini are already rigid boards, and the pots get short tape runs on a flat, stiff panel.
+        The interior pages are ordinary stapled signatures. It is still a stapled photocopied zine whose
+        cover is the circuit board.
+    - answers: taste_critic
+      move: concede
+      argument: 'Conceded, and this is the critique that points at the better idea. As stated, the keyhole
+        just shrinks McCloud''s landscape into a worse Google Maps, and the printed branch hints are decoration.
+        The fix is to split the infinite canvas across the two media. The photocopied pages hold the entire
+        canvas as a map too small to read, so the reader sees the layout, rhythm and branching at once.
+        The OLED becomes the only way to actually read any part of it. Now the window means something:
+        you see where the story goes but can only understand it by going there with your thumbs. The thumbs-as-pacing
+        line is now the whole mechanism instead of a slogan.'
+    outcome: revised
+    revision:
+      statement: A photocopied zine whose pages print an entire infinite-canvas comic as a map too small
+        to read, with a $9 cover OLED lens panned by two thumb pots that resolves any spot into legible
+        drawing, because splitting layout onto paper and reading onto a keyhole lets the reader see McCloud's
+        whole landscape yet travel through it at thumb pace.
+      subject: A stapled photocopied zine whose interior pages print a whole infinite-canvas comic as
+        an illegibly small map, and whose stiffened cardstock cover carries an OLED viewer built from
+        about $9 of parts
+      behavior: The inside pages are the whole infinite canvas, photocopied as a reduced map. Layout,
+        paths and branches are visible, but the dialogue and fine linework are too small to read. A 0.96-inch
+        OLED sits behind a window in the front cover, and two thumb pots pan it to any coordinate, where
+        that region appears at full 1-bit resolution and becomes readable. Faint grid ticks printed on
+        the map match the pot positions, so the reader plans a route on paper and travels it with their
+        thumbs. All electronics sit on the front cover leaf, two layers of cardstock glued together. The
+        copper-tape traces stay on that one flat panel and never cross a fold or staple. Parts are an
+        ESP32-C3 supermini running with its radio off, the OLED, two pots, a coin cell and copper tape,
+        about $9.
+      rationale: McCloud's infinite canvas is about seeing a comic as a landscape and moving through it.
+        On the web those two acts happen on one screen. Here paper does what paper is good at, showing
+        the whole layout cheaply and at once, and the keyhole does the reading. The tiny window stops
+        being a limit and becomes the only lens that resolves the story. The reader's thumbs set the pace
+        that panel borders set in print. Keeping the circuit on one rigid, unfolded cover leaf lets an
+        edition survive hand-to-hand sales without leaving the zine form or the $20 budget.
+    usage:
+      input_tokens: 1882
+      output_tokens: 3012
+      cache_read_tokens: 1310
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: A photocopied zine whose pages print an entire infinite-canvas comic as a map too small
+    to read, with a $9 cover OLED lens panned by two thumb pots that resolves any spot into legible drawing,
+    because splitting layout onto paper and reading onto a keyhole lets the reader see McCloud's whole
+    landscape yet travel through it at thumb pace.
+- position: 12
+  critiques:
+  - role_name: prosecutor
+    model: claude-sonnet-5-5
+    target: constraint
+    severity: minor
+    failure: I found no verifiable prior art for erasing a home-taped VHS soap opera down to at most eight
+      surviving voices, though found-footage erasure is a known genre.
+    argument: I could not run a successful web search because the search tool hit its use limit, so I
+      have no verified citations. The catalog also has no work linking any two of the cards. From memory,
+      erasure applied to film and video is an established practice, including cut-up and found-footage
+      work and spoken-word edits of soap operas. I could not confirm a specific work that matches this
+      idea, so I am not citing one.
+    citations: []
+    none_found: true
+    usage:
+      input_tokens: 787
+      output_tokens: 409
+      cache_read_tokens: 13318
+      cache_write_tokens: 1018
+      web_search_requests: 3
+  - role_name: skeptic
+    model: claude-haiku-5-5
+    target: behavior
+    severity: serious
+    failure: Consumer VCRs record picture and sound together, so silencing all but chosen phrases without
+      blacking the picture needs an audio-dub deck, which the builder has not secured.
+    argument: The behavior depends on overwriting picture and sound independently on a consumer VCR, but
+      the idea never says how. Most VCRs erase video and audio together when recording. Keeping only chosen
+      phrases means silencing the audio between them while the video goes black, which needs an audio-dub
+      or hi-fi deck the builder does not have. Cutting by ear across a linear tape also drifts frame by
+      frame, and each overwrite pass degrades the magnetic signal the surviving phrases depend on. None
+      of this is in the statement, and it is the step that decides whether the poem exists.
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 654
+      output_tokens: 1079
+      cache_read_tokens: 1264
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - role_name: taste_critic
+    model: claude-sonnet-5-5
+    target: constraint
+    severity: serious
+    failure: The constraint keeps the voices tidy and intelligible, so the piece resolves into a sad-sounding
+      supercut of soap clichés with glitch decoration instead of anything uncanny or haunted.
+    argument: 'Strip away the rainbow seams and you have a supercut with the volume mostly off. Soap opera
+      dialogue is already a language of stock phrases (''I can''t do this anymore'', ''you''re not the
+      father''), so cutting it down to a few lines yields exactly what the genre already trades in: melodrama,
+      now with static. Meeting the finished tape would feel like a clever, clean demonstration. You watch
+      black, hear a stray ''I loved you'', see a glitch, and understand the whole thing in ten seconds.
+      That is the found-footage-elegy cliché: nostalgic analog decay plus a faintly sad voice, the Basinski-meets-Lynch
+      mood board. The cap of eight voices is the real problem. It exists to keep the poem ''followable''
+      and ''recognizable'', which is a legibility rule, and it pushes the piece away from the uncanny.
+      The interesting version would let voices blur into each other, get misattributed, or have one actor''s
+      voice speak another''s mouth. Here the voices stay tidy and the dialogue stays intelligible, so
+      nothing is haunted. The seams and the one-way cut are presented as meaning, but they are only the
+      properties of the medium restated as rationale. Nothing is at stake in what gets kept. The poem
+      has no reason to choose these phrases beyond being a plausible little drama, so it ends up as an
+      arty, tasteful, forgettable object.'
+    citations: []
+    none_found: false
+    usage:
+      input_tokens: 654
+      output_tokens: 540
+      cache_read_tokens: 1019
+      cache_write_tokens: 0
+      web_search_requests: 0
+  defense:
+    model: claude-opus-5-5
+    replies:
+    - answers: prosecutor
+      move: rebut
+      argument: 'Not finding prior art is not a failure, and the critic concedes found-footage erasure
+        is a genre without naming a matching work. I accept this as a minor note. The revision narrows
+        the method to a selection rule I have not seen used: keep only off-screen speech over reaction
+        shots. That moves the piece further from generic soap supercuts.'
+    - answers: skeptic
+      move: rebut
+      argument: The core objection misreads the idea. I never planned to silence audio while keeping picture.
+        Everything erased goes to black and silence together, and every kept phrase keeps its original
+        picture and sound. A plain crash record from a second VCR fed black and silence does exactly that,
+        so no audio-dub deck is needed. Recording over neighboring sections also leaves the kept sections
+        untouched; I am not re-recording the phrases themselves. The true part is precision. A consumer
+        deck's erase head and pre-roll make cuts land a few frames off, so I cannot cut mid-word. I choose
+        phrases with breathing room on either side, and the ragged rainbow seams are part of the surface.
+        That is a working method, not a missing step.
+    - answers: taste_critic
+      move: concede
+      argument: 'This critique is right, and it points at the better piece. As stated, the cap served
+        legibility and the selection was ''whatever makes a plausible little drama,'' which yields a melancholy
+        supercut with glitch garnish. The haunting it asks for is already in the source: soap operas constantly
+        put one actor''s voice over another actor''s silent face. If I keep only phrases spoken off-screen
+        over reaction shots, every surviving voice is disembodied and misattached. I can do this with
+        a stock VCR because I am choosing material, not faking sync. The eight-voice cap stops being tidiness
+        and becomes the mechanism: a small cast of voices you learn and keep hearing land on the wrong
+        faces.'
+    outcome: revised
+    revision:
+      statement: An erasure poem made on a found home-taped VHS soap opera that crash-records black and
+        silence over everything except lines heard over reaction shots, keeping at most eight voices,
+        because each surviving line is spoken off-screen into a listening face, so the poem is what characters
+        were told and no speaker is ever seen.
+      subject: An erasure poem made on a found, home-taped VHS cassette of a soap opera
+      behavior: Using a second VCR in record mode, crash-records black and silence over the whole thrifted
+        home-taped soap except phrases spoken by an off-screen character while the camera holds on someone
+        else's listening face. Picture and sound survive together, so every kept line is a voice arriving
+        at a face whose mouth does not move. At most eight distinct voices survive anywhere on the tape.
+      rationale: 'Soap operas are built on reaction shots: the actor who isn''t speaking gets the close-up.
+        Keeping only those moments turns the drama inside out. The poem becomes what people were told,
+        not what they said, and no speaker is ever seen. The eight-voice cap now creates the unease instead
+        of tidying it. With a small cast, each voice returns often enough to be learned, so each time
+        it lands on a different silent face the misattribution is felt. Choosing phrases is constrained
+        by where the camera looked, so the selection has stakes.'
+    usage:
+      input_tokens: 1706
+      output_tokens: 2263
+      cache_read_tokens: 1310
+      cache_write_tokens: 0
+      web_search_requests: 0
+  final_statement: An erasure poem made on a found home-taped VHS soap opera that crash-records black
+    and silence over everything except lines heard over reaction shots, keeping at most eight voices,
+    because each surviving line is spoken off-screen into a listening face, so the poem is what characters
+    were told and no speaker is ever seen.
+debate_failures: []
+tournament:
+  k_factor: 32.0
+  initial_rating: 1500.0
+  max_comparisons: 66
+  entrants:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  comparisons:
+  - first: 4
+    second: 11
+    verdicts:
+    - axis_name: novelty
+      winner: 11
+      ruling: B's pairing of an unreadably small printed map with an OLED that is the only lens able to
+        read it has no stated precedent and was left standing, while A's objection found hive-acoustics
+        prior art that its reply conceded, leaving only the interface new.
+    - axis_name: feasibility
+      winner: 4
+      ruling: A is a Teensy 4.1 with USB host, one knob and a filter, which is easy to build; B needs
+        a hand-assembled copper-tape circuit on a cardstock cover plus a full infinite-canvas comic drawn,
+        mapped to pot coordinates and rendered at 1-bit for every copy.
+    - axis_name: promise
+      winner: 4
+      ruling: A's high-Q resonance that makes queen piping ring in like a station on a dial gives a listening
+        experience that is both useful and uncanny, and its sealed mic lets later listens spare the brood,
+        whereas B's keyhole still risks being a neat gadget that wears off.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4757
+      output_tokens: 323
+      cache_read_tokens: 0
+      cache_write_tokens: 1119
+      web_search_requests: 0
+  - first: 7
+    second: 3
+    verdicts:
+    - axis_name: novelty
+      winner: 7
+      ruling: B's objection found real prior art (midi-plotter, plotter-sounds) and B conceded its original
+        premise, whereas A's search turned up nothing for a scan-line hum mechanic where a broken chord
+        advances the threat.
+    - axis_name: feasibility
+      winner: 7
+      ruling: A is a one-page scratch-off zine made with acrylic-and-soap coating, a pencil and humming,
+        so Objection 1's optics worry was rebutted as ordinary zine craft; B needs survey data, MIDI derivation,
+        frame-by-frame hand animation and a self-playing piano.
+    - axis_name: promise
+      winner: 3
+      ruling: B's revision gives a real drowned village and an honest gap in which the ear hears hills
+        the eye cannot see, a haunting piece worth screening, while A's hummed score remains a party game
+        with a thinner emotional payoff.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4668
+      output_tokens: 298
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 1
+    second: 4
+    verdicts:
+    - axis_name: novelty
+      winner: 1
+      ruling: A's central move, making the reader's physical reach the story's emotional distance with
+        authored chord tones, is an unrefuted narrative-through-touch idea, while B concedes that in-hive
+        mic monitoring of piping is established and what remains is mainly a resonant-filter dial.
+    - axis_name: feasibility
+      winner: 1
+      ruling: A needs only canvas, Pointer Events, Web Audio and hand-drawn art, testable on any phone
+        via remote debugging, whereas B demands hardware assembly, a beeswax-sealed piezo placed in a
+        live hive, and has an unresolved contradiction about opening the hive.
+    - axis_name: promise
+      winner: 1
+      ruling: B's near-resonance filter making queen piping arrive like a station on a dial is a vivid,
+        strange listening experience with real use, but A's resolution that must be earned by holding
+        two estranged figures lit together gives a repeatable emotional arc that reaches more people.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4659
+      output_tokens: 323
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 8
+    second: 9
+    verdicts:
+    - axis_name: novelty
+      winner: 8
+      ruling: A's fixed-frequency-modulator mapping of Taktfahrplan headways to carrier harmonics, with
+        ten-finger voice-dropping as the subject, has no prior art offered, while B concedes it is essentially
+        Wilfred's Home Clavilux with tracings and its remaining novelty is phasing two discs.
+    - axis_name: feasibility
+      winner: 9
+      ruling: B shrinks to 48 hand-traced frames, a hall sensor, a strobed LED and a 3D-printed jig, which
+        fits the builder's soldering and printing skills, whereas A must sight-read a full timetable in
+        one live take and juggle ten fingers of held keys at rush hour.
+    - axis_name: promise
+      winner: 8
+      ruling: A turns a performer's physical failure to hold the whole network into audible fraying of
+        a chord, a distinct and repeatable piece, while B's hand-obeys-smoke phasing is charming but sits
+        close to a pleasant mood-lamp.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4622
+      output_tokens: 336
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 10
+    second: 9
+    verdicts:
+    - axis_name: novelty
+      winner: 10
+      ruling: A's litany of intercession for unrecorded passersby has no named prior art, whereas B concedes
+        that the Home Clavilux already played prerecorded discs and sits next to disc projectors and hand-drawn
+        lumia.
+    - axis_name: feasibility
+      winner: 10
+      ruling: A's tent is a sewing and lens problem that the reply grounded in historical designs (a ~100
+        mm meniscus lens, a 45° mirror turret), while B still requires 48 hand-traced acetate frames,
+        a registered dual-disc rig and hall-sensor strobe timing.
+    - axis_name: promise
+      winner: 10
+      ruling: A turns the surveillance tension into a real theological stake, with silence while waiting
+        for a call and a fixed end at dusk, while B's phasing of hand and smoke is a neat but narrower
+        interaction.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4389
+      output_tokens: 288
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 8
+    second: 11
+    verdicts:
+    - axis_name: novelty
+      winner: 8
+      ruling: A's fixed-frequency modulator, where key choice sets each line's carrier ratio so the timetable's
+        integer headways become literal harmonics and dropped trains stay dropped, has no found precedent,
+        while B's pot-panned OLED is a common hobby scroller that only gains a printed-map pairing.
+    - axis_name: feasibility
+      winner: 11
+      ruling: B uses off-the-shelf parts (ESP32-C3, SSD1306, two pots, copper tape) on one flat cover
+        leaf and can be built and tested over time, whereas A needs sight-reading a compressed timetable
+        live in one unedited take with only ten fingers.
+    - axis_name: promise
+      winner: 8
+      ruling: A turns the performer's physical limit into the piece, since the hub chord audibly thins
+        and frays at rush hour as trains are dropped, which gives it real expressive depth beyond the
+        mapping.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4701
+      output_tokens: 307
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 7
+    second: 9
+    verdicts:
+    - axis_name: novelty
+      winner: 7
+      ruling: A's mechanic of a scan line that turns the party's own scratched path into a hum that hunts
+        them has no cited precedent, while B concedes it is essentially the Home Clavilux with tracings
+        and rests on the less distinctive idea of phasing two looped discs.
+    - axis_name: feasibility
+      winner: 7
+      ruling: A is a one-page zine with hand-applied scratch-off coating, and its objection 3 rebuttal
+        showed that no optics, soldering or printing in plastic is needed, whereas B still needs 48 hand-traced
+        acetate frames plus a hall-sensor strobe projector with two cranks.
+    - axis_name: promise
+      winner: 9
+      ruling: B's hand-and-smoke phase-locking is an evocative uncanny image that a non-musician can feel
+        at once, and it fuses the rotoscoping, Clavilux and non-musician cards, while A's hum-as-hazard
+        risks becoming a one-use novelty.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4402
+      output_tokens: 326
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 9
+    second: 4
+    verdicts:
+    - axis_name: novelty
+      winner: 9
+      ruling: A's phasing of two rotoscoped bodies so smoke seems to obey a hand is not matched by anything
+        the objections found, whereas B's hive-microphone listening is acknowledged as well-established
+        and only its one-knob interface is new.
+    - axis_name: feasibility
+      winner: 4
+      ruling: B is a Teensy, a USB-host knob, a piezo and a resonant filter, all standard gear for one
+        builder, while A still needs 48 hand-traced registered acetate frames plus a dual-disc strobed
+        optical rig with hall sensors.
+    - axis_name: promise
+      winner: 9
+      ruling: A's lock-and-drift between a disembodied traced hand and smoke gives a playable, visibly
+        failing, uncanny experience, while B is closer to a useful EQ sweep that depends on bee acoustics.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4678
+      output_tokens: 284
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 8
+    second: 6
+    verdicts:
+    - axis_name: novelty
+      winner: 6
+      ruling: B reverses the reading from the saw cut back to the seedling and builds every year only
+        from grains of the felling recording, so the page doubles as a narrative and a score, while A's
+        idea of fixed-frequency FM ratios mapped to headways is closer to ordinary timetable sonification.
+    - axis_name: feasibility
+      winner: 6
+      ruling: B needs only a photocopier, a public ITRDB ring series, a saw recording and a Pure Data
+        patch with a few lines of Python for ink coverage, whereas A asks one performer to sight-read
+        a compressed day of trains live in one unedited take on a stock DX7.
+    - axis_name: promise
+      winner: 6
+      ruling: B's concession gave it a real emotional engine, in which the saw dissolves into near-silence
+        as you read inward, whereas A's performer losing the network at rush hour is striking but rests
+        on a single gesture repeated for an hour.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4541
+      output_tokens: 308
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 3
+    second: 11
+    verdicts:
+    - axis_name: novelty
+      winner: 3
+      ruling: A conceded that its MIDI-to-plot mapping had close precedents (midi-plotter), but its revision,
+        elevation-as-pitch scoring of a drowned village's roads on a self-playing piano, is far from them;
+        B's OLED scroller is admittedly a common hobby build, and its map-plus-lens split is the only
+        new part.
+    - axis_name: feasibility
+      winner: 11
+      ruling: B is a single-board build with a known $9 parts list, and its fold-crack objection was solved
+        by confining all electronics to one rigid cover leaf; A needs a self-playing piano, a survey-to-MIDI
+        pipeline, and a hand-drawn stop-motion film paced to ticks.
+    - axis_name: promise
+      winner: 3
+      ruling: A's gap between a flat plan-view drawing and the pitch line that carries the hills, set
+        in a vanished village, gives it emotional and conceptual depth that B's clever but gadget-leaning
+        zine lacks.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4994
+      output_tokens: 330
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 5
+    second: 8
+    verdicts:
+    - axis_name: novelty
+      winner: 8
+      ruling: B's fixed-frequency modulator, where key choice sets each line's harmonic ratio so a Taktfahrplan
+        becomes a literal chord that frays under rush-hour finger limits, has no cited precedent, while
+        A's wheel of rules recombined from historical texts sits close to Llullian generators and existing
+        party games that spin up laws.
+    - axis_name: feasibility
+      winner: 5
+      ruling: A is a few dozen verbatim fragments from two digitized public-domain texts on a cardstock
+        volvelle that the builder has made before, and the dinner table is the test venue, whereas B needs
+        a sight-read hour-long one-take DX7 performance with fixed-frequency FM key mapping and rush-hour
+        polyphony beyond ten fingers.
+    - axis_name: promise
+      winner: 5
+      ruling: A's revision creates real consequence, since the reader's slips become law for the room
+        until breakfast and the Oneida-style criticism round follows, which is an experience people would
+        remember, whereas B's concept is largely a sonification whose payoff the listener hears in thirty
+        seconds.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4532
+      output_tokens: 366
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 12
+    second: 5
+    verdicts:
+    - axis_name: novelty
+      winner: 12
+      ruling: A's selection rule of keeping only off-screen speech over reaction shots, with an eight-voice
+        cap that makes voices land on the wrong faces, has no match in the debate, while B is still a
+        recombination wheel descended from Llull and spin-a-law games.
+    - axis_name: feasibility
+      winner: 5
+      ruling: B is cardstock, a brass split pin and a few dozen clauses from two digitized public-domain
+        texts, and the builder has built volvelles before; A's cuts on a consumer VCR land a few frames
+        off and each overwrite pass degrades the tape.
+    - axis_name: promise
+      winner: 5
+      ruling: B stages real consequences in a real room, a spoken law obeyed until breakfast and an Oneida
+        criticism round, and the reader's slips becoming law is a mechanism with stakes that A's tape,
+        though haunting, only watches.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4371
+      output_tokens: 295
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 4
+    second: 10
+    verdicts:
+    - axis_name: novelty
+      winner: 10
+      ruling: B's litany of intercession naming strangers on a live inverted street, ending when daylight
+        fails, drew no prior art against the combination and was sharpened in reply, while A conceded
+        that hive acoustics and piping detection are well established.
+    - axis_name: feasibility
+      winner: 4
+      ruling: A is a Teensy 4.1 USB-host box, a nanoKONTROL2 and a waxed piezo feeding a resonant bandpass,
+        which is a small electronics build one person can finish, whereas B needs a roughly 100 mm meniscus
+        lens, a rotating mirror turret and a tall blackout tent.
+    - axis_name: promise
+      winner: 10
+      ruling: B's tension between prayer and surveillance, with waiting silences and a dismissal fixed
+        by fading light, gives it far more emotional and conceptual depth than A's useful but conceded
+        EQ-stethoscope.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4418
+      output_tokens: 304
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 12
+    second: 9
+    verdicts:
+    - axis_name: novelty
+      winner: 12
+      ruling: A's rule of keeping only off-screen speech over reaction shots, capped at eight voices that
+        keep landing on the wrong silent faces, is a specific selection logic the critic found no match
+        for, while B's prerecorded-disc light organ sits close to the Home Clavilux, as its own concession
+        admits.
+    - axis_name: feasibility
+      winner: 12
+      ruling: A needs only two consumer VCRs and a thrifted tape, and its reply to the audio-dub objection
+        clarified that black and silence are recorded together, so nothing exotic is required, whereas
+        B needs 48 hand-traced acetate frames plus a hall-sensor strobe, two cranks and a projection rig.
+    - axis_name: promise
+      winner: 12
+      ruling: A's eight learnable voices arriving at faces whose mouths don't move turn a medium quirk
+        into a real haunting, whereas B's phase-locking of hand and smoke is a neat playable idea but
+        risks reading as a gadget.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4461
+      output_tokens: 331
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 5
+    second: 4
+    verdicts:
+    - axis_name: novelty
+      winner: 5
+      ruling: B's objection showed in-hive piping and queenless monitoring is well established (Arnia,
+        Open Source Beehives), leaving only the one-knob resonant dial as new, while A's binding-until-breakfast
+        law with Oneida-style morning criticism found no prior art.
+    - axis_name: feasibility
+      winner: 5
+      ruling: A is cardstock, a split pin, and a few dozen clauses from two digitized public-domain texts,
+        whereas B needs a Teensy USB-host build, a beeswax-sealed piezo, and a hive installation whose
+        own objection (opening the box to place the mic) was only partly answered.
+    - axis_name: promise
+      winner: 5
+      ruling: A's revision turns the spun law into a binding night-long rule with real social cost, such
+        as someone silent at dinner or separated from a partner, and a morning accountability round, which
+        gives a room a rich and repeatable experience.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4588
+      output_tokens: 307
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 3
+    second: 4
+    verdicts:
+    - axis_name: novelty
+      winner: 3
+      ruling: A's reversal (survey elevation becomes pitch, so the ear hears hills the flat plan drawing
+        cannot show) survived the plotter prior-art objection, whereas B conceded that in-hive acoustic
+        monitoring is established and kept only the one-knob dial interface.
+    - axis_name: feasibility
+      winner: 4
+      ruling: B is a Teensy 4.1 with USB host, a resonant filter and a beeswax-sealed piezo, all of which
+        a single maker can build quickly, while A needs a hand-drawn stop-motion film frame by frame plus
+        a self-playing piano and survey data converted to MIDI.
+    - axis_name: promise
+      winner: 3
+      ruling: A gives a real vanished place, an honest gap between picture and sound, and a self-playing
+        piano as a haunting performer, which makes a film worth screening, while B stays closer to a useful
+        gadget.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4944
+      output_tokens: 304
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 1
+    second: 6
+    verdicts:
+    - axis_name: novelty
+      winner: 6
+      ruling: B's felling-only grain source, panel widths taken from a real cross-dated ring series, and
+        the page serving as both narrative and score are further from known work. A's objection 3 concession
+        leaves it close to touch-to-reveal toys, with the stretch-to-hold-both mechanic as its one new
+        element.
+    - axis_name: feasibility
+      winner: 1
+      ruling: A drops the unreliable radius and force inputs and relies only on finger count, position
+        and spread, which any phone reports. Canvas, Pointer Events and Web Audio are simple, and the
+        art is hand-drawn, so one person can build it, whereas B needs a ring-data pipeline, scan analysis
+        and a Pure Data patch.
+    - axis_name: promise
+      winner: 6
+      ruling: B's reversed structure, in which the saw dissolves into a single faint seedling grain, makes
+        the data mapping carry loss, and it works as a physical zine plus sound piece. A's stretch to
+        hold both estranged figures is moving, but it risks being a one-trick mechanic.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4549
+      output_tokens: 350
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 1
+    second: 11
+    verdicts:
+    - axis_name: novelty
+      winner: 11
+      ruling: B's split between a printed unreadable whole-canvas map and a thumb-panned OLED lens that
+        is the only way to read it is a rarer pairing than A's touch-to-light mechanic, which A itself
+        conceded is a familiar kiosk-toy trope in the lineage of Bloom.
+    - axis_name: feasibility
+      winner: 1
+      ruling: A is pure web (canvas, Pointer Events, Web Audio) with hand-drawn art, and it dropped the
+        unreliable radius/force inputs, so a solo builder can test it on any phone via remote debugging,
+        whereas B needs hardware assembly, copper-tape circuits and printed grid-tick alignment to the
+        pots for each copy.
+    - axis_name: promise
+      winner: 1
+      ruling: A turns the Lumigraph rule into the story itself, since reaching across the glass to hold
+        both estranged figures lit enacts their distance and the chord resolves only when it is earned,
+        giving it a real emotional payoff that B's keyhole lens lacks.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4709
+      output_tokens: 346
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 10
+    second: 3
+    verdicts:
+    - axis_name: novelty
+      winner: 10
+      ruling: A's objections found no prior art combining the strands, while B's MIDI-to-drawing core
+        has documented neighbours (midi-plotter, plotter-sounds) and B's own reply conceded the original
+        mapping was a relabelled piano roll.
+    - axis_name: feasibility
+      winner: 10
+      ruling: A's rebuttal to the optics objection is concrete (a ~100 mm meniscus lens, mirror turret,
+        blackout sewing, with historical precedent), and the performance needs only a tent and an officiant,
+        whereas B needs a self-playing piano, survey-to-MIDI conversion, and frame-by-frame drawing synced
+        to ticks.
+    - axis_name: promise
+      winner: 10
+      ruling: A's litany of intercession for unrecorded strangers carries a live tension with surveillance
+        and real stakes (funerals, empty street, fixed dusk ending), while B's elevation-as-pitch drowned-village
+        film is moving but more illustrative of its method.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4655
+      output_tokens: 333
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 5
+    second: 3
+    verdicts:
+    - axis_name: novelty
+      winner: 3
+      ruling: B's reversal, deriving MIDI from a real drowned village's survey so that ear and eye carry
+        different data, sits well away from the midi-plotter prior art, whereas A still looks like a spin-for-a-rule
+        party game, though its binding-until-breakfast mechanic helps.
+    - axis_name: feasibility
+      winner: 5
+      ruling: A is a few dozen clause fragments from two digitized public-domain texts, cut in cardstock
+        on a split pin and testable at a dinner table, while B needs a real survey of a flooded village,
+        a MIDI conversion, frame-by-frame hand-drawn stop-motion and access to a self-playing piano.
+    - axis_name: promise
+      winner: 3
+      ruling: B gives a real lost place and an honest gap between flat plan view and pitched hills, which
+        could move an audience, while A's binding law with morning criticism is interesting but risks
+        staying a party game.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4825
+      output_tokens: 309
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 6
+    second: 4
+    verdicts:
+    - axis_name: novelty
+      winner: 6
+      ruling: A's felling-recording-only granular score on a backward-read comic whose panel widths are
+        a cross-dated ring series has no cited precedent, while B's objection 3 concedes that in-hive
+        piping and queenless monitoring is well established, leaving only the one-knob interface as new.
+    - axis_name: feasibility
+      winner: 4
+      ruling: B is a Teensy, a nanoKONTROL2, a piezo and one resonant filter, all cheap and standard for
+        one person, whereas A needs a ring-width dataset, a scan-to-grain Pure Data pipeline and printed
+        comic panels sized to the data, even though its toner swap cut cost.
+    - axis_name: promise
+      winner: 6
+      ruling: A's reversal, where the saw dissolves toward a single seedling grain and the data mapping
+        carries loss, gives the work an emotional and conceptual core that survives its own objection,
+        beyond B's useful but tamer tunable-hive-radio gadget.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4597
+      output_tokens: 328
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 7
+    second: 8
+    verdicts:
+    - axis_name: novelty
+      winner: 7
+      ruling: A's scan-line hum that the party is hunted by, set inside Murzin's plate, is a stranger
+        fusion than B's timetable sonification, which the objection called a data-to-parameter recipe.
+    - axis_name: feasibility
+      winner: 8
+      ruling: B needs only a used DX7 and two hands, and its fatal fader objection was fixed by moving
+        to key velocity, whereas A needs a hand-coated scratch-off page, a referee, and a table willing
+        to hum on pitch.
+    - axis_name: promise
+      winner: 8
+      ruling: B's performer physically losing the network at rush hour, with a chord that thins and frays
+        in one take, is a coherent and affecting piece, while A's hum-or-be-hunted game risks a gimmicky
+        five-minute novelty even after the revision.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4375
+      output_tokens: 274
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 9
+    second: 5
+    verdicts:
+    - axis_name: novelty
+      winner: 9
+      ruling: A's novelty survives the Home Clavilux concession because the new element is the player
+        phasing two rotoscoped real bodies (hand and smoke) so one seems to obey the other, whereas B
+        is still a Llullian wheel generating rules, a familiar random-law game form with historical text.
+    - axis_name: feasibility
+      winner: 5
+      ruling: B is a cardstock volvelle with a few dozen transcribed clauses from two digitized public-domain
+        sources and a dinner-table test, while A needs 48 hand-traced registered acetate frames plus a
+        hall-sensor strobe rig and projector with a synchronized pair of cranks.
+    - axis_name: promise
+      winner: 5
+      ruling: B's binding-until-breakfast law, with slips becoming law and an Oneida-style criticism round,
+        creates real social stakes and stories in the room, whereas A's crisp phase-locking could still
+        end up as a pleasing but limited visual toy.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4559
+      output_tokens: 321
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 1
+    second: 5
+    verdicts:
+    - axis_name: novelty
+      winner: 1
+      ruling: A's strongest claim is that reach enacts estrangement through touch-held light, which goes
+        beyond the touch-to-reveal toy lineage (Bloom etc.) and was conceded only on the mask; B's wheel
+        of recombined text is the older Llullian move, even if binding a room overnight is a fresh twist.
+    - axis_name: feasibility
+      winner: 5
+      ruling: B is a cardstock wheel with a few dozen clauses from two digitized public-domain sources,
+        which the builder says they have made before, while A needs original drawn art, composed chord
+        tones and multitouch tuning across devices.
+    - axis_name: promise
+      winner: 5
+      ruling: B's binding law with real social consequences, such as someone silent at dinner because
+        of a friend's slip, and the morning Oneida criticism round give a live, unpredictable experience,
+        whereas A's stretch-to-resolve gesture is moving but is a single trick that risks being exhausted
+        after one reading.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4540
+      output_tokens: 325
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 8
+    second: 3
+    verdicts:
+    - axis_name: novelty
+      winner: 8
+      ruling: B's objection turned up close neighbours (midi-plotter, plotter-sounds) for the MIDI-to-drawing
+        mapping, whereas A's prior-art search found nothing combining a fixed-frequency FM modulator,
+        headway-derived harmonics and a player with ten fingers forced to drop trains.
+    - axis_name: feasibility
+      winner: 8
+      ruling: A needs only a used DX7 and a printed timetable, and its conceded fix (velocity as modulation
+        index, ratio set by key choice) makes it playable by one person, while B demands a self-playing
+        piano, a survey-to-MIDI pipeline and a hand-drawn stop-motion film frame by frame.
+    - axis_name: promise
+      winner: 3
+      ruling: B's drowned village, with the ear hearing elevation the flat plan view cannot show and a
+        self-playing piano standing in for the vanished place, gives it emotional and cinematic depth
+        that A's tidy mapping only gets from the ten-finger constraint.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4888
+      output_tokens: 341
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 5
+    second: 2
+    verdicts:
+    - axis_name: novelty
+      winner: 5
+      ruling: A turns a Llullian volvelle into a binding overnight social contract enforced by Oneida-style
+        criticism, a combination with no cited precedent, while B rests on proximity-triggered datamosh,
+        a familiar glitch-art move that its own objection conceded.
+    - axis_name: feasibility
+      winner: 5
+      ruling: A is cardstock, a split pin and a few dozen clauses from two digitized public-domain texts,
+        whereas B still needs a per-frame H.264 pipe into a software decoder on a Pi with I-frame skipping
+        that stays unproven in practice.
+    - axis_name: promise
+      winner: 5
+      ruling: A's rule-until-breakfast with a spoken criticism round creates real social consequences
+        and stories, such as someone silent at dinner because of a friend's slip, while B's lingering
+        smear of a heroine is striking but still a look-and-step-back piece.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4491
+      output_tokens: 303
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 11
+    second: 9
+    verdicts:
+    - axis_name: novelty
+      winner: 9
+      ruling: B's phase-locking of two rotoscoped real bodies so smoke seems to obey a hand is an unusual
+        playable premise, whereas A's core is a pan-by-pots OLED scroller, even with the paper-map-plus-lens
+        split.
+    - axis_name: feasibility
+      winner: 11
+      ruling: A uses off-the-shelf parts (ESP32-C3, SSD1306, two pots) with a confined one-panel circuit
+        and an ordinary photocopy workflow, while B needs 48 hand-traced acetate frames, a registration
+        jig, a hall-sensor strobe and projection optics that are riskier for one person.
+    - axis_name: promise
+      winner: 9
+      ruling: B's uncanny, visibly failing coupling of a disembodied hand and smoke has a clear, performable
+        experience that anyone can judge by eye, while A's keyhole reading may fade to a neat gadget once
+        the map is learned.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4728
+      output_tokens: 316
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 7
+    second: 5
+    verdicts:
+    - axis_name: novelty
+      winner: 7
+      ruling: A joins scratch-off exploration to a hummed scan-line chord whose breaks advance the danger,
+        and no prior art was found for that pairing; B's wheel-generated rules are a more familiar random-law
+        form, even with its verbatim Shaker and Oneida text.
+    - axis_name: feasibility
+      winner: 5
+      ruling: B is a cardstock volvelle on a brass split pin with a few dozen fragments from two digitized
+        public-domain texts, and its builder has made volvelles before; A needs hand-applied scratch-off
+        coating plus a round-by-round humming mechanic that burns a page per playtest.
+    - axis_name: promise
+      winner: 5
+      ruling: B binds a real room to a reader's slipped words until breakfast and ends in Oneida-style
+        spoken criticism, so it can produce real social stakes, memory and discomfort; A's hum-or-lose-light
+        loop is clever but risks being a short novelty.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4312
+      output_tokens: 318
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 11
+    second: 6
+    verdicts:
+    - axis_name: novelty
+      winner: 6
+      ruling: B's backward-from-the-saw-cut structure, with every year rebuilt only from grains of the
+        felling recording, has no cited precedent, whereas A's pot-panned OLED scroller is admitted to
+        be a common hobby build even though its paper-map split is a fresh twist.
+    - axis_name: feasibility
+      winner: 6
+      ruling: B needs only a public ITRDB download, a photocopier, a scanner and a Pure Data patch with
+        a few lines of Python for panel coverage, whereas A needs soldered electronics, copper-tape circuits
+        on a cover leaf and an edition built by hand.
+    - axis_name: promise
+      winner: 6
+      ruling: B turns the data mapping into loss, since the saw thins to a single faint grain at the seedling,
+        which gives a work with an emotional wound and a real score-comic hybrid, while A's keyhole risks
+        being a gadget.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4647
+      output_tokens: 303
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 2
+    second: 4
+    verdicts:
+    - axis_name: novelty
+      winner: 2
+      ruling: A's pairing of Ben-Day halftone with I-frame removal, plus a heroine whose dissolution scales
+        with how long you lingered, has no cited precedent, while B's conceded in-hive acoustic monitoring
+        is well-trodden and only the one-knob interface is new.
+    - axis_name: feasibility
+      winner: 4
+      ruling: B is a Teensy USB-host MIDI-to-filter chain, a standard, well-documented build, whereas
+        A depends on a pre-split H.264 pipe into a software decoder that still needs error-concealment
+        tuning to give a clean smear.
+    - axis_name: promise
+      winner: 2
+      ruling: A's slowed, linger-scaled healing and the heroine walking away turn a proximity trick into
+        an emotional cost that makes a second visit differ, while B is a useful but narrower tool.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4610
+      output_tokens: 288
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 8
+    second: 2
+    verdicts:
+    - axis_name: novelty
+      winner: 8
+      ruling: A's timetable-as-held-keys score, where the integer headways of a Taktfahrplan become harmonic
+        ratios and the network is physically 'lost' by ten fingers, had no prior art found and is further
+        from the familiar proximity-triggered glitch genre that B concedes it belongs to.
+    - axis_name: feasibility
+      winner: 2
+      ruling: B's reply to the NAL-parsing objection is concrete (pre-split frames, tag IDRs, pipe to
+        ffplay/mpv, skip on sensor), so it is a weekend build with a Pi and one sensor, whereas A depends
+        on a performer sight-reading a full service day on ten fingers in one unedited take.
+    - axis_name: promise
+      winner: 8
+      ruling: A turns a performer's physical limit into the subject, so each peak forces live decisions
+        about which trains to drop and the chord frays unpredictably, while B's lean-in-and-smear is mostly
+        legible within ten seconds despite the added heroine.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4554
+      output_tokens: 336
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 1
+    second: 2
+    verdicts:
+    - axis_name: novelty
+      winner: 2
+      ruling: B's pairing of halftone and codec grids, with a viewer's closeness literally dissolving
+        the heroine via I-frame removal, is not traced to any precedent, while A's touch-to-light-and-sound
+        comic rests on a familiar touch-instrument lineage that its own reply conceded.
+    - axis_name: feasibility
+      winner: 1
+      ruling: A uses only canvas, Pointer Events and Web Audio with a phone for testing, and it dropped
+        the unreliable force/radius inputs; B's pipe-of-single-frame-files into a software decoder with
+        an HC-SR04 is a hackier path with real risk that the skipped-I-frame smear won't look right.
+    - axis_name: promise
+      winner: 1
+      ruling: A turns the Lumigraph's contact-only rule into the story, so reaching across the glass enacts
+        estrangement and the chord resolves only when both hands hold both figures, which gives a clear
+        emotional arc and a form that could extend to more comics.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4562
+      output_tokens: 333
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 4
+    second: 12
+    verdicts:
+    - axis_name: novelty
+      winner: 12
+      ruling: B's selection rule of keeping only off-screen speech over reaction shots, with a voice cap
+        that forces misattribution, was not matched by any prior art, while A's objection correctly notes
+        in-hive acoustic monitoring is well established and only the one-knob interface is new.
+    - axis_name: feasibility
+      winner: 12
+      ruling: B needs only two consumer VCRs and a thrifted tape, and its reply to the dub-deck objection
+        (crash-record black and silence together, accept ragged seams) fully answers the technical challenge,
+        whereas A requires a sealed in-hive piezo, a Teensy USB-host build, and a high-Q filter that must
+        be tuned on real colonies.
+    - axis_name: promise
+      winner: 4
+      ruling: A's resonant-filter 'hive radio' where queen piping rings in like a station gives a practical,
+        repeatable instrument that spares the brood and has both an uncanny listening experience and real
+        use, giving it more to build on than a one-off tape.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4490
+      output_tokens: 335
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 3
+    second: 9
+    verdicts:
+    - axis_name: novelty
+      winner: 3
+      ruling: A's elevation-as-pitch encoding of a real drowned village is an ear-versus-eye gap that
+        the cited MIDI-plotter projects don't touch, while B's strobed disc projector sits close to the
+        Home Clavilux, zoetropes and phenakistoscopes, and its objections left the prior art unverified.
+    - axis_name: feasibility
+      winner: 9
+      ruling: B is cut down to 48 traced frames, a hall sensor, a strobed LED and two cranks, which one
+        person with a 3D printer and a soldering iron can build in a few weekends, whereas A needs a hand-drawn
+        stop-motion short plus a self-playing piano and a MIDI file derived from real survey data.
+    - axis_name: promise
+      winner: 3
+      ruling: A gives the film a real vanished place, an honest gap between flat drawing and rising pitch,
+        and keys moving under no hands, which together carry emotional weight beyond the mechanism, while
+        B's phase-locking is a neat interaction but a smaller thing.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4915
+      output_tokens: 347
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 8
+    second: 4
+    verdicts:
+    - axis_name: novelty
+      winner: 8
+      ruling: A has no prior art cited and its fixed-frequency-modulator mapping of headway ratios to
+        chords, with fingers as the limit on trains, is a distinctive concept, whereas B concedes that
+        hive microphones and piping bands are established and keeps only the interface.
+    - axis_name: feasibility
+      winner: 4
+      ruling: B is a Teensy with a USB-host controller, a piezo and a resonant bandpass, all standard
+        parts, and its one-time install is answered with a beeswax-sealed mic and a cable under the inner
+        cover; A's one-take sight-read of a timetable across ten fingers with dropped trains is a hard
+        performance feat.
+    - axis_name: promise
+      winner: 8
+      ruling: A turns the performer's ten fingers into the subject, so the chord fraying at rush hour
+        is audible and unpredictable, while B's radio-dial idea is charming but remains close to a stethoscope-style
+        diagnostic.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4651
+      output_tokens: 319
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 7
+    second: 11
+    verdicts:
+    - axis_name: novelty
+      winner: 7
+      ruling: A's scan line that hums the party's exposed path, with a broken hum advancing the light,
+        is a rules loop that turns exploration into a live musical hazard, while B's map-plus-OLED-lens
+        is closer to known hobby scrollers and paper circuits, which Objection 3 itself acknowledged.
+    - axis_name: feasibility
+      winner: 7
+      ruling: A needs only paper, a pencil and scratch-off coating, which the reply showed is ordinary
+        zine craft, while B needs an ESP32 firmware pipeline, an OLED, pots and a per-copy cardstock circuit
+        assembly.
+    - axis_name: promise
+      winner: 11
+      ruling: B's unreadable printed map that only the thumb-panned lens can resolve is a concrete, sellable
+        object with a clear reading experience, whereas A's hummed score risks being a one-use five-minute
+        novelty that Objection 2 flagged.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4481
+      output_tokens: 313
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 7
+    second: 12
+    verdicts:
+    - axis_name: novelty
+      winner: 7
+      ruling: A's scan-line round that turns the table's hum of the exposed path into the threat is a
+        mechanic I haven't seen, while B's erasure of found video, even narrowed to off-screen speech
+        over reaction shots, sits close to the established found-footage supercut genre.
+    - axis_name: feasibility
+      winner: 12
+      ruling: B needs only two VCRs, a thrifted tape and a crash-record cut, and its reply to the audio-dub
+        objection (black and silence recorded together, so kept phrases stay untouched) is a clean working
+        method; A needs hand-coated scratch-off pages that burn one copy per playtest.
+    - axis_name: promise
+      winner: 12
+      ruling: B's rule of keeping only off-screen voices over silent listening faces, with the eight-voice
+        cap making each voice learnable and misattributed, gives an uncanny, emotionally resonant artifact,
+        whereas A risks being a one-use novelty.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4214
+      output_tokens: 317
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 12
+    second: 3
+    verdicts:
+    - axis_name: novelty
+      winner: 12
+      ruling: A's selection rule of keeping only off-screen speech over reaction shots was never matched
+        by prior art, whereas B's critic cited actual MIDI-to-plotter projects and B conceded the piano-roll
+        overlap, leaving sonified elevation maps as familiar data-sonification territory.
+    - axis_name: feasibility
+      winner: 12
+      ruling: A needs only two consumer VCRs and a found tape, and its rebuttal of the audio-dub objection
+        (everything erased goes to black and silence together) holds, while B needs survey data, a MIDI
+        conversion, hand-drawn stop-motion with tick-paced frames, and a self-playing piano.
+    - axis_name: promise
+      winner: 3
+      ruling: B's drowned village gives an honest picture/sound gap in which the ear hears hills the flat
+        plan view cannot show, and it carries real emotional and documentary weight, while A's concept
+        risks being a one-sentence gimmick.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4727
+      output_tokens: 323
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 1
+    second: 8
+    verdicts:
+    - axis_name: novelty
+      winner: 8
+      ruling: B's pairing of a Taktfahrplan's integer headways with fixed-modulator FM harmonics, plus
+        fingers running out at rush hour, has no stated prior art, while A concedes that touch-to-reveal
+        and touch-to-play are not new.
+    - axis_name: feasibility
+      winner: 1
+      ruling: A uses canvas, Pointer Events and Web Audio with hand-drawn art and was tested on any phone
+        via remote debugging, whereas B needs a one-take sight-read of a compressed day on a DX7 with
+        ten fingers, a hard performance and sequencing problem that is hard to rehearse.
+    - axis_name: promise
+      winner: 1
+      ruling: A's reach-to-hold mechanic makes estrangement a physical strain with an earned resolution
+        and a let-go-and-they-vanish turn, a stronger emotional payoff than B's thinning chord, which
+        is still a sonification at heart.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4603
+      output_tokens: 316
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 6
+    second: 12
+    verdicts:
+    - axis_name: novelty
+      winner: 6
+      ruling: A fuses a felling recording, a ring-width-sized panel grid and scan-driven granular synthesis
+        so the death supplies the sound of the life, which has no precedent in the debate, while B's off-screen-voice-over-reaction-shot
+        rule sits inside the known found-footage erasure genre.
+    - axis_name: feasibility
+      winner: 12
+      ruling: B needs only two consumer VCRs and a thrifted tape, and its audio/picture-sync objection
+        was rebutted by crash-recording black and silence together, whereas A requires a ring-width download,
+        comic production, scan analysis and a Pure Data grain engine.
+    - axis_name: promise
+      winner: 6
+      ruling: A's reversed reading from saw cut to seedling, with the saw dissolving into one faint grain,
+        turns the data mapping into loss and gives a strong, memorable arc, though B's misattributed voices
+        landing on silent faces is also haunting.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4380
+      output_tokens: 317
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 9
+    second: 6
+    verdicts:
+    - axis_name: novelty
+      winner: 6
+      ruling: B reverses the tree's chronology so a life is rebuilt from the grains of its own felling,
+        with the page grid as the ring series, and its objection only found that the parts are familiar,
+        whereas A's own reply conceded it is basically the Home Clavilux plus tracings.
+    - axis_name: feasibility
+      winner: 9
+      ruling: 'A has no big dependency problem at all after its cut to 48 frames: a hall sensor, a strobed
+        LED and a 3D-printed registration jig, with tracing from phone footage, while B needs a scan-to-Pure
+        Data pipeline, ITRDB ring data and a felling recording, which is more stack work to integrate.'
+    - axis_name: promise
+      winner: 6
+      ruling: B's conceit that the saw dissolves into a single faint seedling grain carries real emotional
+        weight and a clear structure, while A's hand-and-smoke phasing is a neat interaction but narrower
+        in what it can grow into.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4568
+      output_tokens: 321
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 7
+    second: 6
+    verdicts:
+    - axis_name: novelty
+      winner: 7
+      ruling: A's scan line that turns the table's own humming of exposed scratches into the threat is
+        a mechanic I haven't seen, whereas B's tree-ring sonification and image-as-score parts are conceded
+        as familiar and only the backward felling structure is new.
+    - axis_name: feasibility
+      winner: 6
+      ruling: B's reply to the riso objection moved it to black-toner photocopy, and its remaining work
+        (a Pure Data patch, Python averaging over known panel boxes, an ITRDB download) is ordinary software
+        for one person, while A needs hand-coated scratch-off pages that burn a copy per playtest and
+        a table that can hum chords in tune.
+    - axis_name: promise
+      winner: 6
+      ruling: B's reversed reading, where every year of the oak's life is rebuilt only from grains of
+        its felling recording and the saw thins to one faint grain at the seedling, gives a coherent emotional
+        arc and a lasting artifact that A's consumable, one-use zine lacks.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4321
+      output_tokens: 335
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 6
+    second: 5
+    verdicts:
+    - axis_name: novelty
+      winner: 6
+      ruling: A's reversed structure, where every year is rebuilt only from grains of the felling recording
+        and panel widths come from a real ring series, has no cited precedent beyond separate parts like
+        UPIC, while B sits closer to familiar random-law wheel games and party games.
+    - axis_name: feasibility
+      winner: 5
+      ruling: B is a cardstock volvelle with a few dozen clauses from two digitized public-domain texts
+        and a dinner-table test, whereas A needs a Pure Data grain engine, scanner-driven mapping, a ring
+        series, a felling recording and comic drawing across many panels.
+    - axis_name: promise
+      winner: 6
+      ruling: A turns the fact that rings are legible only once a tree is cut into a concrete ache, since
+        the saw dissolves to a single seedling grain, and that gives it a memorable form; B's social-obligation
+        idea is lively but depends on room dynamics.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4478
+      output_tokens: 308
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 1
+    second: 10
+    verdicts:
+    - axis_name: novelty
+      winner: 10
+      ruling: B's litany of intercession for strangers seen once in an inverted live projection is a far
+        stranger pairing, and its prior-art objection found nothing, whereas A's touch-to-reveal and touch-to-play
+        mechanic was conceded as a familiar kiosk-toy lineage (Bloom and similar).
+    - axis_name: feasibility
+      winner: 1
+      ruling: A needs only canvas, Pointer Events and Web Audio on a phone with hand-drawn art, and it
+        dropped the unreliable radius and force inputs, whereas B needs a 100 mm meniscus lens, a mirror
+        turret, and a light-tight tent plus an officiant and congregation.
+    - axis_name: promise
+      winner: 10
+      ruling: B's tension between intercession and surveillance, the wait through an empty street, and
+        the dismissal at the point where light fails give it real emotional and ethical charge, while
+        A's reach-to-resolve is moving but is a single, quickly grasped gesture.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4370
+      output_tokens: 333
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 8
+    second: 12
+    verdicts:
+    - axis_name: novelty
+      winner: 12
+      ruling: B's rule of keeping only off-screen speech over reaction shots, capped at eight voices,
+        is a specific selection mechanism that the prior-art search did not match, whereas A is closer
+        to familiar data sonification, as Objection 1 argued.
+    - axis_name: feasibility
+      winner: 12
+      ruling: B needs only a second VCR and a thrifted tape, and its Objection 1 was rebutted by crash-recording
+        black and silence together, whereas A concedes its fader problem and still asks one performer
+        to sight-read a day of trains on a stock DX7 in one take.
+    - axis_name: promise
+      winner: 8
+      ruling: A's chord that thins and frays as the network outruns ten fingers turns the timetable's
+        structure into a listenable human struggle, and its conceded flaws were fixed by making the dropped
+        trains the drama.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4434
+      output_tokens: 286
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 5
+    second: 10
+    verdicts:
+    - axis_name: novelty
+      winner: 10
+      ruling: B's litany of intercession for live, unrecorded strangers in an inverted camera obscura
+        image is an unusual pairing that no objection found prior art for, while A's wheel that spits
+        out laws sits closer to the familiar random-rule game and Llullian generator lineage.
+    - axis_name: feasibility
+      winner: 5
+      ruling: A needs only cardstock, a split pin and a few dozen clauses from two digitized public-domain
+        texts, and its builder has already made volvelles that way, whereas B needs a ~100 mm meniscus
+        lens, a mirror turret, a light-tight tent and good weather.
+    - axis_name: promise
+      winner: 10
+      ruling: B's tension between prayer and surveillance, the silent waiting when the street is empty,
+        and the dusk ending where no one is named after the light fails give it real emotional and ritual
+        depth beyond a party game.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4299
+      output_tokens: 296
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 11
+    second: 10
+    verdicts:
+    - axis_name: novelty
+      winner: 10
+      ruling: B's pairing of a camera obscura with an intercessory litany for passing strangers has no
+        cited precedent and changes what the projection is for, while A's pot-panned OLED viewer is a
+        common hobby build that the debate admitted and only partly redeemed with the paper-map split.
+    - axis_name: feasibility
+      winner: 11
+      ruling: A's ESP32-C3, SSD1306 OLED, two pots and copper tape on one rigid cover leaf is a roughly
+        $9 build with off-the-shelf parts, and its fold-cracking objection was answered by keeping all
+        traces off the spine, whereas B needs a 100 mm long-focal-length lens, a rotating mirror turret,
+        a tall blackout tent, an officiant and a congregation.
+    - axis_name: promise
+      winner: 10
+      ruling: B carries real stakes through the empty-street silence, the unedited funeral or fight entering
+        the litany, the dusk deadline, and the surveillance-versus-mercy tension, whereas A's map-plus-keyhole
+        is clever but still a neat gadget.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4468
+      output_tokens: 363
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 11
+    second: 5
+    verdicts:
+    - axis_name: novelty
+      winner: 11
+      ruling: A's split of a printed illegible whole-canvas map from a thumb-panned 1-bit lens is a specific,
+        unusual pairing that Objection 1 could not match to any precedent, whereas B's spun-rules wheel
+        sits close to existing random-law and recombination games.
+    - axis_name: feasibility
+      winner: 5
+      ruling: B needs only cardstock, a brass split pin and a few dozen clauses from two digitized public-domain
+        texts, while A depends on soldering an ESP32, OLED and pots into a copper-tape cover, plus an
+        image pipeline and firmware, and per-copy durability is only conceded rather than proven.
+    - axis_name: promise
+      winner: 5
+      ruling: B's revision makes the spoken-aloud law binding until breakfast, with Oneida-style criticism
+        the next morning, so real social stakes (silence at dinner, a night apart) give a gathering something
+        to live through, whereas A remains a map-and-viewer gadget whose reading experience is still unproven.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4638
+      output_tokens: 341
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 9
+    second: 2
+    verdicts:
+    - axis_name: novelty
+      winner: 9
+      ruling: A's phasing of two rotoscoped bodies, a hand and smoke, so one seems to obey the other has
+        no cited precedent and its novelty survived the Home Clavilux concession, while B's proximity-triggered
+        datamosh sits in a genre its own critic called familiar.
+    - axis_name: feasibility
+      winner: 2
+      ruling: 'B''s reply to the codec objection is a concrete rebuttal: pre-split the H.264 stream offline,
+        tag the IDR frames, and pipe the untagged files into a software decoder, a weekend of scripting
+        plus one cheap sensor, whereas A still needs 48 hand-traced frames, registration jigs and a strobed
+        hall-sensor optical rig.'
+    - axis_name: promise
+      winner: 2
+      ruling: B gives the glitch a cost through a romance heroine whose face smears into her own departure,
+        with healing scaled to how long you lingered, which turns a thesis demo into something with feeling
+        and repeat visits.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4581
+      output_tokens: 330
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 3
+    second: 2
+    verdicts:
+    - axis_name: novelty
+      winner: 3
+      ruling: A conceded that the MIDI-to-plotter mapping exists, but its revision turns a real survey's
+        elevation into pitch so the ear hears terrain the flat plan view cannot show. B's proximity-triggered
+        datamosh is a familiar genre, and its novelty rests mainly on the halftone-versus-codec analogy.
+    - axis_name: feasibility
+      winner: 3
+      ruling: A needs only hand-drawn frames timed from a frame table (tick to seconds times 24) and a
+        self-playing piano. That removed the plotter and firmware problem entirely, whereas B still depends
+        on a fiddly pipe-to-software-decoder datamosh with error concealment and live sensor toggling.
+    - axis_name: promise
+      winner: 2
+      ruling: B's cost-bearing mechanic, in which lingering leaves the heroine smeared long after you
+        step back, gives a second visit a different feel and a real emotional charge. A's picture-versus-sound
+        gap over a vanished village is lovely but quieter.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4847
+      output_tokens: 345
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 2
+    second: 11
+    verdicts:
+    - axis_name: novelty
+      winner: 2
+      ruling: A's pairing of Ben-Day dots with codec smear that scales to how long you lingered, dragging
+        a heroine's face into her own departure, goes further than B's map-plus-keyhole, which is still
+        an OLED scroller with a printed counterpart.
+    - axis_name: feasibility
+      winner: 11
+      ruling: B uses ordinary parts (ESP32-C3, SSD1306, two pots, copper tape on one rigid cover leaf)
+        and the objection about cracking traces was answered by keeping all electronics off the folds,
+        while A depends on a hacky per-frame pipe into a software decoder with uncertain smear behavior.
+    - axis_name: promise
+      winner: 2
+      ruling: A turned the generic-glitch objection into a cost that outlasts the gesture (the heroine
+        stays smeared long after you step back, so a second visit differs), giving it an emotional core,
+        whereas B's keyhole reader is clever but closer to a neat fair curiosity.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4660
+      output_tokens: 329
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 9
+    second: 1
+    verdicts:
+    - axis_name: novelty
+      winner: 9
+      ruling: A's central act of phasing two rotoscoped real bodies (hand and smoke) against each other
+        so one seems to obey the other has no cited precedent and moves past the 'canned lumia' that Objection
+        3 showed to be old, while B's touch-to-light and touch-to-play is conceded as a familiar mechanic.
+    - axis_name: feasibility
+      winner: 1
+      ruling: B is a canvas, Pointer Events and Web Audio build that can be tested on any phone with remote
+        debugging, and it already dropped the unreliable radius and force inputs, whereas A still needs
+        48 hand-traced acetate frames plus a hall-sensor strobe, motorised or cranked discs and an optical
+        rig.
+    - axis_name: promise
+      winner: 1
+      ruling: B turns reaching across the glass into the estrangement itself, with a physical resolution
+        of the chord and an emotional beat when the figures vanish as you let go, which gives it more
+        emotional and narrative range than A's single locking gesture.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4630
+      output_tokens: 339
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 12
+    second: 2
+    verdicts:
+    - axis_name: novelty
+      winner: 12
+      ruling: A's selection rule of keeping only off-screen voices over reaction shots, with an eight-voice
+        cap, is a specific, unfamiliar form of erasure, while B concedes that proximity-triggered datamosh
+        is a familiar genre and rests only on the halftone-codec link.
+    - axis_name: feasibility
+      winner: 2
+      ruling: B's reply to the live-bitstream objection (pre-split frame files piped to a software decoder,
+        skipping tagged I-frames) is a concrete weekend job on a Pi with one $2 sensor, whereas A depends
+        on manually cutting a linear tape by ear on consumer decks with ragged erase-head seams.
+    - axis_name: promise
+      winner: 12
+      ruling: A's rule inverts soap-opera grammar so that every surviving line is a voice landing on a
+        silent face, and the cap makes misattribution felt through repeated voices, which gives the piece
+        real depth; B's lingering-cost mechanic is good but its interaction remains a gallery proximity
+        trick.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4393
+      output_tokens: 346
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 11
+    second: 12
+    verdicts:
+    - axis_name: novelty
+      winner: 12
+      ruling: B's selection rule of keeping only off-screen speech over reaction shots, with an eight-voice
+        cap, was not matched by any prior art, whereas A's core is a pan-and-scroll OLED image viewer
+        that its own reply admitted is a common hobby build.
+    - axis_name: feasibility
+      winner: 11
+      ruling: A uses an ESP32-C3, an SSD1306 OLED and two pots, all standard hobby parts, and its fold-cracking
+        objection was answered by putting everything on one rigid cover leaf; B's blind crash-record cuts
+        on a consumer VCR land a few frames off and degrade with each pass.
+    - axis_name: promise
+      winner: 12
+      ruling: B's misattached voices landing on silent listening faces, with the eight-voice cap letting
+        each voice be learned, gives a distinctive uncanny effect that A's paper-map-plus-keyhole split,
+        though clever, does not match.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4540
+      output_tokens: 316
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 12
+    second: 10
+    verdicts:
+    - axis_name: novelty
+      winner: 12
+      ruling: A's rule of keeping only off-screen speech over reaction shots, with an eight-voice cap,
+        is a specific method no objection could match, while B's tent obscura plus ritual is acknowledged
+        as built from two existing strands, even if the intercession for strangers is unusual.
+    - axis_name: feasibility
+      winner: 12
+      ruling: A needs only two consumer VCRs and a thrifted tape, and its reply to the audio-dub objection
+        (everything erased goes to black and silence together, kept phrases are never re-recorded) holds
+        up, whereas B needs a sewn light-tight tent, a rotating mirror turret, a 100 mm long-focal lens
+        and a willing congregation at dusk.
+    - axis_name: promise
+      winner: 10
+      ruling: B's litany of intercession for strangers who are seen once and unrecorded, ending when daylight
+        fails, carries real stakes, a live tension with surveillance, and an unpredictable street feeding
+        the rite, which gives it more depth than A's tape-based poem.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4201
+      output_tokens: 345
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 10
+    second: 2
+    verdicts:
+    - axis_name: novelty
+      winner: 10
+      ruling: A's litany of intercession for live-projected strangers in a camera obscura has no found
+        precedent for its combination, while B rests on proximity-triggered datamosh, a familiar genre
+        it conceded.
+    - axis_name: feasibility
+      winner: 2
+      ruling: B's offline frame-splitting and a Python pipe into a software decoder, with one HC-SR04,
+        is a weekend build, whereas A needs a sewn light-tight tent, a rotating mirror turret, a large
+        lens and a live human officiant plus congregation.
+    - axis_name: promise
+      winner: 10
+      ruling: A's built-in end at dusk, the waiting silence when the street is empty, and the unresolved
+        tension between prayer and surveillance give it real emotional and ethical charge, whereas B's
+        cost mechanic of a lingering smear is more easily exhausted.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4321
+      output_tokens: 288
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 7
+    second: 4
+    verdicts:
+    - axis_name: novelty
+      winner: 7
+      ruling: A's rewrite turns a scan line, a hummed chord and a creeping light into a game where the
+        table's own humming hunts the party inside Murzin's plate, which has no cited prior art; B concedes
+        that hive-mic monitoring is established and keeps only the one-knob dial.
+    - axis_name: feasibility
+      winner: 4
+      ruling: B is a Teensy 4.1 with USB host, a nanoKONTROL2 and a piezo in heat-shrink and beeswax,
+        a standard one-person build with a real filter; A's scratch-off zine is also cheap, but B's objections
+        were answered more concretely (the mic goes in during a routine inspection, and no classifier
+        is claimed).
+    - axis_name: promise
+      winner: 4
+      ruling: B's resonant-filter dial makes queen piping ring in like a station on a radio, a distinct
+        and learnable experience that is both eerie and useful; A's humming game risks being a five-minute
+        one-use novelty, as Objection 3 argued.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4431
+      output_tokens: 337
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 6
+    second: 2
+    verdicts:
+    - axis_name: novelty
+      winner: 6
+      ruling: A's page that is both a readable narrative and an exact score, with panel widths from a
+        real cross-dated ring series and every year rebuilt only from the felling recording, has no cited
+        precedent, whereas B is a proximity-triggered datamosh, a familiar genre.
+    - axis_name: feasibility
+      winner: 2
+      ruling: B's offline split into per-frame files with a software-decoder pipe is a weekend of work
+        with a Pi and one HC-SR04, while A needs a published ring series, careful per-panel scan thresholding,
+        and a printed comic that must double as score.
+    - axis_name: promise
+      winner: 6
+      ruling: A's reversed reading from saw cut inward to a seedling that is one faint grain turns data
+        mapping into loss, giving an enduring and emotionally coherent object, while B's lean-in smear
+        still risks being a ten-second reveal despite the lingering-cost fix.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4500
+      output_tokens: 306
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 1
+    second: 3
+    verdicts:
+    - axis_name: novelty
+      winner: 3
+      ruling: B's reversal, deriving a MIDI file from a real drowned village's survey so the ear hears
+        elevation the plan-view drawing hides, lies further from the plotter and piano-roll prior art
+        than A's touch-to-play mechanic, which A conceded is not new in itself.
+    - axis_name: feasibility
+      winner: 1
+      ruling: A is a canvas, Pointer Events and Web Audio build that one person can test on any phone
+        with remote debugging, whereas B needs survey data, a MIDI pipeline, a self-playing piano and
+        months of frame-by-frame stop-motion.
+    - axis_name: promise
+      winner: 3
+      ruling: B's gap between flat plan-view lines and a pitch line for the hills, played on a piano with
+        keys moving under no hands for a vanished place, carries more emotional and formal depth than
+        A's mechanic, which the debate showed risks being a one-panel trick.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4896
+      output_tokens: 309
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 1
+    second: 12
+    verdicts:
+    - axis_name: novelty
+      winner: 12
+      ruling: B's rule of keeping only off-screen speech over reaction shots, capped at eight voices,
+        was not matched by any cited work, whereas A concedes that touch-to-reveal and touch-to-play are
+        common and its Bloom-style kiosk lineage stands.
+    - axis_name: feasibility
+      winner: 12
+      ruling: 'B''s reply to the audio-dub objection holds up: a plain crash record from a second VCR
+        fed black and silence leaves kept sections untouched, so it needs only two decks, while A''s touch
+        toy needs a whole comic drawn and composed.'
+    - axis_name: promise
+      winner: 1
+      ruling: A turns the Lumigraph's rule that light exists only under contact into a bodily story, where
+        reaching across the glass enacts estrangement and lifting a finger makes the figures vanish, and
+        that emotional core has more room to grow than a tape erasure.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4442
+      output_tokens: 299
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 10
+    second: 6
+    verdicts:
+    - axis_name: novelty
+      winner: 10
+      ruling: A's litany of intercession for live-projected strangers inside a camera obscura has no named
+        precedent, while B's parts (ring sonification, UPIC-style image-as-score, granular resynthesis)
+        are admitted to be familiar.
+    - axis_name: feasibility
+      winner: 6
+      ruling: B is a photocopied zine, a Pure Data patch and a public ITRDB ring series, all downloadable
+        or cheap, whereas A needs a light-tight tent with a large lens and live human participants at
+        dusk, though A's rebuttal made the optics plausible.
+    - axis_name: promise
+      winner: 10
+      ruling: A's litany turns surveillance into mercy, so a funeral, a fight or an empty street all enter
+        the service unedited and the work ends when daylight fails, which gives it more charge than B's
+        well-engineered mapping.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4308
+      output_tokens: 286
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 7
+    second: 1
+    verdicts:
+    - axis_name: novelty
+      winner: 7
+      ruling: A's scan line that turns the party's exposed path into a hummed chord, with a broken hum
+        advancing the light, is a stranger mechanism than B's touch-to-reveal comic, which B itself conceded
+        sits in a known lineage of touch-to-play toys.
+    - axis_name: feasibility
+      winner: 1
+      ruling: B is a standard canvas, Pointer Events and Web Audio build with hand-drawn art, tested on
+        a phone via remote debugging, and it already dropped the unreliable radius/force inputs; A needs
+        hand-coated scratch-off pages and burns a page per playtest, which is workable but messier.
+    - axis_name: promise
+      winner: 1
+      ruling: B turns reach into the story, since the estranged figures vanish when you let go and the
+        final panels need fingers across the whole screen, which gives a physical emotional arc that a
+        table-hum game is less likely to match.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4383
+      output_tokens: 304
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 3
+    second: 6
+    verdicts:
+    - axis_name: novelty
+      winner: 6
+      ruling: B's backward-from-the-saw-cut structure, with every year rebuilt only from grains of the
+        felling recording and the page grid as the chronology, has no cited neighbour, whereas A's MIDI-to-plotter
+        core was shown to have prior art (midi-plotter, plotter-sounds) and only escaped it by a reversal.
+    - axis_name: feasibility
+      winner: 6
+      ruling: B's print-and-scan pipeline is simple (photocopier, ITRDB download, a Python coverage average
+        feeding Pure Data), and A's frame-table rebuttal is also strong, but A still depends on sourcing
+        a real survey with elevations and on access to a self-playing piano.
+    - axis_name: promise
+      winner: 6
+      ruling: B's concept of death supplying the sound of life, with the saw thinning to a single faint
+        grain at the seedling, joins form and meaning into a wound that can be felt, while A's drowned-village
+        film with a piano playing hills the flat map cannot show is moving but less structurally tight.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4834
+      output_tokens: 347
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 10
+    second: 7
+    verdicts:
+    - axis_name: novelty
+      winner: 10
+      ruling: A's litany of intercession for live-projected strangers is a combination no objection could
+        find, and its reply turns surveillance into a theological tension, while B's scratch-off dungeon
+        and scan-line humming sit close to existing scratch-off games and ANS-inspired tools.
+    - axis_name: feasibility
+      winner: 7
+      ruling: B is a photocopied page with a scratch-off coating and a pencil, and its reply to the optics
+        objection (acrylic and dish soap over a waxed print, no optics needed) removes the objection entirely,
+        whereas A still needs a light-tight tent, a 100 mm meniscus lens, a rotating mirror turret and
+        a live street.
+    - axis_name: promise
+      winner: 10
+      ruling: A's silent waiting when the street empties, the names slowing as the light dims and the
+        dismissal when the image is too dark to read give it real emotional stakes, and it conceded and
+        fixed the 'mindfulness with a program sheet' critique, whereas B's humming risks being a one-use
+        five-minute novelty.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4142
+      output_tokens: 350
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 2
+    second: 7
+    verdicts:
+    - axis_name: novelty
+      winner: 7
+      ruling: B's scan-line-and-hum mechanic, where the table's own voice hunts the party inside Murzin's
+        plate, has no cited precedent, while A's objections correctly showed that proximity-triggered
+        datamosh glitch is a familiar genre and A conceded the parts are known.
+    - axis_name: feasibility
+      winner: 7
+      ruling: B is a hand-coated paper zine with pencil and humming, and its rebuttal that acrylic-and-dish-soap
+        scratch-off is ordinary zine craft holds, whereas A still depends on splitting H.264 into per-frame
+        files and piping them to a software decoder with a live-skip script, which is real fragile engineering.
+    - axis_name: promise
+      winner: 2
+      ruling: A gives the smear a heroine whose departure is dragged across the wall, with healing scaled
+        to how long you lingered, so leaning in has a lasting cost and repeat visits differ, which carries
+        real feeling beyond a thesis demo.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4334
+      output_tokens: 331
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  - first: 10
+    second: 8
+    verdicts:
+    - axis_name: novelty
+      winner: 10
+      ruling: A's litany of intercession for live-projected strangers, tied to the sunset ending, has
+        no cited precedent and the reply ties the liturgy to surveillance, while B's timetable-to-FM mapping
+        sits close to the well-trodden data sonification and train-schedule score practice.
+    - axis_name: feasibility
+      winner: 10
+      ruling: A's optics were answered with a concrete, low-cost design (about 100 mm meniscus lens, 45°
+        mirror turret, blackout fabric, a sewing-level build) and the performance needs only an officiant
+        and a congregation, whereas B needs sight-reading a full day's timetable on a DX7 in one take
+        with more trains than fingers.
+    - axis_name: promise
+      winner: 10
+      ruling: A turns the objection about missing charge into a real tension, because the prayer for strangers
+        sits uncomfortably close to surveillance and the light fades toward a last chance, whereas B's
+        chord fraying at rush hour is moving but gets understood quickly.
+    failed: false
+    model: claude-sonnet-5-5
+    usage:
+      input_tokens: 4362
+      output_tokens: 338
+      cache_read_tokens: 1119
+      cache_write_tokens: 0
+      web_search_requests: 0
+  ratings:
+  - position: 1
+    axis_name: novelty
+    rating: 1410.285493
+    wins: 2
+    losses: 9
+  - position: 2
+    axis_name: novelty
+    rating: 1434.64759
+    wins: 3
+    losses: 8
+  - position: 3
+    axis_name: novelty
+    rating: 1511.586283
+    wins: 6
+    losses: 5
+  - position: 4
+    axis_name: novelty
+    rating: 1363.336362
+    wins: 0
+    losses: 11
+  - position: 5
+    axis_name: novelty
+    rating: 1408.338912
+    wins: 2
+    losses: 9
+  - position: 6
+    axis_name: novelty
+    rating: 1586.242665
+    wins: 9
+    losses: 2
+  - position: 7
+    axis_name: novelty
+    rating: 1607.364777
+    wins: 10
+    losses: 1
+  - position: 8
+    axis_name: novelty
+    rating: 1534.609069
+    wins: 7
+    losses: 4
+  - position: 9
+    axis_name: novelty
+    rating: 1496.146569
+    wins: 5
+    losses: 6
+  - position: 10
+    axis_name: novelty
+    rating: 1620.370209
+    wins: 10
+    losses: 1
+  - position: 11
+    axis_name: novelty
+    rating: 1434.394533
+    wins: 3
+    losses: 8
+  - position: 12
+    axis_name: novelty
+    rating: 1592.677537
+    wins: 9
+    losses: 2
+  - position: 1
+    axis_name: feasibility
+    rating: 1584.519787
+    wins: 9
+    losses: 2
+  - position: 2
+    axis_name: feasibility
+    rating: 1489.63838
+    wins: 5
+    losses: 6
+  - position: 3
+    axis_name: feasibility
+    rating: 1388.834434
+    wins: 1
+    losses: 10
+  - position: 4
+    axis_name: feasibility
+    rating: 1563.274773
+    wins: 8
+    losses: 3
+  - position: 5
+    axis_name: feasibility
+    rating: 1639.142641
+    wins: 11
+    losses: 0
+  - position: 6
+    axis_name: feasibility
+    rating: 1488.665302
+    wins: 5
+    losses: 6
+  - position: 7
+    axis_name: feasibility
+    rating: 1489.717149
+    wins: 5
+    losses: 6
+  - position: 8
+    axis_name: feasibility
+    rating: 1407.516298
+    wins: 2
+    losses: 9
+  - position: 9
+    axis_name: feasibility
+    rating: 1436.271109
+    wins: 3
+    losses: 8
+  - position: 10
+    axis_name: feasibility
+    rating: 1431.129184
+    wins: 3
+    losses: 8
+  - position: 11
+    axis_name: feasibility
+    rating: 1519.856287
+    wins: 6
+    losses: 5
+  - position: 12
+    axis_name: feasibility
+    rating: 1561.434656
+    wins: 8
+    losses: 3
+  - position: 1
+    axis_name: promise
+    rating: 1538.707985
+    wins: 7
+    losses: 4
+  - position: 2
+    axis_name: promise
+    rating: 1486.941224
+    wins: 5
+    losses: 6
+  - position: 3
+    axis_name: promise
+    rating: 1561.778482
+    wins: 8
+    losses: 3
+  - position: 4
+    axis_name: promise
+    rating: 1439.33011
+    wins: 3
+    losses: 8
+  - position: 5
+    axis_name: promise
+    rating: 1559.69272
+    wins: 8
+    losses: 3
+  - position: 6
+    axis_name: promise
+    rating: 1614.278927
+    wins: 10
+    losses: 1
+  - position: 7
+    axis_name: promise
+    rating: 1360.183077
+    wins: 0
+    losses: 11
+  - position: 8
+    axis_name: promise
+    rating: 1511.987995
+    wins: 6
+    losses: 5
+  - position: 9
+    axis_name: promise
+    rating: 1432.957238
+    wins: 3
+    losses: 8
+  - position: 10
+    axis_name: promise
+    rating: 1644.016752
+    wins: 11
+    losses: 0
+  - position: 11
+    axis_name: promise
+    rating: 1388.710034
+    wins: 1
+    losses: 10
+  - position: 12
+    axis_name: promise
+    rating: 1461.415457
+    wins: 4
+    losses: 7
+  survivors:
+  - 10
+  - 6
+  - 3
+  skipped: false
+usage:
+  input_tokens: 356443
+  output_tokens: 76269
+  cache_read_tokens: 383113
+  cache_write_tokens: 29741
+  web_search_requests: 38
+estimated_cost_usd: 2.224303
