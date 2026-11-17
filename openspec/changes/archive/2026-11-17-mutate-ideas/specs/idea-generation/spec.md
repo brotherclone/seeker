@@ -8,7 +8,7 @@ The schema SHALL define:
 - the enums `Reading`, `Effort` and `RoleName`;
 - the types `ModelId` and `GitCommit`.
 
-`RoleName` SHALL name every role, and `Usage` SHALL count `web_search_requests` (default 0). `Idea` SHALL have an optional `lineage` slot, and `Generation` an optional `mutation` slot. Every element SHALL have a description and a matching Python model or type that passes the conformance test.
+`RoleName` SHALL name every role, and `Usage` SHALL count `web_search_requests` (default 0). `Idea.lineage` and `Generation.mutation` SHALL be optional slots. Each element SHALL have a description and a matching Python model or type that passes the conformance test.
 
 #### Scenario: Ontology lints and conforms
 - **WHEN** the schema is linted and the conformance test runs
@@ -27,13 +27,13 @@ The schema SHALL define:
 - **THEN** it loads, every `Usage` in it has `web_search_requests` 0, and no idea has a lineage
 
 ### Requirement: Locations, prices and credentials come from config
-Seeker SHALL read the following from `seeker.yaml` at the repository root, resolving relative paths against that file:
+Seeker SHALL read from the repository's `seeker.yaml`, resolving relative paths against it:
 - the decks, batches, generations, debates, reports and vault locations;
 - the model price table, including the per-search price;
 - the run budget `budget_usd` (default 5.00);
-- the mutation settings: `mutation.reworkings` (default 2).
+- `mutation.reworkings` (default 2).
 
-The API key SHALL come from the `ANTHROPIC_API_KEY` environment variable or a git-ignored `.env` file, never from `seeker.yaml`. A missing key SHALL be reported before any call is made.
+The API key SHALL come from `ANTHROPIC_API_KEY` in the environment or the git-ignored `.env`, never from `seeker.yaml`. A missing key SHALL be reported before any call is made.
 
 #### Scenario: Missing key
 - **WHEN** a generation runs without an API key
