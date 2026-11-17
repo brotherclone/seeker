@@ -1,0 +1,769 @@
+# Generation record (schema/seeker.yaml). Inputs are pinned: the embedded draw
+# batch, reading, model, role-file digest and git commit. Rerunning with the same
+# output path resumes, filling in only the positions without an idea.
+draw_batch:
+  seed: 7
+  deck_set_digest: 41909d46fec8ea3d0f3062810e78fd25be91b737e18bab6a19577f9e915a3050
+  draws:
+  - position: 1
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - liturgy
+  - position: 2
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - liturgy
+  - position: 3
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - liturgy
+  - position: 4
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - heraldry
+  - position: 5
+    axes:
+    - constraint
+    - technique
+    - domain
+    home_field: comics
+    drawn_cards:
+    - one-color
+    - granular-synthesis
+    - dendrochronology
+  - position: 6
+    axes:
+    - constraint
+    - technique
+    - domain
+    home_field: comics
+    drawn_cards:
+    - one-color
+    - granular-synthesis
+    - dendrochronology
+  - position: 7
+    axes:
+    - constraint
+    - technique
+    - domain
+    home_field: comics
+    drawn_cards:
+    - one-color
+    - flow-fields
+    - dendrochronology
+  - position: 8
+    axes:
+    - constraint
+    - technique
+    - domain
+    home_field: comics
+    drawn_cards:
+    - one-color
+    - granular-synthesis
+    - weather-forecasting
+  - position: 9
+    axes:
+    - constraint
+    - medium
+    - domain
+    home_field: film
+    drawn_cards:
+    - no-dialogue
+    - midi-file
+    - cartography
+  - position: 10
+    axes:
+    - constraint
+    - medium
+    - domain
+    home_field: film
+    drawn_cards:
+    - no-dialogue
+    - midi-file
+    - cartography
+  - position: 11
+    axes:
+    - constraint
+    - medium
+    - domain
+    home_field: film
+    drawn_cards:
+    - no-dialogue
+    - projection-mapping
+    - cartography
+  - position: 12
+    axes:
+    - constraint
+    - medium
+    - domain
+    home_field: film
+    drawn_cards:
+    - no-dialogue
+    - midi-file
+    - tax-law
+  - position: 13
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - liturgy
+  - position: 14
+    axes:
+    - constraint
+    - technique
+    - domain
+    home_field: comics
+    drawn_cards:
+    - one-color
+    - granular-synthesis
+    - dendrochronology
+  - position: 15
+    axes:
+    - constraint
+    - medium
+    - domain
+    home_field: film
+    drawn_cards:
+    - no-dialogue
+    - midi-file
+    - cartography
+reading: literal
+role_name: mutator
+model: claude-opus-5-5
+role_digest: f5e35fa86a8e37710d5984fc4cfba7bf08c677cd2722dc197d6c1b9b448bc62b
+git_commit: 299cd783d9f037d1285f07d919937fc75ca4effe
+generated_at: '2026-11-16T19:50:15.448770Z'
+ideas:
+- position: 1
+  statement: A pinhole-chapel Tenebrae in which fifteen pinholes project the live street and are plugged
+    one by one after each psalm, until darkness, knocking, and one view reopened, because Tenebrae is
+    a liturgy built on light being taken away, and here what is taken away is the actual world outside,
+    unrecorded and unrecoverable.
+  subject: A blacked-out shed made into a camera obscura with fifteen pinholes, used for a Holy Week Tenebrae
+    service
+  behavior: Fifteen pinholes in a blacked-out shed wall each throw a live, inverted view onto the opposite
+    white wall. The Tenebrae lessons and responsories are chanted, and after each psalm one pinhole is
+    plugged, so the projected world thins view by view while the street carries on. When the last image
+    goes, the congregation makes the strepitus, a loud knocking in total darkness. Then one pinhole is
+    unplugged and the street returns.
+  rationale: The parent was faulted for using liturgy as a call-and-response scaffold. Tenebrae carries
+    its own charge, abandonment and the light withdrawn, and here it acts on the image itself instead
+    of using the street as cues. The pinholes replace the candles, so each extinction cuts off a live
+    view while buses and passersby carry on, indifferent. Dim pinhole images need dark-adapted eyes, which
+    suits a service that is meant to darken.
+  card_readings:
+  - card: real-time-only
+    interpretation: Every image is light entering the pinholes at that moment. Nothing is recorded, so
+      each plugged hole removes a view of the world that cannot be brought back.
+  - card: camera-obscura
+    interpretation: 'A literal pinhole camera obscura: a light-tight room whose wall is drilled with fifteen
+      pinholes, each projecting the outside upside down onto a white wall.'
+  - card: liturgy
+    interpretation: 'The actual Tenebrae office of Holy Week, followed in order: its psalms, its responsories,
+      the extinguishing of the fifteen hearse candles, the strepitus and the hidden last light.'
+  usage:
+    input_tokens: 5562
+    output_tokens: 2161
+    cache_read_tokens: 1257
+    cache_write_tokens: 1257
+    web_search_requests: 0
+  lineage:
+    parent_position: 10
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 2
+  statement: A handcart camera obscura carried around a parish boundary at Rogationtide, its hooded reader
+    calling out each landmark sliding across the live table so walkers answer with the litany, or with
+    the curse when a fence blocks the old bounds, because beating the bounds was memory without maps and
+    an unrecordable moving image puts that memory back at stake.
+  subject: A handcart-mounted walk-in camera obscura used to beat the parish bounds
+  behavior: 'On a Rogation evening the cart is wheeled around the old parish boundary. Through a hood
+    the reader watches the inverted, moving image and calls each mark as it slides across the table: an
+    oak, a boundary stone, a culvert. Walkers outside answer ''We beseech thee to hear us.'' When the
+    lens shows the boundary cut by a new fence, a locked gate or a building, the reader speaks the Deuteronomic
+    curse, ''Cursed is he that removeth his neighbour''s landmark,'' and the walkers answer ''Amen.''
+    Nothing is filmed. The perambulation ends where it began, or at dusk if the light gives out first.'
+  rationale: 'Beating the bounds began as memory before maps: a parish kept its edges by walking them
+    aloud each year, because nothing else held them. A camera obscura has the same condition, an image
+    that exists only while it passes. That makes the old rite''s purpose real again rather than decorative.
+    The Commination gives the liturgy teeth. The walkers bless what remains, and they also publicly curse
+    enclosure, development and lost rights of way as they appear in the live image. So the projected street
+    stops being a neutral pleasant picture and becomes contested ground, and the curse lands on real fences
+    that real neighbours put up.'
+  card_readings:
+  - card: real-time-only
+    interpretation: The only image is the live tracking shot the moving lens throws on the table, and
+      nothing of the walk is recorded or kept.
+  - card: camera-obscura
+    interpretation: A literal light-tight box on a handcart with a rotating lens-and-mirror turret, projecting
+      the passing land upside down onto a white table under a viewing hood.
+  - card: liturgy
+    interpretation: The Rogationtide beating of the bounds with its litany and the Commination curse on
+      those who move landmarks, said as call and response between the reader in the box and the walkers
+      outside.
+  usage:
+    input_tokens: 2524
+    output_tokens: 1714
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 10
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 3
+  statement: A live-projected Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time
+    on an 1824 map table, the umpire's casualty dice calling each dead man's name for the congregation
+    to answer 'Grant them eternal rest,' because chance deciding who is named restores the arbitrariness
+    and complicity a tidy alphabetical war memorial erases.
+  subject: A live, unrecorded overhead projection of a historical Kriegsspiel table, performed as a parish
+    requiem service
+  behavior: A parish's own engagement (one battle from its war memorial) is re-fought on a von Reisswitz-style
+    1824 map table. An overhead camera feeds a projector in the nave directly, with nothing stored. Two
+    parishioners command from separate vestries and send written orders by runner, under the umpire's
+    clock. Moves run at 1:1 with the historical timeline, and the game is never paused. Whenever the umpire's
+    casualty dice strike a block, the officiant reads the next name drawn from the memorial roll, and
+    the congregation answers 'Grant them eternal rest.' When the real engagement's hour of ending arrives,
+    the projector is switched off mid-move. Any names not yet called are then read in silence by each
+    person from a printed roll.
+  rationale: Memorials list the dead alphabetically and by rank, which makes their dying look orderly.
+    Kriegsspiel was built to turn soldiers into calculable losses. When its dice call the requiem, the
+    congregation sees the arithmetic and the randomness together. A real name lands on whichever block
+    the dice happen to hit, and the clock can run out before some names are reached. Parishioners give
+    the orders that 'kill' their own great-grandfathers' names. That gives the mourning stakes and complicity,
+    so it never reads as a mindfulness program.
+  card_readings:
+  - card: real-time-only
+    interpretation: The game runs on a 1:1 clock against the historical battle, with no pause, no replay
+      and no recording, and the service ends at the hour the real fighting stopped.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Prussian wargame: a terrain map with metal unit blocks, commanders
+      kept apart and sending written orders, and an umpire whose casualty dice decide losses.'
+  - card: liturgy
+    interpretation: 'An Office of the Dead with call and response: each casualty result is a call, the
+      reading of a real dead man''s name, and the congregation answers with the requiem response.'
+  usage:
+    input_tokens: 5816
+    output_tokens: 2904
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 10
+    mutation_kind: card_swap
+    swapped_axis: historical-artifact
+    replaced_card: camera-obscura
+- position: 4
+  statement: A camera obscura tent where a herald blazons each stranger crossing the live projected street
+    as a coat of arms, granted aloud and never written, until dusk erases tinctures and the last arms
+    are 'sable, plain', because heraldry was invented to identify faceless strangers by colour and device,
+    which is exactly all the obscura shows.
+  subject: A portable camera obscura tent used as a dusk heralds' court that grants spoken, unrecorded
+    arms to passersby
+  behavior: 'From late afternoon until dark, a herald works in a blackout tent. Rotating a lens turret
+    across the street, they blazon every stranger who enters the projected circle as a coat of arms, in
+    correct heraldic language: ''Per pale azure and gules, a bicycle Or, in chief a dog courant sable.''
+    Coat colors become tinctures, carried objects become charges, and direction of travel becomes dexter
+    or sinister. The herald corrects aloud for the obscura''s inversion. Visitors on benches act as the
+    heralds'' court and repeat each blazon once, so it is granted. Nothing is drawn, written or recorded,
+    and each grant exists only for as long as it is spoken. As dusk drains colour from the table, the
+    herald loses tinctures one by one. Gules goes first, then vert and azure, and soon only metal and
+    sable can be told apart. The last grant is ''sable, plain'', for whoever crosses when no colour remains,
+    and then the tent is closed.'
+  rationale: 'Heraldry was invented to identify people whose faces were hidden, such as armoured riders
+    recognised at a distance only by colour and device. The obscura gives exactly that view: tiny faceless
+    figures, upside down, readable only by their coats, bags and bikes. So the herald is not putting a
+    quirky label on them. They are doing what blazon was built for, applied to commoners who never asked
+    to be noticed and will never learn they were ennobled. Blazon also needs specific detail, so a generic
+    ''figure crossing'' cannot be blazoned. Its dependence on colour gives the evening a real ending,
+    because the rule of tincture fails as the light fails. The edge from the parent stays sharp. A coat
+    of arms is a tool for identifying strangers, which makes it surveillance and honour at the same moment.'
+  card_readings:
+  - card: real-time-only
+    interpretation: Each arms grant is spoken once over a live image that cannot be recorded, so the roll
+      of arms exists only during the performance and ends when the light can no longer show colour.
+  - card: camera-obscura
+    interpretation: A portable blackout tent with a meniscus lens and a 45° mirror turret, throwing the
+      live street onto a white table. The image is inverted, and the herald must right it in order to
+      blazon dexter and sinister correctly.
+  - card: heraldry
+    interpretation: Literal blazon, the formal language of tinctures, ordinaries and charges, used by
+      a herald to grant arms aloud to strangers on the street.
+  usage:
+    input_tokens: 2417
+    output_tokens: 1693
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 10
+    mutation_kind: card_swap
+    swapped_axis: domain
+    replaced_card: liturgy
+- position: 5
+  statement: A set of loose black-toner comic strips, each a timber's wordless life with panels sized
+    to its rings, that readers cross-date by sliding them under a webcam until a granulated rain recording
+    falls silent on every strip at once, because a dendrochronological date exists only where many trees
+    agree on the same drought.
+  subject: A loose-strip, black-toner photocopied comic that readers cross-date by hand on a table, sonified
+    by a granular rain patch
+  behavior: Six undated strips of wordless panels, each the life of one timber from a single old building,
+    use panel widths set by real ITRDB ring series. Narrow drought years are drawn as nearly solid black
+    panels. Readers slide the strips on a table under an overhead webcam. A Pure Data patch granulates
+    one rain recording per strip, with ink density thinning that strip's grain cloud. Out of alignment,
+    the dry gaps smear into a continuous patter. When the strips are cross-dated correctly, every strip's
+    drought panels stack, and the rain stops everywhere at once for a few beats.
+  rationale: 'In dendrochronology no single tree holds its own date. The date exists only where many trees
+    agree, usually on the hard years. Making the reader perform that matching turns the mapping from a
+    predictable playback into a discovery. The reward for solving it is a shared silence: the year every
+    tree nearly died, found by ear rather than handed over.'
+  card_readings:
+  - card: one-color
+    interpretation: Black toner on cream only, so ink density is the single value the webcam reads and
+      drought years show as the blackest panels.
+  - card: granular-synthesis
+    interpretation: A Pure Data patch slices a single rain recording into grain clouds per strip, and
+      dark panels starve the cloud of grains.
+  - card: dendrochronology
+    interpretation: 'Real cross-dating: undated timber ring series are matched by sliding their narrow-year
+      patterns against each other, as with skeleton plots.'
+  usage:
+    input_tokens: 5373
+    output_tokens: 3147
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 6
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 6
+  statement: A one-ink photocopied comic of a churchyard drawn year by year from its living oak's cross-dated
+    core, performed under a document camera with grain clouds built from that year's spoken burial names,
+    because famine years narrow the rings and fill the register at once, so the tree's record and the
+    parish's dead meet on one page.
+  subject: A one-ink photocopied comic about a churchyard, performed as a live reading, whose panels are
+    sized by its living oak's cored rings and scored with granulated burial names
+  behavior: 'A black-toner photocopied comic, one wordless panel per year, shows the same churchyard from
+    the tree''s height: graves accumulate, stones lean, the wall is rebuilt. Each panel''s width is the
+    measured width of that year''s ring in a core taken with a hand increment borer from the churchyard''s
+    oak and cross-dated against a public regional chronology. At a live reading the artist turns pages
+    under a document camera. A Pure Data patch measures each panel''s toner coverage and plays grain clouds
+    cut only from the artist''s own recording of that year''s burial entries read aloud from the parish
+    register. Coverage sets grain density, and panel width sets how long the year lasts. In famine and
+    drought years the panels pinch narrow while the names pile up, so a crowded, smeared murmur gets crammed
+    into a sliver of time.'
+  rationale: 'Rings and burials are independent archives that share one cause: the same bad summer that
+    starved the oak starved the parish. So when they line up, the alignment is evidence turning up on
+    the page, not a mapping the artist built for effect. The tree is cored, not felled, so it still stands
+    and keeps adding rings over its neighbours, and you can walk out and visit it. One ink, a borer and
+    a photocopier keep the whole thing in one person''s hands.'
+  card_readings:
+  - card: one-color
+    interpretation: Printed only in black photocopier toner on cream paper, so ink coverage is the single
+      value the patch measures from each panel.
+  - card: granular-synthesis
+    interpretation: 'Real granulation: a Pure Data engine cuts the spoken burial names for each year into
+      grains whose density and span follow that year''s panel.'
+  - card: dendrochronology
+    interpretation: A living oak cored with an increment borer, its ring widths measured and cross-dated
+      against a regional reference chronology, setting the panel grid year by year.
+  usage:
+    input_tokens: 2733
+    output_tokens: 1829
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 6
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 7
+  statement: A black-toner photocopied comic that tells a felled oak's life backward, one flow-field-drawn
+    panel per cross-dated ring year, where every streamline in every panel breaks against the same blank
+    saw kerf, because the felling cut crosses all the rings at once and is what makes each year legible,
+    so the death belongs to every year.
+  subject: A wordless black-toner photocopied comic about a felled oak, drawn entirely as generative flow
+    fields
+  behavior: 'Read from the saw cut back to the seedling, one wordless panel per year. Each panel''s width
+    comes from a published cross-dated oak ring-width series. Its whole image is a flow-field drawing:
+    a Python script traces streamlines through a noise field seeded by that year''s date, and the ring
+    index sets line count and length. Wide wet years fill the panel with long, dense, crowded strokes.
+    Drought years leave a few short, stalled ones. The streamlines loosely gather into that year''s crown,
+    weather and ground. Every streamline in every panel stops dead at one blank horizontal band at the
+    same height on every page: the saw kerf. The SVGs are printed straight to black toner on cream stock
+    on any photocopier.'
+  rationale: In dendrochronology the felling cut is not one event at the end of the series. It is a plane
+    that passes through every ring at once, and it is the reason any ring can be read at all. A flow field
+    makes that physical. A blank band that every streamline must break against puts the death inside the
+    seedling's year as much as the last one, so the wound is everywhere rather than at the end. This keeps
+    the debate's hard-won ache and the backward reading, and drops the scanner and audio pipeline that
+    were only ever an illustration of the data.
+  card_readings:
+  - card: one-color
+    interpretation: Black photocopier toner on cream stock only, so line density is the sole carrier of
+      each year's growth and the kerf can only be shown as absence of ink.
+  - card: flow-fields
+    interpretation: 'Generative vector-field drawing: a coded noise field whose traced streamlines make
+      up every image in every panel, with line count and length driven by data.'
+  - card: dendrochronology
+    interpretation: A real cross-dated oak ring-width series from the ITRDB sets panel widths and streamline
+      density, and the felling cut is the transverse section through which every ring is read.
+  usage:
+    input_tokens: 2648
+    output_tokens: 1712
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 6
+    mutation_kind: card_swap
+    swapped_axis: technique
+    replaced_card: granular-synthesis
+- position: 8
+  statement: A black-toner photocopied comic that draws one afternoon ten times, each page inked from
+    a successive archived forecast for it, while a grain engine built only from that day's spoken radio
+    forecast condenses from cloud into words as lead time shrinks, because a forecast is a story the sky
+    hasn't agreed to yet.
+  subject: A wordless black-toner photocopied comic that is also the score for a granular patch built
+    from a single recorded NOAA Weather Radio forecast
+  behavior: 'Each page draws the same twelve-panel afternoon on the same street, inked from successive
+    archived forecasts for one chosen date, issued ten days out, then nine, and so on down to one. Black
+    coverage in each panel follows the forecast cloud cover for that hour. The figure''s outline is drawn
+    once per GEFS ensemble member, so far-out pages show a crowd of ghost outlines that converge into
+    one person as the date approaches. A Pure Data grain engine reads the scans and uses only one source:
+    a NOAA Weather Radio broadcast for that afternoon, recorded off a cheap receiver. Panel ink sets grain
+    density, and ensemble spread sets grain position jitter and pitch scatter. The early pages are hiss
+    and cloud, and words begin to surface around day three. The last page is inked from the METAR observations
+    of what actually happened, and it plays the broadcast whole. Printed in black toner on any photocopier.'
+  rationale: A forecast is a story about a day that does not exist yet, and its uncertainty shrinks in
+    a measurable way as the day approaches. The mapping makes that shrinking literal. The ensemble spread
+    scatters both the drawn figure and the spoken grains, so the reader watches a person and hears a voice
+    come into focus out of weather noise. On the final page the intact sentence can be heard contradicting
+    the sky that is actually drawn. Black toner keeps cloud as the one value the scanner reads. Every
+    input is a free public download or a cheap off-air recording.
+  card_readings:
+  - card: one-color
+    interpretation: A single black toner on cream paper, so ink coverage stands for cloud cover and is
+      the only value the scanner reads.
+  - card: granular-synthesis
+    interpretation: 'Real microsound: a Pure Data patch granulates one recorded radio forecast, with the
+      scanned panels setting grain density and scatter.'
+  - card: weather-forecasting
+    interpretation: 'Actual numerical weather prediction: archived GFS/GEFS forecasts at several lead
+      times for one place and hour, checked against METAR observations.'
+  usage:
+    input_tokens: 5457
+    output_tokens: 3231
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 6
+    mutation_kind: card_swap
+    swapped_axis: domain
+    replaced_card: dendrochronology
+- position: 9
+  statement: A wordless film that turns a Standard MIDI File of a local folk tune into Ordnance Survey
+    grid references and shoots one held landscape shot at each point, each shot lasting its note's length,
+    because the tune's contour sends the camera to ordinary fields and lay-bys no one would choose to
+    film.
+  subject: A wordless landscape film whose locations and shot lengths come from a Standard MIDI File of
+    a folk tune collected in the region it crosses
+  behavior: Takes a Standard MIDI File of a folk tune collected in a particular region and lays it over
+    the Ordnance Survey sheet that covers that region. Each note-on tick sets an easting across the sheet,
+    and each pitch sets a northing within the sheet's range. The filmmaker travels to every resulting
+    grid reference and shoots one locked-off, wordless shot facing along the route. Each shot lasts as
+    long as its note, timed from the file played at a slowed tempo. The shots are cut in note order, and
+    the film is screened while the same slowed file plays, so every cut falls on a note change.
+  rationale: The image is no longer a graph of the music. It is real ground that the music chose and no
+    editor would pick. The gap between a familiar melody and the plain land it lands on is what the viewer
+    feels. The return of the tune to its own valleys is the reveal, discovered slowly and never explained.
+  card_readings:
+  - card: no-dialogue
+    interpretation: No speech, captions or title cards; the only sound is the tune, and the only image
+      is still landscape shots.
+  - card: midi-file
+    interpretation: 'A literal Standard MIDI File of the tune: note pitches are read as northings and
+      note-on ticks as eastings, each note''s length in ticks sets its shot''s length, and at the screening
+      the same file plays the tune.'
+  - card: cartography
+    interpretation: 'A real Ordnance Survey map sheet and its national grid: the file is projected onto
+      the sheet as grid references, and the film''s route is a transect across the mapped land.'
+  usage:
+    input_tokens: 5939
+    output_tokens: 2509
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 10
+  statement: A wordless short film following one walker along an unrecorded footpath, scored by the MIDI
+    file her footsteps write as she paces it, because pace-and-bearing surveying needs only step timing
+    and compass direction, which an SMF stores natively, so the score doubles as the field book from which
+    the lost path is finally redrawn on the map.
+  subject: A wordless short film of one walker resurveying an unrecorded footpath, scored by the MIDI
+    file her own steps write
+  behavior: A walker retraces a footpath missing from the official map. A shoe switch and a compass module
+    feed a pocket logger that writes a Standard MIDI File. Each footfall is a note, quantised compass
+    bearing is pitch, and footfall force is velocity. The film is shot handheld and wordless, cut to the
+    file played back on piano. In the closing shot the walker plots the path from the file onto tracing
+    paper laid over the printed map.
+  rationale: 'Pace-and-bearing is a real survey method, and an SMF records exactly what it needs: a step
+    count, a direction and a time. The score is therefore the field book itself, not a graph replotted
+    as music. Because it records a body rather than a chart, it carries what a machine would not. Stalls
+    at blocked stiles become silences, and detours around fences become pitch swerves. The audible gap
+    between the old route and where a person could actually go is the film''s feeling.'
+  card_readings:
+  - card: no-dialogue
+    interpretation: No speech or text appears anywhere; the claim for the path is made only by the walk,
+      its sound and the drawn line.
+  - card: midi-file
+    interpretation: 'A literal Standard MIDI File written live by a logger during the walk: tick timestamps
+      are footfalls, note pitch is compass bearing, velocity is step force.'
+  - card: cartography
+    interpretation: 'Actual survey practice: pace-and-bearing dead reckoning, a field book, and plotting
+      a route onto an Ordnance Survey sheet.'
+  usage:
+    input_tokens: 2836
+    output_tokens: 1652
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 11
+  statement: A wordless hand-drawn stop-motion map of a village drowned by a reservoir, projection-mapped
+    onto a cut-card contour model of its valley, which floods layer by layer up to the real waterline,
+    because plan-view roads draped over surveyed relief show the terrain the flat drawing hid and mark
+    exactly which lanes lie underwater.
+  subject: A wordless hand-drawn stop-motion map of a drowned village, projection-mapped onto a cut-card
+    contour model of its valley built from the old survey
+  behavior: The animator cuts a stepped contour model of a real valley from the pre-flood survey, one
+    layer of card per contour interval, and paints it matte white. A wordless hand-drawn stop-motion film
+    is projection-mapped onto it. First comes a legend made only of line weights. Then the village's roads,
+    field boundaries and houses are drawn in plan view, frame by frame. Projected flat, the lines bend
+    over the stepped hills. In the closing sequence a hand-inked water tint fills the model one layer
+    at a time and stops at the contour that matches today's reservoir level. Only the hilltop lanes stay
+    lit.
+  rationale: The parent needed sound to supply the elevation its flat drawing could not show. Here projection
+    mapping lets the survey's own contours carry that elevation as a physical surface, so the plan-view
+    drawing and the terrain finally sit in one image. The reservoir line is a real contour, so the audience
+    sees exactly which roads drowned, with no words needed.
+  card_readings:
+  - card: no-dialogue
+    interpretation: No spoken or written words anywhere. Even the legend is only line weights, and the
+      flooding is told by colour climbing the contours.
+  - card: projection-mapping
+    interpretation: 'Literal video mapping: the film is projected and aligned onto a physical stepped
+      relief model rather than a flat screen.'
+  - card: cartography
+    interpretation: 'Real survey conventions: plan-view roads as polylines, line weight for road class,
+      a wordless legend, and contour intervals cut as physical layers.'
+  usage:
+    input_tokens: 2764
+    output_tokens: 1221
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: card_swap
+    swapped_axis: medium
+    replaced_card: midi-file
+- position: 12
+  statement: A wordless hand-drawn stop-motion film in which a real Georgian street's windows are bricked
+    up one by one, while a self-playing piano plays a MIDI file built from the window tax's rate schedule,
+    because the ear hears the law tightening as the eye watches houses go blind, with no words to connect
+    them.
+  subject: A wordless hand-drawn stop-motion short about the English window tax, scored by a MIDI file
+    built from the tax's actual rate schedule
+  behavior: 'Encodes the English window tax schedule from 1696 to 1851 as one Standard MIDI File. Each
+    tax year is one bar. Each window-count band in force that year sounds as a note: the band''s threshold
+    sets the pitch, and the rate per window sets the velocity. Pitt''s 1797 tripling therefore lands as
+    thick, hammered chords, and the 1851 repeal falls silent. The animator draws a real surviving street
+    of Georgian houses and, frame by frame, bricks up its windows by hand. The frame for each brick comes
+    from a table computed from the file''s ticks. The film is screened with no titles or captions while
+    the file plays on a self-playing piano.'
+  rationale: 'As in the parent, the source is a real record, and picture and sound carry different halves
+    of it. The piano plays the statute''s numbers, and the drawing shows what people did in response.
+    The viewer works out cause and effect alone, because no narrator links them. A tax code is normally
+    pure text, so taking the words away makes the law audible and its consequences visible: rooms going
+    dark as the chords grow heavier.'
+  card_readings:
+  - card: no-dialogue
+    interpretation: No speech, captions, dates or quoted statute; the law is carried only by the piano
+      and the drawn bricks.
+  - card: midi-file
+    interpretation: A literal Standard MIDI File in which bars are tax years, pitch is the window-count
+      threshold, velocity is the rate, and ticks drive the stop-motion frame table.
+  - card: tax-law
+    interpretation: The actual English window tax statutes and their amendments from 1696 to 1851, with
+      bands, rates and the repeal.
+  usage:
+    input_tokens: 2746
+    output_tokens: 1363
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: card_swap
+    swapped_axis: domain
+    replaced_card: cartography
+- position: 13
+  statement: A camera obscura tent-chapel that screens the live street as a film service, with a written
+    order of call and response triggered by passersby, because a projection that cannot be recorded needs
+    a ritual form to turn unrepeatable light into a shared event.
+  subject: A portable camera obscura tent-chapel, staged as a one-person live cinema service
+  behavior: 'Runs a printed order of service whose calls are events in the live projected street, such
+    as a figure crossing or the light dimming, and whose responses are spoken aloud by the seated congregation.
+    A lone officiant turns a mirror-and-lens turret between fixed movements: processional, reading, silence,
+    dismissal.'
+  rationale: 'A camera obscura is cinema that cannot be edited or kept. A liturgy is a script built for
+    exactly that condition: it gives fixed form to an unrepeatable present. Binding responses to chance
+    events trains the audience to attend to unstaged reality the way a congregation attends to a rite,
+    and the result is a film made of attention rather than footage.'
+  card_readings:
+  - card: real-time-only
+    interpretation: 'Nothing is recorded or replayed: the only image is light passing through the lens
+      now, and the work ends when the light does.'
+  - card: camera-obscura
+    interpretation: A literal blackout tent with a rotating lens turret that projects the outside world,
+      upside down and live, onto a white table.
+  - card: liturgy
+    interpretation: A fixed ritual order of service with call and response, where the projected world
+      gives the call and the audience answers.
+  usage:
+    input_tokens: 0
+    output_tokens: 0
+    cache_read_tokens: 0
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 10
+    mutation_kind: carried
+    swapped_axis: null
+    replaced_card: null
+- position: 14
+  statement: A one-ink risograph comic whose panel widths follow a real oak's cross-dated ring-width series
+    and whose scanned pages drive a granular-synthesis patch, turning each year into a grain cloud, because
+    rings and grains both store time as thin measured slices and single-color ink gives the scanner one
+    clean density value, as a core sample does.
+  subject: A single-color risograph comic that doubles as a graphic score for a granular-synthesis patch
+  behavior: 'Tells a wordless story of one oak, one panel per tree-ring year from a real measured core
+    sequence. Each panel''s width equals that year''s ring width. Each panel also scores the soundtrack:
+    a small Pure Data grain engine reads the scanned page so that panel width sets grain duration and
+    ink coverage sets grain density. Drought years become cramped, sparse crackles and wet years become
+    wide, dense clouds.'
+  rationale: 'Tree rings and grain clouds encode a long signal the same way: as a stream of tiny dated
+    units whose widths carry the conditions of their moment. Restricting the print to one ink makes darkness
+    the single value the scanner reads. That is also how a dendrochronologist reads a core, light earlywood
+    against dark latewood, so the page works both as a comic and as an unambiguous score.'
+  card_readings:
+  - card: one-color
+    interpretation: The whole comic is printed in a single black ink on cream stock, so ink coverage is
+      the only visual variable.
+  - card: granular-synthesis
+    interpretation: 'Actual microsound: a Pure Data patch slices a field recording of wind in oak leaves
+      into grains whose duration and density are driven by each scanned panel.'
+  - card: dendrochronology
+    interpretation: 'Real tree-ring dating: panel widths come from a published, cross-dated oak ring-width
+      series, so the page grid is the tree''s chronology.'
+  usage:
+    input_tokens: 0
+    output_tokens: 0
+    cache_read_tokens: 0
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 6
+    mutation_kind: carried
+    swapped_axis: null
+    replaced_card: null
+- position: 15
+  statement: A wordless stop-motion short in which a pen plotter draws a map translated from a Standard
+    MIDI File, filmed frame by frame and screened against that file's playback, because the file is already
+    a time-stamped coordinate list, so one artifact yields both the image and a perfectly synced score.
+  subject: A wordless stop-motion short film of a map being drawn by a pen plotter
+  behavior: Converts one Standard MIDI File into a pen-plotted map, with each track as a road, pitch as
+    north-south position, ticks as east-west distance and velocity as line weight. The map is shot stop-motion
+    as the plotter draws it, and the result is projected in sync with the same file played on a General
+    MIDI synth.
+  rationale: An SMF is already a list of time-stamped coordinates, the same structure as a surveyed route.
+    One file can therefore generate both the picture and the score with frame-exact sync and no hand-timing.
+    With dialogue removed, the viewer hears the terrain before seeing it drawn, and learns to read the
+    map by ear.
+  card_readings:
+  - card: no-dialogue
+    interpretation: The film has no spoken or written words; meaning comes only from the drawn line and
+      the music.
+  - card: midi-file
+    interpretation: A literal Standard MIDI File, parsed for its tracks, note pitches, velocities and
+      tick timestamps.
+  - card: cartography
+    interpretation: 'Actual mapmaking conventions: roads as polylines, line weight as road class, a legend,
+      and the slow reveal of a territory.'
+  usage:
+    input_tokens: 0
+    output_tokens: 0
+    cache_read_tokens: 0
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: carried
+    swapped_axis: null
+    replaced_card: null
+failures: []
+usage:
+  input_tokens: 46815
+  output_tokens: 25136
+  cache_read_tokens: 20112
+  cache_write_tokens: 1257
+  web_search_requests: 0
+estimated_cost_usd: 0.700287
+mutation:
+  parent_run_path: debates/2026-11-14-round-1-literal.yaml
+  parent_run_digest: 76a27d38488404b95d9652a75ea42cd41e0f0eb067b275871a7f19139f38725e
+  mutation_seed: 7
+  round: 2
