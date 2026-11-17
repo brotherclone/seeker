@@ -86,6 +86,14 @@ A paused turn that is resumed accumulates errors the same way it accumulates res
 
 `None` means no prosecutor critique had a report, as in rounds 1 and 2. The report then says search outcomes were not recorded. The run summary line in `seeker-debate` uses the same counts. Each prosecutor critique in the report also gets a short line: "search: N results", or the error codes when there were errors.
 
+### 6. A retry may cite what the first call's searches returned
+
+Found in the live check after tasks 1–5. A rejected prosecution is retried with its earlier answer and the feedback, but not with the earlier search results. So the retry often runs no new search, and cites URLs from its first answer. The check compared those only against the retry call's own results, which were empty, and rejected real results as invented. On 2026-11-17 this turned one of three live prosecutions into a `DebateFailure`.
+
+`Debater._ask` now checks each answer against the URLs returned by every call of that prosecution so far. A URL that no call returned is still rejected. The returned `ModelReply` is unchanged, and `SearchReport.results_returned` still counts each call's own results once.
+
+Alternative considered: replaying the earlier search result blocks in the retry turn. It is heavier: it adds the result tokens again and needs the SDK's raw blocks, which never leave the adapter. It also leaves the check as strict as before.
+
 ## Risks / Trade-offs
 
 - **More input tokens.** Unfiltered results add tokens to the prosecutor's input. → The probe calls cost a few cents more each. The budget meter already prices tokens. Watch the per-run cost in the next live run.

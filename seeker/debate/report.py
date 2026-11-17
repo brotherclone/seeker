@@ -16,6 +16,7 @@ from seeker.ontology import (
     MutationKind,
     RoleName,
     ScoreAxis,
+    SearchReport,
     Severity,
 )
 
@@ -98,6 +99,8 @@ class SurvivorReport:
             f"> {critique.argument}",
             "",
         ]
+        if critique.search is not None:
+            lines += [self._search_line(critique.search), ""]
         if critique.none_found:
             lines += ["- No prior art found.", ""]
         if critique.citations:
@@ -176,7 +179,23 @@ class SurvivorReport:
             lines.append(f"- {critic.value}: {counts}")
         outcomes = ", ".join(f"{o.outcome.value} {o.count}" for o in health.outcomes)
         lines += ["", f"Defense outcomes: {outcomes}", ""]
+        search = health.search
+        if search is None:
+            lines += ["Prior-art search: search outcomes were not recorded for this run.", ""]
+        else:
+            lines += [
+                f"Prior-art search: {search.with_results} of {search.prosecutions} prosecutions with results, "
+                f"{search.with_errors} with errors, {search.citations} citations",
+                "",
+            ]
         return lines
+
+    @staticmethod
+    def _search_line(search: SearchReport) -> str:
+        text = f"*Search: {search.results_returned} results"
+        if search.search_errors:
+            text += "; errors: " + ", ".join(sorted({e.error_code for e in search.search_errors}))
+        return text + "*"
 
     def _unranked(self) -> list[str]:
         withdrawn = [d for d in self.run.debates if not d.competes]

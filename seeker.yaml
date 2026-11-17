@@ -24,7 +24,8 @@ vault_folders:
 # - Haiku 5.5 prices rise 5x for prompts over 100,000 tokens ($0.50 in, $2.50 out).
 #   That tier is not modelled, because Seeker's Haiku prompts are a few thousand tokens.
 # - Web search is $10 per 1,000 searches, plus the tokens its results add. The
-#   code execution it uses to filter results is not charged.
+#   prosecutor uses the basic tool (search_tool: basic), whose results all reach
+#   the model unfiltered. The filtered tool's code execution is not charged.
 prices:
   as_of: 2026-11-12
   web_search_per_request: 0.01

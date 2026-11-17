@@ -111,6 +111,8 @@ Critique severities (this run's debates):
 
 Defense outcomes: defended 0, revised 12, withdrawn 0
 
+Prior-art search: search outcomes were not recorded for this run.
+
 ## Provenance
 
 - Generation: `generations/2026-11-04-round-1-literal.yaml` (sha256 `3d7f2643c02a`)

@@ -297,6 +297,22 @@ enums:
           card from the same deck.
       carried:
         description: The parent itself, carried into the next round with its debate.
+  SearchTool:
+    description: >-
+      Which version of the web search tool a role is offered. The version
+      decides whether the model reads results directly or through code it
+      writes.
+    permissible_values:
+      basic:
+        description: >-
+          Each search's results go straight into the model's context
+          (web_search_20250305). A search over the limit fails on its own and
+          keeps earlier results.
+      filtered:
+        description: >-
+          The model writes code that runs the searches and filters their
+          results before it sees them (web_search_20260209). A search over the
+          limit aborts the whole script, losing every result it had printed.
 
 slots:
   id:
@@ -1010,6 +1026,52 @@ slots:
     description: >-
       Which round of the loop this generation is. A generation drawn from a
       batch is round 1; each mutation adds one.
+  search_tool:
+    range: SearchTool
+    slot_uri: seeker:searchTool
+    description: >-
+      Which web search tool version the role is offered. Set exactly when
+      max_searches is above zero, so a role digest pins the tool version.
+  search:
+    range: SearchReport
+    inlined: true
+    slot_uri: seeker:search
+    description: >-
+      What the critique's web searches returned, failures included. Present
+      on critiques from roles that search; absent on others and on records
+      written before search outcomes were recorded.
+  results_returned:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:resultsReturned
+    description: >-
+      Search results returned across the critique's calls, counted as
+      returned, not as distinct URLs.
+  search_errors:
+    range: SearchError
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:searchErrors
+    description: Every search that failed during the critique's calls.
+  error_code:
+    range: string
+    required: true
+    slot_uri: seeker:errorCode
+    description: >-
+      The search tool's error code, such as max_uses_exceeded, or
+      search_code_failed when code running the searches stopped with an
+      error.
+    examples:
+      - value: max_uses_exceeded
+      - value: search_code_failed
+  error_message:
+    range: string
+    required: true
+    slot_uri: seeker:errorMessage
+    description: >-
+      What the failure said: the error code again for a tool error, or the
+      code's stderr for a failed search script.
 
 classes:
   Card:
@@ -1131,6 +1193,7 @@ classes:
       - max_output_tokens
       - effort
       - max_searches
+      - search_tool
   Generation:
     class_uri: seeker:Generation
     description: >-
@@ -1177,6 +1240,7 @@ classes:
       - citations
       - none_found
       - usage
+      - search
   Reply:
     class_uri: seeker:Reply
     description: The advocate's answer to one critique.
@@ -1317,6 +1381,23 @@ classes:
       - parent_run_digest
       - mutation_seed
       - round
+  SearchReport:
+    class_uri: seeker:SearchReport
+    description: >-
+      What one critique's web searches returned: how many results came back
+      and every search that failed. A none_found with no results or with
+      errors is unverified.
+    slots:
+      - results_returned
+      - search_errors
+  SearchError:
+    class_uri: seeker:SearchError
+    description: >-
+      One web search that failed during a critique's calls, by its code and
+      what it said.
+    slots:
+      - error_code
+      - error_message
   Work:
     class_uri: seeker:Work
     description: >-

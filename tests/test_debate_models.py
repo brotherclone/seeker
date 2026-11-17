@@ -1,6 +1,9 @@
 """The debate ontology models (debate-ideas task 3.3): bounds and cross-field rules."""
 
+from pathlib import Path
+
 import pytest
+import yaml
 from pydantic import ValidationError
 
 from seeker.ontology import (
@@ -8,12 +11,15 @@ from seeker.ontology import (
     Critique,
     CritiqueTarget,
     Debate,
+    DebateRun,
     Defense,
     DefenseMove,
     DefenseOutcome,
     IdeaRevision,
     Reply,
     RoleName,
+    SearchError,
+    SearchReport,
     Severity,
     Usage,
 )
@@ -169,3 +175,31 @@ def test_revised_idea_competes_as_revision() -> None:
     assert debate((critique(),), revised, REVISION.statement).final_statement == REVISION.statement
     with pytest.raises(ValidationError, match="competes as its revision"):
         debate((critique(),), revised, "Something else.")
+
+
+# --- fix-prior-art-search 1.2: search reports ----------------------------------------
+
+
+def test_search_report_sums_and_verifies() -> None:
+    limit = SearchError(error_code="max_uses_exceeded", error_message="max_uses_exceeded")
+    clean = SearchReport(results_returned=9)
+    failed = SearchReport(results_returned=0, search_errors=(limit,))
+    assert clean.verified and not failed.verified and not SearchReport(results_returned=0).verified
+    total = clean + failed
+    assert total.results_returned == 9 and total.search_errors == (limit,) and not total.verified
+    with pytest.raises(ValidationError):
+        SearchReport(results_returned=-1)
+    with pytest.raises(ValidationError):
+        SearchError(error_code="", error_message="x")
+
+
+def test_critique_search_is_optional() -> None:
+    assert critique().search is None
+    assert critique(RoleName.PROSECUTOR, search=SearchReport(results_returned=18)).search.results_returned == 18
+
+
+@pytest.mark.parametrize("path", ["debates/2026-11-14-round-1-literal.yaml", "debates/2026-11-16-round-2-literal.yaml"])
+def test_live_records_load_without_search_reports(path: str) -> None:
+    root = Path(__file__).resolve().parent.parent
+    run = DebateRun.model_validate(yaml.safe_load((root / path).read_text()))
+    assert run.debates and all(c.search is None for d in run.debates for c in d.critiques)

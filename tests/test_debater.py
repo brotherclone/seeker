@@ -10,7 +10,7 @@ from seeker.config import SeekerConfig
 from seeker.debate import DebateRoles
 from seeker.debate.debater import Debater
 from seeker.models import ModelCallFailed, ModelReply, ScriptedModel, SearchResult
-from seeker.ontology import DefenseOutcome, Generation, Reading, RoleName, Usage
+from seeker.ontology import DefenseOutcome, Generation, Reading, RoleName, SearchError, SearchTool, Usage
 from seeker.works.catalog import WorkNotes
 from vault_fixtures import repo_decks
 
@@ -108,3 +108,65 @@ def test_revision_competes(tmp_path: Path) -> None:
     model = ScriptedModel((reply(PROSECUTION, PAPER), reply(SKEPTIC), reply(TASTE), reply(revised)))
     debate = debater(model, tmp_path).debate(IDEA, DRAW).debate
     assert debate.final_statement.startswith("A webcomic whose panels stay dark")
+
+
+# --- fix-prior-art-search 3.1: search reports on critiques --------------------------
+
+LIMIT = SearchError(error_code="max_uses_exceeded", error_message="max_uses_exceeded")
+
+
+def searched(text: str, results: int, *errors: SearchError) -> ModelReply:
+    urls = (PAPER, *(f"https://example.org/{i}" for i in range(results - 1))) if results else ()
+    return reply(text, *urls).model_copy(update={"search_errors": errors})
+
+
+def test_prosecutor_critique_records_its_search(tmp_path: Path) -> None:
+    model = ScriptedModel((searched(PROSECUTION, 18), reply(SKEPTIC), reply(TASTE), reply(DEFENSE)))
+    critiques = debater(model, tmp_path).debate(IDEA, DRAW).debate.critiques
+    prosecution, skeptic, taste = critiques
+    assert prosecution.search.results_returned == 18 and prosecution.search.search_errors == ()
+    assert skeptic.search is None and taste.search is None
+    assert model.requests[0].search_tool is SearchTool.BASIC
+    assert all(r.search_tool is None for r in model.requests[1:])
+
+
+def test_search_errors_are_recorded(tmp_path: Path) -> None:
+    model = ScriptedModel((searched(PROSECUTION, 9, LIMIT), reply(SKEPTIC), reply(TASTE), reply(DEFENSE)))
+    prosecution = debater(model, tmp_path).debate(IDEA, DRAW).debate.critiques[0]
+    assert prosecution.search.results_returned == 9 and prosecution.search.search_errors == (LIMIT,)
+    assert not prosecution.search.verified
+
+
+def test_retried_prosecution_sums_both_attempts(tmp_path: Path) -> None:
+    """The first answer cites a page its searches never returned, so it is retried."""
+    model = ScriptedModel(
+        (searched(PROSECUTION, 0, LIMIT), searched(PROSECUTION, 9), reply(SKEPTIC), reply(TASTE), reply(DEFENSE))
+    )
+    prosecution = debater(model, tmp_path).debate(IDEA, DRAW).debate.critiques[0]
+    assert len(model.requests) == 5 and model.requests[1].retry is not None
+    assert prosecution.search.results_returned == 9 and prosecution.search.search_errors == (LIMIT,)
+
+
+# --- fix-prior-art-search 3.3: a retry may cite the first call's results -------------
+
+
+def test_retry_may_cite_what_the_first_call_returned(tmp_path: Path) -> None:
+    """The first answer has a vague failure; the retry runs no search and re-cites the paper."""
+    vague = critique_json(
+        "This might have been done.",
+        citations=[{"title": "Touch Comic", "url": PAPER, "work_id": "", "relevance": "Very close.", "embodied_cards": ["webcomic"]}],
+        none_found=False,
+    )
+    model = ScriptedModel((reply(vague, PAPER), reply(PROSECUTION), reply(SKEPTIC), reply(TASTE), reply(DEFENSE)))
+    outcome = debater(model, tmp_path).debate(IDEA, DRAW)
+    assert model.requests[1].retry is not None and outcome.failures == ()
+    prosecution = outcome.debate.critiques[0]
+    assert str(prosecution.citations[0].url) == PAPER
+    assert prosecution.search.results_returned == 1
+
+
+def test_a_url_no_call_returned_is_still_rejected(tmp_path: Path) -> None:
+    model = ScriptedModel((reply(PROSECUTION, "https://other.org"), reply(PROSECUTION)))
+    failure = debater(model, tmp_path)._prosecute(IDEA, DRAW)
+    assert failure.role_name is RoleName.PROSECUTOR and len(model.requests) == 2
+    assert PAPER in failure.failure_reason and "not among" in failure.failure_reason

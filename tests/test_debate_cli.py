@@ -9,8 +9,8 @@ import yaml
 from seeker.debate.cli import DebateCommand
 from seeker.debate.record import DebateFile
 from seeker.models import ModelReply, ScriptedModel
-from seeker.ontology import Generation, ScoreAxis, StopReason, Usage
-from test_debate_runner import one_round
+from seeker.ontology import Generation, ScoreAxis, SearchError, StopReason, Usage
+from test_debate_runner import NOTHING, SEARCHED, one_round
 
 ROOT = Path(__file__).resolve().parent.parent
 CALL = Usage(input_tokens=1_000, output_tokens=100, cache_read_tokens=0, cache_write_tokens=0)
@@ -148,3 +148,16 @@ def test_dry_run_on_mutated_generation_skips_carried(config, tmp_path, capsys) -
         assert f"=== idea {position}: carried from parent position {parent_position}; no calls ===" in out
         assert f"=== idea {position}: prosecutor ===" not in out
     assert out.count(": prosecutor ===") == 12 and model.requests == []
+
+
+# --- fix-prior-art-search 3.2: search health in the summary --------------------------
+
+
+def test_summary_counts_prior_art_search(config, generation, tmp_path, capsys) -> None:
+    limit = SearchError(error_code="max_uses_exceeded", error_message="max_uses_exceeded")
+    failing = ModelReply(output_json=NOTHING, usage=SEARCHED, search_errors=(limit,))
+    script = one_round() * 2 + (failing, *one_round()[1:]) + tuple(judgment() for _ in range(6))
+    out = tmp_path / "run.yaml"
+    args = ["run", str(generation), "--out", str(out), "--config", str(config)]
+    assert DebateCommand(ScriptedModel(script)).run(args) == 0
+    assert "prior-art search: 2 of 3 with results, 1 with errors" in capsys.readouterr().out

@@ -283,3 +283,22 @@ def test_git_commit_provenance() -> None:
     if commit is None:
         pytest.skip("not a git checkout")
     assert len(commit.removesuffix("-dirty")) == 40
+
+
+# --- fix-prior-art-search 1.2: search tool -------------------------------------------
+
+
+def test_searching_role_needs_a_search_tool(tmp_path: Path) -> None:
+    broken = tmp_path / "generator.yaml"
+    broken.write_text(ROLE_PATH.read_text() + "max_searches: 3\n")
+    with pytest.raises(RoleFileError) as exc:
+        LoadedRole.load(broken)
+    assert str(broken) in str(exc.value) and "search_tool" in str(exc.value)
+
+
+def test_search_tool_without_searches_is_refused(tmp_path: Path) -> None:
+    broken = tmp_path / "generator.yaml"
+    broken.write_text(ROLE_PATH.read_text() + "search_tool: basic\n")
+    with pytest.raises(RoleFileError) as exc:
+        LoadedRole.load(broken)
+    assert str(broken) in str(exc.value) and "search_tool" in str(exc.value)

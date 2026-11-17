@@ -1,4 +1,5 @@
-"""How healthy a run's judging and debating looked: position bias, split pairs, severities, outcomes.
+"""How healthy a run's judging and debating looked: position bias, split pairs,
+severities, outcomes and prior-art search.
 
 Everything is counted from the record; no API call. Carried debates belong to the
 parent run, so the severity and outcome counts leave them out."""
@@ -47,6 +48,41 @@ class OutcomeCount(SeekerModel):
     count: int = Field(ge=0)
 
 
+class SearchHealth(SeekerModel):
+    """How the run's own prosecutions fared at web search: how many got results,
+    how many hit errors, and how many URLs they cited."""
+
+    model_config = ConfigDict(title="SearchHealth")
+
+    prosecutions: int = Field(ge=0, description="Prosecutor critiques in the run's own debates.")
+    with_results: int = Field(ge=0, description="Prosecutions whose searches returned at least one result.")
+    with_errors: int = Field(ge=0, description="Prosecutions that recorded at least one search error.")
+    citations: int = Field(ge=0, description="URL citations across the run's own prosecutions.")
+
+    @classmethod
+    def of(cls, run: DebateRun) -> SearchHealth | None:
+        """None when no prosecution in the run's own debates recorded a search report,
+        as in runs written before search outcomes were recorded."""
+        own = tuple(
+            c for d in run.debates if d.carried_from is None for c in d.critiques if c.role_name is RoleName.PROSECUTOR
+        )
+        if not any(c.search is not None for c in own):
+            return None
+        return cls(
+            prosecutions=len(own),
+            with_results=sum(1 for c in own if c.search is not None and c.search.results_returned > 0),
+            with_errors=sum(1 for c in own if c.search is not None and c.search.search_errors),
+            citations=sum(1 for c in own for citation in c.citations if citation.url is not None),
+        )
+
+    @property
+    def line(self) -> str:
+        return (
+            f"prior-art search: {self.with_results} of {self.prosecutions} with results, "
+            f"{self.with_errors} with errors"
+        )
+
+
 class JudgeHealth(SeekerModel):
     """A run's position bias per axis, plus the spread of its critics' severities and the advocate's outcomes."""
 
@@ -56,6 +92,7 @@ class JudgeHealth(SeekerModel):
     axes: tuple[AxisBias, ...] = ()
     severities: tuple[SeverityCount, ...] = ()
     outcomes: tuple[OutcomeCount, ...] = ()
+    search: SearchHealth | None = None
 
     @classmethod
     def of(cls, run: DebateRun) -> JudgeHealth:
@@ -72,7 +109,7 @@ class JudgeHealth(SeekerModel):
         )
         ends = Counter(d.defense.outcome for d in own)
         outcomes = tuple(OutcomeCount(outcome=outcome, count=ends[outcome]) for outcome in DefenseOutcome)
-        return cls(both_orders=both, axes=axes, severities=severities, outcomes=outcomes)
+        return cls(both_orders=both, axes=axes, severities=severities, outcomes=outcomes, search=SearchHealth.of(run))
 
     @staticmethod
     def _axis(axis: ScoreAxis, comparisons: tuple[Comparison, ...], both: bool) -> AxisBias:

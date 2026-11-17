@@ -11,6 +11,7 @@ from pathlib import Path
 from seeker.config import ConfigError, SeekerConfig, VaultNotConfigured
 from seeker.debate.carried import CarriedDebates, CarryError
 from seeker.debate.debater import Debater, DebateOutcome
+from seeker.debate.health import SearchHealth
 from seeker.debate.meter import CostMeter
 from seeker.debate.prompts import CriticPrompt, ProsecutorPrompt
 from seeker.debate.record import DebateFile, DebateResumeMismatch
@@ -190,6 +191,8 @@ class DebateCommand:
             f"{usage.input_tokens:,} in / {usage.output_tokens:,} out tokens · {usage.web_search_requests} searches · "
             f"est. ${run.estimated_cost_usd:.2f} of ${run.budget_usd:.2f}"
         )
+        if (search := SearchHealth.of(run)) is not None:
+            print(search.line)
         if run.stop_reason is StopReason.BUDGET:
             print("stopped at the budget; rerun with a higher --budget to continue")
         if run.tournament is not None and run.tournament.survivors:

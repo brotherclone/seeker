@@ -1,5 +1,6 @@
 """The debate classes from schema/seeker.yaml: ``Citation``, ``Critique``,
-``Reply``, ``IdeaRevision``, ``Defense``, ``Debate`` and ``DebateFailure``, and
+``Reply``, ``IdeaRevision``, ``Defense``, ``Debate``, ``DebateFailure``,
+``SearchReport`` and ``SearchError``, and
 the enums ``CritiqueTarget``, ``Severity``, ``DefenseMove`` and ``DefenseOutcome``."""
 
 from __future__ import annotations
@@ -106,6 +107,70 @@ class Citation(SeekerModel):
         return self
 
 
+class SearchError(SeekerModel):
+    """One web search that failed during a critique's calls, by its code and
+    what it said."""
+
+    model_config = ConfigDict(title="SearchError", json_schema_extra={"class_uri": "seeker:SearchError"})
+
+    error_code: str = Field(
+        title="error_code",
+        min_length=1,
+        description=(
+            "The search tool's error code, such as max_uses_exceeded, or search_code_failed when "
+            "code running the searches stopped with an error."
+        ),
+        examples=["max_uses_exceeded", "search_code_failed"],
+        json_schema_extra={"slot_uri": "seeker:errorCode"},
+    )
+    error_message: str = Field(
+        title="error_message",
+        min_length=1,
+        description=(
+            "What the failure said: the error code again for a tool error, or the code's stderr "
+            "for a failed search script."
+        ),
+        examples=["Server tool use limit exceeded during code execution."],
+        json_schema_extra={"slot_uri": "seeker:errorMessage"},
+    )
+
+
+class SearchReport(SeekerModel):
+    """What one critique's web searches returned: how many results came back
+    and every search that failed. A none_found with no results or with errors
+    is unverified."""
+
+    model_config = ConfigDict(title="SearchReport", json_schema_extra={"class_uri": "seeker:SearchReport"})
+
+    results_returned: int = Field(
+        title="results_returned",
+        ge=0,
+        description=(
+            "Search results returned across the critique's calls, counted as returned, not as "
+            "distinct URLs."
+        ),
+        examples=[18],
+        json_schema_extra={"slot_uri": "seeker:resultsReturned"},
+    )
+    search_errors: tuple[SearchError, ...] = Field(
+        default=(),
+        title="search_errors",
+        description="Every search that failed during the critique's calls.",
+        json_schema_extra={"slot_uri": "seeker:searchErrors"},
+    )
+
+    def __add__(self, other: SearchReport) -> SearchReport:
+        return SearchReport(
+            results_returned=self.results_returned + other.results_returned,
+            search_errors=(*self.search_errors, *other.search_errors),
+        )
+
+    @property
+    def verified(self) -> bool:
+        """True when the searches returned results and none failed."""
+        return self.results_returned > 0 and not self.search_errors
+
+
 class Critique(SeekerModel):
     """One critic's attack on one idea, naming the part that fails, how badly, and
     the failure in one sentence."""
@@ -180,6 +245,16 @@ class Critique(SeekerModel):
         title="usage",
         description='Tokens consumed by the model calls this record accounts for.',
         json_schema_extra={"slot_uri": "seeker:usage"},
+    )
+    search: SearchReport | None = Field(
+        default=None,
+        title="search",
+        description=(
+            "What the critique's web searches returned, failures included. Present on critiques "
+            "from roles that search; absent on others and on records written before search "
+            "outcomes were recorded."
+        ),
+        json_schema_extra={"slot_uri": "seeker:search"},
     )
 
     @model_validator(mode="after")
