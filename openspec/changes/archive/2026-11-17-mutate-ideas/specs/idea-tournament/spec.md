@@ -14,7 +14,7 @@ The schema SHALL define the classes `AxisVerdict`, `Comparison`, `Rating` and `T
 - **THEN** it loads, its tournament has `both_orders` false, and its ratings recompute exactly
 
 ### Requirement: Pairings
-Each comparison SHALL count as one judge call. With `both_orders` set, every scheduled pair SHALL be judged twice, back to back: first in the seeded A/B order, then reversed. Pairs SHALL fit in `max_comparisons`, which defaults to 132, and is round robin for 12 entrants in both orders. When every pair does not fit, each entrant SHALL get an equal number of seeded opponents. No pair SHALL be scheduled more than once. A tournament without `both_orders` SHALL judge each pair once, as recorded before this change.
+Each comparison SHALL count as one judge call. With `both_orders` set, every scheduled pair SHALL be judged twice, back to back: first in the seeded A/B order, then reversed. Pairs SHALL fit in `max_comparisons` (default 132: a round robin of 12 entrants in both orders). When every pair does not fit, each entrant SHALL get an equal number of seeded opponents. No pair SHALL be scheduled more than once. Without `both_orders`, each pair SHALL be judged once.
 
 #### Scenario: Round robin
 - **WHEN** 12 ideas enter with `both_orders` set and the default `max_comparisons`
@@ -33,13 +33,13 @@ Each comparison SHALL count as one judge call. With `both_orders` set, every sch
 - **THEN** its schedule is rebuilt in one order, matching its recorded comparisons
 
 ### Requirement: Survivors report
-The system SHALL render a Markdown report to the configured reports folder for a finished run. For each survivor, the report gives:
-- the final statement, plus the original if it was revised;
-- the three axis ratings and the cards;
-- each critique's failure and the reply to it;
-- every citation, with its link.
+A finished run SHALL render as a Markdown report in the configured reports folder, giving for each survivor:
+- the final statement, and the original if revised;
+- its three axis ratings and cards;
+- each critique's failure and its reply;
+- each citation and its link.
 
-The report SHALL also list the non-survivors with their ratings, and the run's provenance and cost. When the debated generation was mutated, every entrant SHALL show its parent, its `MutationKind` and, for children, whether it outrated its parent on promise. Rendering SHALL make no API call.
+It SHALL also list non-survivors' ratings and the run's provenance and cost. For a mutated generation, each entrant SHALL show its `Lineage`, and each child whether it outrated its parent on promise. Rendering SHALL call no API.
 
 #### Scenario: Report from a finished run
 - **WHEN** `seeker-debate report debates/2026-11-12-round-1.yaml` runs
