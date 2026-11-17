@@ -14,7 +14,7 @@ The schema SHALL define the classes `AxisVerdict`, `Comparison`, `Rating` and `T
 - **THEN** it loads, its tournament has `both_orders` false, and its ratings recompute exactly
 
 ### Requirement: Pairings
-Each comparison SHALL count as one judge call. With `both_orders` set, every scheduled pair SHALL be judged twice, back to back: first in the seeded A/B order, then reversed. Pairs SHALL fit in `max_comparisons` (default 132: a round robin of 12 entrants in both orders). When every pair does not fit, each entrant SHALL get an equal number of seeded opponents. No pair SHALL be scheduled more than once. Without `both_orders`, each pair SHALL be judged once.
+Each comparison SHALL count as one judge call. With `both_orders` set, every scheduled pair SHALL be judged twice, back to back: first in the seeded A/B order, then reversed. Comparisons SHALL fit within `max_comparisons` (default 132: a round robin of 12 entrants in both orders). When not every pair fits, each entrant SHALL get an equal number of seeded opponents. No pair SHALL be scheduled more than once. Without `both_orders`, each pair SHALL be judged once.
 
 #### Scenario: Round robin
 - **WHEN** 12 ideas enter with `both_orders` set and the default `max_comparisons`
