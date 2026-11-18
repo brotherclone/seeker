@@ -216,7 +216,7 @@ class Debater:
             try:
                 reply = self.model.reply(request)
             except ModelCallFailed as exc:
-                return Attempt(failure=f"model call failed: {exc}", usage=spent)
+                return Attempt(failure=f"model call failed: {exc}", usage=spent, search=search)
             spent = spent + reply.usage
             if search is not None:
                 search = search + SearchReport(
