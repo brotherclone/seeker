@@ -3,7 +3,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: The report shows judge health
-The survivors report SHALL include a judge-health section. It gives the share of comparisons the idea shown as A won, per `ScoreAxis`, and for a two-order tournament the pairs per axis whose two judgments disagreed. It counts each critic's critiques by `Severity` and the debates by `DefenseOutcome`. It gives prior-art search health from the run's own debates.
+The survivors report SHALL include a judge-health section. It gives the share of comparisons that the idea shown as A won, per `ScoreAxis`, and for a two-order tournament the pairs per axis whose two judgments disagreed. It counts each critic's critiques by `Severity` and the debates by `DefenseOutcome`. It gives prior-art search health from the run's own debates.
 
 #### Scenario: Position bias is visible
 - **WHEN** the report is rendered for `debates/2026-11-14-round-1-literal.yaml`
