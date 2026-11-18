@@ -9,7 +9,7 @@ import yaml
 from seeker.config import SeekerConfig
 from seeker.debate import DebateRoles, IdenticalCritics, UnpricedRole
 from seeker.generate import LoadedRole, RoleFileError
-from seeker.ontology import Reading, RoleName
+from seeker.ontology import Reading, RoleName, SearchTool
 
 ROOT = Path(__file__).resolve().parent.parent
 PROMPTS = ROOT / "prompts"
@@ -27,7 +27,9 @@ def test_role_file_loads_with_every_reading(name: str) -> None:
 def test_only_the_prosecutor_searches() -> None:
     roles = DebateRoles.load(PROMPTS, PRICES)
     assert roles.role(RoleName.PROSECUTOR).role.max_searches == 3
-    assert all(roles.role(n).role.max_searches == 0 for n in DebateRoles.ALL if n is not RoleName.PROSECUTOR)
+    assert roles.role(RoleName.PROSECUTOR).role.search_tool is SearchTool.BASIC
+    others = [roles.role(n).role for n in DebateRoles.ALL if n is not RoleName.PROSECUTOR]
+    assert all(r.max_searches == 0 and r.search_tool is None for r in others)
 
 
 def test_critics_differ_in_model_or_persona() -> None:

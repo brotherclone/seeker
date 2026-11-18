@@ -47,11 +47,21 @@ The advocate must answer every critique exactly once. If it concedes a `fatal` c
 
 Before searching, the prosecutor is shown every captured work in the vault that links two or more of the draw's cards (`seeker-works check`). It then runs up to `max_searches` web searches (3 by default) with Claude's server-side search tool.
 
+The role file also sets which version of the tool to use: `search_tool`, which any role with `max_searches` above 0 must set. Because the role file is hashed into every run, the run record pins the version. The prosecutor uses `basic`, and each search's results go straight into its context.
+
+The other value, `filtered`, has the model write code that runs the searches and filters the results. In both live runs before 2026-11-17, it failed in two ways:
+- a fourth query against the limit of three aborted the whole script;
+- the script choked on the JSON string that searches return inside it.
+
+Either way the prosecutor never saw a result, even though the searches ran and were billed. No role uses `filtered`.
+
+Every critique from a role that searches records a `SearchReport`: how many results came back, and a `SearchError` for each search that failed. Failures include a search tool error such as `max_uses_exceeded`, and search code that stopped with an error. They are recorded, never dropped. A `none_found` whose search returned nothing, or hit an error, is therefore visibly unverified. The run summary prints `prior-art search: N of M with results, K with errors`.
+
 Every prior-art critique must do one of two things:
 - cite evidence: a search result by its exact URL, or a catalog work by its id;
 - declare `none_found`, with no citations and severity `minor`.
 
-A URL that wasn't among that call's search results is rejected, so it can't invent precedent.
+A URL that none of that prosecution's searches returned is rejected, so it can't invent precedent. A retry sees its earlier answer but not the earlier results, so it may cite what the first call's searches found.
 
 Each cited URL that isn't already in the catalog becomes a new note in `Works/` with:
 - `captured_by: prosecutor`;
@@ -98,7 +108,8 @@ The works catalog is allowed to change, because the run's own captures change it
 - a table of the rest, by promise;
 - for a mutated round, each idea's lineage (`reworking`, `card swap` or `carried`, with ↑, ↓ or = against its parent's promise rating), and a section per parent listing its children;
 - the ideas that weren't ranked, and why;
-- judge health: how often the idea shown as A won on each axis, how many pairs the two orders split, each critic's severities and the advocate's outcomes;
+- judge health: how often the idea shown as A won on each axis, how many pairs the two orders split, each critic's severities, the advocate's outcomes, and prior-art search health (prosecutions with results, with errors, and URL citations). Runs from before search outcomes were recorded say so instead;
+- under each survivor's prosecutor critique, a line giving its search's results and any error codes;
 - the run's provenance and cost.
 
 ## Cost

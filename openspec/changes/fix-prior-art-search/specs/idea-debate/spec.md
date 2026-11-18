@@ -36,6 +36,25 @@ The prosecutor SHALL use web search, with the tool version its role file names i
 - **WHEN** the prosecutor role sets `search_tool: basic`
 - **THEN** every prosecutor call offers the basic web search tool, with no code-execution filtering
 
+### Requirement: Prior-art critiques cite their evidence
+A prosecutor `Critique` SHALL carry at least one `Citation` (a URL from its searches, or a `WorkId` from the catalog), or SHALL declare that no prior art was found. A critique that declares none SHALL have severity `minor`. Every cited URL SHALL be one the searches returned in that prosecution's calls, the retry included, and every cited `WorkId` SHALL exist in the catalog.
+
+#### Scenario: Uncited claim of prior art
+- **WHEN** the prosecutor claims severity `fatal` with no citations
+- **THEN** the answer is rejected and retried, with feedback that prior-art claims need evidence
+
+#### Scenario: Invented URL
+- **WHEN** a citation's URL was not among the search results of any of that prosecution's calls
+- **THEN** the answer is rejected and retried, naming the URL
+
+#### Scenario: Nothing found
+- **WHEN** the prosecutor finds no prior art
+- **THEN** its critique declares none, carries no citations, and has severity `minor`
+
+#### Scenario: Retry cites the first call's results
+- **WHEN** the prosecutor's first answer is rejected, and its retry, which runs no new search, cites a URL that the first call's searches returned
+- **THEN** the citation is accepted
+
 ## ADDED Requirements
 
 ### Requirement: Search outcomes are recorded

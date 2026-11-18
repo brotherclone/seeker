@@ -8,12 +8,14 @@ import anthropic
 from pydantic import SecretStr, ValidationError
 
 from seeker.models.base import LanguageModel, ModelCallFailed, ModelReply, ModelRequest, SearchResult
-from seeker.ontology import Usage
+from seeker.ontology import SearchError, SearchTool, Usage
 
 NOT_ANSWERS = frozenset({"refusal", "max_tokens"})
 PAUSE = "pause_turn"
 MAX_RESUMES = 3
-WEB_SEARCH_TOOL = "web_search_20260209"
+BASIC_SEARCH_TOOL = "web_search_20250305"
+FILTERED_SEARCH_TOOL = "web_search_20260209"
+SEARCH_CODE_FAILED = "search_code_failed"
 
 
 class AnthropicModel(LanguageModel):
@@ -21,8 +23,10 @@ class AnthropicModel(LanguageModel):
 
     Forcing a tool call is not supported by current models, so the answer
     shape is given as ``output_config.format`` instead. When a request allows
-    web searches, the server-side search tool is offered with that limit; a
-    paused server-tool turn is resumed up to ``MAX_RESUMES`` times. ``client``
+    web searches, the server-side search tool version the request names is
+    offered with that limit; a paused server-tool turn is resumed up to
+    ``MAX_RESUMES`` times. Search failures (error results, and search code that
+    stopped with an error) are returned as ``SearchError``s, never dropped. ``client``
     can be injected (tests pass a stub); otherwise one is built from
     ``api_key``. SDK objects never leave this class: the answer is returned as
     JSON text, search results as ``SearchResult``s and usage as ``Usage``.
@@ -39,6 +43,7 @@ class AnthropicModel(LanguageModel):
         messages = self._messages(request)
         usage = Usage.zero()
         results: list[SearchResult] = []
+        errors: list[SearchError] = []
         for _attempt in range(MAX_RESUMES + 1):
             try:
                 response = self._client.messages.create(**self._arguments(request, messages))
@@ -46,6 +51,7 @@ class AnthropicModel(LanguageModel):
                 raise ModelCallFailed(f"{type(exc).__name__}: {exc}") from exc
             usage = usage + self._usage(response)
             results += self._search_results(response)
+            errors += self._search_errors(response) if request.max_searches else []
             stop = str(response.stop_reason)
             if stop != PAUSE:
                 break
@@ -59,7 +65,9 @@ class AnthropicModel(LanguageModel):
         text = (texts[-1] if request.max_searches else "".join(texts)).strip()
         if not text:
             raise ModelCallFailed(f"model returned no text for {request.output.name} (stop reason: {stop})")
-        return ModelReply(output_json=text, usage=usage, stop_reason=stop, search_results=tuple(results))
+        return ModelReply(
+            output_json=text, usage=usage, stop_reason=stop, search_results=tuple(results), search_errors=tuple(errors)
+        )
 
     @staticmethod
     def _usage(response: object) -> Usage:
@@ -90,6 +98,28 @@ class AnthropicModel(LanguageModel):
         return found
 
     @staticmethod
+    def _search_errors(response: object) -> list[SearchError]:
+        """Failed searches: a web-search result whose content is an error object
+        (not a list), and any code-execution result, encrypted or not, that
+        stopped with a non-zero return code while running searches."""
+        errors: list[SearchError] = []
+        for block in response.content:
+            content = getattr(block, "content", None)
+            if block.type == "web_search_tool_result" and not isinstance(content, list):
+                code = str(getattr(content, "error_code", None) or "unknown")
+                errors.append(SearchError(error_code=code, error_message=code))
+            elif block.type.endswith("code_execution_tool_result") and getattr(content, "return_code", 0):
+                stderr = str(getattr(content, "stderr", None) or "").strip()
+                message = stderr or f"search code stopped with return code {content.return_code}"
+                errors.append(SearchError(error_code=SEARCH_CODE_FAILED, error_message=message))
+        return errors
+
+    @staticmethod
+    def _search_tool_type(tool: SearchTool) -> str:
+        """The API's tool type for a search tool version."""
+        return BASIC_SEARCH_TOOL if tool is SearchTool.BASIC else FILTERED_SEARCH_TOOL
+
+    @staticmethod
     def _messages(request: ModelRequest) -> list[object]:
         """The opening turns: the prompt, and the rejected answer plus feedback on a retry."""
         messages: list[object] = [{"role": "user", "content": request.prompt}]
@@ -113,6 +143,7 @@ class AnthropicModel(LanguageModel):
                 "format": {"type": "json_schema", "schema": json.loads(request.output.json_schema_text)},
             },
         }
-        if request.max_searches:
-            arguments["tools"] = [{"type": WEB_SEARCH_TOOL, "name": "web_search", "max_uses": request.max_searches}]
+        if request.max_searches and request.search_tool is not None:
+            tool = AnthropicModel._search_tool_type(request.search_tool)
+            arguments["tools"] = [{"type": tool, "name": "web_search", "max_uses": request.max_searches}]
         return arguments

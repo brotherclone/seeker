@@ -9,7 +9,18 @@ from seeker.config import SeekerConfig
 from seeker.debate.health import JudgeHealth
 from seeker.debate.report import SurvivorReport
 from seeker.decks import DeckDirectory
-from seeker.ontology import AxisVerdict, Comparison, DebateRun, Generation, MutationKind, ScoreAxis, Usage
+from seeker.ontology import (
+    AxisVerdict,
+    Comparison,
+    DebateRun,
+    Generation,
+    MutationKind,
+    RoleName,
+    ScoreAxis,
+    SearchError,
+    SearchReport,
+    Usage,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 RUN = ROOT / "debates" / "2026-11-14-round-1-literal.yaml"
@@ -107,3 +118,50 @@ def test_a_tie_with_the_parent_is_neither_up_nor_down(tmp_path: Path) -> None:
     report = SurvivorReport(run.model_copy(update={"tournament": tournament}), generation, DECKS, CONFIG.prices)
     assert report.lineage_tag(1) == "reworking of #10 ="
     assert report.lineage_tag(13) == "carried #10"
+
+
+# --- fix-prior-art-search 4.1: search health -----------------------------------------
+
+
+def with_search(run: DebateRun, failing: int) -> DebateRun:
+    """Every prosecution searched: 9 results each, except ``failing``, which hit the limit."""
+    limit = SearchError(error_code="max_uses_exceeded", error_message="max_uses_exceeded")
+    debates = []
+    for debate in run.debates:
+        critiques = tuple(
+            c.model_copy(
+                update={
+                    "search": SearchReport(results_returned=0, search_errors=(limit,))
+                    if debate.position == failing
+                    else SearchReport(results_returned=9)
+                }
+            )
+            if c.role_name is RoleName.PROSECUTOR
+            else c
+            for c in debate.critiques
+        )
+        debates.append(debate.model_copy(update={"critiques": critiques}))
+    return run.model_copy(update={"debates": tuple(debates)})
+
+
+def test_search_health_is_counted_and_shown(round_one) -> None:
+    run, generation = round_one
+    searched = with_search(run, failing=10)  # survivor 1, so its critiques are shown
+    urls = sum(1 for d in run.debates for c in d.critiques for x in c.citations if x.url is not None)
+    health = JudgeHealth.of(searched).search
+    assert (health.prosecutions, health.with_results, health.with_errors, health.citations) == (12, 11, 1, urls)
+    text = SurvivorReport(searched, generation, DECKS, CONFIG.prices).render()
+    assert f"Prior-art search: 11 of 12 prosecutions with results, 1 with errors, {urls} citations" in text
+    assert "*Search: 9 results*" in text
+    assert "*Search: 0 results; errors: max_uses_exceeded*" in text
+
+
+def test_round_two_says_search_was_not_recorded() -> None:
+    run = DebateRun.model_validate(
+        yaml.safe_load((ROOT / "debates" / "2026-11-16-round-2-literal.yaml").read_text())
+    )
+    generation = Generation.model_validate(yaml.safe_load((ROOT / run.generation_path).read_text()))
+    assert JudgeHealth.of(run).search is None
+    text = SurvivorReport(run, generation, DECKS, CONFIG.prices).render()
+    assert "Prior-art search: search outcomes were not recorded for this run." in text
+    assert "*Search:" not in text

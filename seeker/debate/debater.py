@@ -14,7 +14,15 @@ from seeker.debate.roles import DebateRoles
 from seeker.generate.draft import DraftProblem
 from seeker.generate.prompt import SystemPrompt
 from seeker.generate.role_file import LoadedRole
-from seeker.models import LanguageModel, ModelCallFailed, ModelReply, ModelRequest, OutputSpec, RetryContext
+from seeker.models import (
+    LanguageModel,
+    ModelCallFailed,
+    ModelReply,
+    ModelRequest,
+    OutputSpec,
+    RetryContext,
+    SearchResult,
+)
 from seeker.ontology import (
     Card,
     Critique,
@@ -26,6 +34,7 @@ from seeker.ontology import (
     Idea,
     Reading,
     RoleName,
+    SearchReport,
     SeekerModel,
     Usage,
 )
@@ -71,6 +80,13 @@ class Attempt(SeekerModel):
     problems: tuple[DraftProblem, ...] = Field(default=(), description="Why the last answer was rejected.")
     failure: str = Field(default="", description="Why the role produced nothing, when it did not.")
     usage: Usage = Field(default_factory=Usage.zero, description="Every call made for this role.")
+    search: SearchReport | None = Field(
+        default=None, description="What every call's searches returned, for a role that searches."
+    )
+
+    def searched(self, critique: Critique) -> Critique:
+        """``critique`` with this attempt's search report attached, when the role searched."""
+        return critique if self.search is None else critique.model_copy(update={"search": self.search})
 
 
 class Debater:
@@ -138,7 +154,7 @@ class Debater:
         if attempt.reply is None:
             return self._failure(idea, loaded, attempt)
         parsed, _ = ProsecutorDraft.parse(attempt.reply.output_json)
-        return parsed.to_prosecution(loaded.role.model, attempt.usage, draw)
+        return attempt.searched(parsed.to_prosecution(loaded.role.model, attempt.usage, draw))
 
     def _critique(self, name: RoleName, idea: Idea, draw: Draw) -> Critique | DebateFailure:
         loaded = self.roles.role(name)
@@ -152,7 +168,7 @@ class Debater:
         if attempt.reply is None:
             return self._failure(idea, loaded, attempt)
         parsed, _ = CritiqueDraft.parse(attempt.reply.output_json)
-        return parsed.to_critique(name, loaded.role.model, attempt.usage)
+        return attempt.searched(parsed.to_critique(name, loaded.role.model, attempt.usage))
 
     def _defend(self, idea: Idea, draw: Draw, critiques: tuple[Critique, ...]) -> Defense | DebateFailure:
         loaded = self.roles.role(RoleName.ADVOCATE)
@@ -174,8 +190,15 @@ class Debater:
     def _ask(
         self, loaded: LoadedRole, prompt: str, output: OutputSpec, check: Callable[[ModelReply], tuple[DraftProblem, ...]]
     ) -> Attempt:
-        """Ask once, and once more with feedback if the answer is rejected."""
+        """Ask once, and once more with feedback if the answer is rejected. Usage, and
+        for a role that searches its search report, add up over every call.
+
+        Each answer is checked against the search results of every call so far: a
+        retry sees its earlier answer but not the earlier results, so it often cites
+        them without searching again. The reply returned keeps only its own results."""
         spent = Usage.zero()
+        found: tuple[SearchResult, ...] = ()
+        search = SearchReport(results_returned=0) if loaded.role.max_searches else None
         retry: RetryContext | None = None
         problems: tuple[DraftProblem, ...] = ()
         for _attempt in range(MAX_ATTEMPTS):
@@ -188,18 +211,24 @@ class Debater:
                 effort=loaded.role.effort,
                 retry=retry,
                 max_searches=loaded.role.max_searches,
+                search_tool=loaded.role.search_tool,
             )
             try:
                 reply = self.model.reply(request)
             except ModelCallFailed as exc:
-                return Attempt(failure=f"model call failed: {exc}", usage=spent)
+                return Attempt(failure=f"model call failed: {exc}", usage=spent, search=search)
             spent = spent + reply.usage
-            problems = check(reply)
+            if search is not None:
+                search = search + SearchReport(
+                    results_returned=len(reply.search_results), search_errors=reply.search_errors
+                )
+            found = (*found, *reply.search_results)
+            problems = check(reply.model_copy(update={"search_results": found}))
             if not problems:
-                return Attempt(reply=reply, usage=spent)
+                return Attempt(reply=reply, usage=spent, search=search)
             retry = RetryContext(previous_output=reply.output_json, feedback=Feedback.text(problems))
         reason = "; ".join(str(problem) for problem in problems)
-        return Attempt(problems=problems, failure=f"invalid after retry: {reason}", usage=spent)
+        return Attempt(problems=problems, failure=f"invalid after retry: {reason}", usage=spent, search=search)
 
     @staticmethod
     def _failure(idea: Idea, loaded: LoadedRole, attempt: Attempt) -> DebateFailure:

@@ -10,9 +10,9 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from pydantic import ConfigDict, Field
+from pydantic import ConfigDict, Field, model_validator
 
-from seeker.ontology import Effort, ModelId, SeekerModel, Url, Usage
+from seeker.ontology import Effort, ModelId, SearchError, SearchTool, SeekerModel, Url, Usage
 
 
 class ModelCallFailed(Exception):
@@ -62,6 +62,15 @@ class ModelRequest(SeekerModel):
     max_searches: int = Field(
         default=0, ge=0, description="Web searches this call may run; 0 means the search tool is not offered."
     )
+    search_tool: SearchTool | None = Field(
+        default=None, description="Which web search tool version to offer; set exactly when max_searches is above 0."
+    )
+
+    @model_validator(mode="after")
+    def _search_tool_when_searching(self) -> ModelRequest:
+        if (self.max_searches > 0) != (self.search_tool is not None):
+            raise ValueError("search_tool is set exactly when max_searches is above zero")
+        return self
 
 
 class ModelReply(SeekerModel):
@@ -74,6 +83,9 @@ class ModelReply(SeekerModel):
     stop_reason: str = Field(default="end_turn", description="Why the model stopped.")
     search_results: tuple[SearchResult, ...] = Field(
         default=(), description="Every page the call's web searches returned, in the order returned."
+    )
+    search_errors: tuple[SearchError, ...] = Field(
+        default=(), description="Every search that failed during the call, never dropped."
     )
 
     @property

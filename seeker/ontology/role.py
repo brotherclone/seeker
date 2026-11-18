@@ -1,13 +1,32 @@
-"""The ``Role`` and ``ReadingGuidance`` classes from schema/seeker.yaml."""
+"""The ``Role`` and ``ReadingGuidance`` classes and the ``SearchTool`` enum from
+schema/seeker.yaml."""
 
 from __future__ import annotations
 
 from pydantic import ConfigDict, Field, model_validator
 from pydantic_core import PydanticCustomError
 
-from seeker.ontology.base import SeekerModel
+from seeker.ontology.base import DescribedStrEnum, SeekerModel
 from seeker.ontology.reading import Effort, Reading, RoleName
 from seeker.ontology.types import ModelId
+
+
+class SearchTool(DescribedStrEnum):
+    """Which version of the web search tool a role is offered. The version
+    decides whether the model reads results directly or through code it
+    writes."""
+
+    BASIC = (
+        "basic",
+        "Each search's results go straight into the model's context (web_search_20250305). A search "
+        "over the limit fails on its own and keeps earlier results.",
+    )
+    FILTERED = (
+        "filtered",
+        "The model writes code that runs the searches and filters their results before it sees them "
+        "(web_search_20260209). A search over the limit aborts the whole script, losing every result "
+        "it had printed.",
+    )
 
 
 class ReadingGuidance(SeekerModel):
@@ -97,6 +116,16 @@ class Role(SeekerModel):
         examples=[3],
         json_schema_extra={"slot_uri": "seeker:maxSearches"},
     )
+    search_tool: SearchTool | None = Field(
+        default=None,
+        title="search_tool",
+        description=(
+            "Which web search tool version the role is offered. Set exactly when max_searches is "
+            "above zero, so a role digest pins the tool version."
+        ),
+        examples=["basic"],
+        json_schema_extra={"slot_uri": "seeker:searchTool"},
+    )
 
     @model_validator(mode="before")
     @classmethod
@@ -112,6 +141,16 @@ class Role(SeekerModel):
     @model_validator(mode="after")
     def _one_guidance_per_reading(self) -> Role:
         self._require_one_per_reading([g.reading.value for g in self.reading_guidance])
+        return self
+
+    @model_validator(mode="after")
+    def _search_tool_when_searching(self) -> Role:
+        if (self.max_searches > 0) != (self.search_tool is not None):
+            raise PydanticCustomError(
+                "search_tool",
+                "search_tool is set exactly when max_searches is above zero (max_searches: {max_searches})",
+                {"max_searches": self.max_searches},
+            )
         return self
 
     @staticmethod

@@ -20,7 +20,7 @@ from seeker.models import (
     ScriptedModel,
     ScriptExhausted,
 )
-from seeker.ontology import Effort, Usage
+from seeker.ontology import Effort, SearchTool, Usage
 
 OUTPUT = OutputSpec(
     name="idea_draft",
@@ -45,6 +45,8 @@ def request(**overrides: object) -> ModelRequest:
         "effort": "low",
         **overrides,
     }
+    if fields.get("max_searches") and "search_tool" not in overrides:
+        fields["search_tool"] = SearchTool.BASIC
     return ModelRequest(**fields)
 
 
@@ -254,7 +256,7 @@ def test_search_tool_carries_the_limit_and_results_are_collected() -> None:
         [SimpleNamespace(type="server_tool_use"), code, search_block("https://a.org/x", "https://b.org/y")], searches=2
     )
     messages = StubMessages(response)
-    result = stubbed(messages).reply(request(max_searches=3))
+    result = stubbed(messages).reply(request(max_searches=3, search_tool=SearchTool.FILTERED))
     assert messages.calls[0]["tools"] == [{"type": "web_search_20260209", "name": "web_search", "max_uses": 3}]
     assert [str(r.url) for r in result.search_results] == ["https://a.org/x", "https://b.org/y"]
     assert result.result_urls == {"https://a.org/x", "https://b.org/y"}
@@ -262,10 +264,13 @@ def test_search_tool_carries_the_limit_and_results_are_collected() -> None:
     assert json.loads(result.output_json) == {"urls": []}
 
 
-def test_search_error_block_is_no_results() -> None:
+def test_search_error_block_is_no_results_and_is_recorded() -> None:
     error = SimpleNamespace(type="web_search_tool_result", content=SimpleNamespace(error_code="max_uses_exceeded"))
     result = stubbed(StubMessages(searched_response([error], searches=0))).reply(request(max_searches=1))
     assert result.search_results == ()
+    assert [(e.error_code, e.error_message) for e in result.search_errors] == [
+        ("max_uses_exceeded", "max_uses_exceeded")
+    ]
 
 
 def test_unusable_result_urls_are_skipped() -> None:
@@ -292,3 +297,54 @@ def test_pause_turn_gives_up_after_three_resumes() -> None:
     with pytest.raises(ModelCallFailed, match="still paused after 3 resumes"):
         stubbed(messages).reply(request(max_searches=1))
     assert len(messages.calls) == 4
+
+
+# --- fix-prior-art-search 2.2-2.3: tool version and search errors ------------------
+
+
+def test_basic_search_tool_is_the_older_version() -> None:
+    messages = StubMessages(searched_response([search_block("https://a.org")]))
+    stubbed(messages).reply(request(max_searches=3, search_tool=SearchTool.BASIC))
+    assert messages.calls[0]["tools"] == [{"type": "web_search_20250305", "name": "web_search", "max_uses": 3}]
+
+
+def test_search_tool_only_with_searches() -> None:
+    with pytest.raises(ValueError, match="search_tool"):
+        request(max_searches=2, search_tool=None)
+    with pytest.raises(ValueError, match="search_tool"):
+        request(search_tool=SearchTool.BASIC)
+
+
+def test_failed_search_code_is_recorded() -> None:
+    """The shape the 2026-11-17 probe saw: filtered search code aborted at the limit."""
+    failed = SimpleNamespace(
+        type="code_execution_tool_result",
+        content=SimpleNamespace(
+            type="encrypted_code_execution_result",
+            content=[],
+            encrypted_stdout="Eo4B",
+            return_code=1,
+            stderr="Server tool use limit exceeded during code execution.",
+        ),
+    )
+    response = searched_response([SimpleNamespace(type="server_tool_use"), search_block("https://a.org"), failed])
+    result = stubbed(StubMessages(response)).reply(request(max_searches=3, search_tool=SearchTool.FILTERED))
+    assert result.result_urls == {"https://a.org"}
+    assert [(e.error_code, e.error_message) for e in result.search_errors] == [
+        ("search_code_failed", "Server tool use limit exceeded during code execution.")
+    ]
+
+
+def test_clean_basic_search_has_no_errors() -> None:
+    clean_code = SimpleNamespace(type="code_execution_tool_result", content=SimpleNamespace(return_code=0, stderr=""))
+    response = searched_response([search_block("https://a.org", "https://b.org"), clean_code], searches=2)
+    result = stubbed(StubMessages(response)).reply(request(max_searches=3))
+    assert result.search_errors == () and result.result_urls == {"https://a.org", "https://b.org"}
+
+
+def test_search_errors_accumulate_across_paused_turns() -> None:
+    limit = SimpleNamespace(type="web_search_tool_result", content=SimpleNamespace(error_code="too_many_requests"))
+    paused = searched_response([limit], stop="pause_turn")
+    final = searched_response([search_block("https://b.org")])
+    result = stubbed(SequenceMessages(paused, final)).reply(request(max_searches=2))
+    assert [e.error_code for e in result.search_errors] == ["too_many_requests"]

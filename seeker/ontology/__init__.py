@@ -17,6 +17,8 @@ from seeker.ontology.debate import (
     DefenseOutcome,
     IdeaRevision,
     Reply,
+    SearchError,
+    SearchReport,
     Severity,
 )
 from seeker.ontology.deck import Deck
@@ -26,7 +28,7 @@ from seeker.ontology.fields import CreativeField
 from seeker.ontology.generation import CardReading, Generation, GenerationFailure, Idea, Usage
 from seeker.ontology.mutation import Lineage, MutationKind, MutationOrigin
 from seeker.ontology.reading import Effort, Reading, RoleName
-from seeker.ontology.role import ReadingGuidance, Role
+from seeker.ontology.role import ReadingGuidance, Role, SearchTool
 from seeker.ontology.run import DebateRun, RoleDigest, StopReason
 from seeker.ontology.tournament import AxisVerdict, Comparison, Rating, ScoreAxis, Tournament
 from seeker.ontology.types import AxisId, CardId, GitCommit, ModelId, Sha256Digest, Synonym, Tag, Url, WorkId
@@ -74,6 +76,9 @@ __all__ = [
     "RoleDigest",
     "RoleName",
     "ScoreAxis",
+    "SearchError",
+    "SearchReport",
+    "SearchTool",
     "SeekerModel",
     "Severity",
     "Sha256Digest",

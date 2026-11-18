@@ -5,6 +5,7 @@ model: claude-sonnet-5-5
 max_output_tokens: 6000
 effort: medium
 max_searches: 3
+search_tool: basic
 persona: >-
   You are an archivist of creative technology who has read every NIME and ICMC
   proceedings, the SIGGRAPH art papers, demoscene NFOs and pouet.net threads,
