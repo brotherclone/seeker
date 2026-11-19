@@ -238,6 +238,7 @@ class Debater:
             model=loaded.role.model,
             failure_reason=attempt.failure,
             usage=attempt.usage,
+            search=attempt.search,
         )
 
     def _card_words(self, draw: Draw) -> frozenset[str]:

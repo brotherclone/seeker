@@ -1037,9 +1037,9 @@ slots:
     inlined: true
     slot_uri: seeker:search
     description: >-
-      What the critique's web searches returned, failures included. Present
-      on critiques from roles that search; absent on others and on records
-      written before search outcomes were recorded.
+      What the role's web searches returned, failures included. Present on
+      critiques, and on debate failures, from roles that search; absent on
+      others and on records written before search outcomes were recorded.
   results_returned:
     range: integer
     required: true
@@ -1290,6 +1290,7 @@ classes:
       - failure_reason
       - discarded_critiques
       - usage
+      - search
   AxisVerdict:
     class_uri: seeker:AxisVerdict
     description: The judge's verdict on one score axis of one comparison.

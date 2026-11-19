@@ -15,7 +15,7 @@
 
 ## 2. Role file and adapter
 
-- [x] 2.1 Set `search_tool: basic` in `prompts/prosecutor.yaml`, and change nothing else in it. Verify that `DebateRoles.load` succeeds, and that the generator, mutator, skeptic, taste-critic, advocate and judge files still load unchanged.
+- [x] 2.1 Set `search_tool: basic` in `prompts/prosecutor.yaml`, and change nothing else in it. Verify that `DebateRoles.load` succeeds, and that the generator, mutator, skeptic, taste_critic, advocate and judge files still load unchanged.
 - [x] 2.2 Make the following changes:
   - add `search_tool` to `ModelRequest`, with the same rule as `Role`;
   - pass it from `Debater._ask`;
@@ -36,7 +36,8 @@
   - a prosecutor reply with 18 results gets `results_returned` 18 and no errors;
   - a reply with an error records it;
   - a retried prosecution sums both attempts;
-  - skeptic and taste-critic critiques have no `search`.
+  - skeptic and taste_critic critiques have no `search`;
+  - a prosecution whose retry call fails keeps the first call's `SearchReport` on its `DebateFailure`.
 - [x] 3.2 Print "prior-art search: N of M with results, K with errors" in the `seeker-debate` run summary. Verify with a CLI test on a fake model with one failing prosecution.
 
 - [x] 3.3 Check each prosecutor answer's URLs against the search results of every call of that prosecution so far, not only the current call (design decision 6). `results_returned` stays per call. Verify with debater tests that:

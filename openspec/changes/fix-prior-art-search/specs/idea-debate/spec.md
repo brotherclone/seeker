@@ -58,7 +58,7 @@ A prosecutor `Critique` SHALL carry at least one `Citation` (a URL from its sear
 ## ADDED Requirements
 
 ### Requirement: Search outcomes are recorded
-Every critique from a role that searches SHALL carry a `SearchReport`. It gives the number of search results the call returned (`results_returned`), and a `SearchError` for each search that failed. Each `SearchError` gives an `error_code` and an `error_message`. A failure SHALL be recorded, never dropped, whether the search tool returned an error or code running the searches stopped with an error. Critiques from roles that do not search SHALL have no `SearchReport`.
+Every critique from a role that searches SHALL carry a `SearchReport`. It gives the number of search results the call returned (`results_returned`), and a `SearchError` for each search that failed. Each `SearchError` gives an `error_code` and an `error_message`. A failure SHALL be recorded, never dropped, whether the search tool returned an error or code running the searches stopped with an error. Critiques from roles that do not search SHALL have no `SearchReport`. When a role that searches produces no valid answer, its `DebateFailure` SHALL carry the `SearchReport` of every call it made, the failed call excepted.
 
 #### Scenario: Results counted
 - **WHEN** the prosecutor's two searches return 9 results each
@@ -70,7 +70,11 @@ Every critique from a role that searches SHALL carry a `SearchReport`. It gives 
 
 #### Scenario: Search code failed
 - **WHEN** code running the prosecutor's searches stops with "Server tool use limit exceeded during code execution."
-- **THEN** the critique's `SearchReport` holds a `SearchError` whose `error_message` is that text
+- **THEN** the critique's `SearchReport` holds a `SearchError` with `error_code` `search_code_failed` whose `error_message` is that text
+
+#### Scenario: Retry call fails
+- **WHEN** the prosecutor's first answer, whose searches returned 9 results and one `max_uses_exceeded` error, is rejected, and the retry's model call fails
+- **THEN** the prosecutor's `DebateFailure` has a `SearchReport` showing 9 results returned and that `SearchError`
 
 #### Scenario: Non-searching critic
 - **WHEN** the skeptic's critique is recorded
