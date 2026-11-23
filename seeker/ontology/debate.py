@@ -250,9 +250,9 @@ class Critique(SeekerModel):
         default=None,
         title="search",
         description=(
-            "What the critique's web searches returned, failures included. Present on critiques "
-            "from roles that search; absent on others and on records written before search "
-            "outcomes were recorded."
+            "What the role's web searches returned, failures included. Present on critiques, and "
+            "on debate failures, from roles that search; absent on others and on records written "
+            "before search outcomes were recorded."
         ),
         json_schema_extra={"slot_uri": "seeker:search"},
     )
@@ -508,4 +508,14 @@ class DebateFailure(SeekerModel):
         title="usage",
         description='Tokens consumed by the model calls this record accounts for.',
         json_schema_extra={"slot_uri": "seeker:usage"},
+    )
+    search: SearchReport | None = Field(
+        default=None,
+        title="search",
+        description=(
+            "What the role's web searches returned, failures included. Present on critiques, and "
+            "on debate failures, from roles that search; absent on others and on records written "
+            "before search outcomes were recorded."
+        ),
+        json_schema_extra={"slot_uri": "seeker:search"},
     )

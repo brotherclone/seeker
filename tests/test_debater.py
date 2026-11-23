@@ -147,6 +147,36 @@ def test_retried_prosecution_sums_both_attempts(tmp_path: Path) -> None:
     assert prosecution.search.results_returned == 9 and prosecution.search.search_errors == (LIMIT,)
 
 
+def test_failed_retry_keeps_the_searches_already_gathered(tmp_path: Path) -> None:
+    """The first answer is rejected; the retry's model call fails. The failure still
+    records what the first call's searches returned and the error they hit."""
+    vague = critique_json("This might have been done.", citations=[], none_found=True, severity="minor")
+    model = ScriptedModel((searched(vague, 9, LIMIT), ModelCallFailed("overloaded")))
+    failure = debater(model, tmp_path)._prosecute(IDEA, DRAW)
+    assert len(model.requests) == 2 and model.requests[1].retry is not None
+    assert failure.role_name is RoleName.PROSECUTOR and "overloaded" in failure.failure_reason
+    assert failure.search.results_returned == 9 and failure.search.search_errors == (LIMIT,)
+    assert failure.usage.input_tokens == 100
+
+
+def test_invalid_after_retry_keeps_both_calls_searches(tmp_path: Path) -> None:
+    """Both answers cite a page no search returned."""
+    elsewhere = tuple(f"https://other.org/{i}" for i in range(4))
+    first = reply(PROSECUTION, *elsewhere)
+    second = reply(PROSECUTION, "https://other.org/x").model_copy(update={"search_errors": (LIMIT,)})
+    model = ScriptedModel((first, second))
+    failure = debater(model, tmp_path)._prosecute(IDEA, DRAW)
+    assert "invalid after retry" in failure.failure_reason
+    assert failure.search.results_returned == 5 and failure.search.search_errors == (LIMIT,)
+
+
+def test_failing_non_searching_critic_records_no_search(tmp_path: Path) -> None:
+    vague = critique_json("This might be hard to build.")
+    model = ScriptedModel((reply(vague), ModelCallFailed("overloaded")))
+    failure = debater(model, tmp_path)._critique(RoleName.SKEPTIC, IDEA, DRAW)
+    assert "overloaded" in failure.failure_reason and failure.search is None
+
+
 # --- fix-prior-art-search 3.3: a retry may cite the first call's results -------------
 
 
