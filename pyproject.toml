@@ -31,6 +31,7 @@ seeker-decks = "seeker.decks.cli:main"
 seeker-draw = "seeker.draw.cli:main"
 seeker-generate = "seeker.generate.cli:main"
 seeker-mutate = "seeker.mutate.cli:main"
+seeker-schedule = "seeker.schedule.cli:main"
 seeker-works = "seeker.works.cli:main"
 
 [tool.hatch.build.targets.wheel]

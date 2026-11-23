@@ -12,7 +12,7 @@ from seeker.generate import GenerationFile, LoadedRole, ResumeMismatch
 from seeker.models import ScriptedModel
 from seeker.mutate.mutator import IdeaMutator
 from seeker.mutate.plan import MutationPlan, RunInput
-from seeker.ontology import DeckSet, Generation, MutationKind, Reading, RoleName, Usage
+from seeker.ontology import DeckSet, Generation, MutationKind, Reading, RoleName, StopReason, Usage
 from tests.test_generator import CALL, answer
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -133,3 +133,46 @@ def test_changed_decks_are_refused(role, decks, config) -> None:
     )})
     with pytest.raises(ResumeMismatch, match="deck-set digest"):
         mutator(role, ScriptedModel(()), edited, config).mutate(make_plan(edited), Reading.LITERAL, record=record)
+
+
+# -- budget -----------------------------------------------------------------------------
+
+
+def per_call(config: SeekerConfig, role: LoadedRole) -> float:
+    return config.prices.cost(role.role.model, CALL)
+
+
+def test_budget_stops_after_the_call_that_crosses_it(role, decks, config, tmp_path: Path) -> None:
+    plan = make_plan(decks)
+    sink = GenerationFile(tmp_path / "round-2.yaml")
+    model = ScriptedModel(replies(plan, range(1, 7)))
+    budget = per_call(config, role) * 5.5
+    record = IdeaMutator(role, model, decks, config.prices, budget_usd=budget).mutate(
+        plan, Reading.LITERAL, sink=sink
+    )
+    assert len(model.requests) == 6
+    assert [i.position for i in record.ideas] == [1, 2, 3, 4, 5, 6]
+    assert record.stop_reason is StopReason.BUDGET
+    assert sink.read().stop_reason is StopReason.BUDGET
+
+
+def test_resume_with_more_budget_finishes_and_clears_the_stop(role, decks, config, tmp_path: Path) -> None:
+    plan = make_plan(decks)
+    sink = GenerationFile(tmp_path / "round-2.yaml")
+    low = per_call(config, role) * 5.5
+    IdeaMutator(role, ScriptedModel(replies(plan, range(1, 7))), decks, config.prices, budget_usd=low).mutate(
+        plan, Reading.LITERAL, sink=sink
+    )
+    second = ScriptedModel(replies(plan, range(7, 13)))
+    record = IdeaMutator(role, second, decks, config.prices, budget_usd=2.0).mutate(
+        plan, Reading.LITERAL, record=sink.read(), sink=sink
+    )
+    assert len(second.requests) == 6
+    assert len(record.ideas) == 15
+    assert record.stop_reason is None and sink.read().stop_reason is None
+
+
+def test_no_budget_never_stops(role, decks, config) -> None:
+    plan = make_plan(decks)
+    record = mutator(role, ScriptedModel(replies(plan)), decks, config).mutate(plan, Reading.LITERAL)
+    assert record.stop_reason is None and len(record.ideas) == 15

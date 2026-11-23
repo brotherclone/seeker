@@ -314,6 +314,22 @@ enums:
           results before it sees them (web_search_20260209). A search over the
           limit aborts the whole script, losing every result it had printed.
 
+  ScheduleOutcome:
+    description: How one trigger of the scheduled run ended.
+    permissible_values:
+      advanced:
+        description: A round finished and its report was written.
+      budget:
+        description: The trigger reached its spend cap; the round resumes at the next trigger.
+      too_soon:
+        description: The last advanced round is more recent than the cadence allows; nothing ran.
+      awaiting_review:
+        description: The lineage head is at a review point with no sign-off; nothing ran.
+      locked:
+        description: Another scheduled run held the lock; nothing ran.
+      failed:
+        description: The trigger stopped on an error, which it records.
+
 slots:
   id:
     identifier: true
@@ -934,7 +950,9 @@ slots:
   stop_reason:
     range: StopReason
     slot_uri: seeker:stopReason
-    description: Why the run last stopped; absent while it is running.
+    description: >-
+      Why the run or mutation last stopped early or finished; absent while
+      it is running, and on a generation that finished.
   debates:
     range: Debate
     multivalued: true
@@ -1072,6 +1090,80 @@ slots:
     description: >-
       What the failure said: the error code again for a tool error, or the
       code's stderr for a failed search script.
+
+  ended_at:
+    range: datetime
+    required: true
+    slot_uri: seeker:endedAt
+    description: When the trigger finished, whatever its outcome.
+    examples:
+      - value: "2026-11-25T03:12:40"
+  schedule_outcome:
+    range: ScheduleOutcome
+    required: true
+    slot_uri: seeker:scheduleOutcome
+    description: How the trigger ended.
+    examples:
+      - value: advanced
+  head_run_path:
+    range: string
+    slot_uri: seeker:headRunPath
+    description: >-
+      The lineage head the trigger started from, relative to the repository
+      root when inside it. Absent when the trigger failed before finding one.
+    examples:
+      - value: debates/2026-11-23-round-3-literal.yaml
+  head_round:
+    range: integer
+    minimum_value: 1
+    slot_uri: seeker:headRound
+    description: The round of the lineage head the trigger started from.
+    examples:
+      - value: "3"
+  written_paths:
+    range: string
+    multivalued: true
+    slot_uri: seeker:writtenPaths
+    description: >-
+      The generation, debate run and report files the trigger wrote or
+      resumed, relative to the repository root when inside it.
+    examples:
+      - value: generations/2026-11-25-round-4-literal.yaml
+  failure_message:
+    range: string
+    slot_uri: seeker:failureMessage
+    description: >-
+      What went wrong, for a failed trigger, or a problem that did not stop
+      it, such as a vault note that could not be written.
+    examples:
+      - value: "no API key: set ANTHROPIC_API_KEY in the environment"
+  reviewed_run_path:
+    range: string
+    required: true
+    slot_uri: seeker:reviewedRunPath
+    description: The debate run signed off, relative to the repository root when inside it.
+    examples:
+      - value: debates/2026-11-23-round-3-literal.yaml
+  reviewed_run_digest:
+    range: Sha256Digest
+    required: true
+    slot_uri: seeker:reviewedRunDigest
+    description: >-
+      SHA-256 of the signed-off run's bytes, so a sign-off stops counting if
+      the run changes afterwards.
+  signed_at:
+    range: datetime
+    required: true
+    slot_uri: seeker:signedAt
+    description: When the sign-off was recorded.
+    examples:
+      - value: "2026-11-24T09:30:00"
+  review_note:
+    range: string
+    slot_uri: seeker:reviewNote
+    description: What the reviewer wanted remembered about the review, if anything.
+    examples:
+      - value: keep the obscura line
 
 classes:
   Card:
@@ -1213,6 +1305,7 @@ classes:
       - usage
       - estimated_cost_usd
       - mutation
+      - stop_reason
   Citation:
     class_uri: seeker:Citation
     description: >-
@@ -1435,3 +1528,28 @@ classes:
         description: >-
           The cards the work embodies, referenced by card id. Empty until
           linked by hand or by card suggestions.
+  ScheduledRun:
+    class_uri: seeker:ScheduledRun
+    description: >-
+      One trigger of the scheduled job: the lineage head it found, how it
+      ended, the files it wrote and what it cost.
+    slots:
+      - started_at
+      - ended_at
+      - schedule_outcome
+      - head_run_path
+      - head_round
+      - written_paths
+      - budget_usd
+      - estimated_cost_usd
+      - failure_message
+  ReviewSignOff:
+    class_uri: seeker:ReviewSignOff
+    description: >-
+      Gabe's sign-off on a lineage head at a review point, pinned by the
+      run's digest, which lets the scheduled run advance past it.
+    slots:
+      - reviewed_run_path
+      - reviewed_run_digest
+      - signed_at
+      - review_note

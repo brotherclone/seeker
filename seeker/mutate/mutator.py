@@ -21,21 +21,37 @@ from seeker.ontology import (
     Idea,
     MutationKind,
     Reading,
+    StopReason,
     Usage,
 )
 
 
 class IdeaMutator:
-    """Makes every child of a plan through the mutator role, retried once, and copies the carried parents."""
+    """Makes every child of a plan through the mutator role, retried once, and copies the carried parents.
 
-    def __init__(self, role: LoadedRole, model: LanguageModel, deck_set: DeckSet, prices: PriceTable) -> None:
+    With a ``budget_usd``, it checks the generation's recorded spend before each child's model call
+    and stops cleanly once the spend has reached the budget, saving ``stop_reason: budget``."""
+
+    def __init__(
+        self,
+        role: LoadedRole,
+        model: LanguageModel,
+        deck_set: DeckSet,
+        prices: PriceTable,
+        budget_usd: float | None = None,
+    ) -> None:
         if prices.price_for(role.role.model) is None:
             raise UnpricedModel(role.role.model)
         self.role = role
         self.model = model
         self.deck_set = deck_set
         self.prices = prices
+        self.budget_usd = budget_usd
         self.output = IdeaDraft.output_spec()
+
+    def reached(self, current: Generation) -> bool:
+        """Whether the generation's recorded spend has reached the budget."""
+        return self.budget_usd is not None and current.estimated_cost_usd >= self.budget_usd
 
     def system(self, reading: Reading) -> str:
         return SystemPrompt(self.role.role, reading).render()
@@ -51,6 +67,7 @@ class IdeaMutator:
         if record is not None:
             self._check_resume(record, plan, reading)
         current = record or self._empty(plan, reading, git_commit)
+        current = current.model_copy(update={"stop_reason": None})
         system = self.system(reading)
         for entry in plan.entries:
             if current.idea_at(entry.position) is not None:
@@ -58,6 +75,11 @@ class IdeaMutator:
             if entry.kind is MutationKind.CARRIED:
                 outcome: Idea | GenerationFailure = self.carried(entry)
             else:
+                if self.reached(current):
+                    current = current.model_copy(update={"stop_reason": StopReason.BUDGET})
+                    if sink is not None:
+                        sink.save(current)
+                    return current
                 outcome = self._one(entry, system, self.taken(entry, plan, current))
             current = self._with(current, outcome)
             if sink is not None:

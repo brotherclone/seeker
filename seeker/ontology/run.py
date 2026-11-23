@@ -8,20 +8,13 @@ from datetime import datetime
 from pydantic import ConfigDict, Field, model_validator
 from pydantic_core import PydanticCustomError
 
-from seeker.ontology.base import DescribedStrEnum, SeekerModel
+from seeker.ontology.base import SeekerModel
 from seeker.ontology.debate import Debate, DebateFailure
 from seeker.ontology.generation import Usage
 from seeker.ontology.reading import RoleName
+from seeker.ontology.stop import StopReason
 from seeker.ontology.tournament import Tournament
 from seeker.ontology.types import GitCommit, Sha256Digest
-
-
-class StopReason(DescribedStrEnum):
-    """Why a debate run stopped before or after finishing."""
-
-    FINISHED = "finished", "Every debate and comparison is done."
-    BUDGET = "budget", "The run's estimated spend reached its budget; it can be resumed with more."
-    NO_TOURNAMENT = "no_tournament", "The run was asked to debate only and stopped before the tournament."
 
 
 class RoleDigest(SeekerModel):
@@ -114,7 +107,10 @@ class DebateRun(SeekerModel):
     stop_reason: StopReason | None = Field(
         default=None,
         title="stop_reason",
-        description='Why the run last stopped; absent while it is running.',
+        description=(
+            'Why the run or mutation last stopped early or finished; absent while it is running, '
+            'and on a generation that finished.'
+        ),
         examples=["budget"],
         json_schema_extra={"slot_uri": "seeker:stopReason"},
     )

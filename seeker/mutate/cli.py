@@ -9,20 +9,18 @@ from datetime import date
 from pathlib import Path
 
 from seeker.config import ConfigError, SeekerConfig
-from seeker.debate.runner import GenerationInput
-from seeker.decks import DeckDirectory, DeckValidationFailed
+from seeker.debate.cli import EXIT_BUDGET
+from seeker.decks import DeckValidationFailed
 from seeker.generate.generator import GenerationError
 from seeker.generate.prompt import SystemPrompt
-from seeker.generate.provenance import GitRepo
 from seeker.generate.record import GenerationFile
 from seeker.generate.role_file import LoadedRole, RoleFileError
 from seeker.models import AnthropicModel, LanguageModel
-from seeker.mutate.mutator import IdeaMutator
-from seeker.mutate.plan import MutationError, MutationPlan, PlannedIdea, RunInput
+from seeker.mutate.job import MutationJob
+from seeker.mutate.plan import MutationError, MutationPlan, PlannedIdea
 from seeker.mutate.prompt import MutationPrompt
-from seeker.ontology import DeckSet, Generation, MutationKind, Reading
+from seeker.ontology import DeckSet, Generation, MutationKind, Reading, StopReason
 
-ROLE_FILE = "mutator.yaml"
 
 
 class MutateCommand:
@@ -44,6 +42,9 @@ class MutateCommand:
         target.add_argument("--out", type=Path, help="Write (or resume) the mutated Generation at this path.")
         target.add_argument("--scratch", action="store_true", help="Write under <generations>/scratch/ (git-ignored).")
         self.parser.add_argument("--seed", type=int, help="Mutation seed (default: the parent run's tournament seed).")
+        self.parser.add_argument(
+            "--budget", type=float, help="Stop once estimated spend reaches this many US dollars (default: budget_usd)."
+        )
         self.parser.add_argument("--dry-run", action="store_true", help="Print every planned draw and prompt; make no API call.")
         self.parser.add_argument("--config", type=Path, help="seeker.yaml to use (default: found by walking up).")
 
@@ -53,22 +54,16 @@ class MutateCommand:
             self.parser.error("give --out PATH or --scratch, so the round can be saved and resumed")
         try:
             config = SeekerConfig.load(args.config)
-            deck_set = DeckDirectory(config.paths.decks).load()
-            parent = RunInput.read(args.run, config.root)
-            source = GenerationInput.read(config.root / parent.run.generation_path, config.root)
-            seed = args.seed if args.seed is not None else parent.run.tournament_seed
-            plan = MutationPlan.build(parent, source, deck_set, seed, config.mutation.reworkings)
-            role = LoadedRole.load(config.paths.prompts / ROLE_FILE)
-            reading = source.generation.reading
+            job = MutationJob(config, args.run, seed=args.seed)
+            plan = job.plan
             if args.dry_run:
-                return self._dry_run(plan, role, deck_set, reading)
+                return self._dry_run(plan, job.role, job.deck_set, job.reading)
             model = self.model or AnthropicModel(api_key=config.api_key())
-            mutator = IdeaMutator(role, model, deck_set, config.prices)
-            sink = GenerationFile(args.out or self._scratch(config, parent.label, plan))
-            record = sink.read() if sink.exists() else None
-            if record is not None:
-                print(f"resuming {sink.path}: {len(record.ideas)} of {plan.batch.size} positions have ideas")
-            result = mutator.mutate(plan, reading, record=record, sink=sink, git_commit=GitRepo(config.root).commit())
+            budget = args.budget if args.budget is not None else config.budget_usd
+            sink = GenerationFile(args.out or self._scratch(config, job.parent.label, plan))
+            if sink.exists():
+                print(f"resuming {sink.path}: {len(sink.read().ideas)} of {plan.batch.size} positions have ideas")
+            result = job.run(model, sink, budget)
         except DeckValidationFailed as failed:
             for problem in failed.report.errors:
                 print(problem, file=sys.stderr)
@@ -78,6 +73,9 @@ class MutateCommand:
             return 1
         self._print(plan, result)
         print(f"wrote {sink.path}")
+        if result.stop_reason is StopReason.BUDGET:
+            print(f"stopped at the ${budget:.2f} budget; rerun with a higher --budget to continue")
+            return EXIT_BUDGET
         return 0
 
     @staticmethod
@@ -115,7 +113,12 @@ class MutateCommand:
         failures = {f.position: f for f in result.failures}
         for entry in plan.entries:
             idea = result.idea_at(entry.position)
-            text = idea.statement if idea is not None else f"FAILED  {failures[entry.position].reason}"
+            if idea is not None:
+                text = idea.statement
+            elif entry.position in failures:
+                text = f"FAILED  {failures[entry.position].reason}"
+            else:
+                text = "not yet made"
             print(f"{entry.position:>2}  {MutateCommand._kind(entry)}  {text}")
         usage = result.usage
         print(

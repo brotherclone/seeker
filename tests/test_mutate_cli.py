@@ -38,7 +38,7 @@ def config(tmp_path: Path) -> Path:
     return path
 
 
-def children_script(plan_size: int = 12) -> ScriptedModel:
+def children_script(plan_size: int = 12, start: int = 0) -> ScriptedModel:
     from seeker.config import SeekerConfig
     from seeker.debate.runner import GenerationInput
     from seeker.decks import DeckDirectory
@@ -47,7 +47,7 @@ def children_script(plan_size: int = 12) -> ScriptedModel:
     decks = DeckDirectory(SeekerConfig.load(ROOT / "seeker.yaml").paths.decks).load()
     parent = RunInput.read(RUN, ROOT)
     plan = MutationPlan.build(parent, GenerationInput.read(ROOT / parent.run.generation_path, ROOT), decks, 7, 2)
-    return ScriptedModel(tuple(answer(e.draw) for e in plan.children[:plan_size]))
+    return ScriptedModel(tuple(answer(e.draw) for e in plan.children[start:plan_size]))
 
 
 def test_dry_run_needs_no_key(config: Path, tmp_path: Path, capsys) -> None:
@@ -96,3 +96,18 @@ def test_a_target_is_required(config: Path, tmp_path: Path) -> None:
 def test_missing_key_fails_before_any_call(config: Path, tmp_path: Path, capsys) -> None:
     status = MutateCommand().run([str(tmp_path / "debates" / RUN.name), "--out", str(tmp_path / "r2.yaml"), "--config", str(config)])
     assert status == 1 and "ANTHROPIC_API_KEY" in capsys.readouterr().err
+
+
+def test_budget_stop_exits_three_and_resumes(config: Path, tmp_path: Path, capsys) -> None:
+    out = tmp_path / "generations" / "round-2.yaml"
+    run = str(tmp_path / "debates" / RUN.name)
+    first = children_script(3)
+    status = MutateCommand(first).run([run, "--out", str(out), "--budget", "0.004", "--config", str(config)])
+    assert status == 3
+    printed = capsys.readouterr().out
+    assert "not yet made" in printed and "stopped at the $0.00 budget" in printed
+    assert GenerationFile(out).read().stop_reason.value == "budget"
+    second = children_script(start=3)
+    status = MutateCommand(second).run([run, "--out", str(out), "--budget", "1", "--config", str(config)])
+    assert status == 0 and second.remaining == 0 and len(second.requests) == 9
+    assert GenerationFile(out).read().stop_reason is None

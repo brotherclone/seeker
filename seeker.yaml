@@ -7,12 +7,16 @@ paths:
   prompts: prompts
   debates: debates
   reports: reports
+  runs: runs             # scheduled-run records, one per trigger (git-ignored)
+  reviews: reviews       # review sign-offs (committed)
+  logs: logs             # the scheduled job's stdout and stderr (git-ignored)
   vault: null            # fallback only: put SEEKER_VAULT=~/path/to/vault in .env (git-ignored)
 
 # Seeker's folders inside the vault, relative to its root.
 vault_folders:
   works: Works
   cards: Cards
+  runs: Runs             # one note per scheduled trigger that did work
 
 # USD per million tokens. Prices are data: update them as they change.
 # Checked 2026-11-12 against the official page,
@@ -47,3 +51,12 @@ tournament:
 # swap per non-constraint card.
 mutation:
   reworkings: 2
+
+# Scheduled run (seeker-schedule): launchd fires daily at `hour`; a trigger
+# advances one round only once the last round advanced cadence_days ago (less
+# 12 hours), and the lineage pauses for a sign-off every review_every rounds.
+# Each trigger is capped at budget_usd across mutation, debate and tournament.
+schedule:
+  cadence_days: 2
+  review_every: 3
+  hour: 2
