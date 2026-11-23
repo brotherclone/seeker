@@ -11,6 +11,17 @@ uv run seeker-debate report debates/2026-11-16-round-2-literal.yaml
 
 One command makes one round. A run whose tournament didn't finish (it stopped at the budget, ran with `--no-tournament`, or was skipped) is refused.
 
+## Budget
+
+Mutation checks the generation's recorded spend before each child's model call. Once the spend reaches the budget, mutation stops without making the call: it saves the generation with `stop_reason: budget` and exits with status 3, the same status as a debate stopped at its budget. The budget is `budget_usd` in `seeker.yaml` ($5 by default), or `--budget`. Mutation costs about $0.60, so only a low `--budget` or a scheduled round's shared cap stops it.
+
+```
+uv run seeker-mutate debates/2026-11-14-round-1-literal.yaml --out generations/round-2.yaml --budget 0.30   # stops early, exit 3
+uv run seeker-mutate debates/2026-11-14-round-1-literal.yaml --out generations/round-2.yaml --budget 2      # resumes the missing children
+```
+
+A resume with more budget makes only the missing children and clears `stop_reason` when it finishes. `seeker-debate` refuses a generation that is still stopped at its budget, and names the command to resume it. The scheduled run (`docs/scheduling.md`) passes each round's mutation the whole cap for that trigger.
+
 ## What each survivor gets
 
 For each survivor, in survivor order:

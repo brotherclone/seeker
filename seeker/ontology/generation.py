@@ -12,6 +12,7 @@ from seeker.ontology.base import SeekerModel
 from seeker.ontology.draw import DrawBatch
 from seeker.ontology.mutation import Lineage, MutationOrigin
 from seeker.ontology.reading import Reading, RoleName
+from seeker.ontology.stop import StopReason
 from seeker.ontology.types import CardId, GitCommit, ModelId, Sha256Digest
 
 _COUNT_EXAMPLES = [1200]
@@ -288,6 +289,16 @@ class Generation(SeekerModel):
             "for generations drawn from a batch."
         ),
         json_schema_extra={"slot_uri": "seeker:mutation"},
+    )
+    stop_reason: StopReason | None = Field(
+        default=None,
+        title="stop_reason",
+        description=(
+            'Why the run or mutation last stopped early or finished; absent while it is running, '
+            'and on a generation that finished.'
+        ),
+        examples=["budget"],
+        json_schema_extra={"slot_uri": "seeker:stopReason"},
     )
 
     @model_validator(mode="after")

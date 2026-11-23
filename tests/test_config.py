@@ -4,10 +4,11 @@ from pathlib import Path
 
 import pytest
 
-from seeker.config import ConfigError, DotEnv, MissingApiKey, SeekerConfig, VaultNotConfigured
+from seeker.config import ConfigError, DotEnv, Keychain, MissingApiKey, SeekerConfig, VaultNotConfigured
 from seeker.ontology import Usage
 
 ROOT = Path(__file__).resolve().parent.parent
+REAL_KEYCHAIN_GET = Keychain.get  # captured at import, before conftest stubs it per test
 
 MINIMAL = """\
 paths: {decks: decks, batches: batches, generations: gens, prompts: prompts, vault: ~/vault}
@@ -240,3 +241,136 @@ def test_repo_config_judges_both_orders() -> None:
     assert config.tournament.both_orders is True
     assert config.tournament.max_comparisons == 132
     assert config.mutation.reworkings == 2
+
+
+# --- scheduled-run 3.1: schedule section and new paths ----------------------------------
+
+
+def test_schedule_defaults(tmp_path: Path) -> None:
+    config = SeekerConfig.load(write(tmp_path))
+    assert (config.schedule.cadence_days, config.schedule.review_every, config.schedule.hour) == (2, 3, 2)
+    assert config.paths.runs == tmp_path / "runs"
+    assert config.paths.reviews == tmp_path / "reviews"
+    assert config.paths.logs == tmp_path / "logs"
+
+
+def test_schedule_overrides(tmp_path: Path) -> None:
+    text = MINIMAL + "schedule: {cadence_days: 1, review_every: 5, hour: 23}\n"
+    text = text.replace("vault: ~/vault}", "vault: ~/vault, logs: ~/seeker-logs}")
+    config = SeekerConfig.load(write(tmp_path, text))
+    assert (config.schedule.cadence_days, config.schedule.review_every, config.schedule.hour) == (1, 5, 23)
+    assert config.paths.logs == Path("~/seeker-logs").expanduser()
+
+
+@pytest.mark.parametrize("bad", ["cadence_days: 0", "review_every: 0", "hour: 24", "hour: -1"])
+def test_schedule_out_of_range_is_rejected(tmp_path: Path, bad: str) -> None:
+    with pytest.raises(ConfigError):
+        SeekerConfig.load(write(tmp_path, MINIMAL + f"schedule: {{{bad}}}\n"))
+
+
+def test_vault_has_a_runs_folder(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("SEEKER_VAULT", raising=False)
+    config = SeekerConfig.load(write(tmp_path))
+    assert config.vault().runs == Path("~/vault").expanduser() / "Runs"
+
+
+def test_repo_config_schedule_matches_the_decision() -> None:
+    config = SeekerConfig.load(ROOT / "seeker.yaml")
+    assert (config.schedule.cadence_days, config.schedule.review_every, config.schedule.hour) == (2, 3, 2)
+    assert config.budget_usd == 5.0
+
+
+@pytest.mark.parametrize("folder", ["runs/x.yaml", "logs/seeker.log"])
+def test_runs_and_logs_are_ignored(folder: str) -> None:
+    import subprocess
+
+    result = subprocess.run(["git", "check-ignore", folder], cwd=ROOT, capture_output=True, text=True)
+    assert result.returncode == 0
+
+
+# --- scheduled-run 3.2: the API key from the Keychain -----------------------------------
+
+
+def test_keychain_sits_between_environment_and_dotenv(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from seeker.config import Keychain
+
+    config = SeekerConfig.load(write(tmp_path))
+    (tmp_path / ".env").write_text("ANTHROPIC_API_KEY=from-dotenv\n")
+    monkeypatch.setattr(Keychain, "get", lambda self: "from-keychain")
+    assert config.api_key().get_secret_value() == "from-keychain"
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "from-env")
+    assert config.api_key().get_secret_value() == "from-env"
+    monkeypatch.delenv("ANTHROPIC_API_KEY")
+    monkeypatch.setattr(Keychain, "get", lambda self: None)
+    assert config.api_key().get_secret_value() == "from-dotenv"
+
+
+def test_keychain_only(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from seeker.config import Keychain
+
+    monkeypatch.setattr(Keychain, "get", lambda self: "from-keychain")
+    assert SeekerConfig.load(write(tmp_path)).api_key().get_secret_value() == "from-keychain"
+
+
+def test_missing_key_names_all_three_sources(tmp_path: Path) -> None:
+    with pytest.raises(MissingApiKey) as raised:
+        SeekerConfig.load(write(tmp_path)).api_key()
+    message = str(raised.value)
+    assert "ANTHROPIC_API_KEY" in message and "Keychain" in message and ".env" in message
+
+
+class TestKeychainLookup:
+    """The real Keychain.get, with ``security`` replaced."""
+
+    @pytest.fixture(autouse=True)
+    def real_get(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        import seeker.config
+
+        monkeypatch.setattr(seeker.config.Keychain, "get", REAL_KEYCHAIN_GET)
+        monkeypatch.setattr(seeker.config.sys, "platform", "darwin")
+
+    def run_returning(self, monkeypatch: pytest.MonkeyPatch, returncode: int, stdout: str) -> list:
+        import subprocess
+
+        import seeker.config
+
+        calls: list = []
+
+        def fake(argv, **kwargs):
+            calls.append(argv)
+            return subprocess.CompletedProcess(argv, returncode, stdout=stdout, stderr="")
+
+        monkeypatch.setattr(seeker.config.subprocess, "run", fake)
+        return calls
+
+    def test_found(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        from seeker.config import Keychain
+
+        calls = self.run_returning(monkeypatch, 0, "sk-secret\n")
+        assert Keychain().get() == "sk-secret"
+        assert calls == [["security", "find-generic-password", "-s", "seeker", "-a", "anthropic", "-w"]]
+
+    def test_missing_item_falls_through(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        from seeker.config import Keychain
+
+        self.run_returning(monkeypatch, 44, "")
+        assert Keychain().get() is None
+
+    def test_failing_command_falls_through(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        import subprocess
+
+        import seeker.config
+        from seeker.config import Keychain
+
+        def boom(argv, **kwargs):
+            raise subprocess.TimeoutExpired(argv, 5)
+
+        monkeypatch.setattr(seeker.config.subprocess, "run", boom)
+        assert Keychain().get() is None
+
+    def test_not_macos(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        import seeker.config
+        from seeker.config import Keychain
+
+        monkeypatch.setattr(seeker.config.sys, "platform", "linux")
+        assert Keychain().get() is None

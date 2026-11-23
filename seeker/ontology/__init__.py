@@ -29,7 +29,9 @@ from seeker.ontology.generation import CardReading, Generation, GenerationFailur
 from seeker.ontology.mutation import Lineage, MutationKind, MutationOrigin
 from seeker.ontology.reading import Effort, Reading, RoleName
 from seeker.ontology.role import ReadingGuidance, Role, SearchTool
-from seeker.ontology.run import DebateRun, RoleDigest, StopReason
+from seeker.ontology.run import DebateRun, RoleDigest
+from seeker.ontology.schedule import ReviewSignOff, ScheduledRun, ScheduleOutcome
+from seeker.ontology.stop import StopReason
 from seeker.ontology.tournament import AxisVerdict, Comparison, Rating, ScoreAxis, Tournament
 from seeker.ontology.types import AxisId, CardId, GitCommit, ModelId, Sha256Digest, Synonym, Tag, Url, WorkId
 from seeker.ontology.work import CaptureSource, Work, WorkKind
@@ -72,9 +74,12 @@ __all__ = [
     "Reading",
     "ReadingGuidance",
     "Reply",
+    "ReviewSignOff",
     "Role",
     "RoleDigest",
     "RoleName",
+    "ScheduleOutcome",
+    "ScheduledRun",
     "ScoreAxis",
     "SearchError",
     "SearchReport",

@@ -161,3 +161,18 @@ def test_summary_counts_prior_art_search(config, generation, tmp_path, capsys) -
     args = ["run", str(generation), "--out", str(out), "--config", str(config)]
     assert DebateCommand(ScriptedModel(script)).run(args) == 0
     assert "prior-art search: 2 of 3 with results, 1 with errors" in capsys.readouterr().out
+
+
+def test_a_mutation_stopped_at_its_budget_is_refused(config, tmp_path, capsys) -> None:
+    from tests.mutation_fixtures import mutated_generation
+
+    path = mutated_generation(tmp_path / "generations" / "stopped.yaml")
+    raw = yaml.safe_load(path.read_text())
+    raw["stop_reason"] = "budget"
+    path.write_text(yaml.safe_dump(raw, sort_keys=False))
+    model = ScriptedModel(())
+    for argv in ([str(path), "--dry-run"], [str(path), "--out", str(tmp_path / "run.yaml")]):
+        assert DebateCommand(model).run([*argv, "--config", str(config)]) == 1
+        err = capsys.readouterr().err
+        assert "mutation stopped at its budget" in err and "seeker-mutate" in err
+    assert model.requests == []

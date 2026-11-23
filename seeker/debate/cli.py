@@ -10,19 +10,16 @@ from pathlib import Path
 
 from seeker.config import ConfigError, SeekerConfig, VaultNotConfigured
 from seeker.debate.carried import CarriedDebates, CarryError
-from seeker.debate.debater import Debater, DebateOutcome
+from seeker.debate.debater import DebateOutcome
 from seeker.debate.health import SearchHealth
-from seeker.debate.meter import CostMeter
+from seeker.debate.job import DebateJob, ReportJob
 from seeker.debate.prompts import CriticPrompt, ProsecutorPrompt
 from seeker.debate.record import DebateFile, DebateResumeMismatch
-from seeker.debate.report import SurvivorReport
 from seeker.debate.roles import DebateRoleError, DebateRoles
-from seeker.debate.runner import DebateRunner, GenerationInput
+from seeker.debate.runner import GenerationInput, UnfinishedMutation
 from seeker.debate.schedule import Schedule
-from seeker.debate.tournament import TournamentRunner
-from seeker.decks import DeckDirectory, DeckValidationFailed
+from seeker.decks import DeckValidationFailed
 from seeker.generate.prompt import SystemPrompt
-from seeker.generate.provenance import GitRepo
 from seeker.generate.role_file import RoleFileError
 from seeker.models import AnthropicModel, LanguageModel
 from seeker.ontology import DebateRun, DeckSet, RoleName, ScoreAxis, StopReason
@@ -75,7 +72,9 @@ class DebateCommand:
         except WorksInvalid as invalid:
             print(invalid, file=sys.stderr)
             return 1
-        except (ConfigError, RoleFileError, DebateRoleError, DebateResumeMismatch, CarryError, OSError) as error:
+        except (
+            ConfigError, RoleFileError, DebateRoleError, DebateResumeMismatch, CarryError, UnfinishedMutation, OSError,
+        ) as error:
             print(error, file=sys.stderr)
             return 1
 
@@ -83,46 +82,21 @@ class DebateCommand:
 
     def _run(self, args: argparse.Namespace) -> int:
         config = SeekerConfig.load(args.config)
-        deck_set = DeckDirectory(config.paths.decks).load()
-        source = GenerationInput.read(args.generation, config.root)
-        roles = DebateRoles.load(config.paths.prompts, config.prices)
-        seed = args.seed if args.seed is not None else source.generation.draw_batch.seed
+        job = DebateJob(config, args.generation, seed=args.seed)
         budget = args.budget if args.budget is not None else config.budget_usd
-        carried = CarriedDebates.for_generation(source.generation, config.root)
         if args.dry_run:
-            return self._dry_run(config, deck_set, source, roles, seed, carried)
+            return self._dry_run(config, job.deck_set, job.source, job.roles, job.seed, job.carried)
         if args.out is None and not args.scratch:
             self.parser.error("give --out PATH or --scratch, so the run can be saved and resumed")
-        works = WorkNotes(folder=config.vault().works, deck_set=deck_set)
+        works = job.works()
         model = self.model or AnthropicModel(api_key=config.api_key())
-        meter = CostMeter(config.prices, budget)
-        reading = source.generation.reading
-        debater = Debater(roles, model, deck_set, works, reading, date.today())
-        runner = DebateRunner(roles, debater, meter)
         sink = DebateFile(args.out or config.paths.debates / "scratch" / f"{date.today().isoformat()}-{args.generation.stem}.yaml")
-        record = sink.read() if sink.exists() else None
-        if record is not None:
-            print(f"resuming {sink.path}: {len(record.debates)} debates recorded")
-        progress = runner.debate_all(
-            source, seed, sink=sink, record=record, git_commit=GitRepo(config.root).commit(), carried=carried
-        )
+        if sink.exists():
+            print(f"resuming {sink.path}: {len(sink.read().debates)} debates recorded")
+        progress = job.run(model, sink, budget, works, tournament=not args.no_tournament)
         for outcome in progress.debated:
             print(self._debate_line(outcome))
         current = progress.run
-        if current.stop_reason is not StopReason.BUDGET:
-            if args.no_tournament:
-                current = DebateRun.model_validate({**current.model_dump(), "stop_reason": StopReason.NO_TOURNAMENT})
-                sink.save(current)
-            else:
-                tournament = TournamentRunner(
-                    roles.role(RoleName.JUDGE),
-                    model,
-                    reading,
-                    meter,
-                    config.tournament.max_comparisons,
-                    config.tournament.both_orders,
-                )
-                current = tournament.play(current, source.generation, sink)
         self._summary(current)
         print(f"wrote {sink.path}")
         return EXIT_BUDGET if current.stop_reason is StopReason.BUDGET else 0
@@ -206,19 +180,11 @@ class DebateCommand:
     # -- report ----------------------------------------------------------------------
 
     def _report(self, args: argparse.Namespace) -> int:
-        config = SeekerConfig.load(args.config)
-        deck_set = DeckDirectory(config.paths.decks).load()
-        run = DebateFile(args.run).read()
-        source = GenerationInput.read(config.root / run.generation_path, config.root)
-        if source.digest != run.generation_digest:
+        written = ReportJob(SeekerConfig.load(args.config)).write(args.run)
+        if written.generation_changed:
+            run = DebateFile(args.run).read()
             print(f"{run.generation_path} has changed since the run; the report may not match", file=sys.stderr)
-        parent = None
-        if (origin := source.generation.mutation) is not None:
-            parent_path = CarriedDebates.parent_path(origin, config.root)
-            parent = DebateFile(parent_path).read() if parent_path.is_file() else None
-        report = SurvivorReport(run, source.generation, deck_set, config.prices, parent=parent)
-        path = report.write(config.paths.reports, args.run.stem)
-        print(f"wrote {path}")
+        print(f"wrote {written.path}")
         return 0
 
 

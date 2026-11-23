@@ -10,3 +10,5 @@ reports/*.tmp
 batches/scratch/
 generations/scratch/
 debates/scratch/
+runs/
+logs/

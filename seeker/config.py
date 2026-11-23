@@ -9,6 +9,8 @@ git-ignored ``.env`` beside it.
 from __future__ import annotations
 
 import os
+import subprocess
+import sys
 from datetime import date
 from pathlib import Path
 from typing import ClassVar
@@ -24,6 +26,8 @@ KEY_ENV = "ANTHROPIC_API_KEY"
 VAULT_ENV = "SEEKER_VAULT"
 PER_MILLION = 1_000_000
 FORBIDDEN_KEYS = ("api_key", "anthropic_api_key")
+KEYCHAIN_SERVICE = "seeker"
+KEYCHAIN_ACCOUNT = "anthropic"
 
 
 class ConfigError(Exception):
@@ -33,7 +37,9 @@ class ConfigError(Exception):
 class MissingApiKey(ConfigError):
     def __init__(self, env_file: Path) -> None:
         super().__init__(
-            f"no API key: set {KEY_ENV} in the environment or add {KEY_ENV}=... to {env_file} (git-ignored)"
+            f"no API key: set {KEY_ENV} in the environment, store it in the macOS Keychain "
+            f"(security add-generic-password -s {KEYCHAIN_SERVICE} -a {KEYCHAIN_ACCOUNT} -w), "
+            f"or add {KEY_ENV}=... to {env_file} (git-ignored)"
         )
 
 
@@ -59,8 +65,9 @@ class VaultFolders(SeekerModel):
 
     works: Path = Field(default=Path("Works"), description="One note per captured work.")
     cards: Path = Field(default=Path("Cards"), description="One synced note per deck card.")
+    runs: Path = Field(default=Path("Runs"), description="One note per scheduled trigger that did work.")
 
-    @field_validator("works", "cards")
+    @field_validator("works", "cards", "runs")
     @classmethod
     def _relative(cls, folder: Path) -> Path:
         if folder.is_absolute() or ".." in folder.parts:
@@ -69,17 +76,18 @@ class VaultFolders(SeekerModel):
 
 
 class VaultLayout(SeekerModel):
-    """The resolved vault: its root and the absolute works and cards folders."""
+    """The resolved vault: its root and the absolute works, cards and runs folders."""
 
     model_config = ConfigDict(title="VaultLayout")
 
     root: Path = Field(description="The Obsidian vault root.")
     works: Path = Field(description="Absolute works folder.")
     cards: Path = Field(description="Absolute cards folder.")
+    runs: Path = Field(description="Absolute folder for scheduled-run notes.")
 
     @classmethod
     def under(cls, root: Path, folders: VaultFolders) -> VaultLayout:
-        return cls(root=root, works=root / folders.works, cards=root / folders.cards)
+        return cls(root=root, works=root / folders.works, cards=root / folders.cards, runs=root / folders.runs)
 
 
 class PathsConfig(SeekerModel):
@@ -93,6 +101,9 @@ class PathsConfig(SeekerModel):
     prompts: Path = Field(description="Role files.")
     debates: Path = Field(default=Path("debates"), description="Committed debate-run records.")
     reports: Path = Field(default=Path("reports"), description="Rendered survivor reports.")
+    runs: Path = Field(default=Path("runs"), description="Scheduled-run records, one per trigger (git-ignored).")
+    reviews: Path = Field(default=Path("reviews"), description="Committed review sign-offs.")
+    logs: Path = Field(default=Path("logs"), description="The scheduled job's stdout and stderr (git-ignored).")
     vault: Path | None = Field(
         default=None, description=f"Obsidian vault root; a fallback for {VAULT_ENV}, which wins."
     )
@@ -109,6 +120,9 @@ class PathsConfig(SeekerModel):
             prompts=place(self.prompts),
             debates=place(self.debates),
             reports=place(self.reports),
+            runs=place(self.runs),
+            reviews=place(self.reviews),
+            logs=place(self.logs),
             vault=place(self.vault) if self.vault is not None else None,
         )
 
@@ -197,13 +211,31 @@ class MutationConfig(SeekerModel):
     )
 
 
+class ScheduleConfig(SeekerModel):
+    """When the scheduled run advances a lineage, and when it waits for review."""
+
+    model_config = ConfigDict(title="ScheduleConfig")
+
+    cadence_days: int = Field(
+        default=2,
+        ge=1,
+        description="Days between rounds. A trigger runs once the last round advanced this long ago, less 12 hours.",
+    )
+    review_every: int = Field(
+        default=3,
+        ge=1,
+        description="The lineage pauses for a sign-off whenever the head's round is a multiple of this.",
+    )
+    hour: int = Field(default=2, ge=0, le=23, description="Local hour the LaunchAgent fires each day.")
+
+
 class SeekerConfig(SeekerModel):
     """The parsed seeker.yaml, with paths resolved against the file's folder."""
 
     model_config = ConfigDict(title="SeekerConfig")
 
     SECTIONS: ClassVar[tuple[str, ...]] = (
-        "paths", "prices", "vault_folders", "budget_usd", "tournament", "mutation"
+        "paths", "prices", "vault_folders", "budget_usd", "tournament", "mutation", "schedule"
     )
 
     root: Path = Field(description="Folder holding seeker.yaml; relative paths resolve against it.")
@@ -215,6 +247,7 @@ class SeekerConfig(SeekerModel):
     )
     tournament: TournamentConfig = Field(default_factory=TournamentConfig)
     mutation: MutationConfig = Field(default_factory=MutationConfig)
+    schedule: ScheduleConfig = Field(default_factory=ScheduleConfig)
 
     @classmethod
     def find(cls, start: Path | None = None) -> Path:
@@ -266,8 +299,8 @@ class SeekerConfig(SeekerModel):
         return self.root / ".env"
 
     def api_key(self) -> SecretStr:
-        """The API key from the environment, else .env; raises MissingApiKey."""
-        value = os.environ.get(KEY_ENV) or DotEnv(self.env_file).get(KEY_ENV)
+        """The API key from the environment, else the macOS Keychain, else .env; raises MissingApiKey."""
+        value = os.environ.get(KEY_ENV) or Keychain().get() or DotEnv(self.env_file).get(KEY_ENV)
         if not value:
             raise MissingApiKey(self.env_file)
         return SecretStr(value)
@@ -285,6 +318,35 @@ class SeekerConfig(SeekerModel):
         else:
             raise VaultNotConfigured(self.env_file)
         return VaultLayout.under(root, self.vault_folders)
+
+
+class Keychain:
+    """A generic password in the macOS login keychain, read with ``security``.
+
+    Any failure (not macOS, no such item, a locked keychain, a timeout) reads as no value,
+    so the next key source is tried."""
+
+    TIMEOUT_SECONDS = 5
+
+    def __init__(self, service: str = KEYCHAIN_SERVICE, account: str = KEYCHAIN_ACCOUNT) -> None:
+        self.service = service
+        self.account = account
+
+    def get(self) -> str | None:
+        if sys.platform != "darwin":
+            return None
+        try:
+            found = subprocess.run(
+                ["security", "find-generic-password", "-s", self.service, "-a", self.account, "-w"],
+                capture_output=True,
+                text=True,
+                timeout=self.TIMEOUT_SECONDS,
+                check=False,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            return None
+        value = found.stdout.strip()
+        return value if found.returncode == 0 and value else None
 
 
 class DotEnv:

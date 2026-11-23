@@ -17,6 +17,17 @@ from seeker.debate.roles import DebateRoles
 from seeker.ontology import DebateRun, Generation, GitCommit, SeekerModel, Sha256Digest, StopReason, Usage, WorkId
 
 
+class UnfinishedMutation(Exception):
+    """A mutated generation stopped at its budget, so it is not ready to debate."""
+
+    def __init__(self, label: str, parent_run_path: str) -> None:
+        self.label = label
+        super().__init__(
+            f"{label}: mutation stopped at its budget, so it cannot be debated yet; resume it with "
+            f"seeker-mutate {parent_run_path} --out {label} --budget <more>"
+        )
+
+
 class GenerationInput(SeekerModel):
     """A generation record as a debate reads it: where it is, its bytes' digest, and its content."""
 
@@ -33,6 +44,13 @@ class GenerationInput(SeekerModel):
         label = str(resolved.relative_to(root)) if resolved.is_relative_to(root) else str(resolved)
         generation = Generation.model_validate(yaml.safe_load(data.decode("utf-8")))
         return cls(label=label, digest=hashlib.sha256(data).hexdigest(), generation=generation)
+
+    def require_finished(self) -> GenerationInput:
+        """This input, or UnfinishedMutation when its mutation stopped at its budget."""
+        if self.generation.stop_reason is StopReason.BUDGET:
+            origin = self.generation.mutation
+            raise UnfinishedMutation(self.label, origin.parent_run_path if origin else "<parent run>")
+        return self
 
 
 class RunProgress(SeekerModel):
