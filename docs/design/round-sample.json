@@ -1,0 +1,4420 @@
+{
+ "_note": "Real Seeker data, literal lineage, rounds 1-4, trimmed for design: arguments, rulings and token usage are omitted. Full records: generations/*.yaml and debates/*.yaml.",
+ "rounds": [
+  {
+   "round": 1,
+   "reading": "literal",
+   "generated": "2026-11-04",
+   "debated": "2026-11-14",
+   "cost_usd": {
+    "mutation_or_generation": 0.34,
+    "debate_and_tournament": 2.22,
+    "budget": 5.0
+   },
+   "survivors": [
+    10,
+    6,
+    3
+   ],
+   "comparisons": 66,
+   "both_orders": false,
+   "search_health": null,
+   "generation_failures": [],
+   "ideas": [
+    {
+     "position": 1,
+     "statement": "A webcomic played like Fischinger's Lumigraph that reveals each dark panel only where the reader's fingers press the touchscreen, sounding chords from contact area and position, because the Lumigraph tied light to bodily pressure and the comic's panel order fixes the harmony while each reader's hands set the rhythm.",
+     "final_statement": "A webcomic played like Fischinger's Lumigraph that lights each drawn figure, and sounds its chord tone, only while a fingertip rests on it, so two estranged characters drawn far apart resolve only if the reader stretches to hold both, because the Lumigraph made light exist only under bodily contact, so reach enacts the story's distance.",
+     "cards": [
+      {
+       "id": "no-keyboard",
+       "name": "no keyboard",
+       "axis": "constraint"
+      },
+      {
+       "id": "webcomic",
+       "name": "webcomic",
+       "axis": "medium"
+      },
+      {
+       "id": "lumigraph",
+       "name": "Oskar Fischinger's Lumigraph",
+       "axis": "historical-artifact"
+      }
+     ],
+     "home_field": "music",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1410,
+      "feasibility": 1585,
+      "promise": 1539
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "behavior",
+        "failure": "No verified prior art was found for the full combination, though touch Lumigraph homages and sound-reactive comics probably exist separately and the reveal-by-touch mechanic is likely not novel on its own.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "constraint",
+        "failure": "The builder's Mac desktop has no touchscreen, and browsers report touch radius and force inconsistently, so contact-area sound control cannot be tested without buying a touch device.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "It is a touch-to-reveal ambient toy in which the story is hidden under a flashlight mask, so the comic and the instrument each dilute the other and the mechanism is exhausted within one panel.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 2,
+     "statement": "A wall projection of Ben-Day-dot comic panels that datamoshes itself whenever a single distance sensor detects a viewer leaning in, because halftone printing and video codecs are both compression tricks that only cohere from afar, and closeness should expose the cheat.",
+     "final_statement": "A wall projection of a hand-dotted romance-comic heroine that, whenever its single ultrasonic sensor finds a viewer leaning in, skips keyframes so her Ben-Day face is dragged into the motion of her walking away, because halftone and codec both cohere only at a distance, and here wanting to be close is what dissolves her.",
+     "cards": [
+      {
+       "id": "single-sensor",
+       "name": "a single sensor",
+       "axis": "constraint"
+      },
+      {
+       "id": "datamoshing",
+       "name": "datamoshing",
+       "axis": "technique"
+      },
+      {
+       "id": "ben-day-dots",
+       "name": "Ben-Day dots",
+       "axis": "historical-artifact"
+      }
+     ],
+     "home_field": "visual-art",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1435,
+      "feasibility": 1490,
+      "promise": 1487
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "Proximity-triggered glitching of a projected image is a familiar interactive-art move, so the idea's novelty rests only on the halftone-versus-codec analogy, which a single ultrasonic trigger does not make visible.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "Live I-frame removal from a playing H.264 stream on a Raspberry Pi needs custom bitstream rewriting, which no stock tool provides and which a solo builder would have to write from scratch.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The lean-in-and-it-glitches interaction announces its whole meaning in ten seconds, and the content under the smear is generic comic texture with no character or story whose damage could actually feel like anything.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 3,
+     "statement": "A wordless stop-motion short in which a pen plotter draws a map translated from a Standard MIDI File, filmed frame by frame and screened against that file's playback, because the file is already a time-stamped coordinate list, so one artifact yields both the image and a perfectly synced score.",
+     "final_statement": "A hand-drawn stop-motion short with no dialogue that maps, road by road, a village later drowned by a reservoir while a Standard MIDI File built from its old survey plays on a self-playing piano, because the file encodes each road's elevation as pitch, so the ear hears hills the flat drawing cannot show.",
+     "cards": [
+      {
+       "id": "no-dialogue",
+       "name": "no dialogue",
+       "axis": "constraint"
+      },
+      {
+       "id": "midi-file",
+       "name": "MIDI file",
+       "axis": "medium"
+      },
+      {
+       "id": "cartography",
+       "name": "cartography",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1512,
+      "feasibility": 1389,
+      "promise": 1562
+     },
+     "survivor_rank": 3,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Plotting MIDI pitch and time as pen-plotter lines is already routine, so the idea's only novelty is relabelling the piano-roll plot as a map, and the claimed sync benefit is built into any MIDI visualiser.",
+        "citations": [
+         "https://github.com/jskjott/midi-plotter",
+         "https://github.com/revdancatt/plotter-sounds"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The plotter's physical speed and pen lifts cannot keep pace with dense MIDI ticks, so frame-exact sync with playback is impossible without changing the music.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The 'map' is just a piano roll with renamed axes, so the film is a self-explaining process demo whose perfect machine sync leaves no tension, no place, and no uncanny gap between picture and sound.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 4,
+     "statement": "A gloved-hand hive stethoscope that maps one nanoKONTROL2 knob to a narrow bandpass sweep over an in-hive contact mic, letting a beekeeper dial through the colony's hum to hear swarm piping or queenless roar, because those states live in specific frequency bands and listening beats cracking the lid and chilling the brood.",
+     "final_statement": "A one-knob hive radio that maps a nanoKONTROL2 knob to a high-Q resonant bandpass swept over a sealed contact mic between brood frames, so a gloved beekeeper tunes the colony's hum like a shortwave dial until queen piping rings in as a voice, because those states are narrowband and listening between inspections spares the brood.",
+     "cards": [
+      {
+       "id": "one-knob",
+       "name": "one knob",
+       "axis": "constraint"
+      },
+      {
+       "id": "nanokontrol2-mapping",
+       "name": "nanoKONTROL2 mapping",
+       "axis": "medium"
+      },
+      {
+       "id": "beekeeping",
+       "name": "beekeeping",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "electronics",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1363,
+      "feasibility": 1563,
+      "promise": 1439
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "Without verified searches I can only say that in-hive microphone monitoring of piping and queenless bands is well known, so the idea's novelty is limited to the one-knob nanoKONTROL2 and Teensy sweep interface.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The beekeeping card's contact mic must be wedged between brood frames, so installing it means opening the very hive the idea says it avoids disturbing.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "It reduces an eerie, rich collision (a hive's sound, a studio controller) to a utilitarian bandpass-EQ diagnostic, so the finished object is a competent bee-monitoring gadget with nothing uncanny or strange in it.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 5,
+     "statement": "A hand-cut paper volvelle that spins clauses from historical commune charters into new house rules, which the group must read aloud and debate, because communes governed through spoken assembly and Llull's wheels were built for argument, so voicing a recombined law makes everyone in the room weigh it as a real proposal.",
+     "final_statement": "A cardstock volvelle of verbatim Shaker Millennial Laws and Oneida rules that, spun at an overnight gathering, yields one law a chosen reader speaks aloud and the whole room must obey until breakfast, because Shakers heard their laws read as binding and Oneida enforced them by spoken criticism, so the voiced rule costs everyone something real.",
+     "cards": [
+      {
+       "id": "read-aloud",
+       "name": "must be read aloud",
+       "axis": "constraint"
+      },
+      {
+       "id": "lullian-wheels",
+       "name": "Ramon Llull's combinatorial wheels",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "utopian-communes",
+       "name": "utopian communes",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "writing",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1408,
+      "feasibility": 1639,
+      "promise": 1560
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The literal combination of a charter-fragment volvelle and a read-aloud rule was not found, and the claim that speaking a rule makes it a real proposal is an assumption the idea never tests.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "Real founding charters from five communes must be sourced, transcribed and cut into four rings, which a lone builder cannot finish in three months of evenings.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The rings produce tidy grammatical rules that get a chuckle and a seminar-style debate, so the spoken act never costs anyone anything and the communes' coercion, grief and collapse are absent.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 6,
+     "statement": "A one-ink risograph comic whose panel widths follow a real oak's cross-dated ring-width series and whose scanned pages drive a granular-synthesis patch, turning each year into a grain cloud, because rings and grains both store time as thin measured slices and single-color ink gives the scanner one clean density value, as a core sample does.",
+     "final_statement": "A one-ink photocopied comic that tells a felled oak's life backward from saw cut to seedling, one panel per year sized to a cross-dated ring series, while its scans drive a granular patch built only from the felling's recording, because a tree's chronology becomes legible only once cut, so its death supplies the sound of its life.",
+     "cards": [
+      {
+       "id": "one-color",
+       "name": "one color",
+       "axis": "constraint"
+      },
+      {
+       "id": "granular-synthesis",
+       "name": "granular synthesis",
+       "axis": "technique"
+      },
+      {
+       "id": "dendrochronology",
+       "name": "dendrochronology",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "comics",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1586,
+      "feasibility": 1489,
+      "promise": 1614
+     },
+     "survivor_rank": 2,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "Tree-ring-to-sound mappings and image-to-grain scores are each familiar, so the idea's novelty rests only on the comic-panel framing, and the claim that one ink gives the scanner a clean value is unproven.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "constraint",
+        "failure": "The risograph print run, which the builder's gear list omits, is the step that makes the single-ink page real and it needs an outside shop.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The idea is a tidy data-to-sound mapping that makes drought sparse and wet years lush, so the result is predictable, pleasant, nature-documentary ambience with no uncanny turn or emotional wound, and the felled-tree-as-archive heartbreak goes unused.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 7,
+     "statement": "A one-page TTRPG zine coated in scratch-off black, where players explore a derelict Soviet research station by scratching paths through the coating, then hum the scratched page as a score, because Murzin's ANS made composition an irreversible act of removing darkness, exactly like exploring a dungeon.",
+     "final_statement": "A one-page scratch-off TTRPG zine set inside Murzin's ANS plate that has a referee sweep a pencil scan line rightward each round while the table hums the party's exposed path, letting the light gain whenever the hum breaks, because on the ANS every removal of darkness became sound the machine played.",
+     "cards": [
+      {
+       "id": "one-page",
+       "name": "one page",
+       "axis": "constraint"
+      },
+      {
+       "id": "ttrpg-zine",
+       "name": "TTRPG zine",
+       "axis": "medium"
+      },
+      {
+       "id": "ans-synthesizer",
+       "name": "ANS synthesizer",
+       "axis": "historical-artifact"
+      }
+     ],
+     "home_field": "games",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1607,
+      "feasibility": 1490,
+      "promise": 1360
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The ANS pitch-and-time mapping is only a score-reading convention applied after play, so the scratch-off exploration and the humming don't depend on each other.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The ANS reading demands a glass plate under black mastic with a light path, an optical build the builder's soldering, components and 3D printer cannot deliver.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "The scratch-off mechanic is a clever analogy, but the derelict Soviet station is stock wallpaper and the hummed score is a procedural readout, so the finished thing is a one-use novelty with no dread or strangeness.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 8,
+     "statement": "A one-take live recording of a regional railway timetable played on a used DX7 that sets each line's FM operator ratio from its headway and rides dwell times on the index faders, because clock-face timetables are built from integer intervals, so well-timed connections ring harmonic and schedule conflicts turn clangorous.",
+     "final_statement": "A one-take performance on a stock used DX7 of a regional clock-face timetable's day compressed to an hour, each train a key held from departure to arrival at a harmonic of a fixed-frequency modulator set by its line's headway, because integer headways sound as chords and rush hour demands more held trains than ten fingers allow.",
+     "cards": [
+      {
+       "id": "one-take",
+       "name": "one take",
+       "axis": "constraint"
+      },
+      {
+       "id": "fm-synthesis",
+       "name": "FM synthesis",
+       "axis": "technique"
+      },
+      {
+       "id": "railroad-timetables",
+       "name": "railroad timetables",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "music",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1535,
+      "feasibility": 1408,
+      "promise": 1512
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The idea assumes integer headways map cleanly onto FM ratios, but headways are durations in minutes, not frequencies, so the harmonic-versus-clangorous contrast comes from the performer's chosen mapping, not from the timetable.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Riding several line indices by hand on a stock DX7 with two hands cannot be done live, so the one-hour performance needs custom control hardware first.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "It is a plain parameter-mapping sonification whose payoff, with consonance for on-time and clang for late, is announced in advance, so there is no mystery, no human drama, and nothing the listener discovers.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 9,
+     "statement": "A tabletop Clavilux that projects drifting light-forms from hand-rotoscoped acetate discs of smoke and dancers' hands, played by anyone with one crank and three sliders, because the traced motion already carries the timing of real bodies, so the player only shapes speed and color.",
+     "final_statement": "A tabletop Clavilux that strobes two acetate discs, 24 rotoscoped frames each of a dancer's hand and of smoke, which a player cranks into and out of phase so the smoke seems to obey the hand, because traced real timing only reads as alive when kept crisp and when the player can catch it.",
+     "cards": [
+      {
+       "id": "playable-by-a-non-musician",
+       "name": "playable by a non-musician",
+       "axis": "constraint"
+      },
+      {
+       "id": "rotoscoping",
+       "name": "rotoscoping",
+       "axis": "technique"
+      },
+      {
+       "id": "clavilux",
+       "name": "Thomas Wilfred's Clavilux",
+       "axis": "historical-artifact"
+      }
+     ],
+     "home_field": "visual-art",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1496,
+      "feasibility": 1436,
+      "promise": 1433
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "Wilfred's own consumer Home Clavilux played prerecorded lumia, so the claim that Lumia needed live-invented motion may not hold; I could not verify this by search.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Hand-tracing enough frames of smoke and dancers onto acetate to fill an instrument takes far longer than three months of evenings, before any projector is built.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Once the traced smoke and hands are slowed, blended and blurred through a warped lens, the rotoscoping disappears, leaving a generic psychedelic mood-lamp with speed, color and blur dials and no uncanny or surprising behavior.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 10,
+     "statement": "A camera obscura tent-chapel that screens the live street as a film service, with a written order of call and response triggered by passersby, because a projection that cannot be recorded needs a ritual form to turn unrepeatable light into a shared event.",
+     "final_statement": "A camera obscura tent holding an evensong litany of intercession for strangers crossing its live projected street, the officiant naming each passerby and the congregation answering 'Lord, have mercy' until daylight fails, because people seen once, inverted and unrecorded, can only be held by being prayed for while they pass.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1620,
+      "feasibility": 1431,
+      "promise": 1644
+     },
+     "survivor_rank": 1,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "Without verified sources, no specific prior art can be named; the walk-in camera obscura and ritual-performance strands are likely each covered separately, but I found no evidence of their combination.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "A portable tent that projects a readable daylight street needs a large, heavy lens and a long throw, so it is not the light-tight, portable chapel the statement describes.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The liturgy is borrowed only as a scaffold of call and response, so the street's events become cute cues for murmured answers, and nothing is ever at stake, strange, or sacred.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 11,
+     "statement": "A photocopied zine with a window-cut cover over a tiny OLED that pans across one huge comic drawn as a single infinite canvas, using two thumb pots, because a sub-$10 microcontroller's flash can hold McCloud's borderless comic offline, letting a cartoonist sell it hand-to-hand at zine fairs.",
+     "final_statement": "A photocopied zine whose pages print an entire infinite-canvas comic as a map too small to read, with a $9 cover OLED lens panned by two thumb pots that resolves any spot into legible drawing, because splitting layout onto paper and reading onto a keyhole lets the reader see McCloud's whole landscape yet travel through it at thumb pace.",
+     "cards": [
+      {
+       "id": "under-20-dollars-in-parts",
+       "name": "under $20 in parts",
+       "axis": "constraint"
+      },
+      {
+       "id": "infinite-canvas",
+       "name": "infinite canvas",
+       "axis": "technique"
+      },
+      {
+       "id": "zine",
+       "name": "zine",
+       "axis": "medium"
+      }
+     ],
+     "home_field": "electronics",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1434,
+      "feasibility": 1520,
+      "promise": 1389
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "The idea's likeliest weak point is the pan-by-pots OLED reader itself, since small-display scrolling image viewers are a common hobby build, though I could not verify any specific precedent.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "Copper-tape traces running across the staple and fold lines of a photocopied booklet will crack or short within a few handlings, so it cannot be a durable circuit board.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The OLED keyhole turns an infinite canvas about spatial layout into a pan-and-scroll gadget, and nothing in the comic or the interaction makes the tiny window strange, haunting or meaningful beyond novelty.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 12,
+     "statement": "An erasure poem made on a found VHS soap opera that records black and silence over everything except chosen spoken phrases, keeping at most eight characters' voices, because tape overwriting is a one-way cut and an eight-voice cast lets listeners follow the poem as a dialogue.",
+     "final_statement": "An erasure poem made on a found home-taped VHS soap opera that crash-records black and silence over everything except lines heard over reaction shots, keeping at most eight voices, because each surviving line is spoken off-screen into a listening face, so the poem is what characters were told and no speaker is ever seen.",
+     "cards": [
+      {
+       "id": "eight-voices-max",
+       "name": "eight voices max",
+       "axis": "constraint"
+      },
+      {
+       "id": "erasure",
+       "name": "erasure poetry",
+       "axis": "technique"
+      },
+      {
+       "id": "vhs-tape",
+       "name": "VHS tape",
+       "axis": "medium"
+      }
+     ],
+     "home_field": "writing",
+     "lineage": null,
+     "ratings": {
+      "novelty": 1593,
+      "feasibility": 1561,
+      "promise": 1461
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "constraint",
+        "failure": "I found no verifiable prior art for erasing a home-taped VHS soap opera down to at most eight surviving voices, though found-footage erasure is a known genre.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Consumer VCRs record picture and sound together, so silencing all but chosen phrases without blacking the picture needs an audio-dub deck, which the builder has not secured.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "constraint",
+        "failure": "The constraint keeps the voices tidy and intelligible, so the piece resolves into a sad-sounding supercut of soap clichés with glitch decoration instead of anything uncanny or haunted.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "reading": "literal",
+   "generated": "2026-11-16",
+   "debated": "2026-11-16",
+   "cost_usd": {
+    "mutation_or_generation": 0.7,
+    "debate_and_tournament": 3.22,
+    "budget": 5.0
+   },
+   "survivors": [
+    3,
+    2,
+    4
+   ],
+   "comparisons": 120,
+   "both_orders": true,
+   "search_health": null,
+   "generation_failures": [],
+   "ideas": [
+    {
+     "position": 1,
+     "statement": "A pinhole-chapel Tenebrae in which fifteen pinholes project the live street and are plugged one by one after each psalm, until darkness, knocking, and one view reopened, because Tenebrae is a liturgy built on light being taken away, and here what is taken away is the actual world outside, unrecorded and unrecoverable.",
+     "final_statement": "A pinhole-chapel Tenebrae begun before sunset, whose fifteen live street projections are plugged one per psalm while dusk dims them on its own clock, ending with one hole reopened onto the night street, because the rite's darkening now races the world's own, and what returns is lamplight and headlights, not the daylight taken away.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 10,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1409,
+      "feasibility": 1459,
+      "promise": 1560
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "Live camera obscura projection and Tenebrae's candle-by-candle extinguishing are each long established, so the only new element is substituting plugged pinholes for candles, and I have no verified work that does this.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Pinhole views of a street are bright enough only in daylight, while Tenebrae is sung at dusk, so the projected world disappears before the office ends.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Each pinhole simply stands in for a hearse candle, so the piece translates Tenebrae's existing sequence one-to-one and the live street adds atmosphere but never disrupts, answers, or complicates the rite.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 2,
+     "statement": "A handcart camera obscura carried around a parish boundary at Rogationtide, its hooded reader calling out each landmark sliding across the live table so walkers answer with the litany, or with the curse when a fence blocks the old bounds, because beating the bounds was memory without maps and an unrecordable moving image puts that memory back at stake.",
+     "final_statement": "A hand-pushed hooded camera obscura whose hidden reader recites a parish's old written bounds against the live inverted image at Rogationtide, the walkers answering the litany where the named landmark still shows and 'Amen' to the landmark-curse wherever something else stands, their own houses included, because the unrecordable image turns the gap between record and land into a live verdict.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 10,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1661,
+      "feasibility": 1581,
+      "promise": 1643
+     },
+     "survivor_rank": 2,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "constraint",
+        "failure": "The live-only, unrecordable image is not a real constraint, since every camera obscura already works this way, so the idea's rationale depends on the liturgy pairing and adds nothing of its own.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The walk-in box with a rotating lens-and-mirror turret cannot keep the passing boundary in focus across its range, so the live image the rite depends on goes soft.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "It stages a tidy heritage re-enactment in which the weird inverted image only illustrates a moral about fences, so the uncanny, dreamlike potential of the cart and the chant is spent on civic good-feeling.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 3,
+     "statement": "A live-projected Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time on an 1824 map table, the umpire's casualty dice calling each dead man's name for the congregation to answer 'Grant them eternal rest,' because chance deciding who is named restores the arbitrariness and complicity a tidy alphabetical war memorial erases.",
+     "final_statement": "A live Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time with each block secretly bearing a dead man's name, read when the umpire's dice strike it, because commanders shut in the vestries learn their losses only by hearing the congregation answer 'Grant them eternal rest' through the wall.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 10,
+      "kind": "card_swap",
+      "swapped_axis": "historical-artifact",
+      "replaced_card": "camera-obscura"
+     },
+     "ratings": {
+      "novelty": 1686,
+      "feasibility": 1371,
+      "promise": 1676
+     },
+     "survivor_rank": 1,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "No prior art was located for the specific combination; the nearest unverified cousins are separate Kriegsspiel reconstructions and name-reading memorials, and none was confirmed.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The 1:1 clock needs an hour-by-hour record of a small parish engagement, which a lone builder cannot source or validate in three months.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The dice and names are staged as a controlled, pre-explained ritual, so the promised arbitrariness and complicity are announced as a thesis instead of ever ambushing anyone, leaving a tasteful, earnest memorial-art lecture.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 4,
+     "statement": "A camera obscura tent where a herald blazons each stranger crossing the live projected street as a coat of arms, granted aloud and never written, until dusk erases tinctures and the last arms are 'sable, plain', because heraldry was invented to identify faceless strangers by colour and device, which is exactly all the obscura shows.",
+     "final_statement": "A camera obscura tent that blazons each visitor as they cross the projected lists outside, so on entering they hear their own arms repeated once by the strangers who watched them, then sit to blazon the next, until dusk leaves only 'sable, plain', because heraldry identifies faceless people by colour and device, which is all the obscura shows.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "heraldry",
+       "name": "heraldry",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 10,
+      "kind": "card_swap",
+      "swapped_axis": "domain",
+      "replaced_card": "liturgy"
+     },
+     "ratings": {
+      "novelty": 1641,
+      "feasibility": 1354,
+      "promise": 1591
+     },
+     "survivor_rank": 3,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "behavior",
+        "failure": "No exact precedent was found, though the idea's reliance on tincture loss at dusk might echo existing obscura and heraldic art practice that I could not verify.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "A portable tent cannot hold a sharp street image across a rotating turret without a long throw that a carried, single-person tent cannot physically accommodate.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Every blazon is a mechanical colour-to-tincture translation of anonymous passersby who never know, so the ritual produces cute pedantry and one tidy dusk punchline, not any felt tension between honour and surveillance.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 5,
+     "statement": "A set of loose black-toner comic strips, each a timber's wordless life with panels sized to its rings, that readers cross-date by sliding them under a webcam until a granulated rain recording falls silent on every strip at once, because a dendrochronological date exists only where many trees agree on the same drought.",
+     "final_statement": "A six-lane rail comic of black-toner timber strips that readers slide past a single listening slit, where a granular rain cloud thins under dark ink until aligned drought panels drain all rain at once into a silence the reader must hold, because cross-dating finds a date only where every tree agrees on the year it nearly died.",
+     "cards": [
+      {
+       "id": "one-color",
+       "name": "one color",
+       "axis": "constraint"
+      },
+      {
+       "id": "granular-synthesis",
+       "name": "granular synthesis",
+       "axis": "technique"
+      },
+      {
+       "id": "dendrochronology",
+       "name": "dendrochronology",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "comics",
+     "lineage": {
+      "parent_position": 6,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1538,
+      "feasibility": 1542,
+      "promise": 1318
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The idea's only unproven piece is that darkness-driven grain starvation will make a shared silence audible; nothing here shows that a few beats of quiet across six strips is perceptible against rain noise.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The cross-dating mechanic depends on a webcam tracking six loose sheets' positions and ink density in real time, a computer-vision build the stated stack never names.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "It is a solve-the-puzzle exhibit in which a drought, the one emotionally charged thing here, becomes a win-state chime, so the silence confirms an answer and carries no dread or loss.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 6,
+     "statement": "A one-ink photocopied comic of a churchyard drawn year by year from its living oak's cross-dated core, performed under a document camera with grain clouds built from that year's spoken burial names, because famine years narrow the rings and fill the register at once, so the tree's record and the parish's dead meet on one page.",
+     "final_statement": "A one-ink photocopied accordion comic of a churchyard that sizes each year's panel by its living oak's cross-dated ring, draws it in handwritten burial names, and, pulled under a document camera, granulates that year's spoken names at toner-set density, because famine years narrow the ring and crowd the register, crushing many dead into one blackened sliver.",
+     "cards": [
+      {
+       "id": "one-color",
+       "name": "one color",
+       "axis": "constraint"
+      },
+      {
+       "id": "granular-synthesis",
+       "name": "granular synthesis",
+       "axis": "technique"
+      },
+      {
+       "id": "dendrochronology",
+       "name": "dendrochronology",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "comics",
+     "lineage": {
+      "parent_position": 6,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1576,
+      "feasibility": 1317,
+      "promise": 1576
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "Ring-width-to-sound mapping and tree-ring music are established, so the novelty rests on the comic-panel grid and burial-name grains, and the claim that alignment is evidence is a post hoc reading.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Cross-dating a churchyard oak needs several cores and a statistical match to a regional chronology, and transcribing every burial year by year is weeks of work the statement never prices.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "minor",
+        "target": "behavior",
+        "failure": "The piece is a tidy one-to-one sonification lookup table, ring width to panel width to duration to grain density, so its famine-squeeze elegy is predictable and documentary rather than uncanny or strange.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 7,
+     "statement": "A black-toner photocopied comic that tells a felled oak's life backward, one flow-field-drawn panel per cross-dated ring year, where every streamline in every panel breaks against the same blank saw kerf, because the felling cut crosses all the rings at once and is what makes each year legible, so the death belongs to every year.",
+     "final_statement": "A black-toner photocopied comic that redraws a felled oak once per cross-dated ring year, backward from stump to seedling, as flow-field streamlines bending around a trunk sized by ring widths, all stopping at a blank kerf band at the felling height, because the cut crosses every ring and, in the final pages, hangs in empty air above the seedling.",
+     "cards": [
+      {
+       "id": "one-color",
+       "name": "one color",
+       "axis": "constraint"
+      },
+      {
+       "id": "flow-fields",
+       "name": "flow fields",
+       "axis": "technique"
+      },
+      {
+       "id": "dendrochronology",
+       "name": "dendrochronology",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "comics",
+     "lineage": {
+      "parent_position": 6,
+      "kind": "card_swap",
+      "swapped_axis": "technique",
+      "replaced_card": "granular-synthesis"
+     },
+     "ratings": {
+      "novelty": 1407,
+      "feasibility": 1582,
+      "promise": 1460
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The idea's pieces (ring-data art, flow-field plotting, photocopy zines) are each familiar, so the novelty rests only on the shared kerf band; I could not verify any precedent.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "Density is the idea's only carrier of growth, but photocopier toner gain merges dense streamlines into solid black, erasing the wet-year signal it depends on.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The only event in the comic is a repeated blank stripe, so every page delivers the same idea and the swirling flow-field texture gives the reader no image, character, or strangeness to hold.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 8,
+     "statement": "A black-toner photocopied comic that draws one afternoon ten times, each page inked from a successive archived forecast for it, while a grain engine built only from that day's spoken radio forecast condenses from cloud into words as lead time shrinks, because a forecast is a story the sky hasn't agreed to yet.",
+     "final_statement": "An eight-page black-toner photocopied comic that scores a Pure Data grain patch of a season of recorded NOAA Weather Radio, each page drawing one woman's afternoon from that morning's forecast and granulating that morning's voice, for a date the forecast confidently got wrong, because a forecast is a story the sky never agreed to.",
+     "cards": [
+      {
+       "id": "one-color",
+       "name": "one color",
+       "axis": "constraint"
+      },
+      {
+       "id": "granular-synthesis",
+       "name": "granular synthesis",
+       "axis": "technique"
+      },
+      {
+       "id": "weather-forecasting",
+       "name": "weather forecasting",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "comics",
+     "lineage": {
+      "parent_position": 6,
+      "kind": "card_swap",
+      "swapped_axis": "domain",
+      "replaced_card": "dendrochronology"
+     },
+     "ratings": {
+      "novelty": 1479,
+      "feasibility": 1349,
+      "promise": 1466
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The idea joins known mappings (ink density to grain density, ensemble spread to scatter, forecast convergence to focus) and I could not find or verify any prior work that combines them.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The grain engine is said to use only one radio broadcast, but its scatter depends on GEFS ensemble spread that the broadcast cannot supply.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The convergence arc is a monotone fuzzy-to-sharp progress bar that announces its whole mapping by page two, and the figure is a statistical placeholder with no character, so nothing uncanny or heartbreaking ever happens on the street.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 9,
+     "statement": "A wordless film that turns a Standard MIDI File of a local folk tune into Ordnance Survey grid references and shoots one held landscape shot at each point, each shot lasting its note's length, because the tune's contour sends the camera to ordinary fields and lay-bys no one would choose to film.",
+     "final_statement": "A landscape film with no dialogue that gives each pitch of a regional folk tune's Standard MIDI File one fixed Ordnance Survey grid reference and cuts back to that place whenever the note sounds, for the note's length, because recurring pitches become recurring places the viewer learns to anticipate, so the melody is played on its own ground.",
+     "cards": [
+      {
+       "id": "no-dialogue",
+       "name": "no dialogue",
+       "axis": "constraint"
+      },
+      {
+       "id": "midi-file",
+       "name": "MIDI file",
+       "axis": "medium"
+      },
+      {
+       "id": "cartography",
+       "name": "cartography",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1479,
+      "feasibility": 1693,
+      "promise": 1315
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "behavior",
+        "failure": "No prior art was found, but the search tools failed, so this is weak evidence: the specific pairing of an SMF's ticks and pitches with OS grid references and note-length locked-off shots is unverified either way.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "constraint",
+        "failure": "Shooting every note's grid reference by car and weekend is a fieldwork schedule that three months of evenings and weekends cannot carry out alone.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The note-to-grid mapping is undetectable on screen, so the viewer just sees slow, static shots of dull fields under a slowed MIDI tune, and the promised uncanny gap exists only in the program note.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 10,
+     "statement": "A wordless short film following one walker along an unrecorded footpath, scored by the MIDI file her footsteps write as she paces it, because pace-and-bearing surveying needs only step timing and compass direction, which an SMF stores natively, so the score doubles as the field book from which the lost path is finally redrawn on the map.",
+     "final_statement": "A short film with no dialogue in which a woman walks a vanished footpath by ear, following her late father's pace-and-bearing survey stored as a MIDI file, because the file is literally his field book, so wherever the land has changed his steps play on without her, and the line she finally plots crosses ground now built over.",
+     "cards": [
+      {
+       "id": "no-dialogue",
+       "name": "no dialogue",
+       "axis": "constraint"
+      },
+      {
+       "id": "midi-file",
+       "name": "MIDI file",
+       "axis": "medium"
+      },
+      {
+       "id": "cartography",
+       "name": "cartography",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1527,
+      "feasibility": 1481,
+      "promise": 1587
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "behavior",
+        "failure": "The film's one distinct claim, that the score is the pace-and-bearing field book redrawn onto the map, could not be checked against prior art, though footstep-sensor and walking-sonification work likely sits close to the mechanism.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The compass module reads bearing wrongly near the steel fences and stiles where the detours happen, so the pitch swerves would track the metal, not the walk.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The premise resolves into a tidy, earnest footsteps-to-piano sonification whose closing tracing-paper reveal explains everything, leaving no uncanny, absurd or heartbreaking residue beyond the mapping itself.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 11,
+     "statement": "A wordless hand-drawn stop-motion map of a village drowned by a reservoir, projection-mapped onto a cut-card contour model of its valley, which floods layer by layer up to the real waterline, because plan-view roads draped over surveyed relief show the terrain the flat drawing hid and mark exactly which lanes lie underwater.",
+     "final_statement": "A stop-motion map with no dialogue, projection-mapped onto a cut-card contour model of a drowned valley, that keeps one villager's dotted daily footpath walking beneath hand-inked water risen to the real reservoir contour, because leaving the drowned lanes inhabited and the dry hilltop roads empty turns the survey's cartography into a haunting.",
+     "cards": [
+      {
+       "id": "no-dialogue",
+       "name": "no dialogue",
+       "axis": "constraint"
+      },
+      {
+       "id": "projection-mapping",
+       "name": "projection mapping",
+       "axis": "medium"
+      },
+      {
+       "id": "cartography",
+       "name": "cartography",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "card_swap",
+      "swapped_axis": "medium",
+      "replaced_card": "midi-file"
+     },
+     "ratings": {
+      "novelty": 1413,
+      "feasibility": 1471,
+      "promise": 1498
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "Unverified: no prior art was found because searches failed, though projection-mapped contour models and reservoir-flood visualisations probably exist separately, so the novelty rests only on the wordless stop-motion combination.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The idea never mentions a projector, yet mapping a flat film onto stepped card layers needs one plus per-layer warping and alignment the builder lacks.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The piece treats the flooded village as a legible diagram of which lanes drowned, so the water rises exactly as announced and leaves no ghost, no absurdity and no grief beyond the elegiac reservoir cliché.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 12,
+     "statement": "A wordless hand-drawn stop-motion film in which a real Georgian street's windows are bricked up one by one, while a self-playing piano plays a MIDI file built from the window tax's rate schedule, because the ear hears the law tightening as the eye watches houses go blind, with no words to connect them.",
+     "final_statement": "A stop-motion film with no dialogue whose soundtrack is a MIDI file in which every window of a drawn Georgian terrace is its own note, falling silent the frame it is bricked up as the window tax's statutory thresholds tighten, because the viewer hears each household's tune thin to what tax law allowed, and 1851's repeal restores none.",
+     "cards": [
+      {
+       "id": "no-dialogue",
+       "name": "no dialogue",
+       "axis": "constraint"
+      },
+      {
+       "id": "midi-file",
+       "name": "MIDI file",
+       "axis": "medium"
+      },
+      {
+       "id": "tax-law",
+       "name": "tax law",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "card_swap",
+      "swapped_axis": "domain",
+      "replaced_card": "cartography"
+     },
+     "ratings": {
+      "novelty": 1384,
+      "feasibility": 1617,
+      "promise": 1404
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "Bricked-up window-tax houses and rate-table-to-MIDI sonification are each familiar on their own, but I could not verify any combined precedent.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The film requires a self-playing acoustic piano, which the builder does not own and cannot easily make from a MIDI file within three months.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The audible tax mapping is inaudible, so the film reduces to the stock image of bricked-up windows under swelling chords, an illustration of the one fact everyone already knows about the window tax.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 13,
+     "statement": "A camera obscura tent-chapel that screens the live street as a film service, with a written order of call and response triggered by passersby, because a projection that cannot be recorded needs a ritual form to turn unrepeatable light into a shared event.",
+     "final_statement": "A camera obscura tent holding an evensong litany of intercession for strangers crossing its live projected street, the officiant naming each passerby and the congregation answering 'Lord, have mercy' until daylight fails, because people seen once, inverted and unrecorded, can only be held by being prayed for while they pass.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 10,
+      "kind": "carried"
+     },
+     "ratings": {
+      "novelty": 1496,
+      "feasibility": 1530,
+      "promise": 1555
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": 10,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "Without verified sources, no specific prior art can be named; the walk-in camera obscura and ritual-performance strands are likely each covered separately, but I found no evidence of their combination.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "A portable tent that projects a readable daylight street needs a large, heavy lens and a long throw, so it is not the light-tight, portable chapel the statement describes.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The liturgy is borrowed only as a scaffold of call and response, so the street's events become cute cues for murmured answers, and nothing is ever at stake, strange, or sacred.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 14,
+     "statement": "A one-ink risograph comic whose panel widths follow a real oak's cross-dated ring-width series and whose scanned pages drive a granular-synthesis patch, turning each year into a grain cloud, because rings and grains both store time as thin measured slices and single-color ink gives the scanner one clean density value, as a core sample does.",
+     "final_statement": "A one-ink photocopied comic that tells a felled oak's life backward from saw cut to seedling, one panel per year sized to a cross-dated ring series, while its scans drive a granular patch built only from the felling's recording, because a tree's chronology becomes legible only once cut, so its death supplies the sound of its life.",
+     "cards": [
+      {
+       "id": "one-color",
+       "name": "one color",
+       "axis": "constraint"
+      },
+      {
+       "id": "granular-synthesis",
+       "name": "granular synthesis",
+       "axis": "technique"
+      },
+      {
+       "id": "dendrochronology",
+       "name": "dendrochronology",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "comics",
+     "lineage": {
+      "parent_position": 6,
+      "kind": "carried"
+     },
+     "ratings": {
+      "novelty": 1449,
+      "feasibility": 1669,
+      "promise": 1443
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": 6,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "Tree-ring-to-sound mappings and image-to-grain scores are each familiar, so the idea's novelty rests only on the comic-panel framing, and the claim that one ink gives the scanner a clean value is unproven.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "constraint",
+        "failure": "The risograph print run, which the builder's gear list omits, is the step that makes the single-ink page real and it needs an outside shop.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The idea is a tidy data-to-sound mapping that makes drought sparse and wet years lush, so the result is predictable, pleasant, nature-documentary ambience with no uncanny turn or emotional wound, and the felled-tree-as-archive heartbreak goes unused.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 15,
+     "statement": "A wordless stop-motion short in which a pen plotter draws a map translated from a Standard MIDI File, filmed frame by frame and screened against that file's playback, because the file is already a time-stamped coordinate list, so one artifact yields both the image and a perfectly synced score.",
+     "final_statement": "A hand-drawn stop-motion short with no dialogue that maps, road by road, a village later drowned by a reservoir while a Standard MIDI File built from its old survey plays on a self-playing piano, because the file encodes each road's elevation as pitch, so the ear hears hills the flat drawing cannot show.",
+     "cards": [
+      {
+       "id": "no-dialogue",
+       "name": "no dialogue",
+       "axis": "constraint"
+      },
+      {
+       "id": "midi-file",
+       "name": "MIDI file",
+       "axis": "medium"
+      },
+      {
+       "id": "cartography",
+       "name": "cartography",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "carried"
+     },
+     "ratings": {
+      "novelty": 1355,
+      "feasibility": 1485,
+      "promise": 1410
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": 3,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Plotting MIDI pitch and time as pen-plotter lines is already routine, so the idea's only novelty is relabelling the piano-roll plot as a map, and the claimed sync benefit is built into any MIDI visualiser.",
+        "citations": [
+         "https://github.com/jskjott/midi-plotter",
+         "https://github.com/revdancatt/plotter-sounds"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The plotter's physical speed and pen lifts cannot keep pace with dense MIDI ticks, so frame-exact sync with playback is impossible without changing the music.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The 'map' is just a piano roll with renamed axes, so the film is a self-explaining process demo whose perfect machine sync leaves no tension, no place, and no uncanny gap between picture and sound.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "reading": "literal",
+   "generated": "2026-11-23",
+   "debated": "2026-11-23",
+   "cost_usd": {
+    "mutation_or_generation": 0.8,
+    "debate_and_tournament": 3.89,
+    "budget": 5.0
+   },
+   "survivors": [
+    3,
+    13,
+    4
+   ],
+   "comparisons": 120,
+   "both_orders": true,
+   "search_health": {
+    "prosecutions": 10,
+    "with_results": 10,
+    "with_errors": 0,
+    "citations": 34
+   },
+   "generation_failures": [],
+   "ideas": [
+    {
+     "position": 1,
+     "statement": "A one-take, real-time film of an 1824 Kriegsspiel sung as Compline, where commanders' written orders are chanted on a psalm tone and the umpire moves nothing until the congregation sings 'Amen,' because the uninformed worshippers gradually discover that their reflexive assent is what advances the troops, and the unbroken camera records their voices faltering.",
+     "final_statement": "A single-take, real-time film of a parish's sung Compline with an 1824 Kriegsspiel played in its crossing, where each casualty roll is chanted as a versicle naming the fallen and the congregation sings 'Lord, have mercy', because a nightly office built for commending the dying gives metal blocks a sincere requiem, and the battle stops unfinished when Compline ends.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1544,
+      "feasibility": 1417,
+      "promise": 1488
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "constraint",
+        "failure": "The one-take film requires a real chapel and a rehearsed volunteer congregation, which a solo builder cannot assemble and sustain across the full Compline runtime.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The only payoff, congregants realizing their Amens move troops, is a familiar church-and-war irony delivered as a Milgram-style demonstration, so the film stays a cool thesis rather than anything uncanny or moving.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 2,
+     "statement": "A single unbroken real-time film of an 1824 Kriegsspiel of Waterloo in a working cathedral, whose commanders must leave the table for every scheduled service while the umpire resolves their standing orders, because the liturgy is not staged and cannot be moved, so their absence is real and their losses happen while they pray.",
+     "final_statement": "A single-take real-time film of an 1824 Kriegsspiel of Waterloo played in a parish church on 18 June, where the umpire's casualty reports are read as the names in the intercessions, because the players, kneeling at prayer, learn which regiments their standing orders destroyed only by answering \"Lord, hear our prayer\" with the congregation.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1477,
+      "feasibility": 1414,
+      "promise": 1465
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The real-time Waterloo anniversary wargame and filming real-world events against a fixed clock both have precedent, so the only new element is the liturgical interruption, and the idea is not strictly new even there.",
+        "citations": [
+         "https://militaryhistorynow.com/2015/06/10/waterloo-in-real-time-mhn-to-host-virtual-reenactment-of-famous-battle-online/",
+         "https://www.youtube.com/watch?v=Gtq_jKvHQZI",
+         "https://www.tabletopgaming.co.uk/features/waterloo-replayed-the-biggest-28mm-recreation-of-the-battle-ever-atte/",
+         "https://en.wikipedia.org/wiki/Stairs_1_Geneva"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "The idea assumes a working cathedral will host a nine-and-a-half-hour locked-off shoot through its services, something no lone builder can secure.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The liturgy functions only as a bell-triggered interruption timer, so the war-versus-prayer irony is announced once and then repeated at every service without the chant, text or call-and-response ever altering the game.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 3,
+     "statement": "A candlelit church zoetrope whose soldier's walk cycle has one frame per name on the parish memorial, cranked unbroken from the war diary's zero hour to its closing hour while each name read and answered is lifted from the drum, because the congregation watches its own responses break a man's stride until only a motionless still remains.",
+     "final_statement": "A candlelit church zoetrope whose soldier's walk cycle has one frame per name on the parish memorial, starting empty and cranked unbroken from the war diary's zero hour to its closing hour while each name answered 'Grant them eternal rest' slips its frame into the turning drum, because prayers for rest visibly raise a dead man into walking.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "zoetrope",
+       "name": "zoetrope",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "card_swap",
+      "swapped_axis": "historical-artifact",
+      "replaced_card": "kriegsspiel"
+     },
+     "ratings": {
+      "novelty": 1642,
+      "feasibility": 1434,
+      "promise": 1644
+     },
+     "survivor_rank": 1,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The idea's core device, a memorial where names are taken out one by one so a sequence visibly degrades, has memorial-art cousins, though none with a zoetrope or call and response.",
+        "citations": [
+         "https://www.visitberlin.de/en/bundeswehr-cenotaph",
+         "https://en.wikipedia.org/wiki/Thiepval_Memorial"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The piece cannot be staged by one person, since a two-metre hand-cranked drum needs a parish, a nave, sidesmen and a congregation for hours of live cranking.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The mechanism is a one-to-one allegory announced by its own first stutters, so the hours-long vigil only confirms a solemn, expected point about remembrance and loss without any real strangeness.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 4,
+     "statement": "A live, unrecorded single-take film of the inside of an observation hive that runs while a Kriegsspiel re-fights a parish's war-memorial battle at 1:1 time, its umpire telling the bees each struck block's hidden name, because a colony's alarm builds and decays on its own clock, so the commanders' only casualty report is a roar nobody can script or stop.",
+     "final_statement": "A live, unrecorded single-take hive film projected in each Kriegsspiel commander's shed, where audiences watch him read the comb as his only casualty report while the umpire tells the bees each struck block's memorial name, because a colony's alarm mixes his losses with its own weather and moods, so commanders press attacks on a roar they cannot decode.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "beekeeping",
+       "name": "beekeeping",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "card_swap",
+      "swapped_axis": "domain",
+      "replaced_card": "liturgy"
+     },
+     "ratings": {
+      "novelty": 1571,
+      "feasibility": 1318,
+      "promise": 1620
+     },
+     "survivor_rank": 3,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The hive-as-unscriptable-live-signal and telling-the-bees-for-war-dead pieces are both well-trodden; only the umpire-to-hive casualty channel inside a Kriegsspiel is untested, so the idea's novelty rests on a single coupling.",
+        "citations": [
+         "https://ludwigberger.com/work/vibrating-bees/",
+         "https://requiemforavillage.com/telling-the-bees/",
+         "https://www.wolfgangbuttress.com/hive-soundscape/",
+         "https://www.seattlemag.email/outside/hives-among-the-headstones/",
+         "https://www.louiseannwilson.com/work/tell-it-to-the-bees",
+         "https://en.wikipedia.org/wiki/Kriegsspiel"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The idea substitutes a 1824-style map table for the literal 1824 Prussian wargame, so it does not use the real game its card names.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The audience sees only anonymous bees in infrared while the war, names and knocks stay hidden, leaving a solemn heritage-memorial vigil whose 'bees as grief' metaphor is the first thing anyone would reach for.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 5,
+     "statement": "A blacked-out shopfront camera obscura where a small congregation keeps a dusk vigil of intercessions for strangers crossing the inverted street on the wall, each petition allowed only while its subject is in frame, because praying for unknowing passers-by who drift out mid-sentence makes the room a cinema of the living that feels like the dead.",
+     "final_statement": "A shopfront camera obscura intercession vigil, running from late afternoon until dusk erases faces, where each petition must start when a stranger enters the inverted street on the wall and cannot end until they leave, because unknowing passers-by then dictate every prayer's length while the failing light dissolves their names into shapes.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 2,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1463,
+      "feasibility": 1612,
+      "promise": 1415
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "Each component is established (public camera obscuras, litanies for strangers, live-only viewing), so the only new element is the lapse-when-out-of-frame rule, and that rule does not by itself carry the claimed feeling of cinema of the living as the dead.",
+        "citations": [
+         "https://en.wikipedia.org/wiki/Camera_obscura",
+         "https://en.wikipedia.org/wiki/Camera_obscura_(disambiguation)",
+         "https://sarahjhauser.com/blog/2020/3/17/lord-have-mercy-a-prayer-of-intercession-during-a-season-of-chaos"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The dusk start contradicts the optics: a single-lens projection fades as the street darkens, so the vigil would end before it begins.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The only mechanism is interruption, so after the first cut-off prayer the vigil repeats the same hushed, poignant beat with no escalation, rupture or strangeness, and the promised uncanny dead-cinema feeling is asserted but never built.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 6,
+     "statement": "A Tenebrae service in a lensed, blacked-out chapel where each candle snuffed between psalms lets the inverted living street surface more clearly on a sheet behind the altar, until sunset takes it back, because the liturgy's own darkening becomes the projector's exposure, so the darkness that stands for abandonment reveals the indifferent living city.",
+     "final_statement": "A Tenebrae office in a camera obscura room whose responsories are sung by singers standing in the street outside, seen only as inverted figures on the sheet, sharpening with each snuffed candle and dissolving into dusk while their voices continue through the wall, because the rite's call and response crosses the darkness, and the answering voices outlive their image.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 2,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1481,
+      "feasibility": 1525,
+      "promise": 1562
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "Candle-snuffing as the cue that reveals a street image on a sheet is a standard old obscura show, and Tenebrae's snuffing is established rite, so only the sunset-timed pairing is new.",
+        "citations": [
+         "https://arts.tau.ac.il/sites/arts.tau.ac.il/files/media_server/Arts/filmTV/%D7%97%D7%95%D7%9E%D7%A8%D7%99%20%D7%A7%D7%A8%D7%99%D7%90%D7%94%20%D7%9C%D7%92%D7%90%D7%A0%D7%99%D7%A0%D7%92/Mannoni%20-%20Chapters%201+2%20from%20The%20Great%20Art%20of%20Light%20and%20Shadow.pdf",
+         "https://www.sistersofcarmel.com/tenebrae.php",
+         "https://adoremus.org/2025/03/plunged-into-darkness-the-office-of-tenebrae/",
+         "https://en.wikipedia.org/wiki/Vera_Lutter"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "The idea never says which window faces which street, how far the lens sits from the sheet, or who sings, so the one-person build has no site, lens, or choir.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The reverent pairing resolves into a single legible moral, God's absence as the indifferent city, so the street only illustrates the liturgy's meaning and never disturbs or answers it.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 7,
+     "statement": "A Rogationtide live-cinema rite in which hidden players run Lizzie Magie's Landlord's Game on a board redrawn from the parish tithe map, camera fed straight to projector, while the hall answers every rent paid with the Commination's 'Amen', standing when it is their own house, because Magie's argument about land becomes a verdict spoken once and never kept.",
+     "final_statement": "A Rogationtide live-cinema rite that projects Magie's Landlord's Game, played unrecorded on the parish tithe map, where residents rise when their plot is bought and stay standing through every rent's Amen, because by dusk the hall itself has become the monopoly and is left standing in the dark without a dismissal.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "landlords-game",
+       "name": "The Landlord's Game",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 2,
+      "kind": "card_swap",
+      "swapped_axis": "historical-artifact",
+      "replaced_card": "camera-obscura"
+     },
+     "ratings": {
+      "novelty": 1511,
+      "feasibility": 1416,
+      "promise": 1413
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "The rite needs a congregation of residents whose addresses are on the redrawn board, so one builder cannot stage it without a parish that agrees to host and stand.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The idea reduces to a repeated beat of roll, rent, curse and Amen, with one good moment (standing at your own address) that is spent once and then explained, leaving earnest heritage-theatre moralizing without any uncanny.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 8,
+     "statement": "A street-facing camera obscura whose viewing table is masked by a cut Cardan grille, so that letters from the live, inverted shop signs opposite spell a hidden sentence that passing traffic keeps erasing, because the message's key is the town as it stands right now, and so it can be visited but never copied.",
+     "final_statement": "A portable camera obscura pinned to a pavement mark opposite a bus stop, its viewing table masked by a hand-cut Cardan grille, whose hidden sentence drawn from inverted shop signs is only complete in the seconds a stopping bus's destination blind fills the last holes, because the town must physically arrive to finish its own message.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "cryptography",
+       "name": "cryptography",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 2,
+      "kind": "card_swap",
+      "swapped_axis": "domain",
+      "replaced_card": "liturgy"
+     },
+     "ratings": {
+      "novelty": 1461,
+      "feasibility": 1653,
+      "promise": 1384
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The grille is the only 'key' and anyone at the box can read the message, so it is a position-locked live display rather than a cipher, and the 'never copied' claim is overstated.",
+        "citations": [
+         "https://arxiv.org/pdf/2602.07635",
+         "https://arxiv.org/html/0806.0485.pdf",
+         "https://en.wikipedia.org/wiki/Cardan_grille"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "The subject needs a rented high-street front room with a fixed sight line, which the builder does not have and cannot secure cheaply.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The grille and obscura just cooperate as a clever lock-and-key puzzle, and the unspecified sentence assembled from signage will read as a ransom note, so the encounter is a tidy ephemerality-art 'aha' with no uncanny or emotional residue.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 9,
+     "statement": "A one-performer camera-obscura tournament play whose two rival knights differ only by gules or vert lions, staged so the final duel falls as dusk drains hue from the table and the audience must declare a winner they can no longer tell apart, because heraldry's tincture code fails in failing light exactly where the obscura does.",
+     "final_statement": "A dusk trial-by-combat play seen only on a camera obscura table, where one performer in a reversible gules/vert lion tabard fights himself and the audience must name the traitor, whose arms are then hung reversed yet appear upright through the lens, because failing light erases the tincture that was their only evidence for condemning him.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "heraldry",
+       "name": "heraldry",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 4,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1531,
+      "feasibility": 1506,
+      "promise": 1458
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "Live actors performing outside a darkened chamber for an audience watching the projection is della Porta's 16th-century camera-obscura theatre, and the legibility-at-distance logic is textbook tincture doctrine, so only the dusk-verdict twist is new.",
+        "citations": [
+         "https://www.huntington.org/sites/default/files/volunteer-academy/bscameraobscurabbc.pdf",
+         "https://earlymovingimagetimeline.wordpress.com/2016/07/27/timeline-1-camera-obscura/",
+         "https://tess.oconnor.cx/2023/10/heraldic-link-colors",
+         "https://heraldry.sca.org/armory/newprimer/h4f2.html"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The final act can only be rehearsed at real dusk, so each attempt costs one evening and roughly a dozen tries fit the three-month window.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The dusk-fading-tincture conceit works as a tidy perception demonstration, but the doubled-self duel carries no dread or grief, so the audience's verdict feels like a quiz answer rather than a judgment that costs them anything.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 10,
+     "statement": "A camera obscura tent cinema that screens one uncut, unrecorded street film whose only actor wears a tabard obeying the heraldic rule of tincture, then breaks it to vanish into the real crowd, because heraldry is a legibility code for faceless figures at distance and the obscura's image is exactly that.",
+     "final_statement": "A one-take camera obscura street film that follows a lone walker in a tincture-correct tabard while a herald inside, watching the table, calls only that blazon, until the walker turns it colour-on-colour at a chalk mark and the herald cannot find them, because tincture is how heralds named the faceless at distance, even the dead after battle.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "heraldry",
+       "name": "heraldry",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 4,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1362,
+      "feasibility": 1402,
+      "promise": 1501
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "A live, actors-outside camera obscura tent cinema for about twenty viewers already exists, as 13th-century precedent and NOKILL's 2024 show, so only the tincture-tabard costume device is left as new.",
+        "citations": [
+         "https://www.chalondanslarue.com/en/prog2026/camera-obscura-souvenirs-du-futur/207",
+         "https://en.wikipedia.org/wiki/Rule_of_tincture"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The climax, which the whole piece depends on, cannot be rehearsed or guaranteed because the crowd and street change at every showing.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The vanishing is a didactic rule-then-break reveal, explained in advance by the narrator, so the piece plays as a clever demonstration of heraldic legibility instead of an uncanny or heartbreaking loss.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 11,
+     "statement": "A live-cinema piece where Strachey's love-letter algorithm, its word lists replaced by blazon, types one projected grant of arms per audience seat onto self-blackening thermal paper, striking each coat once granted, because heraldic law allows one bearer per coat, so every love letter costs the strangers after you a little more of the language.",
+     "final_statement": "A recurring live-cinema piece whose Strachey love-letter program, its word lists replaced by blazon, types and then heat-blackens one grant of arms per seat and never reissues a coat across any show, because heraldry's one-bearer law makes each letter permanently spend the language, so later audiences receive letters crowded with apologies for arms already given to strangers.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "strachey-love-letters",
+       "name": "Strachey's love-letter generator",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "heraldry",
+       "name": "heraldry",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 4,
+      "kind": "card_swap",
+      "swapped_axis": "historical-artifact",
+      "replaced_card": "camera-obscura"
+     },
+     "ratings": {
+      "novelty": 1446,
+      "feasibility": 1563,
+      "promise": 1442
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "Every ingredient exists separately, including Strachey ports, swappable word lists and real-time live cinema, so only the exhaustible-coat rule and heat-bar erasure are new, and the rationale credits the combination with more than that.",
+        "citations": [
+         "https://github.com/chrishwiggins/strachey",
+         "https://elmcip.net/creative-work/muc-love-letter-generator/",
+         "https://en.wikipedia.org/wiki/Strachey_love_letter_algorithm"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "constraint",
+        "failure": "The live cinema performance needs a thirty-seat venue, a projection setup and a paid audience, none of which a home studio provides.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The scarcity mechanic is a visible countdown to a foreseeable 'SABLE' ending, so the piece plays as a participatory depletion demo with heraldic jargon pasted into Mad Libs, not an uncanny or heartbreaking experience.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 12,
+     "statement": "A camera obscura hide aimed at a winter rook-and-jackdaw roost where the audience counts arrivals aloud, first by grey nape, then by flight silhouette as dusk drains colour, then by call alone in the dark, because field identification degrades in exactly that order, and the resulting tally is a real roost count that exists only if they watched.",
+     "final_statement": "A camera obscura hide at a winter rook-and-jackdaw roost where a dusk audience counts inverted arrivals aloud, by grey nape, then flight silhouette, then call alone in the dark, because field identification fails in exactly that order as light goes, so the night's real roost count exists only because they watched.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "ornithology",
+       "name": "ornithology",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 4,
+      "kind": "card_swap",
+      "swapped_axis": "domain",
+      "replaced_card": "heraldry"
+     },
+     "ratings": {
+      "novelty": 1328,
+      "feasibility": 1655,
+      "promise": 1492
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The identification ladder of colour marks, then silhouette, then call is standard birding practice, and live unrecordable obscura events already exist, so only the audience-as-surveyor pairing is new.",
+        "citations": [
+         "https://www.wintercrowroost.com/wp-content/uploads/2022-crow-counting-guide.pdf",
+         "https://www.birdsofpooleharbour.co.uk/wp-content/uploads/2025/12/Corvids-of-Poole-Harbour-Study-202425.pdf",
+         "https://www.rspb.org.uk/birds-and-wildlife/identifying-birds/corvids-how-to-identify-the-crow-family"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "constraint",
+        "failure": "The one-metre meniscus lens and large mirror are custom optics the builder cannot make with soldering or a 3D printer, so the projection never exists.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The obscura image serves the count rather than haunting it, so the uncanny inverted roost is reduced to a data-collection tool and the piece reads as a worthy citizen-science evening, not a strange one.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 13,
+     "statement": "A live-projected Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time on an 1824 map table, the umpire's casualty dice calling each dead man's name for the congregation to answer 'Grant them eternal rest,' because chance deciding who is named restores the arbitrariness and complicity a tidy alphabetical war memorial erases.",
+     "final_statement": "A live Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time with each block secretly bearing a dead man's name, read when the umpire's dice strike it, because commanders shut in the vestries learn their losses only by hearing the congregation answer 'Grant them eternal rest' through the wall.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "carried"
+     },
+     "ratings": {
+      "novelty": 1621,
+      "feasibility": 1445,
+      "promise": 1639
+     },
+     "survivor_rank": 2,
+     "debate": {
+      "carried_from": 3,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "No prior art was located for the specific combination; the nearest unverified cousins are separate Kriegsspiel reconstructions and name-reading memorials, and none was confirmed.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The 1:1 clock needs an hour-by-hour record of a small parish engagement, which a lone builder cannot source or validate in three months.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The dice and names are staged as a controlled, pre-explained ritual, so the promised arbitrariness and complicity are announced as a thesis instead of ever ambushing anyone, leaving a tasteful, earnest memorial-art lecture.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 14,
+     "statement": "A handcart camera obscura carried around a parish boundary at Rogationtide, its hooded reader calling out each landmark sliding across the live table so walkers answer with the litany, or with the curse when a fence blocks the old bounds, because beating the bounds was memory without maps and an unrecordable moving image puts that memory back at stake.",
+     "final_statement": "A hand-pushed hooded camera obscura whose hidden reader recites a parish's old written bounds against the live inverted image at Rogationtide, the walkers answering the litany where the named landmark still shows and 'Amen' to the landmark-curse wherever something else stands, their own houses included, because the unrecordable image turns the gap between record and land into a live verdict.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 2,
+      "kind": "carried"
+     },
+     "ratings": {
+      "novelty": 1469,
+      "feasibility": 1640,
+      "promise": 1454
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": 2,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "constraint",
+        "failure": "The live-only, unrecordable image is not a real constraint, since every camera obscura already works this way, so the idea's rationale depends on the liturgy pairing and adds nothing of its own.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The walk-in box with a rotating lens-and-mirror turret cannot keep the passing boundary in focus across its range, so the live image the rite depends on goes soft.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "It stages a tidy heritage re-enactment in which the weird inverted image only illustrates a moral about fences, so the uncanny, dreamlike potential of the cart and the chant is spent on civic good-feeling.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 15,
+     "statement": "A camera obscura tent where a herald blazons each stranger crossing the live projected street as a coat of arms, granted aloud and never written, until dusk erases tinctures and the last arms are 'sable, plain', because heraldry was invented to identify faceless strangers by colour and device, which is exactly all the obscura shows.",
+     "final_statement": "A camera obscura tent that blazons each visitor as they cross the projected lists outside, so on entering they hear their own arms repeated once by the strangers who watched them, then sit to blazon the next, until dusk leaves only 'sable, plain', because heraldry identifies faceless people by colour and device, which is all the obscura shows.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "camera-obscura",
+       "name": "camera obscura",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "heraldry",
+       "name": "heraldry",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 4,
+      "kind": "carried"
+     },
+     "ratings": {
+      "novelty": 1592,
+      "feasibility": 1500,
+      "promise": 1523
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": 4,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "behavior",
+        "failure": "No exact precedent was found, though the idea's reliance on tincture loss at dusk might echo existing obscura and heraldic art practice that I could not verify.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "A portable tent cannot hold a sharp street image across a rotating turret without a long throw that a carried, single-person tent cannot physically accommodate.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Every blazon is a mechanical colour-to-tincture translation of anonymous passersby who never know, so the ritual produces cute pedantry and one tidy dusk punchline, not any felt tension between honour and surveillance.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "round": 4,
+   "reading": "literal",
+   "generated": "2026-11-24",
+   "debated": "2026-11-24",
+   "cost_usd": {
+    "mutation_or_generation": 0.88,
+    "debate_and_tournament": 3.76,
+    "budget": 4.119628
+   },
+   "survivors": [
+    14,
+    13,
+    15
+   ],
+   "comparisons": 126,
+   "both_orders": true,
+   "search_health": {
+    "prosecutions": 11,
+    "with_results": 10,
+    "with_errors": 0,
+    "citations": 23
+   },
+   "generation_failures": [
+    {
+     "position": 7,
+     "reason": "invalid after retry: statement: must be one sentence, but has 2; statement: must be at most 60 words, but has 62"
+    }
+   ],
+   "ideas": [
+    {
+     "position": 1,
+     "statement": "A one-metre zoetrope of a single drawn singing mouth that one performer cranks through the Preces of Evensong, frozen during each versicle and spinning only while the room sings 'And our mouth shall shew forth thy praise', because the singers end up lip-syncing to the drawing and become a live soundtrack dubbing a pre-sound film.",
+     "final_statement": "A candlelit hand-cranked zoetrope of the performer's own drawn mouth that hangs frozen open while the performer chants each Evensong versicle, then spins one syllable per turn as the room sings the response, because strangers end up voicing the performer's answer through a silent drawing that, not they, sets the tempo of the prayer.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "zoetrope",
+       "name": "zoetrope",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1467,
+      "feasibility": 1681,
+      "promise": 1463
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Only the direction of the loop is new, with the drawn mouth leading and the voices following, while hand-cranked drawn frames, live performer-controlled sync and liturgical call and response are each established.",
+        "citations": [
+         "https://en.wikipedia.org/wiki/Th%C3%A9%C3%A2tre_Optique",
+         "https://arxiv.org/pdf/1910.08685"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "At one revolution per sung response, the 24-frame drum runs near 6 to 8 frames per second, too slow to read as a continuous singing mouth.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The drum is a neutral phoneme diagram that the room politely syncs to, so the uncanny reversal is a one-response pun, explained in advance, with no dread, face, or wrongness to carry it further.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 2,
+     "statement": "A Tenebrae zoetrope lit only by the hearse's fifteen candles, cranked at constant speed while one candle is snuffed after each psalm, whose drawn flames stutter in full light and burn ever more smoothly as the chapel darkens, because flicker fusion drops with brightness, so the real fire's death is what brings the painted fire to life.",
+     "final_statement": "A Tenebrae zoetrope lit only by the hearse's fifteen candles, cranked at constant speed while one candle is snuffed after each psalm, whose drawn flames stutter in full light and burn ever more smoothly as the chapel darkens, because flicker fusion drops with brightness, so the real fire's death is what brings the painted fire to life.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "zoetrope",
+       "name": "zoetrope",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1628,
+      "feasibility": 1682,
+      "promise": 1533
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "defended",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "behavior",
+        "failure": "The zoetrope's speed-dependent strobe-versus-fusion behaviour and the Tenebrae candle sequence are both established, and the catalog already pairs real-time with each of liturgy and zoetrope, leaving only the dimming-driven fusion as the novelty.",
+        "citations": [
+         "http://www.randommotion.com/html/zoe.html",
+         "https://en.wikipedia.org/wiki/Tenebrae"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "As the candles die, the lit slits dim with them, so the painted flames may vanish before the smoothing the idea depends on can appear.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "The strip draws candle flames inside a drum lit by candle flames, a self-referential tautology that makes the dying-light-brings-life reversal tidy and legible but never uncanny, so the ritual reads as a perception demo.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "rebut"
+       }
+      ]
+     }
+    },
+    {
+     "position": 3,
+     "statement": "A single silent screening of the 1916 Somme film in a parish nave, scored live on a Fairlight CMI that samples each 'Grant them eternal rest' the congregation answers to a memorial name, because the sampler turns a plea for the dead's rest into the music under men still walking on screen, heard once and never saved.",
+     "final_statement": "A one-time live Fairlight CMI score for a parish screening of The Battle of the Somme (1916) that fires each sampled 'Grant them eternal rest' at speaking pitch whenever a soldier grins or waves at the lens, because the CMI's fast sampling lets a congregation's prayer for the dead come out of living men's mouths, heard once, never saved.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "fairlight-cmi",
+       "name": "Fairlight CMI",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "card_swap",
+      "swapped_axis": "historical-artifact",
+      "replaced_card": "zoetrope"
+     },
+     "ratings": {
+      "novelty": 1331,
+      "feasibility": 1429,
+      "promise": 1552
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "Live-scored Somme screenings in cathedrals and live Fairlight sampling of voices are both established practice, so only the pairing with sampled congregational responses is new, and that is a thin step beyond them.",
+        "citations": [
+         "https://www.williamgoodchild.com/post/world-war-one-centenary-concerts",
+         "https://www.somme100film.com/performances/",
+         "https://www.synthforbreakfast.nl/fairlight-cmi-original-brochure/"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The score's only instrument is a rare, borrowed, failure-prone 1979 machine the builder does not own, and the idea never says how it is found or kept alive.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The irony of a prayer for rest scoring living soldiers is stated up front and then repeated as one unvarying pitched-down drone for 77 minutes, so the Fairlight becomes solemn war-memorial texture instead of something uncanny.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 4,
+     "statement": "A shop-window zoetrope on a town's Whit Walk route that animates a hundred years of newspaper photos as one stride-mismatched walker, its last missing frame shot live from the passing procession, because the zoetrope fuses any frames whose poses line up, so a century of strangers becomes one body that only completes if today's walker steps into the gap.",
+     "final_statement": "A shop-window zoetrope on a Whit Walk route that fuses twelve newspaper-archive walkers from across a century into one stride, cranked only while the procession passes, its blank frame filled by an instant print of a passing walker developing inside the spinning drum, because matched poses override identity, so a stranger already gone fades in among the town's past.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "zoetrope",
+       "name": "zoetrope",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "local-newspaper-archives",
+       "name": "local newspaper archives",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "card_swap",
+      "swapped_axis": "domain",
+      "replaced_card": "liturgy"
+     },
+     "ratings": {
+      "novelty": 1341,
+      "feasibility": 1655,
+      "promise": 1383
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "The core pieces (a zoetrope fed by archive press photographs, a walk-cycle drum, a live-only showing) are each established, so only the stride-matched cross-decade fusion with a live-shot gap frame is new.",
+        "citations": [
+         "https://www.studiointernational.com/mat-collishaw-interview-i-think-human-beings-are-always-drawn-to-the-slightly-illicit/",
+         "https://www.flickr.com/photos/manchesterarchiveplus/albums/72157627020766556/",
+         "https://materialdistrict.com/article/3d-printed-zoetrope-walking-dancing-people/"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The literal card gives microfilm page scans and a morgue the builder may not enter, not the one-print-per-year stack of photocopies the idea needs.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The uncanny century-long body resolves into a sentimental community-completion beat, a 'town is one walker' heritage-festival montage whose suspense is just a staged photo-op with a pat payoff.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 5,
+     "statement": "A single-take, real-time film of a full sung Requiem in which the clergy covertly play an 1824 Kriegsspiel, sending orders inside the Gospel book and posting casualties on the hymn boards, because the Mass's silent couriering already matches the wargame's structure and an unexplained, uncut take makes viewers discover the war themselves rather than be told it.",
+     "final_statement": "A single-take, real-time film of a sung Requiem in which two cantors command half-choirs in a literal 1824 Kriegsspiel umpired on the catafalque, each casualty silencing a singer, because Kriegsspiel's order and report loop mirrors liturgical call and response, and losing voices uncut makes the dice audible as mourning.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 13,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1387,
+      "feasibility": 1460,
+      "promise": 1460
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The uncut real-time feature form is well established, and Kriegsspiel's umpire-and-courier structure is documented, so only the Requiem pairing is new; the claim that the Mass already matches the game's structure is asserted, not demonstrated.",
+        "citations": [
+         "https://en.wikipedia.org/wiki/One-shot_film"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "A single uncut hour of live sung Requiem needs a choir, congregation, ministers and a church, none of which one person on evenings and weekends can produce.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The war is invisible by design, so the film reduces to an hour of unscored Mass whose hidden wargame only a program note could make felt, leaving the Requiem's grief and the carnage never touching.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 6,
+     "statement": "A nine-hour, uncut, real-time triptych film of Königgrätz played as Reisswitz's Kriegsspiel by two commanders who must leave to chant the canonical hours, while the umpire silently keeps rolling casualties, because the war proceeding unattended through prayer ambushes both players and viewers with a complicity that nobody explains.",
+     "final_statement": "An uncut real-time film of Königgrätz played as Reisswitz's 1824 Kriegsspiel in one room that makes both commanders break at Terce, Sext and None to chant the psalms antiphonally, backs to the table, while the umpire executes their standing orders, because each Office forces them to plan killing for the minutes they spend singing to their enemy.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 13,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1366,
+      "feasibility": 1554,
+      "promise": 1535
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "Real-time filmed Kriegsspiel with a hidden umpire is established, so the 'unattended war' effect is the game's ordinary fog of war; only the canonical-hours absence is new.",
+        "citations": [
+         "https://kriegsspiel.org/videos/",
+         "https://kriegsspiel.org/iks/"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The rationale claims one room suffices, but the behavior needs three separate rooms plus a umpire station, so the set and crew exceed what it promises.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The three-Office structure delivers one irony (prayer while killing proceeds) once, then repeats it twice, so nine hours of tidy, symmetrical rigor collapse into a thesis with no uncanny or absurd excess.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 8,
+     "statement": "A one-take, live-streamed, never-archived film of a parish's memorial battle re-fought as Kriegsspiel at 1:1 time, each block hiding a soldier's real probate entry, where an on-camera accountant computes and stamps EXEMPT the estate duty forgiven a man killed on active service, because commanders learn whom they killed only from the tax relief slip.",
+     "final_statement": "A one-take, live-streamed, never-archived film of a parish's memorial battle re-fought as 1824 Kriegsspiel at 1:1 time by two present-day parishioners, whose only casualty report is an on-camera accountant's estate-duty slip computing then waiving a named local man's real probate duty, because the commanders may read their own street or surname in a death their order caused.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "tax-law",
+       "name": "tax law",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 13,
+      "kind": "card_swap",
+      "swapped_axis": "domain",
+      "replaced_card": "liturgy"
+     },
+     "ratings": {
+      "novelty": 1611,
+      "feasibility": 1533,
+      "promise": 1517
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "Real-time, streamed, umpire-run Kriegsspiel with separated commanders is established practice, so only the estate-duty slip as the sole casualty report is new, and that is a small twist on an existing format.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "fatal",
+        "target": "behavior",
+        "failure": "The live-streamed one-take staging needs at least six simultaneous human roles, and a solo builder cannot fill them all at once.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The accountant's ritual always ends in the same nil-and-stamp, so after the first casualty the film's single idea is exhausted and every later death is a repeat of a thesis already understood.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 9,
+     "statement": "A single-take film that follows a beekeeper commanding a real swarm chase from a literal 1824 Kriegsspiel map table, with runner-delayed reports and an umpire, at 1:1 time until the swarm is hived or lost, because a swarm picks its home by scout vote no doctrine can predict, so the wargame meets an enemy with no strategy to read.",
+     "final_statement": "A single-take film shot at an 1824 Kriegsspiel umpire's table beneath a real artificial swarm that shows the umpire decoding scouts' waggle dances into delayed runner dispatches for an unseen beekeeper-commander, 1:1 until the swarm lifts and is hived or lost, because the vote is visible on the cluster yet undecided until quorum.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "beekeeping",
+       "name": "beekeeping",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 4,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1603,
+      "feasibility": 1335,
+      "promise": 1324
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "Live Kriegsspiel and swarm-catching documentaries already exist, and the umpire who watches the cluster and filters every report makes the swarm's 'unreadable' vote a human-mediated adjudication, not a new kind of opponent.",
+        "citations": [
+         "https://vimeo.com/280785456"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "A single lone builder cannot stage a real swarm issue on demand, so the one-take 1:1 film depends on luck with bees rather than a buildable production.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The conceit hides the swarm from the camera, so the film is a costumed man reading slips at a table, and its one joke is explained up front instead of becoming uncanny.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 10,
+     "statement": "A single-take film of a literal 1824 Kriegsspiel whose master map is the glass face of an observation hive during a nectar flow, because bees draw and cap comb at their own pace, turning open ground into woods beneath the blocks, so the camera shows armies stranded by terrain growing in real time.",
+     "final_statement": "A single-take, real-time film of an 1824 Kriegsspiel umpire's table that carries out written orders, read aloud on camera, on a master map of an observation hive drawn from bare foundation during a nectar flow, because the colony redraws the terrain faster than reports reach the commanders.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "beekeeping",
+       "name": "beekeeping",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 4,
+      "kind": "reworking"
+     },
+     "ratings": {
+      "novelty": 1590,
+      "feasibility": 1378,
+      "promise": 1305
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "Real-time observation-hive films of comb building and live Kriegsspiel recordings both exist, so only the comb-as-terrain mapping is new; the claim that slow change becomes legible over hours is already the stated aim of existing hive video art.",
+        "citations": [
+         "https://annemariemaes.net/tag/observation-beehive/",
+         "https://armchairdragoons.com/nineteenth-century-military-war-games-lieutenant-von-reisswitzs-kriegsspiel/"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "Comb drawn and capped inside one day barely changes the cell types the umpire reads, so the terrain in the frame stays nearly constant between dawn and dusk.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The actual drama, commanders misled by terrain that has changed under them, happens in sketches off-screen, so the single take shows only bees and blocks and leaves a slow, static demonstration of its own premise.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 11,
+     "statement": "A live lumia film played on a Clavilux rebuilt from Wilfred's patents, projected through an observation hive's glass, whose drifting light steers the colony's waggle dances toward or away from a filmed feeder, because von Frisch showed comb dancers take a lamp for the sun, so every beautiful sweep of light misdirects real foragers.",
+     "final_statement": "A live lumia played on a Clavilux rebuilt from Wilfred's patents and projected down onto a horizontal glass observation hive, whose waggle dances visibly swing to follow its brightest form and scatter in its red passages, because von Frisch showed bees dancing on a flat comb take a visible lamp for the sun.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "clavilux",
+       "name": "Thomas Wilfred's Clavilux",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "beekeeping",
+       "name": "beekeeping",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 4,
+      "kind": "card_swap",
+      "swapped_axis": "historical-artifact",
+      "replaced_card": "kriegsspiel"
+     },
+     "ratings": {
+      "novelty": 1459,
+      "feasibility": 1511,
+      "promise": 1533
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The steering mechanism is von Frisch's 1940s artificial-sun experiment, and on a vertical comb the dance only splits the difference between light and gravity, so a lumia cannot fully capture dances and 'every sweep misdirects' overstates the effect.",
+        "citations": [
+         "https://www.nobelprize.org/uploads/2018/06/frisch-lecture.pdf",
+         "https://www.polarization.com/bees/bees2.html",
+         "https://www.getty.edu/publications/keepitmoving/case-studies/4-snow/",
+         "https://en.wikipedia.org/wiki/Clavilux"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "fatal",
+        "target": "constraint",
+        "failure": "The piece depends on a living colony reliably dancing toward a lamp, a biological response that no builder can guarantee on a schedule within three months.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The empty-dish feeder feed turns an uncanny image of bees misled by light into a dull performance-metrics readout, so the audience watches a performer optimize while the actual misdirection happens offscreen and is only described.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 12,
+     "statement": "A live, unrecorded single-take film of the western horizon, projected in each Kriegsspiel commander's shed, from which he must forecast the next hour himself while the umpire rules the 1824 game's mud and visibility from the real sky, because a forecast made in real time is a wager the audience watches him lose in named blocks.",
+     "final_statement": "A live, unrecorded single-take film of the western sky in two Kriegsspiel commanders' sheds that sets each written forecast against the umpire's hourly station readings and places every lost block's memorial name into the shot, because a real-time forecast is a wager whose losses pile up on the very sky that decided them.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "weather-forecasting",
+       "name": "weather forecasting",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 4,
+      "kind": "card_swap",
+      "swapped_axis": "domain",
+      "replaced_card": "beekeeping"
+     },
+     "ratings": {
+      "novelty": 1499,
+      "feasibility": 1408,
+      "promise": 1375
+     },
+     "survivor_rank": null,
+     "debate": {
+      "carried_from": null,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "subject",
+        "failure": "Live Kriegsspiel, historical-battle reenactment and hidden weather as a gameplay variable are each established, so only the pairing of a live sky feed with real-weather rulings is new.",
+        "citations": [
+         "https://kriegsspiel.org/how-i-fell-in-love-with-kriegsspiel/",
+         "https://en.wikipedia.org/wiki/Cobra:_Game_of_the_Normandy_Breakout",
+         "https://en.wikipedia.org/wiki/Recreational_wargaming"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The weather-forecasting card requires a commander's forecast to be checked against the umpire's station readings, which this idea walls off from both commanders.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The film element is just a live window onto weather, so the experience reduces to men squinting at gray sky and rolling dice while the memorial names stay buried, a thesis-driven reenactment with no uncanny or cathartic event.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 13,
+     "statement": "A candlelit church zoetrope whose soldier's walk cycle has one frame per name on the parish memorial, cranked unbroken from the war diary's zero hour to its closing hour while each name read and answered is lifted from the drum, because the congregation watches its own responses break a man's stride until only a motionless still remains.",
+     "final_statement": "A candlelit church zoetrope whose soldier's walk cycle has one frame per name on the parish memorial, starting empty and cranked unbroken from the war diary's zero hour to its closing hour while each name answered 'Grant them eternal rest' slips its frame into the turning drum, because prayers for rest visibly raise a dead man into walking.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "zoetrope",
+       "name": "zoetrope",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 3,
+      "kind": "carried"
+     },
+     "ratings": {
+      "novelty": 1669,
+      "feasibility": 1583,
+      "promise": 1669
+     },
+     "survivor_rank": 2,
+     "debate": {
+      "carried_from": 3,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "rationale",
+        "failure": "The idea's core device, a memorial where names are taken out one by one so a sequence visibly degrades, has memorial-art cousins, though none with a zoetrope or call and response.",
+        "citations": [
+         "https://www.visitberlin.de/en/bundeswehr-cenotaph",
+         "https://en.wikipedia.org/wiki/Thiepval_Memorial"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The piece cannot be staged by one person, since a two-metre hand-cranked drum needs a parish, a nave, sidesmen and a congregation for hours of live cranking.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The mechanism is a one-to-one allegory announced by its own first stutters, so the hours-long vigil only confirms a solemn, expected point about remembrance and loss without any real strangeness.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 14,
+     "statement": "A live-projected Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time on an 1824 map table, the umpire's casualty dice calling each dead man's name for the congregation to answer 'Grant them eternal rest,' because chance deciding who is named restores the arbitrariness and complicity a tidy alphabetical war memorial erases.",
+     "final_statement": "A live Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time with each block secretly bearing a dead man's name, read when the umpire's dice strike it, because commanders shut in the vestries learn their losses only by hearing the congregation answer 'Grant them eternal rest' through the wall.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "liturgy",
+       "name": "liturgy",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 13,
+      "kind": "carried"
+     },
+     "ratings": {
+      "novelty": 1542,
+      "feasibility": 1489,
+      "promise": 1687
+     },
+     "survivor_rank": 1,
+     "debate": {
+      "carried_from": 13,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "minor",
+        "target": "subject",
+        "failure": "No prior art was located for the specific combination; the nearest unverified cousins are separate Kriegsspiel reconstructions and name-reading memorials, and none was confirmed.",
+        "citations": []
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The 1:1 clock needs an hour-by-hour record of a small parish engagement, which a lone builder cannot source or validate in three months.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The dice and names are staged as a controlled, pre-explained ritual, so the promised arbitrariness and complicity are announced as a thesis instead of ever ambushing anyone, leaving a tasteful, earnest memorial-art lecture.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "rebut"
+       },
+       {
+        "answers": "skeptic",
+        "move": "rebut"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    },
+    {
+     "position": 15,
+     "statement": "A live, unrecorded single-take film of the inside of an observation hive that runs while a Kriegsspiel re-fights a parish's war-memorial battle at 1:1 time, its umpire telling the bees each struck block's hidden name, because a colony's alarm builds and decays on its own clock, so the commanders' only casualty report is a roar nobody can script or stop.",
+     "final_statement": "A live, unrecorded single-take hive film projected in each Kriegsspiel commander's shed, where audiences watch him read the comb as his only casualty report while the umpire tells the bees each struck block's memorial name, because a colony's alarm mixes his losses with its own weather and moods, so commanders press attacks on a roar they cannot decode.",
+     "cards": [
+      {
+       "id": "real-time-only",
+       "name": "real-time only",
+       "axis": "constraint"
+      },
+      {
+       "id": "kriegsspiel",
+       "name": "Kriegsspiel",
+       "axis": "historical-artifact"
+      },
+      {
+       "id": "beekeeping",
+       "name": "beekeeping",
+       "axis": "domain"
+      }
+     ],
+     "home_field": "film",
+     "lineage": {
+      "parent_position": 4,
+      "kind": "carried"
+     },
+     "ratings": {
+      "novelty": 1508,
+      "feasibility": 1299,
+      "promise": 1664
+     },
+     "survivor_rank": 3,
+     "debate": {
+      "carried_from": 4,
+      "outcome": "revised",
+      "critiques": [
+       {
+        "role": "prosecutor",
+        "severity": "serious",
+        "target": "rationale",
+        "failure": "The hive-as-unscriptable-live-signal and telling-the-bees-for-war-dead pieces are both well-trodden; only the umpire-to-hive casualty channel inside a Kriegsspiel is untested, so the idea's novelty rests on a single coupling.",
+        "citations": [
+         "https://ludwigberger.com/work/vibrating-bees/",
+         "https://requiemforavillage.com/telling-the-bees/",
+         "https://www.wolfgangbuttress.com/hive-soundscape/",
+         "https://www.seattlemag.email/outside/hives-among-the-headstones/",
+         "https://www.louiseannwilson.com/work/tell-it-to-the-bees",
+         "https://en.wikipedia.org/wiki/Kriegsspiel"
+        ]
+       },
+       {
+        "role": "skeptic",
+        "severity": "serious",
+        "target": "card_reading",
+        "failure": "The idea substitutes a 1824-style map table for the literal 1824 Prussian wargame, so it does not use the real game its card names.",
+        "citations": []
+       },
+       {
+        "role": "taste_critic",
+        "severity": "serious",
+        "target": "behavior",
+        "failure": "The audience sees only anonymous bees in infrared while the war, names and knocks stay hidden, leaving a solemn heritage-memorial vigil whose 'bees as grief' metaphor is the first thing anyone would reach for.",
+        "citations": []
+       }
+      ],
+      "replies": [
+       {
+        "answers": "prosecutor",
+        "move": "concede"
+       },
+       {
+        "answers": "skeptic",
+        "move": "concede"
+       },
+       {
+        "answers": "taste_critic",
+        "move": "concede"
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "full_debate_example": {
+  "round": 4,
+  "position": 14,
+  "final_statement": "A live Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time with each block secretly bearing a dead man's name, read when the umpire's dice strike it, because commanders shut in the vestries learn their losses only by hearing the congregation answer 'Grant them eternal rest' through the wall.",
+  "critiques": [
+   {
+    "role": "prosecutor",
+    "severity": "minor",
+    "target": "subject",
+    "failure": "No prior art was located for the specific combination; the nearest unverified cousins are separate Kriegsspiel reconstructions and name-reading memorials, and none was confirmed.",
+    "argument": "The catalog holds no work linking any two of the three cards. My web searches failed. The search tool hit its usage limit, so I got no results and have no URL I can cite. I won't invent precedent. Kriegsspiel has been staged as a game, and names of the dead are read in memorial services. Those are separate neighbours, and I can't point to any one work that combines them.",
+    "citations": []
+   },
+   {
+    "role": "skeptic",
+    "severity": "serious",
+    "target": "behavior",
+    "failure": "The 1:1 clock needs an hour-by-hour record of a small parish engagement, which a lone builder cannot source or validate in three months.",
+    "argument": "The idea depends on an hour-by-hour timeline of one parish's memorial engagement so the game can run at 1:1 with the real fighting. Most small local actions have no such record. Finding the sources, reading them in period German or regional archives, and reconciling them with terrain and unit positions is research that takes far longer than the builder's roughly three months of evenings and weekends. Without that timeline, the clock that ends the service is invented, and the core claim that chance restores the real dead's arrangement falls apart.",
+    "citations": []
+   },
+   {
+    "role": "taste_critic",
+    "severity": "serious",
+    "target": "rationale",
+    "failure": "The dice and names are staged as a controlled, pre-explained ritual, so the promised arbitrariness and complicity are announced as a thesis instead of ever ambushing anyone, leaving a tasteful, earnest memorial-art lecture.",
+    "argument": "On paper this is dreamlike and heartbreaking: dice, miniature blocks, and great-grandfathers' names. But the thing itself will be a quiet church service where a man shoves wooden blocks around a table and a priest reads names off a list, and the congregation mumbles a response. The surreal collision never happens in the room, because the sacred and the procedural are kept politely apart. The dice choose names from a roll, and the roll was already printed on the memorial. So the 'arbitrariness' is a ceremony of arbitrariness, announced in the program and carried out in a plainly orderly way. Nobody is surprised, and nobody is implicated. The commanders playing 'their own great-grandfathers' are told in advance it is a play, so complicity is a stated theme rather than a felt one. Meanwhile the rationale does most of the work. The idea explains in paragraphs why it should hurt, which is how a thesis-driven installation behaves. It is the familiar 'war memorial reinterpreted by process' move, the participatory-commemoration cliché, with a gimmick bolted on: real-time clock, projector cut-off, silent reading. The cut-off at the battle's hour is the one good beat, but it is a single stage effect inside a long ritual. Nothing in the piece is odd or uncanny. A pair of vestry runners and an umpire read as historical-reenactment society chic. You meet it, you nod, you admire the conceit, and you go home having been shown an argument rather than haunted.",
+    "citations": []
+   }
+  ],
+  "replies": [
+   {
+    "answers": "prosecutor",
+    "move": "rebut",
+    "argument": "No located precedent is not a failure of the idea. Staging Kriegsspiel and reading names of the dead are separate practices, and the prosecutor confirms nothing joins them. The revision keeps that junction, made tighter: in the revision, the names are bound to the blocks themselves."
+   },
+   {
+    "answers": "skeptic",
+    "move": "rebut",
+    "argument": "This misreads the clock. The game is re-fought freely, not replayed move by move against a historical timeline, so only two facts are needed: when the engagement began and when it ended. The idea never claimed chance restores the real order of deaths. It claims the opposite: chance replaces the order with arbitrariness. Parish memorials are overwhelmingly First World War, and battalion war diaries recording zero hour and the end of the action are digitised and in English (UK National Archives WO 95). Matching a memorial name to its battalion and that day is an evenings-and-weekends job. The one fair point is that I must choose an engagement whose diary fixes both hours, and the revision says so."
+   },
+   {
+    "answers": "taste_critic",
+    "move": "concede",
+    "argument": "Right, and the fault runs deeper than the critique says. The names come from a list the officiant reads in turn, so the dice only ever chose when a name is read, never whose name. Commanders who are told the theme are play-acting complicity. The cure is inside Kriegsspiel itself. Commanders were kept apart and learned their losses only through the umpire. So I hide one name under each block, give the commanders no briefing, and let the congregation's 'Grant them eternal rest' through the vestry wall be their only casualty report. Then the commander is ambushed mid-order by a prayer for a man their own order killed, and the room's silences and volleys of names follow the fighting rather than a script."
+   }
+  ],
+  "outcome": "revised",
+  "revision": {
+   "statement": "A live Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time with each block secretly bearing a dead man's name, read when the umpire's dice strike it, because commanders shut in the vestries learn their losses only by hearing the congregation answer 'Grant them eternal rest' through the wall.",
+   "subject": "A live, unrecorded Kriegsspiel requiem service in a parish church, played on an 1824-style map table with an overhead projection in the nave",
+   "behavior": "A parish's memorial engagement, chosen because its battalion war diary fixes the hours when fighting began and ended, is re-fought freely on an 1824-style map table at 1:1 time, never paused or recorded. An overhead camera feeds the nave projector live. Before the service, each unit block has one name from the memorial roll fixed to its underside. Neither commander knows which name is on which block, and nothing is explained to them beyond the Kriegsspiel rules. The two commanders sit shut in separate vestries and send written orders by runner. When the umpire's dice strike a block, he turns it over and the officiant reads the name. The congregation answers 'Grant them eternal rest.' The commanders get no casualty report: they hear their losses only as that response coming through the vestry wall. Quiet stretches of play leave the church silent, and an assault brings a fast run of names. At the diary's closing hour the projector is cut mid-move, and the names on blocks never struck are read silently from a printed roll.",
+   "rationale": "Kriegsspiel was built to deliver losses to a commander as an umpire's abstract report. Here the report arrives as a congregation's prayer for a named man, heard through stone by the person whose written order caused it. Complicity is not announced. The commander discovers it alone in a vestry, mid-order. The real-time clock makes the tempo of the liturgy the tempo of the fighting. Names hidden under blocks make chance bind each man to a unit no one chose for him, unlike the tidy alphabetical roll. Only the war diary's start and end hours are needed, so the clock is historical, not invented."
+  },
+  "sample_rulings": [
+   {
+    "first": 13,
+    "second": 14,
+    "verdicts": [
+     {
+      "axis": "novelty",
+      "winner": 13,
+      "ruling": "A's literal zoetrope assembled by prayer, with its revenant inversion, had no precedent found beyond loose name-gap memorials, while B's Kriegsspiel with names under blocks rests on an unverified search that found nothing."
+     },
+     {
+      "axis": "feasibility",
+      "winner": 13,
+      "ruling": "A needs a plywood drum, a crank and hand-drawn cards, which is shed work the reply rightly separates from the venue and rota, and it can be tested on a small mock drum, whereas B needs two commanders, runners, an umpire, a live camera and projector feed, and a church all running in sync."
+     },
+     {
+      "axis": "promise",
+      "winner": 13,
+      "ruling": "A's revenant walking out of a prayer for rest is a contradiction the congregation feels, and the drum coasting to a stop on a chance frame is a strong ending, while B's commander hearing the response through a vestry wall is potent but depends on many staged parts."
+     }
+    ]
+   },
+   {
+    "first": 14,
+    "second": 13,
+    "verdicts": [
+     {
+      "axis": "novelty",
+      "winner": 13,
+      "ruling": "B's zoetrope assembling a walking revenant out of answered prayers has no located precedent and its only cousins (Thiepval, the Bundeswehr Cenotaph) were shed by the revision, whereas A's concession that the name-roll was a ritual of arbitrariness left it nearer the familiar 'memorial reinterpreted by process' move."
+     },
+     {
+      "axis": "feasibility",
+      "winner": 13,
+      "ruling": "B's build is a plywood drum on a bicycle hub, a crank and hand-drawn cards, which is shed work that can be tested on a mock drum at home, while A needs a trained umpire, two commanders sworn to secrecy, runners, a live camera and projector and a hidden-name scheme to work in real time."
+     },
+     {
+      "axis": "promise",
+      "winner": 14,
+      "ruling": "A's vestry-wall casualty report makes a commander discover complicity alone mid-order, and this lived tension is a richer experience than watching a drum fuse into a walking man."
+     }
+    ]
+   }
+  ]
+ }
+}
