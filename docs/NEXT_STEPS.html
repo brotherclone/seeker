@@ -72,13 +72,20 @@
 <h2>Next steps, in priority order</h2>
 <ol class="steps">
 
-<li><span class="tag do">fix first</span> <strong>The scheduler depends on whichever branch is checked out.</strong>
-  launchd runs <code>seeker-schedule run</code> in this repo's working tree, and it finds the head by scanning <code>paths.debates</code> on disk. The 11-24 round-4 outputs were committed on <code>feature/archive-fix-prior-art-search</code>. When the checkout later switched to <code>feature/round-viewer</code>, which didn't have them, they left the working tree. On 11-26 the scheduler found round 3 as the head again and re-ran round 4, which cost about $4.26. Any checkout that drops round outputs can repeat this before round 5.
+<li><span class="tag do">fix first</span> <strong>Land <code>pin-schedule-workspace</code>, then migrate.</strong>
+  launchd runs <code>seeker-schedule run</code> in a checkout's working tree and reads the head from the round files on disk. On 11-26, a branch switch had removed the 11-24 round-4 files, so the job re-ran round 4 (about $4.26). The OpenSpec change <code>pin-schedule-workspace</code> on <code>feature/pin-schedule-workspace</code> fixes this:
   <ul>
-    <li>Propose an OpenSpec change, for example <code>pin-schedule-workspace</code>. Run the job from a dedicated worktree or clone that agents never check branches out in, and make its location a <code>seeker.yaml</code> setting, never a hard-coded path. Another option, or an addition, is a guard: refuse to advance when the latest <code>advanced</code> trigger record in <code>runs/</code> names written paths that no longer exist, and fail loudly instead.</li>
-    <li>Until it lands, <strong>don't check out a branch in <code>/Users/gabrielwalsh/Sites/seeker</code> that lacks the latest round outputs</strong>, especially around 02:00. Do other work in a separate worktree (<code>git worktree add</code>).</li>
-    <li>Record the incident and the fix in a vault Decision, with a link from <code>Decisions/2026-11-23 Scheduled run every other day.md</code>.</li>
-  </ul></li>
+    <li>a <strong>missing-output guard</strong>: a trigger fails, with no API call, when the last productive trigger's files are gone;</li>
+    <li><code>seeker-schedule discard &lt;record&gt; --note</code>, for rounds dropped on purpose;</li>
+    <li>a <strong>schedule workspace</strong>: a git worktree detached at <code>origin/develop</code>, located by <code>SEEKER_SCHEDULE_WORKSPACE</code> in <code>.env</code>, with <code>workspace create</code> and <code>workspace update</code>. The LaunchAgent and every schedule command use it.</li>
+  </ul>
+  After the PR merges, follow "Moving to a workspace" in <code>docs/scheduling.md</code>, with Gabe's go-ahead:
+  <ol>
+    <li><code>uv run seeker-schedule discard runs/2026-11-26T020005.yaml --note "duplicate round 4; kept 2026-11-24"</code>. <strong>Without this, the guard fails every trigger</strong>, because that record's files were deleted.</li>
+    <li>Add <code>SEEKER_SCHEDULE_WORKSPACE=~/Sites/seeker-schedule</code> to <code>.env</code>, then run <code>uv run seeker-schedule workspace create</code>.</li>
+    <li>Run <code>uv run seeker-schedule status</code> and check the head. Then run <code>uv run seeker-schedule install</code> and check the plist with <code>plutil -p ~/Library/LaunchAgents/com.seeker.scheduled-run.plist</code>.</li>
+  </ol>
+  Until then, <strong>don't check out a branch in <code>/Users/gabrielwalsh/Sites/seeker</code> that lacks the latest round outputs</strong>, and do other work in a separate <code>git worktree</code>. Afterwards, never <code>git switch</code> inside the workspace. The incident and the fix are recorded in the vault Decision <code>Decisions/2026-11-26 Pin the schedule workspace.md</code>.</li>
 
 <li><span class="tag watch">watch</span> <strong>Prior-art search sometimes isn't used.</strong>
   In the kept 11-24 run, 10 of 11 prosecutions got search results, with 23 citations, so search is healthy. The discarded duplicate run got results in only 5 of 12. Its other 7 made <code>web_search_requests: 0</code> with no errors, because the prosecutor chose to cite only catalog works. That shows the prosecutor sometimes skips search on its own. Check the count in rounds 5 and 6. If it drops again, look at the prosecutor prompt in <code>prompts/</code> and consider requiring at least one search (an OpenSpec change). Carried debates such as #14 (<code>carried_from: 13</code>) still contain old "usage limit" text from before the fix. That's inherited and expected.</li>
