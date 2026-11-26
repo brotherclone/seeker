@@ -4,10 +4,11 @@ from pathlib import Path
 
 import pytest
 
-from seeker.config import ConfigError, DotEnv, MissingApiKey, SeekerConfig
+from seeker.config import ConfigError, DotEnv, Keychain, MissingApiKey, SeekerConfig, VaultNotConfigured
 from seeker.ontology import Usage
 
 ROOT = Path(__file__).resolve().parent.parent
+REAL_KEYCHAIN_GET = Keychain.get  # captured at import, before conftest stubs it per test
 
 MINIMAL = """\
 paths: {decks: decks, batches: batches, generations: gens, prompts: prompts, vault: ~/vault}
@@ -105,3 +106,271 @@ def test_non_utf8_config_is_a_config_error(tmp_path: Path) -> None:
     path.write_bytes(b"paths: \xff\xfe\n")
     with pytest.raises(ConfigError, match="not UTF-8"):
         SeekerConfig.load(path)
+
+
+class TestVault:
+    @pytest.fixture(autouse=True)
+    def no_vault_env(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.delenv("SEEKER_VAULT", raising=False)
+
+    NO_VAULT = MINIMAL.replace(", vault: ~/vault", "")
+
+    def test_folder_defaults(self, tmp_path: Path) -> None:
+        layout = SeekerConfig.load(write(tmp_path)).vault()
+        assert layout.root == Path("~/vault").expanduser()
+        assert layout.works == layout.root / "Works"
+        assert layout.cards == layout.root / "Cards"
+
+    def test_folder_overrides(self, tmp_path: Path) -> None:
+        text = MINIMAL + "vault_folders: {works: Library/Works, cards: Library/Cards}\n"
+        layout = SeekerConfig.load(write(tmp_path, text)).vault()
+        assert layout.works == layout.root / "Library" / "Works"
+        assert layout.cards == layout.root / "Library" / "Cards"
+
+    @pytest.mark.parametrize("folder", ["/abs/Works", "../outside"])
+    def test_folders_must_stay_inside_the_vault(self, tmp_path: Path, folder: str) -> None:
+        with pytest.raises(ConfigError):
+            SeekerConfig.load(write(tmp_path, MINIMAL + f"vault_folders: {{works: {folder}}}\n"))
+
+    def test_dotenv_value(self, tmp_path: Path) -> None:
+        config = SeekerConfig.load(write(tmp_path, self.NO_VAULT))
+        (tmp_path / ".env").write_text("ANTHROPIC_API_KEY=x\nSEEKER_VAULT=~/notes\n")
+        assert config.vault().root == Path.home() / "notes"
+
+    def test_dotenv_beats_paths_vault(self, tmp_path: Path) -> None:
+        config = SeekerConfig.load(write(tmp_path))
+        (tmp_path / ".env").write_text(f"SEEKER_VAULT={tmp_path / 'from-env'}\n")
+        assert config.vault().root == tmp_path / "from-env"
+
+    def test_environment_beats_dotenv_and_config(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+        config = SeekerConfig.load(write(tmp_path))
+        (tmp_path / ".env").write_text("SEEKER_VAULT=/from/dotenv\n")
+        monkeypatch.setenv("SEEKER_VAULT", str(tmp_path / "from-environment"))
+        assert config.vault().root == tmp_path / "from-environment"
+
+    def test_relative_value_resolves_against_config_folder(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("SEEKER_VAULT", "vault")
+        assert SeekerConfig.load(write(tmp_path, self.NO_VAULT)).vault().root == tmp_path / "vault"
+
+    def test_not_configured(self, tmp_path: Path) -> None:
+        config = SeekerConfig.load(write(tmp_path, self.NO_VAULT))
+        with pytest.raises(VaultNotConfigured, match="SEEKER_VAULT") as caught:
+            config.vault()
+        assert ".env" in str(caught.value)
+
+    def test_repo_config_has_no_vault_committed(self) -> None:
+        config = SeekerConfig.load(ROOT / "seeker.yaml")
+        assert config.paths.vault is None
+        assert str(config.vault_folders.works) == "Works"
+
+
+# --- debate-ideas 2.3: debate paths, budget, tournament and search prices -----------
+
+
+def test_debate_defaults(tmp_path: Path) -> None:
+    config = SeekerConfig.load(write(tmp_path))
+    assert config.paths.debates == tmp_path / "debates"
+    assert config.paths.reports == tmp_path / "reports"
+    assert config.budget_usd == 5.00
+    assert config.tournament.max_comparisons == 132
+    assert config.tournament.both_orders is True
+
+
+def test_debate_settings_override(tmp_path: Path) -> None:
+    text = MINIMAL.replace("prompts: prompts,", "prompts: prompts, debates: runs, reports: ~/out,")
+    config = SeekerConfig.load(write(tmp_path, text + "budget_usd: 2.5\ntournament: {max_comparisons: 30}\n"))
+    assert config.paths.debates == tmp_path / "runs"
+    assert config.paths.reports == Path.home() / "out"
+    assert config.budget_usd == 2.5
+    assert config.tournament.max_comparisons == 30
+
+
+def test_searches_are_priced(tmp_path: Path) -> None:
+    text = MINIMAL.replace("  models:", "  web_search_per_request: 0.01\n  models:")
+    prices = SeekerConfig.load(write(tmp_path, text)).prices
+    tokens = Usage(input_tokens=1_000_000, output_tokens=0, cache_read_tokens=0, cache_write_tokens=0)
+    searched = tokens.model_copy(update={"web_search_requests": 3})
+    assert prices.cost("claude-opus-5-5", searched) == pytest.approx(prices.cost("claude-opus-5-5", tokens) + 0.03)
+
+
+def test_unpriced_searches_and_models_are_errors(tmp_path: Path) -> None:
+    from seeker.config import UnpricedModelError
+
+    prices = SeekerConfig.load(write(tmp_path)).prices
+    searched = Usage(input_tokens=1, output_tokens=1, cache_read_tokens=0, cache_write_tokens=0, web_search_requests=1)
+    with pytest.raises(ConfigError, match="web_search_per_request"):
+        prices.cost("claude-opus-5-5", searched)
+    with pytest.raises(UnpricedModelError, match="claude-sonnet-5-5"):
+        prices.cost("claude-sonnet-5-5", searched)
+
+
+def test_repo_config_prices_searches() -> None:
+    assert SeekerConfig.load(ROOT / "seeker.yaml").prices.web_search_per_request == 0.01
+
+
+def test_debate_scratch_is_ignored() -> None:
+    import subprocess
+
+    result = subprocess.run(["git", "check-ignore", "-q", "debates/scratch/x.yaml"], cwd=ROOT)
+    assert result.returncode == 0
+
+
+# --- mutate-ideas 2.1: mutation settings and two-order judging ------------------------
+
+
+def test_mutation_defaults(tmp_path: Path) -> None:
+    config = SeekerConfig.load(write(tmp_path))
+    assert config.mutation.reworkings == 2
+
+
+def test_mutation_and_order_overrides(tmp_path: Path) -> None:
+    text = MINIMAL + "mutation: {reworkings: 3}\ntournament: {both_orders: false}\n"
+    config = SeekerConfig.load(write(tmp_path, text))
+    assert config.mutation.reworkings == 3
+    assert config.tournament.both_orders is False
+    assert config.tournament.max_comparisons == 132
+
+
+def test_zero_reworkings_rejected(tmp_path: Path) -> None:
+    with pytest.raises(ConfigError, match="reworkings"):
+        SeekerConfig.load(write(tmp_path, MINIMAL + "mutation: {reworkings: 0}\n"))
+
+
+def test_repo_config_judges_both_orders() -> None:
+    config = SeekerConfig.load(ROOT / "seeker.yaml")
+    assert config.tournament.both_orders is True
+    assert config.tournament.max_comparisons == 132
+    assert config.mutation.reworkings == 2
+
+
+# --- scheduled-run 3.1: schedule section and new paths ----------------------------------
+
+
+def test_schedule_defaults(tmp_path: Path) -> None:
+    config = SeekerConfig.load(write(tmp_path))
+    assert (config.schedule.cadence_days, config.schedule.review_every, config.schedule.hour) == (2, 3, 2)
+    assert config.paths.runs == tmp_path / "runs"
+    assert config.paths.reviews == tmp_path / "reviews"
+    assert config.paths.logs == tmp_path / "logs"
+
+
+def test_schedule_overrides(tmp_path: Path) -> None:
+    text = MINIMAL + "schedule: {cadence_days: 1, review_every: 5, hour: 23}\n"
+    text = text.replace("vault: ~/vault}", "vault: ~/vault, logs: ~/seeker-logs}")
+    config = SeekerConfig.load(write(tmp_path, text))
+    assert (config.schedule.cadence_days, config.schedule.review_every, config.schedule.hour) == (1, 5, 23)
+    assert config.paths.logs == Path("~/seeker-logs").expanduser()
+
+
+@pytest.mark.parametrize("bad", ["cadence_days: 0", "review_every: 0", "hour: 24", "hour: -1"])
+def test_schedule_out_of_range_is_rejected(tmp_path: Path, bad: str) -> None:
+    with pytest.raises(ConfigError):
+        SeekerConfig.load(write(tmp_path, MINIMAL + f"schedule: {{{bad}}}\n"))
+
+
+def test_vault_has_a_runs_folder(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("SEEKER_VAULT", raising=False)
+    config = SeekerConfig.load(write(tmp_path))
+    assert config.vault().runs == Path("~/vault").expanduser() / "Runs"
+
+
+def test_repo_config_schedule_matches_the_decision() -> None:
+    config = SeekerConfig.load(ROOT / "seeker.yaml")
+    assert (config.schedule.cadence_days, config.schedule.review_every, config.schedule.hour) == (2, 3, 2)
+    assert config.budget_usd == 5.0
+
+
+@pytest.mark.parametrize("folder", ["runs/x.yaml", "logs/seeker.log"])
+def test_runs_and_logs_are_ignored(folder: str) -> None:
+    import subprocess
+
+    result = subprocess.run(["git", "check-ignore", folder], cwd=ROOT, capture_output=True, text=True)
+    assert result.returncode == 0
+
+
+# --- scheduled-run 3.2: the API key from the Keychain -----------------------------------
+
+
+def test_keychain_sits_between_environment_and_dotenv(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from seeker.config import Keychain
+
+    config = SeekerConfig.load(write(tmp_path))
+    (tmp_path / ".env").write_text("ANTHROPIC_API_KEY=from-dotenv\n")
+    monkeypatch.setattr(Keychain, "get", lambda self: "from-keychain")
+    assert config.api_key().get_secret_value() == "from-keychain"
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "from-env")
+    assert config.api_key().get_secret_value() == "from-env"
+    monkeypatch.delenv("ANTHROPIC_API_KEY")
+    monkeypatch.setattr(Keychain, "get", lambda self: None)
+    assert config.api_key().get_secret_value() == "from-dotenv"
+
+
+def test_keychain_only(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from seeker.config import Keychain
+
+    monkeypatch.setattr(Keychain, "get", lambda self: "from-keychain")
+    assert SeekerConfig.load(write(tmp_path)).api_key().get_secret_value() == "from-keychain"
+
+
+def test_missing_key_names_all_three_sources(tmp_path: Path) -> None:
+    with pytest.raises(MissingApiKey) as raised:
+        SeekerConfig.load(write(tmp_path)).api_key()
+    message = str(raised.value)
+    assert "ANTHROPIC_API_KEY" in message and "Keychain" in message and ".env" in message
+
+
+class TestKeychainLookup:
+    """The real Keychain.get, with ``security`` replaced."""
+
+    @pytest.fixture(autouse=True)
+    def real_get(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        import seeker.config
+
+        monkeypatch.setattr(seeker.config.Keychain, "get", REAL_KEYCHAIN_GET)
+        monkeypatch.setattr(seeker.config.sys, "platform", "darwin")
+
+    def run_returning(self, monkeypatch: pytest.MonkeyPatch, returncode: int, stdout: str) -> list:
+        import subprocess
+
+        import seeker.config
+
+        calls: list = []
+
+        def fake(argv, **kwargs):
+            calls.append(argv)
+            return subprocess.CompletedProcess(argv, returncode, stdout=stdout, stderr="")
+
+        monkeypatch.setattr(seeker.config.subprocess, "run", fake)
+        return calls
+
+    def test_found(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        from seeker.config import Keychain
+
+        calls = self.run_returning(monkeypatch, 0, "sk-secret\n")
+        assert Keychain().get() == "sk-secret"
+        assert calls == [["security", "find-generic-password", "-s", "seeker", "-a", "anthropic", "-w"]]
+
+    def test_missing_item_falls_through(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        from seeker.config import Keychain
+
+        self.run_returning(monkeypatch, 44, "")
+        assert Keychain().get() is None
+
+    def test_failing_command_falls_through(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        import subprocess
+
+        import seeker.config
+        from seeker.config import Keychain
+
+        def boom(argv, **kwargs):
+            raise subprocess.TimeoutExpired(argv, 5)
+
+        monkeypatch.setattr(seeker.config.subprocess, "run", boom)
+        assert Keychain().get() is None
+
+    def test_not_macos(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        import seeker.config
+        from seeker.config import Keychain
+
+        monkeypatch.setattr(seeker.config.sys, "platform", "linux")
+        assert Keychain().get() is None

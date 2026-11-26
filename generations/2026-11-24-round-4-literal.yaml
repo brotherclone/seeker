@@ -1,0 +1,811 @@
+# Generation record (schema/seeker.yaml). Inputs are pinned: the embedded draw
+# batch, reading, model, role-file digest and git commit. Rerunning with the same
+# output path resumes, filling in only the positions without an idea.
+draw_batch:
+  seed: 7
+  deck_set_digest: 41909d46fec8ea3d0f3062810e78fd25be91b737e18bab6a19577f9e915a3050
+  draws:
+  - position: 1
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - zoetrope
+    - liturgy
+  - position: 2
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - zoetrope
+    - liturgy
+  - position: 3
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - fairlight-cmi
+    - liturgy
+  - position: 4
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - zoetrope
+    - local-newspaper-archives
+  - position: 5
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - liturgy
+  - position: 6
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - liturgy
+  - position: 7
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - mellotron
+    - liturgy
+  - position: 8
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - tax-law
+  - position: 9
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - beekeeping
+  - position: 10
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - beekeeping
+  - position: 11
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - clavilux
+    - beekeeping
+  - position: 12
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - weather-forecasting
+  - position: 13
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - zoetrope
+    - liturgy
+  - position: 14
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - liturgy
+  - position: 15
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - beekeeping
+reading: literal
+role_name: mutator
+model: claude-opus-5-5
+role_digest: f5e35fa86a8e37710d5984fc4cfba7bf08c677cd2722dc197d6c1b9b448bc62b
+git_commit: c4268dcd188c8aea5675e3fca0e21e439923914b
+generated_at: '2026-11-24T07:00:05.720205Z'
+ideas:
+- position: 1
+  statement: A one-metre zoetrope of a single drawn singing mouth that one performer cranks through the
+    Preces of Evensong, frozen during each versicle and spinning only while the room sings 'And our mouth
+    shall shew forth thy praise', because the singers end up lip-syncing to the drawing and become a live
+    soundtrack dubbing a pre-sound film.
+  subject: A one-metre hand-cranked zoetrope of a drawn singing mouth, played by one performer for a sung
+    Evensong preces with whoever is in the room
+  behavior: 'One performer sets up a one-metre plywood drum on a lazy-Susan bearing in any room. Inside
+    are 24 hand-drawn frames: a single singing mouth, drawn huge, that forms the vowels and consonants
+    of ''And our mouth shall shew forth thy praise.'' One revolution of the drum lasts exactly one sung
+    response. Ten to thirty people stand around the drum, each with a slit at eye level. The performer
+    chants the Preces of Evensong and cranks the drum. At each versicle the performer stops the drum dead,
+    so the mouth is a frozen still. At each response the people sing while the performer cranks, and the
+    drawn mouth comes alive and mouths their words. It is in sync only if the crank and the room''s tempo
+    agree. Within two responses the singers stop leading and start following the mouth, and they slow
+    or quicken to keep their lips on its lips. The last response brings the drum to rest with the mouth
+    open. Nothing is filmed or amplified.'
+  rationale: Pre-sound cinema could never make a drawn mouth speak, and synchronised sound later solved
+    the problem by making actors serve the soundtrack. A zoetrope has no soundtrack. Here the congregation
+    is the soundtrack, and the drum quietly takes over the tempo of the prayer. The singers find themselves
+    lip-syncing to a drawing that is mouthing their own words. That is an uncanny inversion of dubbing,
+    which they feel in their own throats rather than decode as an allegory. It needs one tabletop-scale
+    drum, one performer and whoever turns up.
+  card_readings:
+  - card: real-time-only
+    interpretation: The lip sync exists only between living voices and a live hand on the crank at that
+      moment. It cannot be filmed, played back or dubbed afterwards, and it falls apart the instant either
+      side drifts.
+  - card: zoetrope
+    interpretation: A literal slotted drum with a 24-frame hand-drawn strip of a singing mouth, viewed
+      through slits by people standing around it. One revolution equals one sung response.
+  - card: liturgy
+    interpretation: The versicles and responses of Choral Evensong. The performer sings 'O Lord, open
+      thou our lips' and the room answers 'And our mouth shall shew forth thy praise.'
+  usage:
+    input_tokens: 3363
+    output_tokens: 2671
+    cache_read_tokens: 0
+    cache_write_tokens: 1257
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 2
+  statement: A Tenebrae zoetrope lit only by the hearse's fifteen candles, cranked at constant speed while
+    one candle is snuffed after each psalm, whose drawn flames stutter in full light and burn ever more
+    smoothly as the chapel darkens, because flicker fusion drops with brightness, so the real fire's death
+    is what brings the painted fire to life.
+  subject: A one-metre hand-cranked zoetrope built around a Tenebrae hearse, its only light the service's
+    fifteen candles, made for one Holy Week office
+  behavior: In a small chapel on a Wednesday of Holy Week, the fifteen candles of the Tenebrae hearse
+    stand on a fixed tray inside a one-metre plywood zoetrope. The drum turns on a lazy-susan bearing
+    around them, and its candles are the only light in the room. The inner strip is a hand-inked cycle
+    of candle flames burning. One performer cranks at a constant rate for the whole office while a few
+    people sing the psalms and the call-and-response responsories. After each psalm the performer reaches
+    through the top and snuffs one real candle. At full light the drawn flames visibly strobe and judder.
+    As the real candles go out, the same crank speed makes the drawn flames burn more and more smoothly,
+    until by a single candle they flicker as fluidly as living fire. The last candle is then hidden, the
+    strepitus is struck in total dark, and the candle is returned, so the drawn flames come back for a
+    moment before everyone leaves in silence. Nothing is filmed.
+  rationale: The eye's flicker-fusion threshold falls as light dims (the Ferry–Porter law). So a drum
+    cranked at constant speed strobes in bright light and fuses into smooth motion in dim light. The liturgy's
+    own darkening is what animates the drawing, and the congregation watches painted fire come alive exactly
+    as the real fire dies. That is a perceptual fact they feel in their own eyes, not a symbol they decode.
+  card_readings:
+  - card: real-time-only
+    interpretation: The animation is lit only by the office's own dying candles and cranked unbroken through
+      one Tenebrae. It is too dark to film, and a camera would not see the smoothing a human eye sees.
+  - card: zoetrope
+    interpretation: The literal slotted drum with a hand-drawn strip of burning candle flames on its inner
+      wall, lit from inside by the real hearse candles.
+  - card: liturgy
+    interpretation: 'Tenebrae''s ritual order: psalms, call-and-response responsories, one candle snuffed
+      after each psalm, the hidden last candle and the strepitus in the dark.'
+  usage:
+    input_tokens: 7945
+    output_tokens: 3934
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 3
+  statement: A single silent screening of the 1916 Somme film in a parish nave, scored live on a Fairlight
+    CMI that samples each 'Grant them eternal rest' the congregation answers to a memorial name, because
+    the sampler turns a plea for the dead's rest into the music under men still walking on screen, heard
+    once and never saved.
+  subject: A one-time, unrecorded live Fairlight CMI score for a church screening of The Battle of the
+    Somme (1916)
+  behavior: The parish projects The Battle of the Somme (1916) once, silent, from a hired 16mm print onto
+    a sheet in the nave. A borrowed Fairlight CMI Series II sits on a trestle with one microphone hung
+    over the pews. Its operator is the only musician. Across the film's 77 minutes the officiant reads
+    the memorial names at even intervals, and the congregation answers 'Grant them eternal rest'. Each
+    answer is sampled straight into the Fairlight, and the operator plays it on the keyboard against the
+    images, pitched down and slowed. At the CMI's low sample rate this turns into a grainy, aliased drone.
+    Each new response is loaded into the next of its eight voices. Once all eight are full, the oldest
+    response is overwritten. The congregation therefore hears its own plea come back as the score while
+    men on screen joke, smoke and march up to the line. The score is never saved to floppy. When the last
+    reel runs out, the operator switches the Fairlight off, and the held chord of the final eight answers
+    is gone.
+  rationale: The Fairlight was the first instrument that could take a room's voice and hand it back as
+    music within seconds. Here that speed means the prayer reaches the screen before its echo has faded.
+    The plea for rest becomes the soundtrack for men who are still walking, still alive, still about to
+    go over. The contradiction is carried by sound rather than spelled out by a mechanism. The CMI's crude
+    sampling also makes the congregation's voices uncanny, so they hear themselves turned strange. The
+    only thing the operator has to build is a single performance on a borrowed machine.
+  card_readings:
+  - card: real-time-only
+    interpretation: The score exists only during one screening. Every sound is sampled live from the room
+      and played at once, nothing is saved to floppy, and the machine is switched off at the end.
+  - card: fairlight-cmi
+    interpretation: The literal 1979 Fairlight CMI sampler, with its microphone input, eight voices and
+      low-bit, low-rate sampling. It turns a voice into a playable instrument within seconds.
+  - card: liturgy
+    interpretation: The Office of the Dead's call and response. The officiant reads a name, and the congregation's
+      spoken 'Grant them eternal rest' is the only source material the score has.
+  usage:
+    input_tokens: 3423
+    output_tokens: 2377
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: card_swap
+    swapped_axis: historical-artifact
+    replaced_card: zoetrope
+- position: 4
+  statement: A shop-window zoetrope on a town's Whit Walk route that animates a hundred years of newspaper
+    photos as one stride-mismatched walker, its last missing frame shot live from the passing procession,
+    because the zoetrope fuses any frames whose poses line up, so a century of strangers becomes one body
+    that only completes if today's walker steps into the gap.
+  subject: A hand-cranked plywood zoetrope in a shop window on a town's annual Whit Walk route, built
+    from one man's photocopies of the local newspaper's archive
+  behavior: 'From the local paper''s morgue, the builder photocopies one press photo per year of the annual
+    Whit Walk, each showing a walker mid-stride. The walkers are cropped, scaled and ordered by leg position,
+    not by date, into a zoetrope cycle. One gait phase is left blank. On Walk day the plywood drum sits
+    in a shop window on the route, and passers-by crank it only while the procession is passing. Through
+    the slits, one figure walks, but every frame is a different decade: coat, grain and face jump from
+    1931 to 1987 to 1958, and the stride hitches at the blank. The builder stands at the kerb with an
+    instant camera, waiting for a living walker whose legs hit exactly the missing pose. When one does,
+    the print goes into the gap and the walk runs smooth. When the last walker passes, the cranking stops.
+    Nothing is filmed, and the strip is unpinned that evening.'
+  rationale: Persistence of vision fuses any frames whose poses line up, whoever is in them. So matching
+    gait overrides mismatched identity, and a century of a town's walkers becomes one uncanny body that
+    flickers through decades at every step. Unlike a fixed allegory, the ending is truly uncertain. Whether
+    the stride ever completes depends on a stranger's legs hitting the right phase before the procession
+    ends, a match the builder must spot live.
+  card_readings:
+  - card: real-time-only
+    interpretation: The drum turns only between the first and last walker passing the window on Walk day,
+      with no filming, no replay and no second showing.
+  - card: zoetrope
+    interpretation: A literal slotted drum with a paper strip whose evenly spaced walk-cycle frames fuse
+      into one moving figure through the slits.
+  - card: local-newspaper-archives
+    interpretation: The local paper's morgue and microfilm of its yearly Whit Walk coverage, the source
+      of one photographed stride per year.
+  usage:
+    input_tokens: 3415
+    output_tokens: 2230
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: card_swap
+    swapped_axis: domain
+    replaced_card: liturgy
+- position: 5
+  statement: A single-take, real-time film of a full sung Requiem in which the clergy covertly play an
+    1824 Kriegsspiel, sending orders inside the Gospel book and posting casualties on the hymn boards,
+    because the Mass's silent couriering already matches the wargame's structure and an unexplained, uncut
+    take makes viewers discover the war themselves rather than be told it.
+  subject: A single-take, real-time feature film of a staged sung Requiem Mass in a parish church, shot
+    from the west gallery
+  behavior: A volunteer congregation hears a complete sung Requiem in a rented church, filmed in one uncut,
+    unscored hour from the west gallery. Nothing is explained, on screen or to the congregation. Inside
+    the service, the ministers play a full 1824 Kriegsspiel. The sacristan umpires in the sacristy over
+    the map and blocks, out of shot. The two commanders are the deacon and the subdeacon, kneeling at
+    opposite ends of the sanctuary. Every two minutes, the Kriegsspiel turn length, a server carries a
+    written order to the sacristy folded inside the Gospel book. The sacristan rolls the casualty dice
+    and changes the numerals on the two hymn boards to post the results. Each commander reads only his
+    own board. As losses mount, the ministers grow visibly rattled. They fumble the thurible, and one
+    hesitates at the altar. The liturgy cannot stop for any of it. The film ends at the dismissal, wherever
+    the battle stands.
+  rationale: Kriegsspiel was a war fought entirely through silent couriers carrying paper to a mediator,
+    and a Mass is already a choreography of silent ministers carrying books between fixed stations. That
+    shared structure lets the game hide inside the liturgy without breaking it. Because the take is uncut
+    and nothing is announced, no edit, caption or programme explains the game. The viewer is not given
+    a thesis. They catch it slowly through wrong-looking hymn numbers and a deacon's shaking hands, and
+    once seen it cannot be unseen.
+  card_readings:
+  - card: real-time-only
+    interpretation: A single uncut take with no edit, pause or retake. The game runs on Kriegsspiel's
+      two-minute turns inside the hour of the Mass and stops at the dismissal.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Prussian wargame: a map with metal blocks, an umpire with casualty
+      dice, and two separated commanders who send written orders and receive only the umpire''s reports.'
+  - card: liturgy
+    interpretation: A complete sung Requiem Mass with versicles and responses. Its ordered movements of
+      ministers, books and hymn boards carry the game's messages.
+  usage:
+    input_tokens: 2849
+    output_tokens: 2607
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 13
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 6
+  statement: A nine-hour, uncut, real-time triptych film of Königgrätz played as Reisswitz's Kriegsspiel
+    by two commanders who must leave to chant the canonical hours, while the umpire silently keeps rolling
+    casualties, because the war proceeding unattended through prayer ambushes both players and viewers
+    with a complicity that nobody explains.
+  subject: A nine-hour real-time triptych film of the Battle of Königgrätz (3 July 1866) played as an
+    1824 Kriegsspiel, interrupted by the canonical hours
+  behavior: Two volunteers command Austria and Prussia in Reisswitz's 1824 Kriegsspiel through a single
+    uncut day, from 8am to the battle's end. The game advances in his two-minute turns, so play runs 1:1
+    with the clock. Each commander has agreed to keep the canonical hours from a breviary, so at Terce,
+    Sext and None they must leave the table, kneel in separate rooms and chant the Office. Nobody tells
+    them the umpire keeps running turns while they pray. He moves their blocks on their last written orders
+    and rolls casualty dice. Three fixed cameras film the two prayer rooms and the empty map table, and
+    the result is shown as a triptych at full length, uncut. During each Office the audience watches the
+    dead accumulate on the table while both commanders sing psalms, unaware. Each commander learns what
+    happened in his absence only when he returns from the hour.
+  rationale: Kriegsspiel was the drill that trained the Prussian staff who won Königgrätz, and the canonical
+    hours are the oldest human practice of stopping work at a fixed time. Run both on the same unbroken
+    clock and they collide without anyone staging a thesis. The war goes on while its makers pray, and
+    the commanders' shock at the changed map is real, unscripted and caught on camera. Real-time film
+    is the only form that can hold both clocks honestly. Each Office lasts as long as it lasts, and the
+    viewer has to sit through that interval of unattended killing too. The piece needs only one room,
+    three friends, three cameras and a breviary.
+  card_readings:
+  - card: real-time-only
+    interpretation: The game, the shoot and the screening all run on one unbroken clock matching the real
+      battle's hours, with no cuts, pauses or replays.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Prussian wargame: a terrain map, metal blocks, written orders, two-minute
+      turns, and an umpire rolling casualty dice.'
+  - card: liturgy
+    interpretation: 'The Liturgy of the Hours: fixed daily Offices of chanted psalm and response that
+      pull the commanders away from the table at set times.'
+  usage:
+    input_tokens: 2994
+    output_tokens: 2012
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 13
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 8
+  statement: A one-take, live-streamed, never-archived film of a parish's memorial battle re-fought as
+    Kriegsspiel at 1:1 time, each block hiding a soldier's real probate entry, where an on-camera accountant
+    computes and stamps EXEMPT the estate duty forgiven a man killed on active service, because commanders
+    learn whom they killed only from the tax relief slip.
+  subject: A single-take, live-streamed, unarchived film of an 1824-style Kriegsspiel table where an accountant
+    sits in frame beside the umpire
+  behavior: 'A parish''s memorial engagement, chosen because its battalion war diary fixes zero hour and
+    the end of the action, is re-fought freely on an 1824-style map table at 1:1 time and filmed in one
+    unedited take that streams live to a cinema and is never archived. Before play, each unit block gets
+    one memorial-roll man''s probate calendar entry fixed to its underside: his name, parish and ''Effects
+    £'' figure. The two commanders sit in separate rooms with no briefing beyond the Kriegsspiel rules.
+    They send written orders by runner. When the umpire''s dice strike a block, he turns it over and passes
+    the entry to an accountant seated in frame. On a period estate-duty form, the accountant works out
+    the duty that would have been owed, then crosses it to nil under the wartime exemption for men killed
+    on active service and stamps it EXEMPT. The commanders get no other casualty report. A runner hands
+    them the stamped carbon. They learn whom their order killed from a figure like £7 3s 2d and a tax
+    relief. The camera never cuts. At the diary''s closing hour the stream ends mid-calculation.'
+  rationale: Kriegsspiel already turned death into an umpire's arithmetic. The estate-duty exemption is
+    the one place the state formally priced each soldier's death, and it offered its condolence as a waived
+    tax bill. When the exemption slip becomes the commander's only casualty report, nothing is announced.
+    A commander reads a dead man's whole worldly worth, often a few pounds, at the moment the state forgives
+    it. The order that caused it is still in his hand. Probate calendar entries and WO 95 war diaries
+    are public and in English, so one person can source everything. The single live take keeps the accountant's
+    slow, exact arithmetic at the same pace as the fighting.
+  card_readings:
+  - card: real-time-only
+    interpretation: The battle is re-fought and filmed in one continuous take at 1:1 time between the
+      war diary's start and end hours, streamed live once, never edited or archived.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Prussian wargame: a map table with unit blocks, commanders kept
+      apart and sending written orders by runner, and an umpire whose dice decide losses.'
+  - card: tax-law
+    interpretation: The actual estate-duty code and its wartime exemption for men killed on active service
+      (still law as IHTA 1984 s.154), applied on camera to each struck man's real probate value.
+  usage:
+    input_tokens: 2874
+    output_tokens: 2268
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 13
+    mutation_kind: card_swap
+    swapped_axis: domain
+    replaced_card: liturgy
+- position: 9
+  statement: A single-take film that follows a beekeeper commanding a real swarm chase from a literal
+    1824 Kriegsspiel map table, with runner-delayed reports and an umpire, at 1:1 time until the swarm
+    is hived or lost, because a swarm picks its home by scout vote no doctrine can predict, so the wargame
+    meets an enemy with no strategy to read.
+  subject: A live single-take documentary film of a beekeeper's swarm chase run as a literal 1824 Kriegsspiel
+  behavior: The film begins when a beekeeper's hive throws a real May swarm. A beekeeper-commander sits
+    at an 1824 Reisswitz map of the parish, drawn at the rule's scale. Scattered catchers send him written
+    reports by bicycle runner, delayed by the 1824 messenger-speed rules. An umpire watching the cluster
+    moves the swarm block and decides what the commander is told. The commander orders catchers with skeps
+    toward where he thinks the scouts will vote to go. One continuous 1:1 take shows the map table from
+    the issue of the swarm until it is hived or lost over the horizon.
+  rationale: Every Kriegsspiel opponent until now has been a human playing by doctrine. A swarm chooses
+    its objective by a decentralized scout vote that no commander can read in advance. Against it, the
+    old staff machinery of delay and partial report becomes absurd and also strangely apt. The beekeeper
+    must act before the swarm commits and cannot wait for it, so the camera films decisions made blind
+    rather than bees standing in for grief.
+  card_readings:
+  - card: real-time-only
+    interpretation: The swarm's departure and the scouts' vote happen once, on their own clock, so the
+      game and the single unbroken take run 1:1 from issue to hiving or loss, with no restaging.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Reisswitz apparatus, used as written: scale map, blocks, a separated
+      commander, written orders, messenger delays and an umpire who controls all information.'
+  - card: beekeeping
+    interpretation: 'Real swarm management: a colony casting a swarm, scout bees choosing a new home,
+      and a beekeeper''s team chasing the cluster with skeps to hive it.'
+  usage:
+    input_tokens: 7227
+    output_tokens: 3052
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 4
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 10
+  statement: A single-take film of a literal 1824 Kriegsspiel whose master map is the glass face of an
+    observation hive during a nectar flow, because bees draw and cap comb at their own pace, turning open
+    ground into woods beneath the blocks, so the camera shows armies stranded by terrain growing in real
+    time.
+  subject: A single-take, real-time film of a Kriegsspiel umpire's master map, which is the glass face
+    of a working observation hive with the unit blocks set on the glass.
+  behavior: 'Two commanders in separate rooms play Reisswitz''s 1824 rules, as written in Leeson''s translation,
+    with the umpire''s sketches as their only view. The master map is the living face of a glass observation
+    hive during a nectar flow. The umpire reads each cell type as 1824 terrain: capped honey is woods,
+    open brood is marsh, and drawn-but-empty comb is open ground. He sets the brass unit blocks on the
+    outside of the glass with micro-suction tape and moves them at the rule''s pace. A fixed camera films
+    the glass in one unbroken take, from the first forager out to dusk. As the bees draw and cap comb
+    in real time, the terrain under each block changes. A battalion parked on open ground at ten is standing
+    in forest by three, and a road the bees fill with nectar closes behind the troops using it. No re-drawing
+    is allowed, and the game ends when the camera loses the light.'
+  rationale: Reisswitz's innovation was fighting on real, measured terrain. Here the terrain is alive
+    and rebuilt by a colony that ignores both armies. The camera puts the bees and the blocks in the same
+    frame, so viewers watch actual cells change under actual units. That change is too slow to notice
+    in any clip and only becomes legible over hours of unbroken real time.
+  card_readings:
+  - card: real-time-only
+    interpretation: Game moves, the single uncut take and the bees' comb-building all run on one 1:1 clock
+      from first forager to dusk, with no pause and no second take.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Reisswitz game: its blocks, casualty dice, written orders, separated
+      commanders and an umpire who alone holds the master map, here the hive face.'
+  - card: beekeeping
+    interpretation: A real glass observation hive filmed during a nectar flow, with its drawing, filling
+      and capping of comb serving as the terrain.
+  usage:
+    input_tokens: 6816
+    output_tokens: 3162
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 4
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 11
+  statement: A live lumia film played on a Clavilux rebuilt from Wilfred's patents, projected through
+    an observation hive's glass, whose drifting light steers the colony's waggle dances toward or away
+    from a filmed feeder, because von Frisch showed comb dancers take a lamp for the sun, so every beautiful
+    sweep of light misdirects real foragers.
+  subject: A live, single-take lumia film projected through a glass observation hive from a rebuilt Clavilux,
+    shown beside a live feed of a distant sugar feeder
+  behavior: 'In a dark gallery, one performer plays a Clavilux rebuilt from Wilfred''s 1920s patent drawings:
+    a lamp, rotating reflectors, coloured gels and a slider console. Its slow lumia forms are projected
+    through the glass of a vertical observation hive onto a scrim, so the audience sees Wilfred''s luminous
+    veils drifting across the living comb. Beside it runs a second live, unbroken single-take feed of
+    a sugar feeder set 300 m due north of the gallery''s hive exit. The piece rests on Karl von Frisch''s
+    finding that dancers on a vertical comb orient their waggle runs to a bright light as if it were the
+    sun. Wherever the lumia''s brightest form sits, it re-aims the dances, and recruits fly out on that
+    bearing. Bees cannot see red, so in red and amber passages the dancers fall back to gravity. Blue
+    and white passages capture them. The performer must keep the feeder busy while playing a lumia worth
+    watching. Every beautiful sweep of light sends foragers the wrong way, and a misdirected flight shows
+    up as an empty dish only minutes later. The audience watches the player read the comb and the feeder
+    and compose against that lag. The show starts with the first forager out and ends when the colony
+    stops flying at dusk. It cannot be rehearsed, paused or recorded, because no two afternoons of the
+    colony are the same.'
+  rationale: Von Frisch showed that comb dancers take a lamp for the sun, so a lumia played on the glass
+    is not decoration. It is the colony's sky, and each colour and position redirects living animals.
+    That makes the hive a decision channel again, which the parent's debate found was the only truly new
+    part. It also drops the memorial vigil. The audience watches a performer's composition get vetoed
+    or obeyed by a colony that answers late and in its own terms. Wilfred's dream of a music for the eye
+    gains a listener that acts on it, and the trade-off between beauty and steering is visible on the
+    comb and at the feeder.
+  card_readings:
+  - card: real-time-only
+    interpretation: The light and the colony's flights share one live clock with minutes of lag, from
+      first forager to dusk. Nothing can be rehearsed against the colony, paused or recorded.
+  - card: clavilux
+    interpretation: 'Thomas Wilfred''s actual Clavilux, rebuilt from his patent drawings: a lamp, reflectors,
+      gels and a console playing slow projected lumia, his ''eighth art'' of light composed live.'
+  - card: beekeeping
+    interpretation: A real glass observation hive with its waggle dance, and a beekeeper's sugar-feeder
+      trial at a set bearing, used as the experiment von Frisch ran with a lamp.
+  usage:
+    input_tokens: 3279
+    output_tokens: 2434
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 4
+    mutation_kind: card_swap
+    swapped_axis: historical-artifact
+    replaced_card: kriegsspiel
+- position: 12
+  statement: A live, unrecorded single-take film of the western horizon, projected in each Kriegsspiel
+    commander's shed, from which he must forecast the next hour himself while the umpire rules the 1824
+    game's mud and visibility from the real sky, because a forecast made in real time is a wager the audience
+    watches him lose in named blocks.
+  subject: A live, unrecorded single-take film of the western sky, with a barometer in frame, projected
+    in two Kriegsspiel commanders' sheds where the audience sits behind them
+  behavior: A parish's First World War engagement is chosen because its war diary fixes the start and
+    end hours of the fighting. It is re-fought at 1:1 time under the 1824 Reisswitz Anleitung, with its
+    blocks, dice and scale map of the real ground. Each block hides one name from the memorial roll. The
+    two commanders sit apart in garden sheds and send written orders by runner, with a dozen audience
+    members behind each. The only image in each shed is a live, unbroken, single-take shot of the western
+    horizon. A brass barometer and a hand-lettered card of the morning's Met Office forecast sit in frame.
+    The umpire has a rooftop station of rain gauge, anemometer and visibility markers. Using the discretion
+    Reisswitz gives him, he rules smoke, mud, sight lines and fire effect from what it reads that afternoon.
+    The commanders never see his readings, so each must forecast the next hour from the sky on the wall
+    and the falling needle, then time his attacks by that guess. At the diary's closing hour both cameras
+    are capped. Nothing is recorded.
+  rationale: 'Kriegsspiel hides the battlefield from its players, and forecasting is how people act on
+    an hour that has not arrived yet. Fusing the two turns every order into a bet on the sky. Today''s
+    real afternoon weather is what decides whether a named block survives, and the commander can reason
+    about it but never know it. That keeps the parent''s working engine: a man committing men forward
+    on an unreliable live signal, with the audience behind him watching the misreading happen. It drops
+    the borrowed bees-as-grief imagery. Real time is essential, because a forecast checked after the fact
+    is no longer a forecast.'
+  card_readings:
+  - card: real-time-only
+    interpretation: The game, the horizon feed and the umpire's weather rulings run on a 1:1 clock against
+      the war diary's hours, with no pause, no replay and no recording, so nobody can wait to see what
+      the sky does.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Reisswitz wargame, played from Leeson''s translation of the Anleitung:
+      blocks, casualty dice, a map at the rule''s scale, separated commanders, written orders, and an
+      umpire whose judgment alone decides conditions and losses.'
+  - card: weather-forecasting
+    interpretation: 'Real meteorology done live and by hand: a commander reading cloud, wind and a barometer
+      needle on the projected horizon to predict the next hour, set against the morning''s official forecast
+      and the umpire''s actual station readings.'
+  usage:
+    input_tokens: 3262
+    output_tokens: 2238
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 4
+    mutation_kind: card_swap
+    swapped_axis: domain
+    replaced_card: beekeeping
+- position: 13
+  statement: A candlelit church zoetrope whose soldier's walk cycle has one frame per name on the parish
+    memorial, cranked unbroken from the war diary's zero hour to its closing hour while each name read
+    and answered is lifted from the drum, because the congregation watches its own responses break a man's
+    stride until only a motionless still remains.
+  subject: A large hand-cranked zoetrope stood in a parish nave for a single, unrecorded Office of the
+    Dead
+  behavior: The parish picks the memorial engagement whose battalion war diary (WO 95) fixes both zero
+    hour and the hour the action closed. A two-metre slotted drum stands in the nave, lit from inside
+    by candles. It carries a hand-drawn walk cycle of one soldier in period kit, advancing. The cycle
+    has exactly as many frames as the memorial has names, and each frame is lettered at its foot with
+    one name. Sidesmen take turns cranking the drum at a steady rate from zero hour to the closing hour,
+    without stopping. Nothing is filmed or photographed. The congregation stands around the drum, looking
+    through the slits. The officiant reads names at even intervals across those hours. After each name
+    the congregation answers 'Grant them eternal rest', and a warden lifts that frame out of the moving
+    drum. Nobody announces what the removals will do. At first the man walks smoothly. Then he hitches,
+    limps, jumps and strobes as gaps open in the cycle. At the diary's closing hour one frame is left,
+    the one name never read aloud. The drum keeps turning, and through the slits there is only a man standing
+    still.
+  rationale: A zoetrope makes a living body only while every frame is present and evenly spaced, so each
+    frame that goes is felt in the eye as a stumble before anyone works out the cause. Nobody explains
+    complicity. The congregation watches its own spoken responses take apart a man's stride, one hitch
+    at a time. The ending is the medium itself running backwards, from moving picture to still photograph,
+    and it happens at the hour the war diary says the fighting stopped. The only historical facts needed
+    are two diary hours and a memorial roll, and the parts are paper, a drum, candles and a crank.
+  card_readings:
+  - card: real-time-only
+    interpretation: The drum turns without a break, from the war diary's zero hour to its closing hour,
+      with no pause, recording or replay. The animation exists only while it spins in front of the people
+      present.
+  - card: zoetrope
+    interpretation: The literal 1830s slotted drum and paper strip, viewed through slits, which makes
+      motion out of an unbroken, evenly spaced sequence of frames, here a soldier's walk cycle.
+  - card: liturgy
+    interpretation: The Office of the Dead's call and response. The officiant calls a dead man's name,
+      the congregation answers 'Grant them eternal rest', and that answer is what takes his frame out
+      of the drum.
+  usage:
+    input_tokens: 0
+    output_tokens: 0
+    cache_read_tokens: 0
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: carried
+    swapped_axis: null
+    replaced_card: null
+- position: 14
+  statement: A live-projected Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time
+    on an 1824 map table, the umpire's casualty dice calling each dead man's name for the congregation
+    to answer 'Grant them eternal rest,' because chance deciding who is named restores the arbitrariness
+    and complicity a tidy alphabetical war memorial erases.
+  subject: A live, unrecorded overhead projection of a historical Kriegsspiel table, performed as a parish
+    requiem service
+  behavior: A parish's own engagement (one battle from its war memorial) is re-fought on a von Reisswitz-style
+    1824 map table. An overhead camera feeds a projector in the nave directly, with nothing stored. Two
+    parishioners command from separate vestries and send written orders by runner, under the umpire's
+    clock. Moves run at 1:1 with the historical timeline, and the game is never paused. Whenever the umpire's
+    casualty dice strike a block, the officiant reads the next name drawn from the memorial roll, and
+    the congregation answers 'Grant them eternal rest.' When the real engagement's hour of ending arrives,
+    the projector is switched off mid-move. Any names not yet called are then read in silence by each
+    person from a printed roll.
+  rationale: Memorials list the dead alphabetically and by rank, which makes their dying look orderly.
+    Kriegsspiel was built to turn soldiers into calculable losses. When its dice call the requiem, the
+    congregation sees the arithmetic and the randomness together. A real name lands on whichever block
+    the dice happen to hit, and the clock can run out before some names are reached. Parishioners give
+    the orders that 'kill' their own great-grandfathers' names. That gives the mourning stakes and complicity,
+    so it never reads as a mindfulness program.
+  card_readings:
+  - card: real-time-only
+    interpretation: The game runs on a 1:1 clock against the historical battle, with no pause, no replay
+      and no recording, and the service ends at the hour the real fighting stopped.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Prussian wargame: a terrain map with metal unit blocks, commanders
+      kept apart and sending written orders, and an umpire whose casualty dice decide losses.'
+  - card: liturgy
+    interpretation: 'An Office of the Dead with call and response: each casualty result is a call, the
+      reading of a real dead man''s name, and the congregation answers with the requiem response.'
+  usage:
+    input_tokens: 0
+    output_tokens: 0
+    cache_read_tokens: 0
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 13
+    mutation_kind: carried
+    swapped_axis: null
+    replaced_card: null
+- position: 15
+  statement: A live, unrecorded single-take film of the inside of an observation hive that runs while
+    a Kriegsspiel re-fights a parish's war-memorial battle at 1:1 time, its umpire telling the bees each
+    struck block's hidden name, because a colony's alarm builds and decays on its own clock, so the commanders'
+    only casualty report is a roar nobody can script or stop.
+  subject: A live, unrecorded single-take film projected from inside a glass observation hive while a
+    Kriegsspiel is played out of the audience's sight in a parish apiary
+  behavior: 'A parish''s First World War engagement is chosen because its battalion war diary (WO 95)
+    fixes the hours fighting began and ended. It is re-fought freely on an 1824-style Kriegsspiel map
+    table at 1:1 time, never paused or recorded. One name from the memorial roll is hidden under each
+    unit block, and the commanders are given nothing beyond the rules. The two commanders sit in separate
+    garden sheds and send written orders by runner. When the umpire''s dice strike a block, he turns it
+    over and carries it to a glass observation hive. Following the old custom of telling the bees, he
+    knocks three times and speaks the name to the hive. A contact mic inside the hive feeds a small speaker
+    in each shed. The commanders get no casualty report: their only report is the hive''s roar swelling.
+    The audience sits in the dark and never sees the game. They watch a single unbroken live projection
+    from an infrared camera inside the hive. Each knock sends a shudder across the comb. An assault stacks
+    knocks faster than the colony can settle. At the diary''s closing hour the umpire drapes the hive
+    in black crepe and the projector is switched off. Nothing is kept.'
+  rationale: Telling the bees was how rural households registered a death, so the custom fits the job,
+    and unlike a reading of names it cannot be scripted. A colony's alarm builds and decays on its own
+    biology. A run of casualties leaves the hive roaring long after the dice go quiet, and neither the
+    umpire nor the artist can stage it or stop it. A commander learns that an order killed men from a
+    sound that will not settle, not from a theme he was told in advance. The audience watching the comb
+    sees the war only as the disturbance it causes. That works as cinema because the footage exists only
+    in the hour it is made.
+  card_readings:
+  - card: real-time-only
+    interpretation: The game, the hive feed and the projection run on a 1:1 clock against the historical
+      engagement's start and end hours, with no pause, no replay and no recording, and the show ends when
+      the real fighting stopped.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Prussian wargame: a terrain map with unit blocks, commanders kept
+      apart and sending written orders, and an umpire whose casualty dice decide losses and who alone
+      tells the players what happened.'
+  - card: beekeeping
+    interpretation: A real glass observation hive and the English beekeepers' custom of telling the bees
+      of a death and draping the hive in black crepe.
+  usage:
+    input_tokens: 0
+    output_tokens: 0
+    cache_read_tokens: 0
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 4
+    mutation_kind: carried
+    swapped_axis: null
+    replaced_card: null
+failures:
+- position: 7
+  reason: 'invalid after retry: statement: must be one sentence, but has 2; statement: must be at most
+    60 words, but has 62'
+  usage:
+    input_tokens: 5917
+    output_tokens: 3858
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+usage:
+  input_tokens: 53364
+  output_tokens: 32843
+  cache_read_tokens: 18855
+  cache_write_tokens: 1257
+  web_search_requests: 0
+estimated_cost_usd: 0.880372
+mutation:
+  parent_run_path: debates/2026-11-23-round-3-literal.yaml
+  parent_run_digest: 2bb1f50b25630e7724fbbc794e95074691292696e878adfccd4fcfbddc9fec60
+  mutation_seed: 7
+  round: 4
+stop_reason: null

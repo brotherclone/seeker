@@ -98,17 +98,19 @@ Run one test batch by hand first to tune decks and prompts, then build the stand
 4. **Review.** Gabe judges whether the survivors are worth having; adjust decks, roles and scoring.
 5. **Standalone tool.** Build the orchestrator from the architecture sketch; resumable overnight runs.
 
-- [ ] Seed decks
-- [ ] Draft role prompts
-- [ ] Run test batch
+- [x] Seed decks
+- [x] Draft role prompts
+- [x] Run test batch (round 1, debated and ranked 2026-11-14)
 - [ ] Review survivors
-- [ ] Scaffold orchestrator in the repo
+- [x] Scaffold orchestrator in the repo
+- [x] Mutate survivors into the next round (`seeker-mutate`)
+- [x] Scheduled run: launchd every other day, the spend cap, vault run notes (`seeker-schedule`, `docs/scheduling.md`)
 
 ## Open questions
 
 - Which cards are must-haves in the first decks?
-- How many debate rounds before an idea counts as a survivor?
+- How many debate rounds before an idea counts as a survivor? *Answered 2026-11-23: the lineage pauses for Gabe's review every 3 rounds (`schedule.review_every`).*
 - Should promise be judged by agents alone, or does Gabe's taste get encoded as a persona?
 - Which search sources can the prosecutor actually reach (NIME archive, arXiv, GitHub, Bandcamp, patents)?
-- What's the budget per overnight run?
+- What's the budget per overnight run? *Answered 2026-11-23: $5 per trigger, covering mutation, debate and tournament together; a round runs every other day (`docs/scheduling.md`).*
 - Is this a sibling of the White pipeline or fully separate?

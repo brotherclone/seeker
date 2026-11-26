@@ -5,18 +5,58 @@ paths:
   batches: batches
   generations: generations
   prompts: prompts
-  vault: null            # e.g. ~/Documents/Claude/Projects/Bracers/Projects (used by later changes)
+  debates: debates
+  reports: reports
+  runs: runs             # scheduled-run records, one per trigger (git-ignored)
+  reviews: reviews       # review sign-offs (committed)
+  logs: logs             # the scheduled job's stdout and stderr (git-ignored)
+  vault: null            # fallback only: put SEEKER_VAULT=~/path/to/vault in .env (git-ignored)
+
+# Seeker's folders inside the vault, relative to its root.
+vault_folders:
+  works: Works
+  cards: Cards
+  runs: Runs             # one note per scheduled trigger that did work
 
 # USD per million tokens. Prices are data: update them as they change.
-# Input/output: list prices checked 2026-11-04 (https://computeprices.com/api-pricing/claude).
-# Cache: 5-minute write = 1.25x input, read = 0.1x input, per
-# https://www.eesel.ai/blog/anthropic-api-pricing (edited 2026-09-08), which shows
-# the same ratios for the 5.x line. The official page is
-# https://platform.claude.com/docs/en/about-claude/pricing; re-check the 5.5 cache
-# rates there when you next update this table.
+# Checked 2026-11-12 against the official page,
+# https://platform.claude.com/docs/en/about-claude/pricing:
+# - Input, output and 5-minute cache writes are as listed below.
+# - Cache reads on Opus and Sonnet 5.5 are 0.05x input ($0.20 and $0.10). The
+#   2026-11-04 table had 0.1x, so generation records written before this date
+#   overstate their cache-read cost slightly.
+# - Haiku 5.5 prices rise 5x for prompts over 100,000 tokens ($0.50 in, $2.50 out).
+#   That tier is not modelled, because Seeker's Haiku prompts are a few thousand tokens.
+# - Web search is $10 per 1,000 searches, plus the tokens its results add. The
+#   prosecutor uses the basic tool (search_tool: basic), whose results all reach
+#   the model unfiltered. The filtered tool's code execution is not charged.
 prices:
-  as_of: 2026-11-04
+  as_of: 2026-11-12
+  web_search_per_request: 0.01
   models:
-    - {model: claude-opus-5-5,   input: 4.00, output: 20.00, cache_read: 0.40, cache_write: 5.00}
-    - {model: claude-sonnet-5-5, input: 2.00, output: 10.00, cache_read: 0.20, cache_write: 2.50}
+    - {model: claude-opus-5-5,   input: 4.00, output: 20.00, cache_read: 0.20, cache_write: 5.00}
+    - {model: claude-sonnet-5-5, input: 2.00, output: 10.00, cache_read: 0.10, cache_write: 2.50}
     - {model: claude-haiku-5-5,  input: 0.10, output: 0.50,  cache_read: 0.01, cache_write: 0.125}
+
+# A run stops cleanly once its estimated spend reaches this, in US dollars.
+budget_usd: 5.00
+
+# Debate tournament: the most judge calls one run schedules. With both_orders,
+# every pair is judged twice (A/B, then B/A), so 132 = round robin for 12.
+tournament:
+  max_comparisons: 132
+  both_orders: true
+
+# Mutation: per survivor, this many reworkings on the same cards, plus one card
+# swap per non-constraint card.
+mutation:
+  reworkings: 2
+
+# Scheduled run (seeker-schedule): launchd fires daily at `hour`; a trigger
+# advances one round only once the last round advanced cadence_days ago (less
+# 12 hours), and the lineage pauses for a sign-off every review_every rounds.
+# Each trigger is capped at budget_usd across mutation, debate and tournament.
+schedule:
+  cadence_days: 2
+  review_every: 3
+  hour: 2

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "0.1.0",
+  "name": "Seeker work",
+  "behavior": "create",
+  "noteNameFormat": "{{title|safe_name}}",
+  "path": "Works",
+  "properties": [
+    {"name": "type", "value": "work", "type": "text"},
+    {"name": "title", "value": "{{title}}", "type": "text"},
+    {"name": "creators", "value": "{{author|wikilink}}", "type": "multitext"},
+    {"name": "year", "value": "{{published|date:\"YYYY\"}}", "type": "number"},
+    {"name": "url", "value": "{{url}}", "type": "text"},
+    {"name": "kind", "value": "other", "type": "text"},
+    {"name": "fields", "value": "", "type": "multitext"},
+    {"name": "cards", "value": "", "type": "multitext"},
+    {"name": "summary", "value": "{{description}}", "type": "text"},
+    {"name": "captured_by", "value": "gabe", "type": "text"},
+    {"name": "captured_on", "value": "{{date|date:\"YYYY-MM-DD\"}}", "type": "date"}
+  ],
+  "triggers": [],
+  "noteContentFormat": "{{selection}}\n\n{{\"In 3 sentences: what this work is, how it was made, and what techniques, media or historical machines it uses.\"}}"
+}

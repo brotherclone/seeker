@@ -1,0 +1,178 @@
+"""The seeker-debate command line (debate-ideas tasks 8.1-8.2), with a scripted model injected."""
+
+import json
+from pathlib import Path
+
+import pytest
+import yaml
+
+from seeker.debate.cli import DebateCommand
+from seeker.debate.record import DebateFile
+from seeker.models import ModelReply, ScriptedModel
+from seeker.ontology import Generation, ScoreAxis, SearchError, StopReason, Usage
+from test_debate_runner import NOTHING, SEARCHED, one_round
+
+ROOT = Path(__file__).resolve().parent.parent
+CALL = Usage(input_tokens=1_000, output_tokens=100, cache_read_tokens=0, cache_write_tokens=0)
+
+
+@pytest.fixture(autouse=True)
+def isolated(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("SEEKER_CONFIG", raising=False)
+    monkeypatch.setenv("SEEKER_VAULT", str(tmp_path / "vault"))
+
+
+@pytest.fixture
+def config(tmp_path: Path) -> Path:
+    text = (ROOT / "seeker.yaml").read_text()
+    for folder in ("decks", "prompts"):
+        text = text.replace(f"{folder}: {folder}", f"{folder}: {ROOT / folder}")
+    path = tmp_path / "seeker.yaml"
+    path.write_text(text)
+    return path
+
+
+@pytest.fixture
+def generation(tmp_path: Path) -> Path:
+    """The round-1 literal generation cut to its first three ideas."""
+    full = yaml.safe_load((ROOT / "generations" / "2026-11-04-round-1-literal.yaml").read_text())
+    full["ideas"], full["failures"] = full["ideas"][:3], []
+    keys = ("input_tokens", "output_tokens", "cache_read_tokens", "cache_write_tokens")
+    full["usage"] = {k: sum(i["usage"].get(k, 0) for i in full["ideas"]) for k in keys}
+    Generation.model_validate(full)
+    path = tmp_path / "generations" / "three.yaml"
+    path.parent.mkdir()
+    path.write_text(yaml.safe_dump(full, sort_keys=False))
+    return path
+
+
+def judgment() -> ModelReply:
+    return ModelReply(
+        output_json=json.dumps({a.value: {"winner": "A", "reason": "Specific."} for a in ScoreAxis}), usage=CALL
+    )
+
+
+def full_script(ideas: int = 3, comparisons: int = 6) -> ScriptedModel:
+    return ScriptedModel(one_round() * ideas + tuple(judgment() for _ in range(comparisons)))
+
+
+def test_dry_run_needs_no_key_and_makes_no_calls(config, capsys) -> None:
+    model = ScriptedModel(())
+    generation = ROOT / "generations" / "2026-11-04-round-1-literal.yaml"
+    assert DebateCommand(model).run([str(generation), "--dry-run", "--config", str(config)]) == 0
+    out = capsys.readouterr().out
+    assert "12 debates, 0 carried, 48 debate calls (up to 36 searches), up to 132 comparisons among 12 entrants" in out
+    assert out.count("=== idea") == 24 and model.requests == []
+
+
+def test_run_out_writes_debates_tournament_and_survivors(config, generation, tmp_path, capsys) -> None:
+    out = tmp_path / "run.yaml"
+    model = full_script()
+    assert DebateCommand(model).run(["run", str(generation), "--out", str(out), "--config", str(config)]) == 0
+    record = DebateFile(out).read()
+    assert len(record.debates) == 3 and len(record.tournament.comparisons) == 6
+    assert record.tournament.both_orders is True
+    assert record.stop_reason is StopReason.FINISHED and record.tournament_seed == 7
+    assert record.generation_path == "generations/three.yaml"
+    printed = capsys.readouterr().out
+    assert "defended" in printed and "survivor 1:" in printed and "searches" in printed and model.remaining == 0
+
+
+def test_no_tournament_stops_before_ranking(config, generation, tmp_path) -> None:
+    out = tmp_path / "run.yaml"
+    assert DebateCommand(full_script(comparisons=0)).run(
+        [str(generation), "--out", str(out), "--no-tournament", "--config", str(config)]
+    ) == 0
+    record = DebateFile(out).read()
+    assert record.stop_reason is StopReason.NO_TOURNAMENT and record.tournament is None
+    model = ScriptedModel(tuple(judgment() for _ in range(6)))
+    assert DebateCommand(model).run([str(generation), "--out", str(out), "--config", str(config)]) == 0
+    assert len(DebateFile(out).read().tournament.comparisons) == 6 and model.remaining == 0
+
+
+def test_budget_stop_exits_three_and_resumes(config, generation, tmp_path, capsys) -> None:
+    out = tmp_path / "run.yaml"
+    status = DebateCommand(full_script()).run([str(generation), "--out", str(out), "--budget", "0.0001", "--config", str(config)])
+    assert status == 3 and DebateFile(out).read().stop_reason is StopReason.BUDGET
+    assert "higher --budget" in capsys.readouterr().out
+    rest = ScriptedModel(one_round() * 2 + tuple(judgment() for _ in range(6)))
+    assert DebateCommand(rest).run([str(generation), "--out", str(out), "--budget", "50", "--config", str(config)]) == 0
+    assert DebateFile(out).read().stop_reason is StopReason.FINISHED
+
+
+def test_scratch_lands_in_ignored_folder(config, generation, tmp_path) -> None:
+    assert DebateCommand(full_script()).run([str(generation), "--scratch", "--config", str(config)]) == 0
+    (written,) = (tmp_path / "debates" / "scratch").glob("*-three.yaml")
+    assert DebateFile(written).read().stop_reason is StopReason.FINISHED
+
+
+def test_a_target_is_required(config, generation) -> None:
+    with pytest.raises(SystemExit):
+        DebateCommand(ScriptedModel(())).run([str(generation), "--config", str(config)])
+
+
+def test_missing_key_fails_before_any_call(config, generation, tmp_path, capsys) -> None:
+    assert DebateCommand().run([str(generation), "--out", str(tmp_path / "r.yaml"), "--config", str(config)]) == 1
+    assert "ANTHROPIC_API_KEY" in capsys.readouterr().err
+
+
+def test_report_from_a_finished_run(config, generation, tmp_path, capsys) -> None:
+    out = tmp_path / "run.yaml"
+    DebateCommand(full_script()).run([str(generation), "--out", str(out), "--config", str(config)])
+    model = ScriptedModel(())
+    assert DebateCommand(model).run(["report", str(out), "--config", str(config)]) == 0
+    report = (tmp_path / "reports" / "run.md").read_text()
+    assert report.count("### ") == 3 and "**prosecutor**" in report and "*Advocate rebuts:*" in report
+    assert "novelty" in report and "## Provenance" in report and model.requests == []
+
+
+# --- mutate-ideas 5.2: dry run on a mutated generation ------------------------------
+
+
+def test_dry_run_on_mutated_generation_skips_carried(config, tmp_path, capsys) -> None:
+    import shutil
+
+    from tests.mutation_fixtures import ROUND_ONE_RUN, mutated_generation
+
+    (tmp_path / "debates").mkdir()
+    parent = tmp_path / "debates" / ROUND_ONE_RUN.name
+    shutil.copy(ROUND_ONE_RUN, parent)
+    path = mutated_generation(tmp_path / "generations" / "round-2.yaml", parent, tmp_path)
+    model = ScriptedModel(())
+    assert DebateCommand(model).run([str(path), "--dry-run", "--config", str(config)]) == 0
+    out = capsys.readouterr().out
+    assert "12 debates, 3 carried, 48 debate calls" in out
+    assert "comparisons among 15 entrants" in out
+    for position, parent_position in ((13, 10), (14, 6), (15, 3)):
+        assert f"=== idea {position}: carried from parent position {parent_position}; no calls ===" in out
+        assert f"=== idea {position}: prosecutor ===" not in out
+    assert out.count(": prosecutor ===") == 12 and model.requests == []
+
+
+# --- fix-prior-art-search 3.2: search health in the summary --------------------------
+
+
+def test_summary_counts_prior_art_search(config, generation, tmp_path, capsys) -> None:
+    limit = SearchError(error_code="max_uses_exceeded", error_message="max_uses_exceeded")
+    failing = ModelReply(output_json=NOTHING, usage=SEARCHED, search_errors=(limit,))
+    script = one_round() * 2 + (failing, *one_round()[1:]) + tuple(judgment() for _ in range(6))
+    out = tmp_path / "run.yaml"
+    args = ["run", str(generation), "--out", str(out), "--config", str(config)]
+    assert DebateCommand(ScriptedModel(script)).run(args) == 0
+    assert "prior-art search: 2 of 3 with results, 1 with errors" in capsys.readouterr().out
+
+
+def test_a_mutation_stopped_at_its_budget_is_refused(config, tmp_path, capsys) -> None:
+    from tests.mutation_fixtures import mutated_generation
+
+    path = mutated_generation(tmp_path / "generations" / "stopped.yaml")
+    raw = yaml.safe_load(path.read_text())
+    raw["stop_reason"] = "budget"
+    path.write_text(yaml.safe_dump(raw, sort_keys=False))
+    model = ScriptedModel(())
+    for argv in ([str(path), "--dry-run"], [str(path), "--out", str(tmp_path / "run.yaml")]):
+        assert DebateCommand(model).run([*argv, "--config", str(config)]) == 1
+        err = capsys.readouterr().err
+        assert "mutation stopped at its budget" in err and "seeker-mutate" in err
+    assert model.requests == []

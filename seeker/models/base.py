@@ -10,9 +10,9 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from pydantic import ConfigDict, Field
+from pydantic import ConfigDict, Field, model_validator
 
-from seeker.ontology import Effort, ModelId, SeekerModel, Usage
+from seeker.ontology import Effort, ModelId, SearchError, SearchTool, SeekerModel, Url, Usage
 
 
 class ModelCallFailed(Exception):
@@ -26,6 +26,15 @@ class OutputSpec(SeekerModel):
 
     name: str = Field(pattern="^[a-z_]+$", description="A name for the answer shape, for logs and errors.")
     json_schema_text: str = Field(min_length=2, description="Strict JSON Schema of the answer, as JSON text.")
+
+
+class SearchResult(SeekerModel):
+    """One page a server-side web search returned during a call."""
+
+    model_config = ConfigDict(title="SearchResult")
+
+    url: Url = Field(description="The result's address, exactly as the search returned it.")
+    title: str = Field(default="", description="The result's page title, when the search gave one.")
 
 
 class RetryContext(SeekerModel):
@@ -50,6 +59,18 @@ class ModelRequest(SeekerModel):
     max_tokens: int = Field(ge=1, description="Output token limit.")
     effort: Effort = Field(description="How much effort the model puts into the answer.")
     retry: RetryContext | None = Field(default=None, description="Present when re-asking after an invalid answer.")
+    max_searches: int = Field(
+        default=0, ge=0, description="Web searches this call may run; 0 means the search tool is not offered."
+    )
+    search_tool: SearchTool | None = Field(
+        default=None, description="Which web search tool version to offer; set exactly when max_searches is above 0."
+    )
+
+    @model_validator(mode="after")
+    def _search_tool_when_searching(self) -> ModelRequest:
+        if (self.max_searches > 0) != (self.search_tool is not None):
+            raise ValueError("search_tool is set exactly when max_searches is above zero")
+        return self
 
 
 class ModelReply(SeekerModel):
@@ -60,6 +81,16 @@ class ModelReply(SeekerModel):
     output_json: str = Field(min_length=1, description="The answer, as JSON text.")
     usage: Usage
     stop_reason: str = Field(default="end_turn", description="Why the model stopped.")
+    search_results: tuple[SearchResult, ...] = Field(
+        default=(), description="Every page the call's web searches returned, in the order returned."
+    )
+    search_errors: tuple[SearchError, ...] = Field(
+        default=(), description="Every search that failed during the call, never dropped."
+    )
+
+    @property
+    def result_urls(self) -> frozenset[str]:
+        return frozenset(str(result.url) for result in self.search_results)
 
 
 class LanguageModel(ABC):

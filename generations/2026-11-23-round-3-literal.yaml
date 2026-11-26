@@ -1,0 +1,835 @@
+# Generation record (schema/seeker.yaml). Inputs are pinned: the embedded draw
+# batch, reading, model, role-file digest and git commit. Rerunning with the same
+# output path resumes, filling in only the positions without an idea.
+draw_batch:
+  seed: 7
+  deck_set_digest: 41909d46fec8ea3d0f3062810e78fd25be91b737e18bab6a19577f9e915a3050
+  draws:
+  - position: 1
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - liturgy
+  - position: 2
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - liturgy
+  - position: 3
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - zoetrope
+    - liturgy
+  - position: 4
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - beekeeping
+  - position: 5
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - liturgy
+  - position: 6
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - liturgy
+  - position: 7
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - landlords-game
+    - liturgy
+  - position: 8
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - cryptography
+  - position: 9
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - heraldry
+  - position: 10
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - heraldry
+  - position: 11
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - strachey-love-letters
+    - heraldry
+  - position: 12
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - ornithology
+  - position: 13
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - kriegsspiel
+    - liturgy
+  - position: 14
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - liturgy
+  - position: 15
+    axes:
+    - constraint
+    - historical-artifact
+    - domain
+    home_field: film
+    drawn_cards:
+    - real-time-only
+    - camera-obscura
+    - heraldry
+reading: literal
+role_name: mutator
+model: claude-opus-5-5
+role_digest: f5e35fa86a8e37710d5984fc4cfba7bf08c677cd2722dc197d6c1b9b448bc62b
+git_commit: 1a7947761eaf586eaa3fe130e060c7a36edf1357
+generated_at: '2026-11-23T19:32:49.364136Z'
+ideas:
+- position: 1
+  statement: A one-take, real-time film of an 1824 Kriegsspiel sung as Compline, where commanders' written
+    orders are chanted on a psalm tone and the umpire moves nothing until the congregation sings 'Amen,'
+    because the uninformed worshippers gradually discover that their reflexive assent is what advances
+    the troops, and the unbroken camera records their voices faltering.
+  subject: A single-take, real-time film of a Kriegsspiel game played as sung Compline in a small chapel
+  behavior: Two Kriegsspiel commanders sit in the choir stalls opposite each other, decani against cantoris,
+    each screened from the map. Each writes an order, and a cantor chants it on a psalm tone, for example
+    'Second battalion shall advance upon the mill.' The umpire stands in the crossing at an 1824 terrain
+    table and moves nothing until the congregation sings the reflexive 'Amen' of the printed order of
+    service. He chants casualty dice results back as versicles, and those too wait for their Amen. The
+    volunteer congregation is told only that this is a sung Compline. The game runs Reisswitz's two-minute
+    turns as two real minutes, with no pause and no retakes. One locked-off camera at the back of the
+    nave records it as a single uncut take, and the take is screened only at full length.
+  rationale: 'Nothing is explained, so nobody is shown an argument. Call and response trains a congregation
+    to assent without thinking, and Kriegsspiel needs an authority to ratify each order. Joining the two
+    makes the room''s reflex the trigger for the war. The ambush lands on the audience, not on actors:
+    some way into the take, the people in the pews realise that every Amen they sang moved the troops.
+    The camera catches the moment their voices thin and falter. That faltering is unrepeatable, which
+    is why the film can only be one real-time take.'
+  card_readings:
+  - card: real-time-only
+    interpretation: 'One unbroken take whose running time is the game''s own clock: Reisswitz''s two-minute
+      turns are played as two real minutes, with no cuts, pauses or retakes.'
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Prussian wargame: commanders kept apart who send written orders,
+      an umpire at a terrain table moving metal blocks, and casualty dice.'
+  - card: liturgy
+    interpretation: 'Sung Compline''s call and response: orders and results are chanted as versicles,
+      and the congregation''s printed ''Amen'' is the response.'
+  usage:
+    input_tokens: 2849
+    output_tokens: 2604
+    cache_read_tokens: 0
+    cache_write_tokens: 1257
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 2
+  statement: A single unbroken real-time film of an 1824 Kriegsspiel of Waterloo in a working cathedral,
+    whose commanders must leave the table for every scheduled service while the umpire resolves their
+    standing orders, because the liturgy is not staged and cannot be moved, so their absence is real and
+    their losses happen while they pray.
+  subject: A nine-and-a-half-hour single-take film of a Kriegsspiel played in a side chapel of a working
+    cathedral during its ordinary daily services
+  behavior: 'Two players re-fight Waterloo on an 1824 map table in a side chapel of a working cathedral.
+    The game runs at 1:1 time from 11:30 to 21:00 on the 18 June anniversary. One rule binds them: when
+    the bell rings for the Eucharist or Evensong, both must leave the table and attend. The umpire keeps
+    the clock running and adjudicates their last written standing orders, rolling casualty dice at the
+    empty table. A single locked-off camera films the whole nine and a half hours in one unbroken take.
+    Chant from the quire carries over the dice, and the players come back to find units gone. The worshippers
+    are never told, and the cathedral''s ordinary schedule of services is left unaltered.'
+  rationale: 'Kriegsspiel was built to teach that command means writing orders and then being absent while
+    they play out. Here the absence is imposed by a liturgy the piece does not control and cannot reschedule,
+    so it is not a staged ceremony. The congregation is not performing for anyone, and the players cannot
+    prepare for it. Complicity reaches each player when they return to a board that changed while they
+    knelt. The viewer sees it concretely: an untouched table, and dice falling under a Magnificat that
+    was never meant for it.'
+  card_readings:
+  - card: real-time-only
+    interpretation: The game clock runs 1:1 with Waterloo's hours and the film is one unedited take, so
+      the war never pauses while its commanders are away at prayer.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Reisswitz wargame: map table, metal blocks, written orders, and
+      an umpire whose dice settle the fate of units left on standing orders.'
+  - card: liturgy
+    interpretation: The cathedral's actual scheduled Eucharist and sung Evensong, which nobody stages
+      for the film and which the players must attend whatever the board shows.
+  usage:
+    input_tokens: 6829
+    output_tokens: 3090
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 3
+  statement: A candlelit church zoetrope whose soldier's walk cycle has one frame per name on the parish
+    memorial, cranked unbroken from the war diary's zero hour to its closing hour while each name read
+    and answered is lifted from the drum, because the congregation watches its own responses break a man's
+    stride until only a motionless still remains.
+  subject: A large hand-cranked zoetrope stood in a parish nave for a single, unrecorded Office of the
+    Dead
+  behavior: The parish picks the memorial engagement whose battalion war diary (WO 95) fixes both zero
+    hour and the hour the action closed. A two-metre slotted drum stands in the nave, lit from inside
+    by candles. It carries a hand-drawn walk cycle of one soldier in period kit, advancing. The cycle
+    has exactly as many frames as the memorial has names, and each frame is lettered at its foot with
+    one name. Sidesmen take turns cranking the drum at a steady rate from zero hour to the closing hour,
+    without stopping. Nothing is filmed or photographed. The congregation stands around the drum, looking
+    through the slits. The officiant reads names at even intervals across those hours. After each name
+    the congregation answers 'Grant them eternal rest', and a warden lifts that frame out of the moving
+    drum. Nobody announces what the removals will do. At first the man walks smoothly. Then he hitches,
+    limps, jumps and strobes as gaps open in the cycle. At the diary's closing hour one frame is left,
+    the one name never read aloud. The drum keeps turning, and through the slits there is only a man standing
+    still.
+  rationale: A zoetrope makes a living body only while every frame is present and evenly spaced, so each
+    frame that goes is felt in the eye as a stumble before anyone works out the cause. Nobody explains
+    complicity. The congregation watches its own spoken responses take apart a man's stride, one hitch
+    at a time. The ending is the medium itself running backwards, from moving picture to still photograph,
+    and it happens at the hour the war diary says the fighting stopped. The only historical facts needed
+    are two diary hours and a memorial roll, and the parts are paper, a drum, candles and a crank.
+  card_readings:
+  - card: real-time-only
+    interpretation: The drum turns without a break, from the war diary's zero hour to its closing hour,
+      with no pause, recording or replay. The animation exists only while it spins in front of the people
+      present.
+  - card: zoetrope
+    interpretation: The literal 1830s slotted drum and paper strip, viewed through slits, which makes
+      motion out of an unbroken, evenly spaced sequence of frames, here a soldier's walk cycle.
+  - card: liturgy
+    interpretation: The Office of the Dead's call and response. The officiant calls a dead man's name,
+      the congregation answers 'Grant them eternal rest', and that answer is what takes his frame out
+      of the drum.
+  usage:
+    input_tokens: 2892
+    output_tokens: 3211
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: card_swap
+    swapped_axis: historical-artifact
+    replaced_card: kriegsspiel
+- position: 4
+  statement: A live, unrecorded single-take film of the inside of an observation hive that runs while
+    a Kriegsspiel re-fights a parish's war-memorial battle at 1:1 time, its umpire telling the bees each
+    struck block's hidden name, because a colony's alarm builds and decays on its own clock, so the commanders'
+    only casualty report is a roar nobody can script or stop.
+  subject: A live, unrecorded single-take film projected from inside a glass observation hive while a
+    Kriegsspiel is played out of the audience's sight in a parish apiary
+  behavior: 'A parish''s First World War engagement is chosen because its battalion war diary (WO 95)
+    fixes the hours fighting began and ended. It is re-fought freely on an 1824-style Kriegsspiel map
+    table at 1:1 time, never paused or recorded. One name from the memorial roll is hidden under each
+    unit block, and the commanders are given nothing beyond the rules. The two commanders sit in separate
+    garden sheds and send written orders by runner. When the umpire''s dice strike a block, he turns it
+    over and carries it to a glass observation hive. Following the old custom of telling the bees, he
+    knocks three times and speaks the name to the hive. A contact mic inside the hive feeds a small speaker
+    in each shed. The commanders get no casualty report: their only report is the hive''s roar swelling.
+    The audience sits in the dark and never sees the game. They watch a single unbroken live projection
+    from an infrared camera inside the hive. Each knock sends a shudder across the comb. An assault stacks
+    knocks faster than the colony can settle. At the diary''s closing hour the umpire drapes the hive
+    in black crepe and the projector is switched off. Nothing is kept.'
+  rationale: Telling the bees was how rural households registered a death, so the custom fits the job,
+    and unlike a reading of names it cannot be scripted. A colony's alarm builds and decays on its own
+    biology. A run of casualties leaves the hive roaring long after the dice go quiet, and neither the
+    umpire nor the artist can stage it or stop it. A commander learns that an order killed men from a
+    sound that will not settle, not from a theme he was told in advance. The audience watching the comb
+    sees the war only as the disturbance it causes. That works as cinema because the footage exists only
+    in the hour it is made.
+  card_readings:
+  - card: real-time-only
+    interpretation: The game, the hive feed and the projection run on a 1:1 clock against the historical
+      engagement's start and end hours, with no pause, no replay and no recording, and the show ends when
+      the real fighting stopped.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Prussian wargame: a terrain map with unit blocks, commanders kept
+      apart and sending written orders, and an umpire whose casualty dice decide losses and who alone
+      tells the players what happened.'
+  - card: beekeeping
+    interpretation: A real glass observation hive and the English beekeepers' custom of telling the bees
+      of a death and draping the hive in black crepe.
+  usage:
+    input_tokens: 2882
+    output_tokens: 2390
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: card_swap
+    swapped_axis: domain
+    replaced_card: liturgy
+- position: 5
+  statement: A blacked-out shopfront camera obscura where a small congregation keeps a dusk vigil of intercessions
+    for strangers crossing the inverted street on the wall, each petition allowed only while its subject
+    is in frame, because praying for unknowing passers-by who drift out mid-sentence makes the room a
+    cinema of the living that feels like the dead.
+  subject: A dusk intercession vigil held inside a blacked-out shopfront camera obscura facing a street
+  behavior: 'A street-facing shop or front room is blacked out, with a single lens fitted in the window.
+    It throws the pavement outside onto a white sheet on the back wall, upside down and silent. A small
+    congregation sits in the dark facing the sheet. One cantor watches the image and improvises the Prayers
+    of the People for whoever crosses it. The petitions name strangers only by what can be seen: ''for
+    the man carrying the ladder,'' ''for the girl running for the bus.'' The people answer ''Lord, hear
+    our prayer.'' The rule is that a petition can only be said while its subject is on the wall. If they
+    walk out of frame mid-sentence, the prayer breaks off unfinished and goes unanswered. When the street
+    is empty, everyone keeps silence. The vigil starts at dusk and ends when the image fades too far to
+    see a face. Nothing is filmed, and no names are known.'
+  rationale: Intercession is usually prayed for people who are absent but named. Here it falls on people
+    who are present but unknown, and who cannot hear it. The inverted, silent figures on the sheet look
+    like the dead or like saints, so the room feels like a dream. It does not work as a civic lesson.
+    No one is judged and nothing is proved. Because the image cannot be held, the liturgy is shaped by
+    strangers' walking speed, and the half-finished prayers are its real content. A blackout cloth and
+    a magnifying lens make it a single evening's build, with no cart and no turret.
+  card_readings:
+  - card: real-time-only
+    interpretation: A petition is only valid while its stranger is in the live projected frame, so the
+      prayer has to keep time with an image that cannot be paused or replayed.
+  - card: camera-obscura
+    interpretation: 'A literal blacked-out room with one window lens projecting the inverted, silent street
+      onto a sheet: cinema with no film in it.'
+  - card: liturgy
+    interpretation: The intercessions from the order of service, said as call and response between a cantor
+      and the congregation, aimed at passers-by.
+  usage:
+    input_tokens: 3074
+    output_tokens: 1728
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 2
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 6
+  statement: A Tenebrae service in a lensed, blacked-out chapel where each candle snuffed between psalms
+    lets the inverted living street surface more clearly on a sheet behind the altar, until sunset takes
+    it back, because the liturgy's own darkening becomes the projector's exposure, so the darkness that
+    stands for abandonment reveals the indifferent living city.
+  subject: A Tenebrae service held inside a single-lens camera obscura chapel
+  behavior: 'On a Holy Week evening, Tenebrae is sung in a small chapel or hired hall. One window is blacked
+    out and fitted with a single lens. It throws the street outside, upside down, onto a linen sheet hung
+    behind the hearse, the triangular stand of fifteen candles. At first the candlelight washes the image
+    out completely. After each psalm and its sung responsory, one candle is snuffed. The street rises
+    out of the sheet a little more each time: buses, umbrellas and lit shop signs, all inverted and passing
+    silently over the readings from Lamentations. The service starts at a set time before sunset. That
+    means the dying candles race the dying daylight, and the picture is brightest for only a few minutes
+    somewhere in the middle of the office. After that, dusk takes it away again. The last candle is hidden.
+    The congregation makes the strepitus, slamming books on the pews, and leaves in darkness. Nothing
+    is filmed, and no two nights look alike.'
+  rationale: Tenebrae already is a rite of controlled darkening, and a camera obscura works only in the
+    dark. So the liturgy's own order of service becomes the projector's exposure control, and no prop
+    has to illustrate a moral. The darkness that stands for abandonment is what reveals the living city.
+    That city is upside down and indifferent, and nobody can step out of the image the way a cinema audience
+    can step out of a film. The image fades for real when dusk wins, so the piece gets under the skin
+    rather than confirming what anyone already knew.
+  card_readings:
+  - card: real-time-only
+    interpretation: The only image is the live street, and its brightness depends on the timed race between
+      snuffed candles and actual sunset, so each performance's picture happens once and is never kept.
+  - card: camera-obscura
+    interpretation: A single lens in a blacked-out chapel window projects the inverted street onto a linen
+      sheet behind the altar, the classic room-sized obscura.
+  - card: liturgy
+    interpretation: The Tenebrae office, with its psalms, sung responsories, candles snuffed one by one
+      on the hearse, and the closing strepitus in the dark.
+  usage:
+    input_tokens: 3210
+    output_tokens: 1541
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 2
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 7
+  statement: A Rogationtide live-cinema rite in which hidden players run Lizzie Magie's Landlord's Game
+    on a board redrawn from the parish tithe map, camera fed straight to projector, while the hall answers
+    every rent paid with the Commination's 'Amen', standing when it is their own house, because Magie's
+    argument about land becomes a verdict spoken once and never kept.
+  subject: A live-projected, unrecorded Rogationtide performance of Lizzie Magie's Landlord's Game, played
+    on the parish's own tithe-map plots
+  behavior: 'On a Rogation evening, two players sit out of sight behind a screen in the parish hall. They
+    play Lizzie Magie''s 1904 rules, including ''Absolute Necessity'', the poorhouse, the Public Treasury
+    and the Mother Earth corner. The board is hand-redrawn so that each property square is a plot from
+    the parish''s tithe apportionment: the mill field, the glebe, and the rows where the audience now
+    live. A cheap security camera points straight down at the board and feeds a projector directly. There
+    is no recorder, no streaming and no phone in the chain. The congregation sees only the huge live image
+    of dice, tokens and paper money crossing their own streets. A reader beside the screen calls each
+    move as a versicle. Passing Mother Earth, he says ''Labour upon Mother Earth produces wages'', and
+    the hall answers ''We pray thee to hear us.'' When a token lands on an owned plot and rent changes
+    hands, he reads the Commination line ''Cursed is he that removeth his neighbour''s landmark.'' Everyone
+    answers ''Amen'', and whoever lives on that plot must stand while they say it. The game ends at dusk,
+    when the projector is switched off, whoever is winning.'
+  rationale: Magie built her game to show players how rent drains a district while they enjoy winning
+    it, and in this rite the game is played on the congregation's own land. The live projected board does
+    what the parent's camera obscura did. One unseen source feeds one reported image, and it sets an old
+    document against the present, without the optics problem. Saying 'Amen' to a curse on your own address,
+    live and without a record, turns Magie's argument into a verdict people speak about themselves rather
+    than a heritage pageant about someone else's fence.
+  card_readings:
+  - card: real-time-only
+    interpretation: The only image is a direct camera-to-projector feed of the board as it is played,
+      with nothing recorded, and the game stops at dusk.
+  - card: landlords-game
+    interpretation: Lizzie Magie's actual 1904 anti-monopoly game, with its rules, Mother Earth corner
+      and rent mechanics, played on a board redrawn from the parish tithe map.
+  - card: liturgy
+    interpretation: Rogationtide litany and the Commination's 'Amen' to the curse on landmark-movers,
+      said as call and response between the reader and the hall.
+  usage:
+    input_tokens: 3142
+    output_tokens: 2077
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 2
+    mutation_kind: card_swap
+    swapped_axis: historical-artifact
+    replaced_card: camera-obscura
+- position: 8
+  statement: A street-facing camera obscura whose viewing table is masked by a cut Cardan grille, so that
+    letters from the live, inverted shop signs opposite spell a hidden sentence that passing traffic keeps
+    erasing, because the message's key is the town as it stands right now, and so it can be visited but
+    never copied.
+  subject: A fixed street-facing camera obscura whose viewing table is masked by a hand-cut Cardan cipher
+    grille
+  behavior: A light-tight box with a single fixed lens sits in a rented front room facing a high street
+    and is focused on the shop fronts opposite. A black card grille lies on its white viewing table. The
+    builder has cut the grille's holes, by tracing the inverted image, exactly where single letters of
+    the signs, bus-stop timetable, house numbers and posters fall. One visitor at a time puts their head
+    under the hood and sees mostly black. Through the holes, letters from the live, upside-down street
+    spell a sentence. A passing van, a lowered shutter or a pedestrian in front of a sign drops letters
+    out mid-read, so the sentence flickers between sense and gibberish. Nothing is projected anywhere
+    else or recorded. When a shop repaints its sign, that grille's message dies, and the builder retires
+    the card.
+  rationale: A Cardan grille hides a message inside innocent text, and this one hides it inside the town
+    itself. The key is the box's exact position plus the grille, so a photograph of the street reveals
+    nothing. The message cannot be copied, only visited. Strangers walking past unknowingly censor it.
+    It expires the day the street changes, which makes it a film that exists only as projection.
+  card_readings:
+  - card: real-time-only
+    interpretation: The plaintext exists only in the light passing through the lens at that moment. Traffic,
+      shutters and passers-by edit it live, and nothing is filmed or kept.
+  - card: camera-obscura
+    interpretation: A literal fixed box obscura with one long lens throwing the street opposite, inverted,
+      onto a white table under a viewing hood.
+  - card: cryptography
+    interpretation: A Cardan grille, the historical stencil cipher that picks hidden letters out of an
+      innocent cover text. Here the cover text is the street itself.
+  usage:
+    input_tokens: 6340
+    output_tokens: 2652
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 2
+    mutation_kind: card_swap
+    swapped_axis: domain
+    replaced_card: liturgy
+- position: 9
+  statement: A one-performer camera-obscura tournament play whose two rival knights differ only by gules
+    or vert lions, staged so the final duel falls as dusk drains hue from the table and the audience must
+    declare a winner they can no longer tell apart, because heraldry's tincture code fails in failing
+    light exactly where the obscura does.
+  subject: A live, unrecordable tournament play watched only as a camera obscura projection, in which
+    one performer in a reversible heraldic tabard plays two rival knights
+  behavior: An audience of a dozen sits in a blackout tent around a white table. A fixed lens throws a
+    marked stretch of pavement onto it, upside down and mirror-reversed. One performer outside plays two
+    rival claimants to the same arms by turning a reversible tabard. One side is blazoned Or, a lion rampant
+    gules, and the other Or, a lion rampant vert. The audience never sees a face. They follow the feud
+    through the lion's tincture alone, and a narrator inside reads the blazon aloud each time a knight
+    enters. The play is timed so its last act, a single combat between the two lions, falls in the minutes
+    when the obscura table loses hue. Red goes dark first, then green, until both lions read only as dark
+    beasts on gold. The performer fights himself, falls, and one tabard leaves the lists. The audience
+    must then declare aloud which claimant won. Their verdict decides the closing speech, so the ending
+    changes with each night's cloud and sunset. Nothing is filmed, because a recording would show a camera's
+    colour and not the failing light the audience actually saw.
+  rationale: 'Heraldry is a legibility code built for watchers who cannot see faces at a distance, and
+    the obscura recreates that viewing condition exactly. Dusk then breaks the code in a known order:
+    reds fade first, and light-dark contrast lasts longest. The ambiguity of the final duel is therefore
+    not scripted. The audience''s own eyes produce it, and they must then pass judgment on what they could
+    not read. The grant now has a cost and a recipient, and so does the dusk.'
+  card_readings:
+  - card: real-time-only
+    interpretation: The ending depends on how that evening's light fails at that minute, so the piece
+      exists only live, and any recording would falsify the ambiguity it depends on.
+  - card: camera-obscura
+    interpretation: A two-person-pitched blackout tent with a fixed lens aimed at one marked stretch of
+      pavement serves as the only screen of this live cinema, inverted and faceless.
+  - card: heraldry
+    interpretation: 'Literal blazon and the rule of tincture: two arms differing only in gules versus
+      vert carry the plot''s identities, and those are exactly the two that heraldry''s legibility rules
+      warn against relying on.'
+  usage:
+    input_tokens: 2728
+    output_tokens: 2108
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 4
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 10
+  statement: A camera obscura tent cinema that screens one uncut, unrecorded street film whose only actor
+    wears a tabard obeying the heraldic rule of tincture, then breaks it to vanish into the real crowd,
+    because heraldry is a legibility code for faceless figures at distance and the obscura's image is
+    exactly that.
+  subject: A one-take, live camera obscura street film whose lone actor is costumed in a heraldic tabard
+  behavior: 'Inside a two-person blackout tent, a fixed lens and mirror throw a busy street corner onto
+    a white table for 15 to 20 seated viewers. Outside, one performer plays a single unrehearsed-street,
+    scripted-route film in one 20-minute take. Their only costume is a tabard that obeys the rule of tincture:
+    or on gules, argent on sable, colour on metal. That makes them the one figure on the low-resolution,
+    inverted, faceless table the eye can follow through the real crowd. Strangers become unwitting extras
+    who obstruct, cross and frame the action. A narrator inside speaks the herald''s errand: searching
+    the street for whoever bears a certain blazon. Nobody in the crowd does, though coats and bags keep
+    nearly matching. At the climax the performer reverses the tabard to azure on gules, colour on colour,
+    which breaks the rule. On the table they dissolve into the crowd in front of everyone. The audience
+    loses its protagonist without any cut. Nothing is recorded, and each showing is a different street.'
+  rationale: 'Heraldry''s rule of tincture is not decoration. It is a 12th-century legibility standard
+    for recognising someone at distance with no face visible, which is exactly the obscura''s condition:
+    low resolution, no close-ups, no cuts. Heraldry here is the working tool that makes a one-take obscura
+    film possible, not a lookup table. Breaking the rule is the only way the piece can edit, and the protagonist''s
+    vanishing is felt because the audience has spent 20 minutes depending on that tincture to hold onto
+    a person.'
+  card_readings:
+  - card: real-time-only
+    interpretation: The film is one live, uncut, unrecorded take shown only on the obscura table as it
+      happens, with real passersby as extras who cannot be reshot.
+  - card: camera-obscura
+    interpretation: A blackout tent with a fixed meniscus lens and mirror projecting a live, inverted
+      street corner onto a white table as the only screen.
+  - card: heraldry
+    interpretation: 'The rule of tincture and the tabard used literally as costume design: medieval visual
+      grammar for telling one figure from a faceless crowd at a distance.'
+  usage:
+    input_tokens: 5855
+    output_tokens: 3399
+    cache_read_tokens: 2514
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 4
+    mutation_kind: reworking
+    swapped_axis: null
+    replaced_card: null
+- position: 11
+  statement: A live-cinema piece where Strachey's love-letter algorithm, its word lists replaced by blazon,
+    types one projected grant of arms per audience seat onto self-blackening thermal paper, striking each
+    coat once granted, because heraldic law allows one bearer per coat, so every love letter costs the
+    strangers after you a little more of the language.
+  subject: A live-cinema performance in which a microcontroller running Strachey's love-letter algorithm,
+    with its word lists replaced by blazon, types a grant of arms as a love letter to one audience seat
+    at a time
+  behavior: 'About thirty people sit in a small cinema. A thermal printer types at the Ferranti teleprinter''s
+    pace while a document camera projects the paper strip onto the screen. Each letter is addressed to
+    a seat number and written in Strachey''s syntax, with its word lists swapped for blazon: ''DEAREST
+    ROW C SEAT 4, YOU ARE MY GULES CHEVRON. MY ARGENT LONGING CURIOUSLY BEARS YOUR THREE ESCALLOPS. YOURS
+    BEAUTIFULLY, M.U.C.'' Once the text has passed the lens, the strip runs under a heat bar that blackens
+    the thermal paper, so each letter is seen only once and no copy survives. The program follows the
+    heraldic rule that only one person may bear a given coat. Every tincture and charge pairing it grants
+    is struck from the lists. The recipient then walks to the console and types one noun of their own
+    into the charge list, and later letters may draw on it. Later seats are granted arms built from what
+    remains: exhausted tinctures and objects donated by the strangers who came before. The last seat receives
+    ''SABLE'' with no charge, and the show ends.'
+  rationale: Strachey's letters were made to show that ardour can be a template, and heraldry is a closed
+    grammar that guarantees each person a unique identity by rule. Joining them turns the debate's lookup-table
+    complaint into the subject itself. You watch the combinatorics assemble your coat in public, and it
+    is still addressed to you alone. The one-bearer rule gives every grant a cost, because each coat removes
+    options from everyone seated after you. Recipients who donate the next nouns become the authors of
+    strangers' arms. The final blank 'SABLE' is a real exhaustion caused by the room, not a scripted punchline.
+  card_readings:
+  - card: real-time-only
+    interpretation: Each letter exists only while it types live under the camera. A heat bar then blackens
+      the thermal strip, so no grant can be recorded or replayed.
+  - card: strachey-love-letters
+    interpretation: Christopher Strachey's 1952 Ferranti Mark 1 love-letter program, signed M.U.C., reimplemented
+      with its slot-filling template and slow teleprinter output intact.
+  - card: heraldry
+    interpretation: Literal blazon of tinctures and charges, together with the heraldic law that no two
+      people may bear the same arms, which the program enforces by striking each used combination.
+  usage:
+    input_tokens: 2801
+    output_tokens: 3203
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 4
+    mutation_kind: card_swap
+    swapped_axis: historical-artifact
+    replaced_card: camera-obscura
+- position: 12
+  statement: A camera obscura hide aimed at a winter rook-and-jackdaw roost where the audience counts
+    arrivals aloud, first by grey nape, then by flight silhouette as dusk drains colour, then by call
+    alone in the dark, because field identification degrades in exactly that order, and the resulting
+    tally is a real roost count that exists only if they watched.
+  subject: A camera obscura hide aimed at a winter rook-and-jackdaw roost, operated as a dusk cinema whose
+    audience performs the evening's roost count
+  behavior: 'Two people pitch a blackout tent about twenty metres from a winter corvid roost. A fixed
+    one-metre meniscus lens and mirror throw the roost tree, inverted, onto a white table. For the last
+    hour of daylight, a bench audience keeps a live arrival count aloud with clickers, splitting rooks
+    from jackdaws as they come in. At first they go by plumage: the jackdaw''s grey nape and pale eye
+    against the rook''s bare grey face. As the Purkinje shift drains the table, the grey nape disappears,
+    and they fall back on jizz: the jackdaw''s smaller, quicker, pigeon-like flight against the rook''s
+    ragged wings. When the table goes black, they finish counting by call alone, ''chak'' against ''caah'',
+    in a dark room. Nothing is filmed or recorded. At close, the two tallies are read once and phoned
+    in as that night''s roost count, with the dark-only portion marked as estimated by ear.'
+  rationale: 'Birders already work down a fixed ladder of evidence as light fails: colour field marks
+    first, then silhouette and flight, then sound. An obscura at dusk forces that ladder in real time
+    on a single table. Each step the audience loses is a real perceptual loss, not a staged one. The count
+    is a genuine survey datum that only their attention produces, so it has a recipient and a cost: a
+    miscount goes into the record. The piece also plays film history backwards, from colour to monochrome
+    to darkness with only the soundtrack left, which is something no recorded screening can do.'
+  card_readings:
+  - card: real-time-only
+    interpretation: The roost arrival happens once per evening and the obscura image cannot be recorded,
+      so the count exists only as it is spoken and clicked in the room.
+  - card: camera-obscura
+    interpretation: A two-person blackout tent with a fixed meniscus lens and 45° mirror trained on one
+      roost tree at a known distance, projecting it live and inverted onto a white table.
+  - card: ornithology
+    interpretation: 'Literal field birding: telling rooks from jackdaws by field marks, then jizz, then
+      call, and making a real roost count of the kind local bird surveys collect.'
+  usage:
+    input_tokens: 2766
+    output_tokens: 2287
+    cache_read_tokens: 1257
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 4
+    mutation_kind: card_swap
+    swapped_axis: domain
+    replaced_card: heraldry
+- position: 13
+  statement: A live-projected Kriegsspiel requiem that re-fights a parish's memorial battle at 1:1 time
+    on an 1824 map table, the umpire's casualty dice calling each dead man's name for the congregation
+    to answer 'Grant them eternal rest,' because chance deciding who is named restores the arbitrariness
+    and complicity a tidy alphabetical war memorial erases.
+  subject: A live, unrecorded overhead projection of a historical Kriegsspiel table, performed as a parish
+    requiem service
+  behavior: A parish's own engagement (one battle from its war memorial) is re-fought on a von Reisswitz-style
+    1824 map table. An overhead camera feeds a projector in the nave directly, with nothing stored. Two
+    parishioners command from separate vestries and send written orders by runner, under the umpire's
+    clock. Moves run at 1:1 with the historical timeline, and the game is never paused. Whenever the umpire's
+    casualty dice strike a block, the officiant reads the next name drawn from the memorial roll, and
+    the congregation answers 'Grant them eternal rest.' When the real engagement's hour of ending arrives,
+    the projector is switched off mid-move. Any names not yet called are then read in silence by each
+    person from a printed roll.
+  rationale: Memorials list the dead alphabetically and by rank, which makes their dying look orderly.
+    Kriegsspiel was built to turn soldiers into calculable losses. When its dice call the requiem, the
+    congregation sees the arithmetic and the randomness together. A real name lands on whichever block
+    the dice happen to hit, and the clock can run out before some names are reached. Parishioners give
+    the orders that 'kill' their own great-grandfathers' names. That gives the mourning stakes and complicity,
+    so it never reads as a mindfulness program.
+  card_readings:
+  - card: real-time-only
+    interpretation: The game runs on a 1:1 clock against the historical battle, with no pause, no replay
+      and no recording, and the service ends at the hour the real fighting stopped.
+  - card: kriegsspiel
+    interpretation: 'The literal 1824 Prussian wargame: a terrain map with metal unit blocks, commanders
+      kept apart and sending written orders, and an umpire whose casualty dice decide losses.'
+  - card: liturgy
+    interpretation: 'An Office of the Dead with call and response: each casualty result is a call, the
+      reading of a real dead man''s name, and the congregation answers with the requiem response.'
+  usage:
+    input_tokens: 0
+    output_tokens: 0
+    cache_read_tokens: 0
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 3
+    mutation_kind: carried
+    swapped_axis: null
+    replaced_card: null
+- position: 14
+  statement: A handcart camera obscura carried around a parish boundary at Rogationtide, its hooded reader
+    calling out each landmark sliding across the live table so walkers answer with the litany, or with
+    the curse when a fence blocks the old bounds, because beating the bounds was memory without maps and
+    an unrecordable moving image puts that memory back at stake.
+  subject: A handcart-mounted walk-in camera obscura used to beat the parish bounds
+  behavior: 'On a Rogation evening the cart is wheeled around the old parish boundary. Through a hood
+    the reader watches the inverted, moving image and calls each mark as it slides across the table: an
+    oak, a boundary stone, a culvert. Walkers outside answer ''We beseech thee to hear us.'' When the
+    lens shows the boundary cut by a new fence, a locked gate or a building, the reader speaks the Deuteronomic
+    curse, ''Cursed is he that removeth his neighbour''s landmark,'' and the walkers answer ''Amen.''
+    Nothing is filmed. The perambulation ends where it began, or at dusk if the light gives out first.'
+  rationale: 'Beating the bounds began as memory before maps: a parish kept its edges by walking them
+    aloud each year, because nothing else held them. A camera obscura has the same condition, an image
+    that exists only while it passes. That makes the old rite''s purpose real again rather than decorative.
+    The Commination gives the liturgy teeth. The walkers bless what remains, and they also publicly curse
+    enclosure, development and lost rights of way as they appear in the live image. So the projected street
+    stops being a neutral pleasant picture and becomes contested ground, and the curse lands on real fences
+    that real neighbours put up.'
+  card_readings:
+  - card: real-time-only
+    interpretation: The only image is the live tracking shot the moving lens throws on the table, and
+      nothing of the walk is recorded or kept.
+  - card: camera-obscura
+    interpretation: A literal light-tight box on a handcart with a rotating lens-and-mirror turret, projecting
+      the passing land upside down onto a white table under a viewing hood.
+  - card: liturgy
+    interpretation: The Rogationtide beating of the bounds with its litany and the Commination curse on
+      those who move landmarks, said as call and response between the reader in the box and the walkers
+      outside.
+  usage:
+    input_tokens: 0
+    output_tokens: 0
+    cache_read_tokens: 0
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 2
+    mutation_kind: carried
+    swapped_axis: null
+    replaced_card: null
+- position: 15
+  statement: A camera obscura tent where a herald blazons each stranger crossing the live projected street
+    as a coat of arms, granted aloud and never written, until dusk erases tinctures and the last arms
+    are 'sable, plain', because heraldry was invented to identify faceless strangers by colour and device,
+    which is exactly all the obscura shows.
+  subject: A portable camera obscura tent used as a dusk heralds' court that grants spoken, unrecorded
+    arms to passersby
+  behavior: 'From late afternoon until dark, a herald works in a blackout tent. Rotating a lens turret
+    across the street, they blazon every stranger who enters the projected circle as a coat of arms, in
+    correct heraldic language: ''Per pale azure and gules, a bicycle Or, in chief a dog courant sable.''
+    Coat colors become tinctures, carried objects become charges, and direction of travel becomes dexter
+    or sinister. The herald corrects aloud for the obscura''s inversion. Visitors on benches act as the
+    heralds'' court and repeat each blazon once, so it is granted. Nothing is drawn, written or recorded,
+    and each grant exists only for as long as it is spoken. As dusk drains colour from the table, the
+    herald loses tinctures one by one. Gules goes first, then vert and azure, and soon only metal and
+    sable can be told apart. The last grant is ''sable, plain'', for whoever crosses when no colour remains,
+    and then the tent is closed.'
+  rationale: 'Heraldry was invented to identify people whose faces were hidden, such as armoured riders
+    recognised at a distance only by colour and device. The obscura gives exactly that view: tiny faceless
+    figures, upside down, readable only by their coats, bags and bikes. So the herald is not putting a
+    quirky label on them. They are doing what blazon was built for, applied to commoners who never asked
+    to be noticed and will never learn they were ennobled. Blazon also needs specific detail, so a generic
+    ''figure crossing'' cannot be blazoned. Its dependence on colour gives the evening a real ending,
+    because the rule of tincture fails as the light fails. The edge from the parent stays sharp. A coat
+    of arms is a tool for identifying strangers, which makes it surveillance and honour at the same moment.'
+  card_readings:
+  - card: real-time-only
+    interpretation: Each arms grant is spoken once over a live image that cannot be recorded, so the roll
+      of arms exists only during the performance and ends when the light can no longer show colour.
+  - card: camera-obscura
+    interpretation: A portable blackout tent with a meniscus lens and a 45° mirror turret, throwing the
+      live street onto a white table. The image is inverted, and the herald must right it in order to
+      blazon dexter and sinister correctly.
+  - card: heraldry
+    interpretation: Literal blazon, the formal language of tinctures, ordinaries and charges, used by
+      a herald to grant arms aloud to strangers on the street.
+  usage:
+    input_tokens: 0
+    output_tokens: 0
+    cache_read_tokens: 0
+    cache_write_tokens: 0
+    web_search_requests: 0
+  lineage:
+    parent_position: 4
+    mutation_kind: carried
+    swapped_axis: null
+    replaced_card: null
+failures: []
+usage:
+  input_tokens: 45368
+  output_tokens: 30290
+  cache_read_tokens: 17598
+  cache_write_tokens: 1257
+  web_search_requests: 0
+estimated_cost_usd: 0.797077
+mutation:
+  parent_run_path: debates/2026-11-16-round-2-literal.yaml
+  parent_run_digest: 6f0e56863a294aa5db5fdb1d910299b2a78bac49ff99a07e789a3b5287920989
+  mutation_seed: 7
+  round: 3

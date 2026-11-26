@@ -10,7 +10,9 @@ from pydantic_core import PydanticCustomError
 
 from seeker.ontology.base import SeekerModel
 from seeker.ontology.draw import DrawBatch
+from seeker.ontology.mutation import Lineage, MutationOrigin
 from seeker.ontology.reading import Reading, RoleName
+from seeker.ontology.stop import StopReason
 from seeker.ontology.types import CardId, GitCommit, ModelId, Sha256Digest
 
 _COUNT_EXAMPLES = [1200]
@@ -49,6 +51,17 @@ class Usage(SeekerModel):
         examples=[900],
         json_schema_extra={"slot_uri": "seeker:cacheWriteTokens"},
     )
+    web_search_requests: int = Field(
+        default=0,
+        title="web_search_requests",
+        ge=0,
+        description=(
+            "Web searches the model ran through the server-side search tool, billed per search on top "
+            "of tokens. Absent in records written before searches existed, which means none."
+        ),
+        examples=[2],
+        json_schema_extra={"slot_uri": "seeker:webSearchRequests"},
+    )
 
     @classmethod
     def zero(cls) -> Usage:
@@ -60,6 +73,7 @@ class Usage(SeekerModel):
             output_tokens=self.output_tokens + other.output_tokens,
             cache_read_tokens=self.cache_read_tokens + other.cache_read_tokens,
             cache_write_tokens=self.cache_write_tokens + other.cache_write_tokens,
+            web_search_requests=self.web_search_requests + other.web_search_requests,
         )
 
     @classmethod
@@ -149,6 +163,15 @@ class Idea(SeekerModel):
         title="usage",
         description="Tokens consumed by the model calls this record accounts for.",
         json_schema_extra={"slot_uri": "seeker:usage"},
+    )
+    lineage: Lineage | None = Field(
+        default=None,
+        title="lineage",
+        description=(
+            "Where the idea came from, when it belongs to a mutated generation. Absent for ideas "
+            "generated straight from a draw."
+        ),
+        json_schema_extra={"slot_uri": "seeker:lineage"},
     )
 
     @property
@@ -258,6 +281,25 @@ class Generation(SeekerModel):
         examples=[0.21],
         json_schema_extra={"slot_uri": "seeker:estimatedCostUsd"},
     )
+    mutation: MutationOrigin | None = Field(
+        default=None,
+        title="mutation",
+        description=(
+            "The debate run this generation was bred from, when it is a mutated generation. Absent "
+            "for generations drawn from a batch."
+        ),
+        json_schema_extra={"slot_uri": "seeker:mutation"},
+    )
+    stop_reason: StopReason | None = Field(
+        default=None,
+        title="stop_reason",
+        description=(
+            'Why the run or mutation last stopped early or finished; absent while it is running, '
+            'and on a generation that finished.'
+        ),
+        examples=["budget"],
+        json_schema_extra={"slot_uri": "seeker:stopReason"},
+    )
 
     @model_validator(mode="after")
     def _consistent(self) -> Generation:
@@ -274,7 +316,17 @@ class Generation(SeekerModel):
             raise PydanticCustomError("unordered", "ideas and failures must be in position order")
         if self.usage != Usage.total(tuple(r.usage for r in (*self.ideas, *self.failures))):
             raise PydanticCustomError("usage_total", "usage must equal the sum of the ideas' and failures' usage")
+        mutated = self.mutation is not None
+        if any((idea.lineage is not None) != mutated for idea in self.ideas):
+            raise PydanticCustomError(
+                "lineage", "ideas carry a lineage exactly when the generation is mutated"
+            )
         return self
+
+    @property
+    def round(self) -> int:
+        """1 for a generation drawn from a batch; a mutated generation's recorded round."""
+        return self.mutation.round if self.mutation is not None else 1
 
     @property
     def covered_positions(self) -> frozenset[int]:

@@ -9,18 +9,30 @@ Turns each `Draw` of a `DrawBatch` into one structured, validated `Idea` at a ch
 ### Requirement: Generation ontology is published in the LinkML schema
 The schema SHALL define:
 - the classes `Idea`, `CardReading`, `Generation`, `GenerationFailure`, `Role`, `ReadingGuidance` and `Usage`;
-- the enums `Reading`, `Effort` and `RoleName`;
+- the enums `Reading`, `Effort`, `RoleName` and `SearchTool`;
 - the types `ModelId` and `GitCommit`.
 
-Every element SHALL have a description, and each SHALL have a matching Python model or type that passes the conformance test.
+`RoleName` SHALL name every role. `Usage` counts `web_search_requests` (default 0). `Idea.lineage`, `Generation.mutation` and `Role.search_tool` are optional. Each element SHALL have a description and a matching Python model or type passing the conformance test.
 
 #### Scenario: Ontology lints and conforms
 - **WHEN** the schema is linted and the conformance test runs
 - **THEN** both pass for every new class, enum and type
 
+#### Scenario: Role names cover every debate role
+- **WHEN** `RoleName` is read from the schema
+- **THEN** its values are `generator`, `prosecutor`, `skeptic`, `taste_critic`, `advocate`, `judge` and `mutator`
+
 #### Scenario: Generation records are schema instances
 - **WHEN** a `Generation` record written by the generate command is validated against the schema with `Generation` as the target class
 - **THEN** validation passes
+
+#### Scenario: Older records still load
+- **WHEN** `generations/2026-11-04-round-1-literal.yaml`, written without `web_search_requests`, `lineage` or `mutation`, is loaded
+- **THEN** it loads, every `Usage` in it has `web_search_requests` 0, and no idea has a lineage
+
+#### Scenario: Search tool values
+- **WHEN** `SearchTool` is read from the schema
+- **THEN** its values are exactly `basic` (results go straight to the model) and `filtered` (results are filtered by model-written code before the model sees them)
 
 ### Requirement: Reading vocabulary
 `Reading` SHALL have exactly the values `literal`, `loose` and `metaphorical`, each with a description:
@@ -33,15 +45,27 @@ Every element SHALL have a description, and each SHALL have a matching Python mo
 - **THEN** it is rejected, naming the three valid readings
 
 ### Requirement: Roles are versioned YAML files
-A role SHALL be defined by a YAML file in `prompts/` that validates as a `Role`. The file gives the `RoleName`, `ModelId`, persona, system prompt, a positive output-token limit, an `Effort` level, and exactly one `ReadingGuidance` per `Reading` value.
+A role SHALL be defined by a YAML file in `prompts/` that validates as a `Role`. The file gives the `RoleName`, `ModelId`, persona, system prompt, a positive output-token limit, an `Effort` level, and one `ReadingGuidance` per `Reading` value. It MAY give `max_searches` (default 0). A role with `max_searches` above 0 SHALL give a `search_tool`; a role with 0 SHALL NOT.
 
 #### Scenario: Generator role loads
 - **WHEN** `prompts/generator.yaml` is loaded
-- **THEN** it yields a `Role` named `generator` with guidance for `literal`, `loose` and `metaphorical`
+- **THEN** it yields a `Role` named `generator` with guidance for `literal`, `loose` and `metaphorical`, and `max_searches` 0
 
 #### Scenario: Missing guidance
 - **WHEN** a role file omits guidance for `metaphorical`
 - **THEN** loading fails, naming the file and the missing reading
+
+#### Scenario: Negative search limit
+- **WHEN** a role file sets `max_searches: -1`
+- **THEN** loading fails, naming the file and `max_searches`
+
+#### Scenario: Searching role without a tool
+- **WHEN** a role file sets `max_searches: 3` and no `search_tool`
+- **THEN** loading fails, naming the file and `search_tool`
+
+#### Scenario: Tool without searches
+- **WHEN** a role file sets `search_tool: basic` and `max_searches: 0`
+- **THEN** loading fails, naming the file and `search_tool`
 
 ### Requirement: One idea per draw in the X/Y/Z form
 For each `Draw`, the generator SHALL produce one `Idea` whose `statement` is a single sentence of at most 60 words. The idea also carries:
@@ -100,14 +124,14 @@ A `Generation` SHALL record:
 
 #### Scenario: Pinned inputs
 - **WHEN** a generation is written
-- **THEN** its record contains the batch's seed and deck-set digest, the reading, the model id and the role-file digest
+- **THEN** its record contains the batch's seed and deck-set digest, the reading, the `ModelId` and the role-file digest
 
 #### Scenario: Prompt change is visible
 - **WHEN** `prompts/generator.yaml` is edited and another generation is run
 - **THEN** the two records carry different role-file digests
 
 ### Requirement: Usage and estimated cost are recorded
-Each `Idea` and `GenerationFailure` SHALL carry the `Usage` (input, output, cache-read and cache-write tokens) of every model call made for it. The `Generation` SHALL carry the total `Usage` and an estimated cost in US dollars, computed from the price table in config. A generation whose model has no price in config SHALL be rejected before any call is made.
+Each `Idea` and `GenerationFailure` SHALL carry the `Usage` of every model call made for it: input, output, cache-read and cache-write tokens, and web-search requests. The `Generation` SHALL carry the total `Usage` and an estimated cost in US dollars, computed from the price table in config. Web-search requests SHALL be priced at the table's per-search rate. A generation whose model has no price in config SHALL be rejected before any call is made.
 
 #### Scenario: Totals add up
 - **WHEN** a generation finishes
@@ -117,8 +141,18 @@ Each `Idea` and `GenerationFailure` SHALL carry the `Usage` (input, output, cach
 - **WHEN** the role names a model with no entry in the price table
 - **THEN** the generation is rejected naming the model, and no API call is made
 
+#### Scenario: Searches are priced
+- **WHEN** a usage has 3 web-search requests and the table's per-search price is $0.01
+- **THEN** its estimated cost includes $0.03 for searches on top of its tokens
+
 ### Requirement: Locations, prices and credentials come from config
-Seeker SHALL read the decks, batches, generations and vault locations, and the model price table, from `seeker.yaml` at the repository root, resolving relative paths against that file. The API key SHALL come from the `ANTHROPIC_API_KEY` environment variable or a git-ignored `.env` file, never from `seeker.yaml`. A missing key SHALL be reported before any call is made.
+Seeker SHALL read from the repository's `seeker.yaml`, resolving relative paths against it:
+- the decks, batches, generations, debates, reports and vault locations;
+- the model price table, including the per-search price;
+- the run budget `budget_usd` (default 5.00);
+- `mutation.reworkings` (default 2).
+
+The API key SHALL come from `ANTHROPIC_API_KEY` in the environment or the git-ignored `.env`, never from `seeker.yaml`. A missing key SHALL be reported before any call is made.
 
 #### Scenario: Missing key
 - **WHEN** a generation runs without an API key
@@ -127,6 +161,14 @@ Seeker SHALL read the decks, batches, generations and vault locations, and the m
 #### Scenario: Key in seeker.yaml is refused
 - **WHEN** `seeker.yaml` contains an `api_key` entry
 - **THEN** loading the config fails, saying keys belong in the environment or `.env`
+
+#### Scenario: Budget default
+- **WHEN** `seeker.yaml` sets no `budget_usd`
+- **THEN** the loaded config's budget is 5.00
+
+#### Scenario: Mutation default
+- **WHEN** `seeker.yaml` has no `mutation` section
+- **THEN** the loaded config asks for 2 reworkings per parent
 
 ### Requirement: Generations are written incrementally and can be resumed
 When writing to a file, the generator SHALL rewrite the `Generation` record after each draw completes. Re-running against an existing record with the same batch, reading and role-file digest SHALL skip the positions that already have an idea and generate only the rest. A mismatch SHALL be rejected rather than mixing inputs.

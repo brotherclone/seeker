@@ -54,6 +54,7 @@ class IdeaGenerator:
         self.model = model
         self.deck_set = deck_set
         self.price: ModelPrice = price
+        self.prices = prices
         self.output = IdeaDraft.output_spec()
 
     def prompts(self, batch: DrawBatch, reading: Reading) -> tuple[str, tuple[str, ...]]:
@@ -145,7 +146,7 @@ class IdeaGenerator:
                 "ideas": ideas,
                 "failures": failures,
                 "usage": total,
-                "estimated_cost_usd": round(self.price.cost(total), 6),
+                "estimated_cost_usd": round(self.prices.cost(self.role.role.model, total), 6),
             }
         )
 

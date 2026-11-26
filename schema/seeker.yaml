@@ -94,6 +94,25 @@ types:
     examples:
       - value: 5085562a1b2c3d4e5f60718293a4b5c6d7e8f90a
 
+  WorkId:
+    typeof: string
+    uri: seeker:WorkId
+    description: >-
+      Stable identifier for a work, derived from its note's file name reduced
+      to lowercase kebab-case, so renaming the note renames the work.
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+    examples:
+      - value: oramics-demo-tape-1962
+  Url:
+    typeof: uri
+    uri: seeker:Url
+    description: >-
+      An absolute http or https web address, such as the page a work was
+      captured from.
+    pattern: "^https?://\\S+$"
+    examples:
+      - value: https://daphneoram.org/
+
 enums:
   CreativeField:
     description: >-
@@ -146,10 +165,170 @@ enums:
   RoleName:
     description: >-
       The agent roles in Seeker's pipeline. Each role is defined by a YAML file
-      in prompts/. Only the generator exists so far; the debate adds the rest.
+      in prompts/. The generator states ideas; the critics, advocate and judge
+      debate and rank them; the mutator breeds new ideas from the survivors.
     permissible_values:
       generator:
         description: Turns one draw into one idea stated as a single sentence.
+      prosecutor:
+        description: Argues an idea has been done, citing catalog works and web results.
+      skeptic:
+        description: Argues an idea cannot be built with Gabe's gear, stack and time.
+      taste_critic:
+        description: Argues an idea is boring even if it is new and buildable.
+      advocate:
+        description: Answers every critique and may revise or withdraw the idea.
+      judge:
+        description: Compares two debated ideas blind and picks a winner on each axis.
+      mutator:
+        description: Breeds new ideas from a debated survivor, by reworking it or swapping one of its cards.
+
+  WorkKind:
+    description: >-
+      What sort of thing a captured work is. Coarse on purpose: the cards a
+      work links say what it is about, the kind says what form it takes.
+    permissible_values:
+      piece:
+        description: A finished artwork, composition or comic not better described by another kind.
+      recording:
+        description: A released or archived audio or video recording.
+      instrument:
+        description: A musical instrument or sound-making machine, built or designed.
+      software:
+        description: A program, plugin, tool or code library.
+      game:
+        description: A board, card, tabletop or electronic game.
+      publication:
+        description: A book, zine, magazine, album booklet or other edition.
+      performance:
+        description: A live performance, concert or happening.
+      installation:
+        description: A site-specific or gallery installation.
+      paper:
+        description: A research paper, thesis or technical report.
+      product:
+        description: A commercial device or kit.
+      other:
+        description: Anything else; the capture default until refined by hand.
+  CaptureSource:
+    description: >-
+      Who or what added a work to the vault, so hand-captured works can be told
+      apart from ones agents found or imported in bulk.
+    permissible_values:
+      gabe:
+        description: Captured by hand, usually with the Web Clipper template.
+      prosecutor:
+        description: Found by the prior-art prosecutor during a debate and cached.
+      import:
+        description: Imported in bulk from another catalog.
+
+  CritiqueTarget:
+    description: >-
+      Which part of an idea a critique says fails. Naming the part keeps a
+      critique from being a general complaint.
+    permissible_values:
+      subject:
+        description: The thing being made (the X) is wrong, vague or not new.
+      behavior:
+        description: What the thing does (the Y) fails or cannot be done.
+      rationale:
+        description: The reason (the Z) is false, circular or does not matter.
+      card_reading:
+        description: One card was read in a way the idea does not earn.
+      constraint:
+        description: The idea does not satisfy its constraint card.
+  Severity:
+    description: >-
+      How badly a critic says an idea fails. Critics set it themselves, so the
+      judge never sees it.
+    permissible_values:
+      fatal:
+        description: If true, the idea should not survive as stated.
+      serious:
+        description: A real problem the idea must answer, short of killing it.
+      minor:
+        description: A small or speculative problem, or no prior art found.
+  DefenseMove:
+    description: How the advocate answers one critique.
+    permissible_values:
+      concede:
+        description: The critique is right.
+      rebut:
+        description: The critique is wrong or does not matter, with an argument why.
+  DefenseOutcome:
+    description: What the advocate does with the idea after answering every critique.
+    permissible_values:
+      defended:
+        description: The idea stands as stated.
+      revised:
+        description: The idea is restated to survive the critiques.
+      withdrawn:
+        description: The advocate gives the idea up; it does not compete.
+  ScoreAxis:
+    description: >-
+      The separate axes ideas are judged on. Each axis keeps its own rating;
+      they are never blended into one score.
+    permissible_values:
+      novelty:
+        description: How far the idea is from its nearest prior art.
+      feasibility:
+        description: Whether one person can build it with Gabe's actual gear, stack and time.
+      promise:
+        description: Whether there is something there worth making.
+  StopReason:
+    description: Why a debate run stopped before or after finishing.
+    permissible_values:
+      finished:
+        description: Every debate and comparison is done.
+      budget:
+        description: The run's estimated spend reached its budget; it can be resumed with more.
+      no_tournament:
+        description: The run was asked to debate only and stopped before the tournament.
+  MutationKind:
+    description: How an idea in a mutated generation relates to its parent.
+    permissible_values:
+      reworking:
+        description: >-
+          The parent's three cards, rewritten into a different idea after
+          reading the parent's debate.
+      card_swap:
+        description: >-
+          The parent's draw with one non-constraint card replaced by a seeded
+          card from the same deck.
+      carried:
+        description: The parent itself, carried into the next round with its debate.
+  SearchTool:
+    description: >-
+      Which version of the web search tool a role is offered. The version
+      decides whether the model reads results directly or through code it
+      writes.
+    permissible_values:
+      basic:
+        description: >-
+          Each search's results go straight into the model's context
+          (web_search_20250305). A search over the limit fails on its own and
+          keeps earlier results.
+      filtered:
+        description: >-
+          The model writes code that runs the searches and filters their
+          results before it sees them (web_search_20260209). A search over the
+          limit aborts the whole script, losing every result it had printed.
+
+  ScheduleOutcome:
+    description: How one trigger of the scheduled run ended.
+    permissible_values:
+      advanced:
+        description: A round finished and its report was written.
+      budget:
+        description: The trigger reached its spend cap; the round resumes at the next trigger.
+      too_soon:
+        description: The last advanced round is more recent than the cadence allows; nothing ran.
+      awaiting_review:
+        description: The lineage head is at a review point with no sign-off; nothing ran.
+      locked:
+        description: Another scheduled run held the lock; nothing ran.
+      failed:
+        description: The trigger stopped on an error, which it records.
 
 slots:
   id:
@@ -352,6 +531,23 @@ slots:
     minimum_value: 0
     slot_uri: seeker:cacheWriteTokens
     description: Input tokens written to the prompt cache.
+  web_search_requests:
+    range: integer
+    minimum_value: 0
+    ifabsent: int(0)
+    slot_uri: seeker:webSearchRequests
+    description: >-
+      Web searches the model ran through the server-side search tool, billed
+      per search on top of tokens. Absent in records written before searches
+      existed, which means none.
+  max_searches:
+    range: integer
+    minimum_value: 0
+    ifabsent: int(0)
+    slot_uri: seeker:maxSearches
+    description: >-
+      The most web searches one call of this role may run. Zero means the
+      role is not offered the search tool.
   reading:
     range: Reading
     required: true
@@ -445,6 +641,530 @@ slots:
       The total usage priced with the configured price table. It is an
       estimate, because prices change and are kept as data.
 
+  title:
+    range: string
+    required: true
+    slot_uri: dcterms:title
+    description: The work's title as its creators give it.
+  creators:
+    range: string
+    multivalued: true
+    slot_uri: dcterms:creator
+    description: >-
+      The people or groups who made the work, as plain names. Notes may write
+      them as wikilinks so they show up in the vault's graph.
+  year:
+    range: integer
+    slot_uri: dcterms:date
+    description: The year the work was made, released or published, when known.
+  url:
+    range: Url
+    slot_uri: seeker:url
+    description: Where the work can be found or was captured from.
+  kind:
+    range: WorkKind
+    required: true
+    slot_uri: dcterms:type
+    description: What form the work takes.
+  summary:
+    range: string
+    slot_uri: dcterms:abstract
+    description: >-
+      A short description of the work. Card suggestions search it along with
+      the title and the note body.
+  captured_by:
+    range: CaptureSource
+    required: true
+    slot_uri: seeker:capturedBy
+    description: Who or what added the work to the vault.
+  captured_on:
+    range: date
+    required: true
+    slot_uri: seeker:capturedOn
+    description: The date the work was added to the vault.
+  relevance:
+    range: string
+    required: true
+    slot_uri: seeker:relevance
+    description: One sentence on how close the cited work is to the idea.
+  cited_work:
+    range: WorkId
+    slot_uri: seeker:citedWork
+    description: A captured work cited as prior art, referenced by work id.
+  embodied_cards:
+    range: Card
+    inlined: false
+    multivalued: true
+    slot_uri: seeker:embodiedCards
+    description: >-
+      The cards of the idea's draw that the cited work already embodies,
+      referenced by card id.
+  target:
+    range: CritiqueTarget
+    required: true
+    slot_uri: seeker:target
+    description: Which part of the idea the critique says fails.
+  target_card:
+    range: Card
+    inlined: false
+    slot_uri: seeker:targetCard
+    description: The card whose reading fails, when the target is a card reading.
+  severity:
+    range: Severity
+    required: true
+    slot_uri: seeker:severity
+    description: How badly the critic says the idea fails.
+  failure:
+    range: string
+    required: true
+    slot_uri: seeker:failure
+    description: >-
+      The specific failure, in one sentence that says something the idea's
+      statement does not.
+  argument:
+    range: string
+    required: true
+    slot_uri: seeker:argument
+    description: The reasoning behind a critique or a reply.
+  citations:
+    range: Citation
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:citations
+    description: The evidence a prior-art critique rests on.
+  none_found:
+    range: boolean
+    ifabsent: "false"
+    slot_uri: seeker:noneFound
+    description: >-
+      True when the prosecutor searched and found no prior art. Such a
+      critique carries no citations and is minor.
+  answers:
+    range: RoleName
+    required: true
+    slot_uri: seeker:answers
+    description: The critic role whose critique this reply answers.
+  move:
+    range: DefenseMove
+    required: true
+    slot_uri: seeker:move
+    description: Whether the advocate concedes or rebuts the critique.
+  replies:
+    range: Reply
+    multivalued: true
+    inlined_as_list: true
+    required: true
+    minimum_cardinality: 1
+    maximum_cardinality: 3
+    slot_uri: seeker:replies
+    description: One reply per critique, in critique order.
+  outcome:
+    range: DefenseOutcome
+    required: true
+    slot_uri: seeker:outcome
+    description: What the advocate did with the idea.
+  revision:
+    range: IdeaRevision
+    inlined: true
+    slot_uri: seeker:revision
+    description: The restated idea, present exactly when the outcome is revised.
+  critiques:
+    range: Critique
+    multivalued: true
+    inlined_as_list: true
+    required: true
+    minimum_cardinality: 1
+    maximum_cardinality: 3
+    slot_uri: seeker:critiques
+    description: >-
+      The critiques the idea faced, in role order. Fewer than three means a
+      critic failed and is recorded as a debate failure.
+  defense:
+    range: Defense
+    inlined: true
+    required: true
+    slot_uri: seeker:defense
+    description: The advocate's answer to the critiques.
+  final_statement:
+    range: string
+    required: true
+    slot_uri: seeker:finalStatement
+    description: The statement that competes, the revision's when the idea was revised.
+  failure_reason:
+    range: string
+    required: true
+    slot_uri: seeker:failureReason
+    description: Why a role produced no valid answer, even after a retry.
+  discarded_critiques:
+    range: Critique
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:discardedCritiques
+    description: >-
+      When the advocate fails, the critiques it would have answered. The idea
+      does not compete, but they are kept so every call made stays recorded.
+  axis_name:
+    range: ScoreAxis
+    required: true
+    slot_uri: seeker:axisName
+    description: The score axis this verdict or rating is on.
+  winner:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:winner
+    description: The position of the idea that won on this axis.
+  ruling:
+    range: string
+    required: true
+    slot_uri: seeker:ruling
+    description: The judge's one-sentence reason for the verdict.
+  first:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:first
+    description: The position of the idea shown to the judge as A.
+  second:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:second
+    description: The position of the idea shown to the judge as B.
+  verdicts:
+    range: AxisVerdict
+    multivalued: true
+    inlined_as_list: true
+    maximum_cardinality: 3
+    slot_uri: seeker:verdicts
+    description: One verdict per score axis; empty when the comparison failed.
+  failed:
+    range: boolean
+    ifabsent: "false"
+    slot_uri: seeker:failed
+    description: True when the judge gave no valid answer even after a retry; ratings are unchanged.
+  rating:
+    range: float
+    required: true
+    slot_uri: seeker:rating
+    description: The Elo rating on this axis after every comparison so far.
+  wins:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:wins
+    description: Comparisons won on this axis.
+  losses:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:losses
+    description: Comparisons lost on this axis.
+  k_factor:
+    range: float
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:kFactor
+    description: How far one comparison moves a rating (the Elo K).
+  initial_rating:
+    range: float
+    required: true
+    slot_uri: seeker:initialRating
+    description: The rating every entrant starts at, on every axis.
+  max_comparisons:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:maxComparisons
+    description: The most comparisons the tournament may schedule.
+  entrants:
+    range: integer
+    multivalued: true
+    slot_uri: seeker:entrants
+    description: The positions of the ideas that competed, in position order.
+  comparisons:
+    range: Comparison
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:comparisons
+    description: The comparisons made, in schedule order.
+  ratings:
+    range: Rating
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:ratings
+    description: One rating per entrant per axis, recomputable from the comparisons.
+  survivors:
+    range: integer
+    multivalued: true
+    slot_uri: seeker:survivors
+    description: The positions of the top entrants by promise, best first.
+  skipped:
+    range: boolean
+    ifabsent: "false"
+    slot_uri: seeker:skipped
+    description: True when fewer than two ideas could compete, so no comparison was made.
+  generation_path:
+    range: string
+    required: true
+    slot_uri: seeker:generationPath
+    description: The generation record debated, relative to the repository root when inside it.
+  generation_digest:
+    range: Sha256Digest
+    required: true
+    slot_uri: seeker:generationDigest
+    description: SHA-256 of the generation record's bytes, so a changed input is caught on resume.
+  role_digests:
+    range: RoleDigest
+    multivalued: true
+    inlined_as_list: true
+    required: true
+    minimum_cardinality: 5
+    maximum_cardinality: 5
+    slot_uri: seeker:roleDigests
+    description: The digest of every debate role file the run used.
+  catalog_digest:
+    range: Sha256Digest
+    required: true
+    slot_uri: seeker:catalogDigest
+    description: >-
+      Digest of the works catalog when the run started. It may change during
+      the run, because the prosecutor's finds are added to the catalog.
+  tournament_seed:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:tournamentSeed
+    description: The integer that pairings, A/B order and objection order are derived from.
+  started_at:
+    range: datetime
+    required: true
+    slot_uri: seeker:startedAt
+    description: When the run first started.
+  budget_usd:
+    range: float
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:budgetUsd
+    description: The estimated spend at which the run stops cleanly, in US dollars.
+  stop_reason:
+    range: StopReason
+    slot_uri: seeker:stopReason
+    description: >-
+      Why the run or mutation last stopped early or finished; absent while
+      it is running, and on a generation that finished.
+  debates:
+    range: Debate
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:debates
+    description: The finished debates, in position order.
+  debate_failures:
+    range: DebateFailure
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:debateFailures
+    description: Roles that produced no valid answer, in position then role order.
+  tournament:
+    range: Tournament
+    inlined: true
+    slot_uri: seeker:tournament
+    description: The ranking of the debated ideas, once it has started.
+  lineage:
+    range: Lineage
+    inlined: true
+    slot_uri: seeker:lineage
+    description: >-
+      Where the idea came from, when it belongs to a mutated generation.
+      Absent for ideas generated straight from a draw.
+  mutation:
+    range: MutationOrigin
+    inlined: true
+    slot_uri: seeker:mutation
+    description: >-
+      The debate run this generation was bred from, when it is a mutated
+      generation. Absent for generations drawn from a batch.
+  carried_from:
+    range: integer
+    minimum_value: 1
+    slot_uri: seeker:carriedFrom
+    description: >-
+      For a debate copied from the parent run with a carried idea, the
+      position it had in the parent run.
+  both_orders:
+    range: boolean
+    ifabsent: "false"
+    slot_uri: seeker:bothOrders
+    description: >-
+      True when every scheduled pair is judged twice, as A/B and then as B/A,
+      so the judge's preference for one position cancels out. Absent in
+      tournaments recorded before two-order judging, which means false.
+  parent_position:
+    range: integer
+    required: true
+    minimum_value: 1
+    slot_uri: seeker:parentPosition
+    description: The parent idea's position in the parent debate run.
+  mutation_kind:
+    range: MutationKind
+    required: true
+    slot_uri: seeker:mutationKind
+    description: How the idea was made from its parent.
+  swapped_axis:
+    range: AxisId
+    slot_uri: seeker:swappedAxis
+    description: For a card swap, the axis whose card was replaced.
+  replaced_card:
+    range: CardId
+    slot_uri: seeker:replacedCard
+    description: For a card swap, the parent's card that was replaced, referenced by card id.
+  parent_run_path:
+    range: string
+    required: true
+    slot_uri: seeker:parentRunPath
+    description: The parent debate run, relative to the repository root when inside it.
+  parent_run_digest:
+    range: Sha256Digest
+    required: true
+    slot_uri: seeker:parentRunDigest
+    description: >-
+      SHA-256 of the parent run's bytes, so a changed parent is caught on
+      resume and when its debates are carried.
+  mutation_seed:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:mutationSeed
+    description: The integer the card swaps are drawn from.
+  round:
+    range: integer
+    required: true
+    minimum_value: 2
+    slot_uri: seeker:round
+    description: >-
+      Which round of the loop this generation is. A generation drawn from a
+      batch is round 1; each mutation adds one.
+  search_tool:
+    range: SearchTool
+    slot_uri: seeker:searchTool
+    description: >-
+      Which web search tool version the role is offered. Set exactly when
+      max_searches is above zero, so a role digest pins the tool version.
+  search:
+    range: SearchReport
+    inlined: true
+    slot_uri: seeker:search
+    description: >-
+      What the role's web searches returned, failures included. Present on
+      critiques, and on debate failures, from roles that search; absent on
+      others and on records written before search outcomes were recorded.
+  results_returned:
+    range: integer
+    required: true
+    minimum_value: 0
+    slot_uri: seeker:resultsReturned
+    description: >-
+      Search results returned across the critique's calls, counted as
+      returned, not as distinct URLs.
+  search_errors:
+    range: SearchError
+    multivalued: true
+    inlined_as_list: true
+    slot_uri: seeker:searchErrors
+    description: Every search that failed during the critique's calls.
+  error_code:
+    range: string
+    required: true
+    slot_uri: seeker:errorCode
+    description: >-
+      The search tool's error code, such as max_uses_exceeded, or
+      search_code_failed when code running the searches stopped with an
+      error.
+    examples:
+      - value: max_uses_exceeded
+      - value: search_code_failed
+  error_message:
+    range: string
+    required: true
+    slot_uri: seeker:errorMessage
+    description: >-
+      What the failure said: the error code again for a tool error, or the
+      code's stderr for a failed search script.
+
+  ended_at:
+    range: datetime
+    required: true
+    slot_uri: seeker:endedAt
+    description: When the trigger finished, whatever its outcome.
+    examples:
+      - value: "2026-11-25T03:12:40"
+  schedule_outcome:
+    range: ScheduleOutcome
+    required: true
+    slot_uri: seeker:scheduleOutcome
+    description: How the trigger ended.
+    examples:
+      - value: advanced
+  head_run_path:
+    range: string
+    slot_uri: seeker:headRunPath
+    description: >-
+      The lineage head the trigger started from, relative to the repository
+      root when inside it. Absent when the trigger failed before finding one.
+    examples:
+      - value: debates/2026-11-23-round-3-literal.yaml
+  head_round:
+    range: integer
+    minimum_value: 1
+    slot_uri: seeker:headRound
+    description: The round of the lineage head the trigger started from.
+    examples:
+      - value: "3"
+  written_paths:
+    range: string
+    multivalued: true
+    slot_uri: seeker:writtenPaths
+    description: >-
+      The generation, debate run and report files the trigger wrote or
+      resumed, relative to the repository root when inside it.
+    examples:
+      - value: generations/2026-11-25-round-4-literal.yaml
+  failure_message:
+    range: string
+    slot_uri: seeker:failureMessage
+    description: >-
+      What went wrong, for a failed trigger, or a problem that did not stop
+      it, such as a vault note that could not be written.
+    examples:
+      - value: "no API key: set ANTHROPIC_API_KEY in the environment"
+  reviewed_run_path:
+    range: string
+    required: true
+    slot_uri: seeker:reviewedRunPath
+    description: The debate run signed off, relative to the repository root when inside it.
+    examples:
+      - value: debates/2026-11-23-round-3-literal.yaml
+  reviewed_run_digest:
+    range: Sha256Digest
+    required: true
+    slot_uri: seeker:reviewedRunDigest
+    description: >-
+      SHA-256 of the signed-off run's bytes, so a sign-off stops counting if
+      the run changes afterwards.
+  signed_at:
+    range: datetime
+    required: true
+    slot_uri: seeker:signedAt
+    description: When the sign-off was recorded.
+    examples:
+      - value: "2026-11-24T09:30:00"
+  review_note:
+    range: string
+    slot_uri: seeker:reviewNote
+    description: What the reviewer wanted remembered about the review, if anything.
+    examples:
+      - value: keep the obscura line
+
 classes:
   Card:
     class_uri: seeker:Card
@@ -497,6 +1217,9 @@ classes:
       A balanced set of draws produced from one seed and one deck set: shapes
       evenly represented, no card repeated, home fields rotating through the
       creative fields. Fully reproducible from its seed and deck-set digest.
+      A mutated generation's batch is the exception: it is rebuilt from the
+      generation's mutation origin, its seed is the mutation seed, and parent
+      cards repeat by design.
     slots:
       - seed
       - deck_set_digest
@@ -510,6 +1233,7 @@ classes:
       - output_tokens
       - cache_read_tokens
       - cache_write_tokens
+      - web_search_requests
   CardReading:
     class_uri: seeker:CardReading
     description: >-
@@ -531,6 +1255,7 @@ classes:
       - rationale
       - card_readings
       - usage
+      - lineage
   GenerationFailure:
     class_uri: seeker:GenerationFailure
     description: >-
@@ -559,6 +1284,8 @@ classes:
       - reading_guidance
       - max_output_tokens
       - effort
+      - max_searches
+      - search_tool
   Generation:
     class_uri: seeker:Generation
     description: >-
@@ -577,3 +1304,252 @@ classes:
       - failures
       - usage
       - estimated_cost_usd
+      - mutation
+      - stop_reason
+  Citation:
+    class_uri: seeker:Citation
+    description: >-
+      One piece of prior-art evidence: a web page the prosecutor's searches
+      returned, or a work already in the vault's catalog.
+    slots:
+      - title
+      - url
+      - cited_work
+      - relevance
+      - embodied_cards
+  Critique:
+    class_uri: seeker:Critique
+    description: >-
+      One critic's attack on one idea, naming the part that fails, how badly,
+      and the failure in one sentence.
+    slots:
+      - role_name
+      - model
+      - target
+      - target_card
+      - severity
+      - failure
+      - argument
+      - citations
+      - none_found
+      - usage
+      - search
+  Reply:
+    class_uri: seeker:Reply
+    description: The advocate's answer to one critique.
+    slots:
+      - answers
+      - move
+      - argument
+  IdeaRevision:
+    class_uri: seeker:IdeaRevision
+    description: >-
+      An idea restated by the advocate to survive its critiques, in the same
+      one-sentence form and from the same draw.
+    slots:
+      - statement
+      - subject
+      - behavior
+      - rationale
+  Defense:
+    class_uri: seeker:Defense
+    description: >-
+      The advocate's answer to every critique of one idea, and what became of
+      the idea.
+    slots:
+      - model
+      - replies
+      - outcome
+      - revision
+      - usage
+  Debate:
+    class_uri: seeker:Debate
+    description: >-
+      One idea's round of debate: the critiques it faced, the advocate's
+      defense, and the statement that goes on to compete.
+    slots:
+      - position
+      - critiques
+      - defense
+      - final_statement
+      - carried_from
+  DebateFailure:
+    class_uri: seeker:DebateFailure
+    description: A debate role that produced no valid answer for one idea, even after a retry.
+    slots:
+      - position
+      - role_name
+      - model
+      - failure_reason
+      - discarded_critiques
+      - usage
+      - search
+  AxisVerdict:
+    class_uri: seeker:AxisVerdict
+    description: The judge's verdict on one score axis of one comparison.
+    slots:
+      - axis_name
+      - winner
+      - ruling
+  Comparison:
+    class_uri: seeker:Comparison
+    description: >-
+      One blind pairwise judgment between two debated ideas, with a winner on
+      each score axis.
+    slots:
+      - first
+      - second
+      - verdicts
+      - failed
+      - model
+      - usage
+  Rating:
+    class_uri: seeker:Rating
+    description: One idea's Elo rating on one score axis.
+    slots:
+      - position
+      - axis_name
+      - rating
+      - wins
+      - losses
+  Tournament:
+    class_uri: seeker:Tournament
+    description: >-
+      The ranking of a run's debated ideas: the comparisons made, the per-axis
+      Elo ratings they produce, and the survivors.
+    see_also:
+      - https://en.wikipedia.org/wiki/Elo_rating_system
+    slots:
+      - k_factor
+      - initial_rating
+      - max_comparisons
+      - entrants
+      - comparisons
+      - ratings
+      - survivors
+      - skipped
+      - both_orders
+  RoleDigest:
+    class_uri: seeker:RoleDigest
+    description: The digest of one role file a run used.
+    slots:
+      - role_name
+      - role_digest
+  DebateRun:
+    class_uri: seeker:DebateRun
+    description: >-
+      One debate over a recorded generation: its pinned inputs, every debate
+      and failure, the tournament, and its usage and estimated cost.
+    slots:
+      - generation_path
+      - generation_digest
+      - role_digests
+      - catalog_digest
+      - git_commit
+      - tournament_seed
+      - started_at
+      - budget_usd
+      - stop_reason
+      - debates
+      - debate_failures
+      - tournament
+      - usage
+      - estimated_cost_usd
+  Lineage:
+    class_uri: seeker:Lineage
+    description: >-
+      Where an idea in a mutated generation came from: its parent in the
+      parent debate run, and how it was made from it.
+    slots:
+      - parent_position
+      - mutation_kind
+      - swapped_axis
+      - replaced_card
+  MutationOrigin:
+    class_uri: seeker:MutationOrigin
+    description: >-
+      The debate run a mutated generation was bred from, pinned by path and
+      digest, with the seed its card swaps came from and its round number.
+    slots:
+      - parent_run_path
+      - parent_run_digest
+      - mutation_seed
+      - round
+  SearchReport:
+    class_uri: seeker:SearchReport
+    description: >-
+      What one critique's web searches returned: how many results came back
+      and every search that failed. A none_found with no results or with
+      errors is unverified.
+    slots:
+      - results_returned
+      - search_errors
+  SearchError:
+    class_uri: seeker:SearchError
+    description: >-
+      One web search that failed during a critique's calls, by its code and
+      what it said.
+    slots:
+      - error_code
+      - error_message
+  Work:
+    class_uri: seeker:Work
+    description: >-
+      A creative work, instrument, game, publication or paper that already
+      exists, captured as a note in the Obsidian vault and linked to the cards
+      it embodies. Works are Seeker's offline prior art: a draw whose cards a
+      work already combines is not new.
+    see_also:
+      - https://en.wikipedia.org/wiki/Literature-based_discovery
+    slots:
+      - id
+      - title
+      - creators
+      - year
+      - url
+      - kind
+      - fields
+      - cards
+      - summary
+      - captured_by
+      - captured_on
+    slot_usage:
+      id:
+        range: WorkId
+        description: The work's identifier, derived from its note's file name.
+      fields:
+        description: The creative fields the work belongs to, when known.
+      cards:
+        range: Card
+        inlined: false
+        inlined_as_list: false
+        required: false
+        minimum_cardinality: 0
+        description: >-
+          The cards the work embodies, referenced by card id. Empty until
+          linked by hand or by card suggestions.
+  ScheduledRun:
+    class_uri: seeker:ScheduledRun
+    description: >-
+      One trigger of the scheduled job: the lineage head it found, how it
+      ended, the files it wrote and what it cost.
+    slots:
+      - started_at
+      - ended_at
+      - schedule_outcome
+      - head_run_path
+      - head_round
+      - written_paths
+      - budget_usd
+      - estimated_cost_usd
+      - failure_message
+  ReviewSignOff:
+    class_uri: seeker:ReviewSignOff
+    description: >-
+      Gabe's sign-off on a lineage head at a review point, pinned by the
+      run's digest, which lets the scheduled run advance past it.
+    slots:
+      - reviewed_run_path
+      - reviewed_run_digest
+      - signed_at
+      - review_note
