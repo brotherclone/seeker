@@ -9,10 +9,10 @@ Turns each `Draw` of a `DrawBatch` into one structured, validated `Idea` at a ch
 ### Requirement: Generation ontology is published in the LinkML schema
 The schema SHALL define:
 - the classes `Idea`, `CardReading`, `Generation`, `GenerationFailure`, `Role`, `ReadingGuidance` and `Usage`;
-- the enums `Reading`, `Effort` and `RoleName`;
+- the enums `Reading`, `Effort`, `RoleName` and `SearchTool`;
 - the types `ModelId` and `GitCommit`.
 
-`RoleName` SHALL name every role, and `Usage` SHALL count `web_search_requests` (default 0). `Idea.lineage` and `Generation.mutation` SHALL be optional slots. Each element SHALL have a description and a matching Python model or type that passes the conformance test.
+`RoleName` SHALL name every role. `Usage` counts `web_search_requests` (default 0). `Idea.lineage`, `Generation.mutation` and `Role.search_tool` are optional. Each element SHALL have a description and a matching Python model or type passing the conformance test.
 
 #### Scenario: Ontology lints and conforms
 - **WHEN** the schema is linted and the conformance test runs
@@ -30,6 +30,10 @@ The schema SHALL define:
 - **WHEN** `generations/2026-11-04-round-1-literal.yaml`, written without `web_search_requests`, `lineage` or `mutation`, is loaded
 - **THEN** it loads, every `Usage` in it has `web_search_requests` 0, and no idea has a lineage
 
+#### Scenario: Search tool values
+- **WHEN** `SearchTool` is read from the schema
+- **THEN** its values are exactly `basic` (results go straight to the model) and `filtered` (results are filtered by model-written code before the model sees them)
+
 ### Requirement: Reading vocabulary
 `Reading` SHALL have exactly the values `literal`, `loose` and `metaphorical`, each with a description:
 - `literal`: cards mean what they name;
@@ -41,7 +45,7 @@ The schema SHALL define:
 - **THEN** it is rejected, naming the three valid readings
 
 ### Requirement: Roles are versioned YAML files
-A role SHALL be defined by a YAML file in `prompts/` that validates as a `Role`. The file gives the `RoleName`, `ModelId`, persona, system prompt, a positive output-token limit, an `Effort` level, and exactly one `ReadingGuidance` per `Reading` value. It MAY give `max_searches`, a non-negative number of web searches allowed per call, which defaults to 0.
+A role SHALL be defined by a YAML file in `prompts/` that validates as a `Role`. The file gives the `RoleName`, `ModelId`, persona, system prompt, a positive output-token limit, an `Effort` level, and one `ReadingGuidance` per `Reading` value. It MAY give `max_searches` (default 0). A role with `max_searches` above 0 SHALL give a `search_tool`; a role with 0 SHALL NOT.
 
 #### Scenario: Generator role loads
 - **WHEN** `prompts/generator.yaml` is loaded
@@ -54,6 +58,14 @@ A role SHALL be defined by a YAML file in `prompts/` that validates as a `Role`.
 #### Scenario: Negative search limit
 - **WHEN** a role file sets `max_searches: -1`
 - **THEN** loading fails, naming the file and `max_searches`
+
+#### Scenario: Searching role without a tool
+- **WHEN** a role file sets `max_searches: 3` and no `search_tool`
+- **THEN** loading fails, naming the file and `search_tool`
+
+#### Scenario: Tool without searches
+- **WHEN** a role file sets `search_tool: basic` and `max_searches: 0`
+- **THEN** loading fails, naming the file and `search_tool`
 
 ### Requirement: One idea per draw in the X/Y/Z form
 For each `Draw`, the generator SHALL produce one `Idea` whose `statement` is a single sentence of at most 60 words. The idea also carries:
