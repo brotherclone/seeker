@@ -62,36 +62,38 @@
   <tr><th>Area</th><th>State</th></tr>
   <tr><td>Pipeline</td><td>Decks, generation, debate, tournament, mutation and the scheduled run are all built and merged into <code>develop</code>.</td></tr>
   <tr><td>Lineage</td><td>Literal reading, rounds 1–4. Round 3 was signed off on 2026-11-23 (<code>reviews/2026-11-23-round-3-literal.yaml</code>).</td></tr>
-  <tr><td>Round 4</td><td>Ran unattended on 2026-11-26 02:00 (<code>advanced</code>) for an estimated $4.26 of $5. Its outputs are <strong>untracked</strong>: <code>generations/</code>, <code>debates/</code> and <code>reports/2026-11-26-round-4-literal.*</code>.</td></tr>
-  <tr><td>Schedule</td><td>launchd fires daily at 2am with a 2-day cadence. Round 5 is due on the 2026-11-28 trigger and round 6 around 2026-11-30. <strong>Round 6 is the next review point</strong>, where the job pauses with <code>awaiting_review</code>.</td></tr>
-  <tr><td>Open PRs</td><td>#25 <em>Archive scheduled-run</em> and #26 <em>Archive fix-prior-art-search</em>. Both are open and unmerged, which is why <code>openspec/changes/</code> still lists those two changes.</td></tr>
+  <tr><td>Round 4</td><td>The canonical round 4 is <code>debates/2026-11-24-round-4-literal.yaml</code>. It ran unattended on 2026-11-24 02:00 for an estimated $4.64 and is committed on <code>develop</code> (<code>6b68b7e</code>).</td></tr>
+  <tr><td>Duplicate round 4</td><td>The 2026-11-26 trigger ran round 4 <strong>a second time</strong>, from round 3, for about $4.26. Gabe chose to keep 11-24, so the duplicate's outputs were deleted. Its trigger record, <code>runs/2026-11-26T020005.yaml</code>, is still there (git-ignored). The cause is step 1.</td></tr>
+  <tr><td>Schedule</td><td><code>seeker-schedule status</code> shows the 11-24 round 4 as the head, with the gate open. Round 5 is due from 2026-11-27 14:29, so it runs on the 2026-11-28 02:00 trigger. Round 6 should come around 2026-11-30. <strong>Round 6 is the next review point</strong>, where the job pauses with <code>awaiting_review</code>.</td></tr>
+  <tr><td>OpenSpec</td><td>The archive PRs #25 and #26 were merged on 2026-11-26. Every finished change is under <code>openspec/changes/archive/</code>, and none is in flight.</td></tr>
   <tr><td>Round viewer</td><td>The design brief is committed: <code>docs/design/round-viewer-handoff.md</code> plus <code>round-sample.json</code>. It's waiting on Claude Design. There's no OpenSpec change and no PR for it yet.</td></tr>
 </table>
 
 <h2>Next steps, in priority order</h2>
 <ol class="steps">
 
-<li><span class="tag blocked">needs Gabe</span> <strong>Land the two archive PRs.</strong>
-  Ask Gabe to merge #26 and #25, or to approve you doing it (<code>gh pr merge</code>). Then pull <code>develop</code> and rebase or merge <code>feature/round-viewer</code> onto it, so <code>openspec/changes/</code> holds only live changes.</li>
-
-<li><span class="tag do">investigate</span> <strong>The prosecutor stopped searching in round 4.</strong>
-  In round 3, 10 of 10 prosecutions got search results. In round 4 it was 5 of 12, and the other 7 have <code>web_search_requests: 0</code> with <code>search_errors: []</code>. Search didn't break. The model chose not to search and leaned on catalog matches (see <code>debates/2026-11-26-round-4-literal.yaml</code> around line 213: "I ran no web searches, so I cite only catalog works"). Before the round-6 review:
+<li><span class="tag do">fix first</span> <strong>The scheduler depends on whichever branch is checked out.</strong>
+  launchd runs <code>seeker-schedule run</code> in this repo's working tree, and it finds the head by scanning <code>paths.debates</code> on disk. The 11-24 round-4 outputs were committed on <code>feature/archive-fix-prior-art-search</code>. When the checkout later switched to <code>feature/round-viewer</code>, which didn't have them, they left the working tree. On 11-26 the scheduler found round 3 as the head again and re-ran round 4, which cost about $4.26. Any checkout that drops round outputs can repeat this before round 5.
   <ul>
-    <li>Check the prosecutor prompt in <code>prompts/</code> and <code>max_searches</code> in <code>seeker/ontology/role.py</code>. Does anything require at least one search?</li>
-    <li>If it's a prompt fix, propose an OpenSpec change (for example <code>require-prior-art-search</code>). Bump the role digest, and consider a report warning when a prosecution made 0 searches.</li>
-    <li>Don't confuse this with carried debates. Carried idea #14 (<code>carried_from: 13</code>) still contains the old "usage limit" text from before the fix. That's inherited and expected.</li>
+    <li>Propose an OpenSpec change, for example <code>pin-schedule-workspace</code>. Run the job from a dedicated worktree or clone that agents never check branches out in, and make its location a <code>seeker.yaml</code> setting, never a hard-coded path. Another option, or an addition, is a guard: refuse to advance when the latest <code>advanced</code> trigger record in <code>runs/</code> names written paths that no longer exist, and fail loudly instead.</li>
+    <li>Until it lands, <strong>don't check out a branch in <code>/Users/gabrielwalsh/Sites/seeker</code> that lacks the latest round outputs</strong>, especially around 02:00. Do other work in a separate worktree (<code>git worktree add</code>).</li>
+    <li>Record the incident and the fix in a vault Decision, with a link from <code>Decisions/2026-11-23 Scheduled run every other day.md</code>.</li>
   </ul></li>
 
+<li><span class="tag watch">watch</span> <strong>Prior-art search sometimes isn't used.</strong>
+  In the kept 11-24 run, 10 of 11 prosecutions got search results, with 23 citations, so search is healthy. The discarded duplicate run got results in only 5 of 12. Its other 7 made <code>web_search_requests: 0</code> with no errors, because the prosecutor chose to cite only catalog works. That shows the prosecutor sometimes skips search on its own. Check the count in rounds 5 and 6. If it drops again, look at the prosecutor prompt in <code>prompts/</code> and consider requiring at least one search (an OpenSpec change). Carried debates such as #14 (<code>carried_from: 13</code>) still contain old "usage limit" text from before the fix. That's inherited and expected.</li>
+
 <li><span class="tag watch">watch</span> <strong>Judge health and mutation, rounds 4–6.</strong>
-  Round 4's numbers, read from the report's <em>Judge health</em> section:
+  From the reports' <em>Judge health</em> sections. Round 4 is the kept 11-24 run:
   <table>
     <tr><th>Signal</th><th>Round 3</th><th>Round 4</th><th>Reading</th></tr>
-    <tr><td>A-win: novelty / feasibility / promise</td><td>68 / 43 / 67%</td><td>59 / 55 / 68%</td><td>Promise keeps the strongest position bias</td></tr>
-    <tr><td>Split pairs (of 60): nov / feas / prom</td><td>23 / 16 / 28</td><td>13 / 14 / 21</td><td>Promise is still the least stable axis, and survivors are picked by promise</td></tr>
-    <tr><td>Skeptic severities</td><td>serious 12</td><td>fatal 5, serious 7</td><td>It finally spread out</td></tr>
-    <tr><td>Taste critic</td><td>serious 10, minor 2</td><td>serious 11</td><td>Still uniform</td></tr>
-    <tr><td>Defense outcomes</td><td>all revised</td><td>revised 12 of 12</td><td>The advocate never defends unchanged or withdraws</td></tr>
-    <tr><td>Children beating their parent</td><td>—</td><td>none; all 3 survivors carried</td><td>Possible stagnation. Check round 5.</td></tr>
+    <tr><td>A-win: novelty / feasibility / promise</td><td>68 / 43 / 67%</td><td>58 / 50 / 56%</td><td>Position bias eased on every axis</td></tr>
+    <tr><td>Split pairs: nov / feas / prom</td><td>23 / 16 / 28 of 60</td><td>12 / 10 / 12 of 63</td><td>Much more stable, though one round is too few to call a trend</td></tr>
+    <tr><td>Prosecutor severities</td><td>serious 6, minor 4</td><td>serious 8, minor 3</td><td>Spread holding</td></tr>
+    <tr><td>Skeptic severities</td><td>serious 12</td><td>fatal 2, serious 9</td><td>Starting to spread</td></tr>
+    <tr><td>Taste critic</td><td>serious 10, minor 2</td><td>serious 10, minor 1</td><td>Still nearly uniform</td></tr>
+    <tr><td>Defense outcomes</td><td>all revised</td><td>defended 1, revised 10</td><td>The advocate almost always revises, and nothing is withdrawn</td></tr>
+    <tr><td>Children beating their parent</td><td>—</td><td>none; all 3 survivors are carried round-3 parents (11 of 12 children made)</td><td>Possible stagnation. Check round 5.</td></tr>
   </table>
   For Gabe's round-6 review, compile a short trend summary across rounds 3–6 (a vault note in <code>Notes/</code>). Don't change judging without an OpenSpec change.</li>
 
@@ -107,7 +109,7 @@
 <li><span class="tag blocked">needs Gabe</span> <strong>Round-6 review and sign-off.</strong>
   When <code>uv run seeker-schedule status</code> shows <code>awaiting_review</code>:
   <ol>
-    <li>Commit the round 4–6 outputs on a feature branch. Earlier rounds went onto the change branch that was active, as in <code>17a3f70</code>. Ask Gabe which branch.</li>
+    <li>Commit the round 5–6 outputs on a feature branch. Round 4 is already on <code>develop</code>. Commit promptly, and in the scheduler's own working tree, so step 1 can't repeat. Ask Gabe which branch.</li>
     <li>Give Gabe the trend summary from step 3.</li>
     <li>Gabe signs off himself: <code>uv run seeker-schedule approve debates/&lt;round-6&gt;.yaml --note "..."</code>.</li>
   </ol>
