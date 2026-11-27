@@ -24,6 +24,7 @@ CONFIG_NAME = "seeker.yaml"
 CONFIG_ENV = "SEEKER_CONFIG"
 KEY_ENV = "ANTHROPIC_API_KEY"
 VAULT_ENV = "SEEKER_VAULT"
+WORKSPACE_ENV = "SEEKER_SCHEDULE_WORKSPACE"
 PER_MILLION = 1_000_000
 FORBIDDEN_KEYS = ("api_key", "anthropic_api_key")
 KEYCHAIN_SERVICE = "seeker"
@@ -227,6 +228,14 @@ class ScheduleConfig(SeekerModel):
         description="The lineage pauses for a sign-off whenever the head's round is a multiple of this.",
     )
     hour: int = Field(default=2, ge=0, le=23, description="Local hour the LaunchAgent fires each day.")
+    workspace: Path | None = Field(
+        default=None,
+        description=(
+            "The git worktree the scheduled job runs in, where nobody switches branches. Relative to "
+            "seeker.yaml's folder; SEEKER_SCHEDULE_WORKSPACE in the environment or .env wins. Unset "
+            "runs the job from the repository root."
+        ),
+    )
 
 
 class SeekerConfig(SeekerModel):
@@ -305,6 +314,17 @@ class SeekerConfig(SeekerModel):
             raise MissingApiKey(self.env_file)
         return SecretStr(value)
 
+
+    def schedule_workspace(self) -> Path | None:
+        """The schedule workspace from $SEEKER_SCHEDULE_WORKSPACE, else the same key in .env, else
+        schedule.workspace; ``~`` is expanded and a relative path resolves against this config's
+        folder. None when none is set."""
+        value = os.environ.get(WORKSPACE_ENV) or DotEnv(self.env_file).get(WORKSPACE_ENV)
+        path = Path(value) if value else self.schedule.workspace
+        if path is None:
+            return None
+        path = path.expanduser()
+        return (path if path.is_absolute() else self.root / path).resolve()
 
     def vault(self) -> VaultLayout:
         """The vault from $SEEKER_VAULT, else SEEKER_VAULT in .env, else paths.vault.

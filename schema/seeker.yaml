@@ -1137,6 +1137,20 @@ slots:
       it, such as a vault note that could not be written.
     examples:
       - value: "no API key: set ANTHROPIC_API_KEY in the environment"
+  discarded_at:
+    range: datetime
+    slot_uri: seeker:discardedAt
+    description: >-
+      When Gabe discarded this trigger's outputs. A discarded record is
+      skipped by the missing-output guard and by the cadence check.
+    examples:
+      - value: "2026-11-27T09:30:00-05:00"
+  discard_note:
+    range: string
+    slot_uri: seeker:discardNote
+    description: Why this trigger's outputs were discarded.
+    examples:
+      - value: "duplicate round 4; kept 2026-11-24"
   reviewed_run_path:
     range: string
     required: true
@@ -1543,6 +1557,8 @@ classes:
       - budget_usd
       - estimated_cost_usd
       - failure_message
+      - discarded_at
+      - discard_note
   ReviewSignOff:
     class_uri: seeker:ReviewSignOff
     description: >-

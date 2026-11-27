@@ -374,3 +374,32 @@ class TestKeychainLookup:
 
         monkeypatch.setattr(seeker.config.sys, "platform", "linux")
         assert Keychain().get() is None
+
+
+class TestScheduleWorkspace:
+    """SEEKER_SCHEDULE_WORKSPACE: environment, then .env, then schedule.workspace (pin-schedule-workspace 5.1)."""
+
+    @pytest.fixture(autouse=True)
+    def no_workspace_env(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.delenv("SEEKER_SCHEDULE_WORKSPACE", raising=False)
+
+    def test_unset_means_none(self, tmp_path: Path) -> None:
+        assert SeekerConfig.load(write(tmp_path)).schedule_workspace() is None
+
+    def test_repo_config_commits_no_workspace(self) -> None:
+        assert SeekerConfig.load(ROOT / "seeker.yaml").schedule.workspace is None
+
+    def test_config_value_resolves_against_config_folder(self, tmp_path: Path) -> None:
+        config = SeekerConfig.load(write(tmp_path / "repo", MINIMAL + "schedule: {workspace: ../seeker-schedule}\n"))
+        assert config.schedule_workspace() == (tmp_path / "seeker-schedule").resolve()
+
+    def test_dotenv_beats_config_and_expands_home(self, tmp_path: Path) -> None:
+        config = SeekerConfig.load(write(tmp_path, MINIMAL + "schedule: {workspace: elsewhere}\n"))
+        (tmp_path / ".env").write_text("SEEKER_SCHEDULE_WORKSPACE=~/Sites/seeker-schedule\n")
+        assert config.schedule_workspace() == (Path.home() / "Sites" / "seeker-schedule").resolve()
+
+    def test_environment_beats_dotenv(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+        config = SeekerConfig.load(write(tmp_path))
+        (tmp_path / ".env").write_text("SEEKER_SCHEDULE_WORKSPACE=/from/dotenv\n")
+        monkeypatch.setenv("SEEKER_SCHEDULE_WORKSPACE", "ws")
+        assert config.schedule_workspace() == (tmp_path / "ws").resolve()

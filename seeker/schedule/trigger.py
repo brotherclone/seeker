@@ -17,6 +17,7 @@ from seeker.generate.record import GenerationFile
 from seeker.models import AnthropicModel, LanguageModel
 from seeker.ontology import DebateRun, ScheduledRun, ScheduleOutcome
 from seeker.schedule.cadence import Cadence
+from seeker.schedule.guard import OutputGuard
 from seeker.schedule.lineage import LineageRecords, LineageState
 from seeker.schedule.log import RunLog, RunLock
 from seeker.schedule.note import RunNote
@@ -62,6 +63,7 @@ class Scheduler:
         written: tuple[Path, ...] = ()
         spend_before = 0.0
         try:
+            OutputGuard(self.config, self.log).check()
             state = LineageRecords(self.config).state()
             if state.report_missing:
                 written += (ReportJob(self.config).write(state.head.path).path,)
