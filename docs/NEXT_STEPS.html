@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Seeker Next Steps</title>
-<meta name="description" content="Handoff for an AI agent (Duet) picking up Seeker on 2026-11-26: current state, prioritized next steps, and the rules to follow.">
+<meta name="description" content="Handoff for an AI agent (Duet) picking up Seeker on 2026-11-27: current state, prioritized next steps, and the rules to follow.">
 <style>
   :root {
     --bg: #faf8f4; --fg: #1d1b18; --muted: #6b655c; --rule: #ddd6ca;
@@ -43,7 +43,7 @@
 <main>
 
 <h1>Seeker: next steps</h1>
-<p class="meta">Handoff for Duet, written 2026-11-26. Repo: <code>/Users/gabrielwalsh/Sites/seeker</code>. Current branch: <code>feature/round-viewer</code>.</p>
+<p class="meta">Handoff for Duet, written 2026-11-27. Repo: <code>/Users/gabrielwalsh/Sites/seeker</code>. Current branch: <code>feature/round-viewer</code>. The scheduled job runs from its own worktree, <code>/Users/gabrielwalsh/Sites/seeker-schedule</code>.</p>
 
 <p>Seeker is an idea engine for creative tech. It draws three cards from independent decks, generates an idea of the form "a/an X that does Y because Z", then has critics debate it and a blind judge rank it on three separate Elo axes (novelty, feasibility, promise). The top three by promise survive and are mutated into the next round. Start with <code>docs/concept.md</code>, then <code>CLAUDE.md</code>.</p>
 
@@ -54,6 +54,7 @@
   <li><strong>Python style:</strong> Pydantic v2 models that mirror LinkML. No <code>Any</code>, no <code>dict</code> payloads, no dataclasses or TypedDicts. Use named constrained scalar types.</li>
   <li><strong>Obsidian vault</strong> (<code>/Users/gabrielwalsh/Documents/Claude/Projects/Seeker/</code>): record decisions in <code>Decisions/YYYY-MM-DD &lt;title&gt;.md</code>, and update <code>Ontology/&lt;Class&gt;.md</code> in the same change as the schema. Every note links back to <code>[[Seeker]]</code>.</li>
   <li><strong>Never hard-code paths.</strong> Read them from <code>seeker.yaml</code>. Run everything through <code>uv run</code>.</li>
+  <li><strong>Leave the schedule workspace alone.</strong> <code>/Users/gabrielwalsh/Sites/seeker-schedule</code> is a git worktree detached at <code>origin/develop</code>, and the LaunchAgent runs there. Never <code>git switch</code>, commit or edit files in it. Move it only with <code>uv run seeker-schedule workspace update</code>. Branch freely in the main checkout. Schedule commands run from there act on the workspace anyway, because <code>.env</code> sets <code>SEEKER_SCHEDULE_WORKSPACE</code>.</li>
   <li><strong>Ask Gabe first</strong> before merging PRs, signing off reviews, spending API money outside the scheduled job, or changing the schedule.</li>
 </ul>
 
@@ -63,22 +64,14 @@
   <tr><td>Pipeline</td><td>Decks, generation, debate, tournament, mutation and the scheduled run are all built and merged into <code>develop</code>.</td></tr>
   <tr><td>Lineage</td><td>Literal reading, rounds 1–4. Round 3 was signed off on 2026-11-23 (<code>reviews/2026-11-23-round-3-literal.yaml</code>).</td></tr>
   <tr><td>Round 4</td><td>The canonical round 4 is <code>debates/2026-11-24-round-4-literal.yaml</code>. It ran unattended on 2026-11-24 02:00 for an estimated $4.64 and is committed on <code>develop</code> (<code>6b68b7e</code>).</td></tr>
-  <tr><td>Duplicate round 4</td><td>The 2026-11-26 trigger ran round 4 <strong>a second time</strong>, from round 3, for about $4.26. Gabe chose to keep 11-24, so the duplicate's outputs were deleted. Its trigger record, <code>runs/2026-11-26T020005.yaml</code>, is still there (git-ignored). The cause is step 1.</td></tr>
-  <tr><td>Schedule</td><td><code>seeker-schedule status</code> shows the 11-24 round 4 as the head, with the gate open. Round 5 is due from 2026-11-27 14:29, so it runs on the 2026-11-28 02:00 trigger. Round 6 should come around 2026-11-30. <strong>Round 6 is the next review point</strong>, where the job pauses with <code>awaiting_review</code>.</td></tr>
-  <tr><td>OpenSpec</td><td>The archive PRs #25 and #26 were merged on 2026-11-26. Every finished change is under <code>openspec/changes/archive/</code>, and none is in flight.</td></tr>
+  <tr><td>Duplicate round 4</td><td>The 2026-11-26 trigger ran round 4 <strong>a second time</strong>, from round 3, for about $4.26. A branch switch in the main checkout had removed the 11-24 files. Gabe chose to keep 11-24, so the duplicate's outputs were deleted, and its record <code>runs/2026-11-26T020005.yaml</code> is marked discarded. The fix is <code>pin-schedule-workspace</code>, merged in #28 and migrated on 2026-11-27. On 11-27 at 02:00 the new guard stopped a trigger on the missing files and spent nothing.</td></tr>
+  <tr><td>Schedule</td><td>The LaunchAgent runs from <code>/Users/gabrielwalsh/Sites/seeker-schedule</code>, detached at <code>ac5ef9f</code>, so new round outputs and <code>runs/</code> records appear there, not in the main checkout. <code>seeker-schedule status</code> shows the 11-24 round 4 as the head, with the gate open. Round 5 is due, so it runs on the 2026-11-28 02:00 trigger. Round 6 should come around 2026-11-30. <strong>Round 6 is the next review point</strong>, where the job pauses with <code>awaiting_review</code>.</td></tr>
+  <tr><td>OpenSpec</td><td><code>pin-schedule-workspace</code> was implemented in #28 and archived in #29 (2026-11-27), and its delta is synced into <code>openspec/specs/scheduled-run/spec.md</code>. Every finished change is under <code>openspec/changes/archive/</code>, and none is in flight.</td></tr>
   <tr><td>Round viewer</td><td>The design brief is committed: <code>docs/design/round-viewer-handoff.md</code> plus <code>round-sample.json</code>. It's waiting on Claude Design. There's no OpenSpec change and no PR for it yet.</td></tr>
 </table>
 
 <h2>Next steps, in priority order</h2>
 <ol class="steps">
-
-<li><span class="tag do">fix first</span> <strong>The scheduler depends on whichever branch is checked out.</strong>
-  launchd runs <code>seeker-schedule run</code> in this repo's working tree, and it finds the head by scanning <code>paths.debates</code> on disk. The 11-24 round-4 outputs were committed on <code>feature/archive-fix-prior-art-search</code>. When the checkout later switched to <code>feature/round-viewer</code>, which didn't have them, they left the working tree. On 11-26 the scheduler found round 3 as the head again and re-ran round 4, which cost about $4.26. Any checkout that drops round outputs can repeat this before round 5.
-  <ul>
-    <li>Propose an OpenSpec change, for example <code>pin-schedule-workspace</code>. Run the job from a dedicated worktree or clone that agents never check branches out in, and make its location a <code>seeker.yaml</code> setting, never a hard-coded path. Another option, or an addition, is a guard: refuse to advance when the latest <code>advanced</code> trigger record in <code>runs/</code> names written paths that no longer exist, and fail loudly instead.</li>
-    <li>Until it lands, <strong>don't check out a branch in <code>/Users/gabrielwalsh/Sites/seeker</code> that lacks the latest round outputs</strong>, especially around 02:00. Do other work in a separate worktree (<code>git worktree add</code>).</li>
-    <li>Record the incident and the fix in a vault Decision, with a link from <code>Decisions/2026-11-23 Scheduled run every other day.md</code>.</li>
-  </ul></li>
 
 <li><span class="tag watch">watch</span> <strong>Prior-art search sometimes isn't used.</strong>
   In the kept 11-24 run, 10 of 11 prosecutions got search results, with 23 citations, so search is healthy. The discarded duplicate run got results in only 5 of 12. Its other 7 made <code>web_search_requests: 0</code> with no errors, because the prosecutor chose to cite only catalog works. That shows the prosecutor sometimes skips search on its own. Check the count in rounds 5 and 6. If it drops again, look at the prosecutor prompt in <code>prompts/</code> and consider requiring at least one search (an OpenSpec change). Carried debates such as #14 (<code>carried_from: 13</code>) still contain old "usage limit" text from before the fix. That's inherited and expected.</li>
@@ -109,8 +102,9 @@
 <li><span class="tag blocked">needs Gabe</span> <strong>Round-6 review and sign-off.</strong>
   When <code>uv run seeker-schedule status</code> shows <code>awaiting_review</code>:
   <ol>
-    <li>Commit the round 5–6 outputs on a feature branch. Round 4 is already on <code>develop</code>. Commit promptly, and in the scheduler's own working tree, so step 1 can't repeat. Ask Gabe which branch.</li>
-    <li>Give Gabe the trend summary from step 3.</li>
+    <li>Copy the round 5–6 outputs from <code>/Users/gabrielwalsh/Sites/seeker-schedule</code> (<code>generations/</code>, <code>debates/</code>, <code>reports/</code>) into a feature branch in the main checkout, commit them, and merge through a PR. Ask Gabe which branch. Don't commit inside the workspace.</li>
+    <li>Once that PR merges, run <code>uv run seeker-schedule workspace update</code>. It moves the workspace to the new <code>develop</code>, dropping its untracked copies only where they match byte for byte. If it refuses because a file differs, find out why before changing anything.</li>
+    <li>Give Gabe the trend summary from step 2.</li>
     <li>Gabe signs off himself: <code>uv run seeker-schedule approve debates/&lt;round-6&gt;.yaml --note "..."</code>.</li>
   </ol>
   After a sign-off that Gabe calls a real survivor review, tick <code>- [ ] Review survivors</code> in <code>docs/concept.md</code>. It's the last unchecked item.</li>
@@ -123,7 +117,8 @@
 </ol>
 
 <h2>Useful commands</h2>
-<pre>uv run seeker-schedule status        # lineage head, gate, uncommitted outputs; no API call
+<pre>uv run seeker-schedule status        # workspace, lineage head, gate, last trigger; no API call
+uv run seeker-schedule workspace update   # after a review's rounds merge into develop
 make lint &amp;&amp; make schema &amp;&amp; make test
 gh pr list --state open
 git log --oneline develop -10</pre>
@@ -134,7 +129,7 @@ git log --oneline develop -10</pre>
   <tr><td><code>docs/concept.md</code></td><td>Concept of record and checklist</td></tr>
   <tr><td><code>docs/debating.md</code>, <code>mutating.md</code>, <code>scheduling.md</code></td><td>How each stage works</td></tr>
   <tr><td><code>reports/*.md</code></td><td>Per-round reports. Read the <em>Judge health</em> section.</td></tr>
-  <tr><td><code>runs/*.yaml</code></td><td>One record per scheduled trigger (git-ignored)</td></tr>
+  <tr><td><code>seeker-schedule/runs/*.yaml</code></td><td>One record per scheduled trigger (git-ignored), in the workspace</td></tr>
   <tr><td><code>seeker.yaml</code></td><td>All paths, prices, budget, schedule</td></tr>
   <tr><td><code>docs/design/round-viewer-handoff.md</code></td><td>Round viewer brief</td></tr>
 </table>
