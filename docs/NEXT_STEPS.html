@@ -43,7 +43,7 @@
 <main>
 
 <h1>Seeker: next steps</h1>
-<p class="meta">Handoff for Duet, written 2026-11-27. Repo: <code>/Users/gabrielwalsh/Sites/seeker</code>. Current branch: <code>feature/round-viewer</code>. The scheduled job runs from its own worktree, <code>/Users/gabrielwalsh/Sites/seeker-schedule</code>.</p>
+<p class="meta">Handoff for Duet, written 2026-11-27. Repo: <code>/Users/gabrielwalsh/Sites/seeker</code>. Current branch: <code>feature/round-viewer2</code>. The scheduled job runs from its own worktree, <code>/Users/gabrielwalsh/Sites/seeker-schedule</code>.</p>
 
 <p>Seeker is an idea engine for creative tech. It draws three cards from independent decks, generates an idea of the form "a/an X that does Y because Z", then has critics debate it and a blind judge rank it on three separate Elo axes (novelty, feasibility, promise). The top three by promise survive and are mutated into the next round. Start with <code>docs/concept.md</code>, then <code>CLAUDE.md</code>.</p>
 
@@ -67,7 +67,7 @@
   <tr><td>Duplicate round 4</td><td>The 2026-11-26 trigger ran round 4 <strong>a second time</strong>, from round 3, for about $4.26. A branch switch in the main checkout had removed the 11-24 files. Gabe chose to keep 11-24, so the duplicate's outputs were deleted, and its record <code>runs/2026-11-26T020005.yaml</code> is marked discarded. The fix is <code>pin-schedule-workspace</code>, merged in #28 and migrated on 2026-11-27. On 11-27 at 02:00 the new guard stopped a trigger on the missing files and spent nothing.</td></tr>
   <tr><td>Schedule</td><td>The LaunchAgent runs from <code>/Users/gabrielwalsh/Sites/seeker-schedule</code>, detached at <code>ac5ef9f</code>, so new round outputs and <code>runs/</code> records appear there, not in the main checkout. <code>seeker-schedule status</code> shows the 11-24 round 4 as the head, with the gate open. Round 5 is due, so it runs on the 2026-11-28 02:00 trigger. Round 6 should come around 2026-11-30. <strong>Round 6 is the next review point</strong>, where the job pauses with <code>awaiting_review</code>.</td></tr>
   <tr><td>OpenSpec</td><td><code>pin-schedule-workspace</code> was implemented in #28 and archived in #29 (2026-11-27), and its delta is synced into <code>openspec/specs/scheduled-run/spec.md</code>. Every finished change is under <code>openspec/changes/archive/</code>, and none is in flight.</td></tr>
-  <tr><td>Round viewer</td><td>The design brief is committed: <code>docs/design/round-viewer-handoff.md</code> plus <code>round-sample.json</code>. It's waiting on Claude Design. There's no OpenSpec change and no PR for it yet.</td></tr>
+  <tr><td>Round viewer</td><td>The design brief is <code>docs/design/round-viewer-handoff.md</code> plus <code>round-sample.json</code>. It was merged straight into <code>main</code> (#27, #30), so <code>develop</code> is 11 commits behind <code>main</code>. <code>feature/round-viewer2</code> was cut from <code>develop</code> with <code>main</code> merged in, and its PR into <code>develop</code> brings the two level. The brief is waiting on Claude Design. There's no OpenSpec change yet.</td></tr>
 </table>
 
 <h2>Next steps, in priority order</h2>
@@ -91,7 +91,7 @@
   For Gabe's round-6 review, compile a short trend summary across rounds 3–6 (a vault note in <code>Notes/</code>). Don't change judging without an OpenSpec change.</li>
 
 <li><span class="tag do">do</span> <strong>Round viewer: turn the brief into an OpenSpec change.</strong>
-  <code>feature/round-viewer</code> breaks the one-change-per-branch rule until a change exists. Once Claude Design's output comes back (ask Gabe for it):
+  Work on <code>feature/round-viewer2</code>. It breaks the one-change-per-branch rule until a change exists. Its PR goes into <code>develop</code>, not <code>main</code>. Once Claude Design's output comes back (ask Gabe for it):
   <ul>
     <li>Run <code>/opsx:propose round-viewer</code>. Pick the stack (a static site per round, a small local app, or an Obsidian-adjacent view) and record the choice in a vault Decision.</li>
     <li>Model anything the viewer computes in LinkML first. Candidates are a per-round summary (cost, survivors, child-vs-parent results) and a lineage edge.</li>
