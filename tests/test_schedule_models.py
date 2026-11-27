@@ -78,3 +78,40 @@ def test_generation_accepts_a_budget_stop() -> None:
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
     stopped = Generation.model_validate({**raw, "stop_reason": "budget"})
     assert stopped.stop_reason is StopReason.BUDGET
+
+
+FIXTURE_RUNS = ROOT / "tests" / "fixtures" / "scheduled-runs"
+
+
+@pytest.mark.parametrize("path", sorted(FIXTURE_RUNS.glob("*.yaml")), ids=lambda p: p.name)
+def test_recorded_triggers_load_undiscarded(path: Path) -> None:
+    run = ScheduledRun.model_validate(yaml.safe_load(path.read_text()))
+    assert run.discarded_at is None and run.discard_note is None and not run.discarded
+
+
+def test_local_trigger_records_load_undiscarded() -> None:
+    for path in sorted((ROOT / "runs").glob("*.yaml")):
+        run = ScheduledRun.model_validate(yaml.safe_load(path.read_text()))
+        assert run.discarded_at is None or run.discard_note
+
+
+def test_a_discarded_record_has_no_outputs_to_check() -> None:
+    run = ScheduledRun.model_validate(yaml.safe_load((FIXTURE_RUNS / "2026-11-26T020005.yaml").read_text()))
+    assert run.wrote_outputs
+    dropped = run.model_copy(update={"discarded_at": WHEN, "discard_note": "duplicate round 4"})
+    assert dropped.discarded and not dropped.wrote_outputs
+    again = ScheduledRun.model_validate(yaml.safe_load(yaml.safe_dump(dropped.model_dump(mode="json"))))
+    assert again == dropped
+
+
+@pytest.mark.parametrize(
+    ("outcome", "paths", "wrote"),
+    [("advanced", ("debates/x.yaml",), True), ("budget", ("debates/x.yaml",), True),
+     ("failed", ("reports/x.md",), False), ("advanced", (), False)],
+)
+def test_which_records_wrote_outputs(outcome: str, paths: tuple[str, ...], wrote: bool) -> None:
+    run = ScheduledRun(
+        started_at=WHEN, ended_at=WHEN, schedule_outcome=outcome, written_paths=paths,
+        budget_usd=5.0, estimated_cost_usd=0.0,
+    )
+    assert run.wrote_outputs is wrote

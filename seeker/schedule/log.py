@@ -9,11 +9,20 @@ import tempfile
 from pathlib import Path
 
 import yaml
-from pydantic import ValidationError
+from pydantic import ConfigDict, Field, ValidationError
 
-from seeker.ontology import ScheduledRun, ScheduleOutcome
+from seeker.ontology import ScheduledRun, ScheduleOutcome, SeekerModel
 
 LOCK_NAME = ".lock"
+
+
+class RunRecord(SeekerModel):
+    """One ScheduledRun together with the file it is stored in, so it can be named and rewritten."""
+
+    model_config = ConfigDict(title="RunRecord")
+
+    path: Path = Field(description="The record's YAML file in the runs folder.")
+    run: ScheduledRun = Field(description="The trigger the file records.")
 
 
 class RunLog:
@@ -30,33 +39,57 @@ class RunLog:
         while path.exists():
             path = self.folder / f"{stem}-{suffix}.yaml"
             suffix += 1
+        self._save(path, run)
+        return path
+
+    def rewrite(self, record: RunRecord) -> Path:
+        """Replace an existing record's file with ``record.run``, keeping its file name."""
+        self._save(record.path, record.run)
+        return record.path
+
+    def _save(self, path: Path, run: ScheduledRun) -> None:
         body = yaml.safe_dump(run.model_dump(mode="json", exclude_none=True), sort_keys=False, allow_unicode=True)
-        handle, temp = tempfile.mkstemp(prefix=f".{path.name}.", dir=self.folder)
+        handle, temp = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
         with os.fdopen(handle, "w", encoding="utf-8") as out:
             out.write(body)
         os.replace(temp, path)
-        return path
 
-    def all(self) -> tuple[ScheduledRun, ...]:
+    def read(self, path: Path) -> RunRecord:
+        """The record stored at ``path``; raises ValueError when it is not a readable ScheduledRun."""
+        try:
+            run = ScheduledRun.model_validate(yaml.safe_load(path.read_text(encoding="utf-8")))
+        except (OSError, UnicodeDecodeError, yaml.YAMLError, ValidationError) as error:
+            raise ValueError(f"{path}: not a readable ScheduledRun record ({type(error).__name__})") from error
+        return RunRecord(path=path, run=run)
+
+    def all(self) -> tuple[RunRecord, ...]:
         """Every readable record, oldest first. A record that does not parse is skipped, so one
         corrupt file cannot stop the schedule."""
         if not self.folder.is_dir():
             return ()
-        found: list[ScheduledRun] = []
+        found: list[RunRecord] = []
         for path in self.folder.glob("*.yaml"):
             try:
-                found.append(ScheduledRun.model_validate(yaml.safe_load(path.read_text(encoding="utf-8"))))
-            except (OSError, UnicodeDecodeError, yaml.YAMLError, ValidationError):
+                found.append(self.read(path))
+            except ValueError:
                 continue
-        return tuple(sorted(found, key=lambda run: run.started_at))
+        return tuple(sorted(found, key=lambda record: record.run.started_at))
 
     def last(self) -> ScheduledRun | None:
-        runs = self.all()
-        return runs[-1] if runs else None
+        records = self.all()
+        return records[-1].run if records else None
 
     def last_advanced(self) -> ScheduledRun | None:
-        advanced = [r for r in self.all() if r.schedule_outcome is ScheduleOutcome.ADVANCED]
+        """The latest round that advanced and was not discarded; the cadence measures from it."""
+        advanced = [
+            r.run for r in self.all() if r.run.schedule_outcome is ScheduleOutcome.ADVANCED and not r.run.discarded
+        ]
         return advanced[-1] if advanced else None
+
+    def last_with_outputs(self) -> RunRecord | None:
+        """The latest advanced or budget-stopped trigger, not discarded, whose files should be on disk."""
+        found = [r for r in self.all() if r.run.wrote_outputs]
+        return found[-1] if found else None
 
 
 class RunLock:
