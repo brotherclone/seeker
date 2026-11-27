@@ -106,6 +106,37 @@ class ScheduledRun(SeekerModel):
         examples=["no API key: set ANTHROPIC_API_KEY in the environment"],
         json_schema_extra={"slot_uri": "seeker:failureMessage"},
     )
+    discarded_at: datetime | None = Field(
+        default=None,
+        title="discarded_at",
+        description=(
+            "When Gabe discarded this trigger's outputs. A discarded record is skipped by the "
+            "missing-output guard and by the cadence check."
+        ),
+        examples=["2026-11-27T09:30:00-05:00"],
+        json_schema_extra={"slot_uri": "seeker:discardedAt"},
+    )
+    discard_note: str | None = Field(
+        default=None,
+        title="discard_note",
+        description="Why this trigger's outputs were discarded.",
+        examples=["duplicate round 4; kept 2026-11-24"],
+        json_schema_extra={"slot_uri": "seeker:discardNote"},
+    )
+
+    @property
+    def discarded(self) -> bool:
+        """Whether Gabe has discarded this trigger's outputs."""
+        return self.discarded_at is not None
+
+    @property
+    def wrote_outputs(self) -> bool:
+        """Whether this trigger did round work whose files should still be on disk."""
+        return (
+            self.schedule_outcome in (ScheduleOutcome.ADVANCED, ScheduleOutcome.BUDGET)
+            and bool(self.written_paths)
+            and not self.discarded
+        )
 
 
 class ReviewSignOff(SeekerModel):

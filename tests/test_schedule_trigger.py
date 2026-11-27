@@ -146,6 +146,68 @@ def test_a_missing_head_report_is_rendered_first(config: SeekerConfig) -> None:
     assert record.written_paths == ("reports/2026-11-23-round-3-literal.md",)
 
 
+# -- the missing-output guard -------------------------------------------------------------
+
+ROUND_3_OUTPUTS = (
+    "generations/2026-11-23-round-3-literal.yaml",
+    ROUND_3,
+    "reports/2026-11-23-round-3-literal.md",
+)
+
+
+def wrote(config: SeekerConfig, ended: datetime, paths: tuple[str, ...], outcome: str = "advanced") -> Path:
+    return RunLog(config.paths.runs).write(
+        ScheduledRun(
+            started_at=ended - timedelta(hours=1), ended_at=ended, schedule_outcome=outcome,
+            written_paths=paths, budget_usd=5.0, estimated_cost_usd=4.0,
+        )
+    )
+
+
+def generations(config: SeekerConfig) -> list[str]:
+    return sorted(p.name for p in config.paths.generations.glob("*.yaml"))
+
+
+def test_outputs_removed_by_a_branch_switch_stop_the_trigger(config: SeekerConfig) -> None:
+    """The round-3 run left the disk, so the head would fall back to round 2 and redo round 3."""
+    record_path = wrote(config, NOW - timedelta(days=3), ROUND_3_OUTPUTS)
+    (config.root / ROUND_3).unlink()
+    before = generations(config)
+    model = ScriptedModel(())
+    record = Scheduler(config, model).trigger(NOW)
+    assert record.schedule_outcome is ScheduleOutcome.FAILED
+    assert ROUND_3 in record.failure_message and "reports/" not in record.failure_message
+    assert f"uv run seeker-schedule discard runs/{record_path.name}" in record.failure_message
+    assert model.requests == [] and record.estimated_cost_usd == 0
+    assert generations(config) == before and record.written_paths == ()
+    (note,) = notes(config)
+    assert "failed" in note.name and ROUND_3 in note.read_text()
+
+
+def test_outputs_present_let_the_trigger_go_on(config: SeekerConfig) -> None:
+    wrote(config, NOW - timedelta(hours=22), ROUND_3_OUTPUTS)
+    record = Scheduler(config, ScriptedModel(())).trigger(NOW)
+    assert record.schedule_outcome is ScheduleOutcome.AWAITING_REVIEW
+
+
+def test_a_budget_stop_is_guarded_too(config: SeekerConfig) -> None:
+    wrote(config, NOW - timedelta(days=1), ("generations/2026-11-24-round-4-literal.yaml",), outcome="budget")
+    model = ScriptedModel(())
+    record = Scheduler(config, model).trigger(NOW)
+    assert record.schedule_outcome is ScheduleOutcome.FAILED and model.requests == []
+    assert "generations/2026-11-24-round-4-literal.yaml" in record.failure_message
+
+
+def test_a_discarded_record_is_not_guarded(config: SeekerConfig) -> None:
+    path = wrote(config, NOW - timedelta(days=1), ("debates/2026-11-24-round-4-literal.yaml",))
+    log = RunLog(config.paths.runs)
+    kept = log.read(path)
+    dropped = kept.run.model_copy(update={"discarded_at": NOW - timedelta(hours=2), "discard_note": "duplicate"})
+    log.rewrite(kept.model_copy(update={"run": dropped}))
+    record = Scheduler(config, ScriptedModel(())).trigger(NOW)
+    assert record.schedule_outcome is ScheduleOutcome.AWAITING_REVIEW
+
+
 # -- a real round -------------------------------------------------------------------------
 
 

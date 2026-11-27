@@ -60,3 +60,7 @@ schedule:
   cadence_days: 2
   review_every: 3
   hour: 2
+  # The git worktree the job runs in, detached at develop, where nobody switches
+  # branches (seeker-schedule workspace create). Set SEEKER_SCHEDULE_WORKSPACE in
+  # .env instead to keep the machine's path out of git. Unset: the repo root.
+  workspace: null
