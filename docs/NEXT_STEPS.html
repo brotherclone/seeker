@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seeker Next Steps</title>
+<meta name="description" content="Handoff for an AI agent (Duet) picking up Seeker on 2026-11-27: current state, prioritized next steps, and the rules to follow.">
+<style>
+  :root {
+    --bg: #faf8f4; --fg: #1d1b18; --muted: #6b655c; --rule: #ddd6ca;
+    --code-bg: #efebe3; --accent: #7a3b1d; --warn: #8a5a00; --ok: #2f6b3a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16151a; --fg: #e9e5dc; --muted: #9d968a; --rule: #34313a;
+      --code-bg: #222028; --accent: #e09a6e; --warn: #e0b45a; --ok: #7fc08a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16151a; --fg: #e9e5dc; --muted: #9d968a; --rule: #34313a;
+    --code-bg: #222028; --accent: #e09a6e; --warn: #e0b45a; --ok: #7fc08a;
+  }
+  body { background: var(--bg); color: var(--fg); margin: 0;
+         font: 16px/1.6 Georgia, "Iowan Old Style", serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.8rem; margin: 0 0 4px; }
+  h2 { font-size: 1.25rem; margin: 40px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
+  h3 { font-size: 1.05rem; margin: 24px 0 4px; }
+  .meta { color: var(--muted); margin: 0 0 24px; }
+  code, pre { font: 0.88em/1.5 ui-monospace, Menlo, monospace; background: var(--code-bg); border-radius: 4px; }
+  code { padding: 1px 4px; }
+  pre { padding: 10px 12px; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.94rem; display: block; overflow-x: auto; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { color: var(--muted); font-weight: normal; }
+  .tag { font: 0.75rem ui-monospace, Menlo, monospace; padding: 1px 6px; border-radius: 3px; border: 1px solid currentColor; }
+  .blocked { color: var(--warn); } .do { color: var(--ok); } .watch { color: var(--accent); }
+  li { margin: 4px 0; }
+  ol.steps > li { margin: 16px 0; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Seeker: next steps</h1>
+<p class="meta">Handoff for Duet, written 2026-11-27. Repo: <code>/Users/gabrielwalsh/Sites/seeker</code>. Current branch: <code>feature/round-viewer2</code>. The scheduled job runs from its own worktree, <code>/Users/gabrielwalsh/Sites/seeker-schedule</code>.</p>
+
+<p>Seeker is an idea engine for creative tech. It draws three cards from independent decks, generates an idea of the form "a/an X that does Y because Z", then has critics debate it and a blind judge rank it on three separate Elo axes (novelty, feasibility, promise). The top three by promise survive and are mutated into the next round. Start with <code>docs/concept.md</code>, then <code>CLAUDE.md</code>.</p>
+
+<h2>Rules you must follow</h2>
+<ul>
+  <li><strong>OpenSpec for every change.</strong> Propose with <code>/opsx:propose</code> and implement with <code>/opsx:apply</code>. Work on <code>feature/&lt;change-name&gt;</code> branches cut from <code>develop</code>, and merge through a PR. Never commit to <code>develop</code> or <code>main</code>.</li>
+  <li><strong>Ontology first.</strong> Define any new concept in the LinkML schema under <code>schema/</code> before code uses it. Then run <code>make lint</code> and <code>make schema</code>, and keep the Pydantic conformance test green with <code>make test</code>.</li>
+  <li><strong>Python style:</strong> Pydantic v2 models that mirror LinkML. No <code>Any</code>, no <code>dict</code> payloads, no dataclasses or TypedDicts. Use named constrained scalar types.</li>
+  <li><strong>Obsidian vault</strong> (<code>/Users/gabrielwalsh/Documents/Claude/Projects/Seeker/</code>): record decisions in <code>Decisions/YYYY-MM-DD &lt;title&gt;.md</code>, and update <code>Ontology/&lt;Class&gt;.md</code> in the same change as the schema. Every note links back to <code>[[Seeker]]</code>.</li>
+  <li><strong>Never hard-code paths.</strong> Read them from <code>seeker.yaml</code>. Run everything through <code>uv run</code>.</li>
+  <li><strong>Leave the schedule workspace alone.</strong> <code>/Users/gabrielwalsh/Sites/seeker-schedule</code> is a git worktree detached at <code>origin/develop</code>, and the LaunchAgent runs there. Never <code>git switch</code>, commit or edit files in it. Move it only with <code>uv run seeker-schedule workspace update</code>. Branch freely in the main checkout. Schedule commands run from there act on the workspace anyway, because <code>.env</code> sets <code>SEEKER_SCHEDULE_WORKSPACE</code>.</li>
+  <li><strong>Ask Gabe first</strong> before merging PRs, signing off reviews, spending API money outside the scheduled job, or changing the schedule.</li>
+</ul>
+
+<h2>Where things stand</h2>
+<table>
+  <tr><th>Area</th><th>State</th></tr>
+  <tr><td>Pipeline</td><td>Decks, generation, debate, tournament, mutation and the scheduled run are all built and merged into <code>develop</code>.</td></tr>
+  <tr><td>Lineage</td><td>Literal reading, rounds 1–4. Round 3 was signed off on 2026-11-23 (<code>reviews/2026-11-23-round-3-literal.yaml</code>).</td></tr>
+  <tr><td>Round 4</td><td>The canonical round 4 is <code>debates/2026-11-24-round-4-literal.yaml</code>. It ran unattended on 2026-11-24 02:00 for an estimated $4.64 and is committed on <code>develop</code> (<code>6b68b7e</code>).</td></tr>
+  <tr><td>Duplicate round 4</td><td>The 2026-11-26 trigger ran round 4 <strong>a second time</strong>, from round 3, for about $4.26. A branch switch in the main checkout had removed the 11-24 files. Gabe chose to keep 11-24, so the duplicate's outputs were deleted, and its record <code>runs/2026-11-26T020005.yaml</code> is marked discarded. The fix is <code>pin-schedule-workspace</code>, merged in #28 and migrated on 2026-11-27. On 11-27 at 02:00 the new guard stopped a trigger on the missing files and spent nothing.</td></tr>
+  <tr><td>Schedule</td><td>The LaunchAgent runs from <code>/Users/gabrielwalsh/Sites/seeker-schedule</code>, detached at <code>ac5ef9f</code>, so new round outputs and <code>runs/</code> records appear there, not in the main checkout. <code>seeker-schedule status</code> shows the 11-24 round 4 as the head, with the gate open. Round 5 is due, so it runs on the 2026-11-28 02:00 trigger. Round 6 should come around 2026-11-30. <strong>Round 6 is the next review point</strong>, where the job pauses with <code>awaiting_review</code>.</td></tr>
+  <tr><td>OpenSpec</td><td><code>pin-schedule-workspace</code> was implemented in #28 and archived in #29 (2026-11-27), and its delta is synced into <code>openspec/specs/scheduled-run/spec.md</code>. Every finished change is under <code>openspec/changes/archive/</code>, and none is in flight.</td></tr>
+  <tr><td>Round viewer</td><td>The design brief is <code>docs/design/round-viewer-handoff.md</code> plus <code>round-sample.json</code>. It was merged straight into <code>main</code> (#27, #30), so <code>develop</code> is 11 commits behind <code>main</code>. <code>feature/round-viewer2</code> was cut from <code>develop</code> with <code>main</code> merged in, and its PR into <code>develop</code> brings the two level. The brief is waiting on Claude Design. There's no OpenSpec change yet.</td></tr>
+</table>
+
+<h2>Next steps, in priority order</h2>
+<ol class="steps">
+
+<li><span class="tag watch">watch</span> <strong>Prior-art search sometimes isn't used.</strong>
+  In the kept 11-24 run, 10 of 11 prosecutions got search results, with 23 citations, so search is healthy. The discarded duplicate run got results in only 5 of 12. Its other 7 made <code>web_search_requests: 0</code> with no errors, because the prosecutor chose to cite only catalog works. That shows the prosecutor sometimes skips search on its own. Check the count in rounds 5 and 6. If it drops again, look at the prosecutor prompt in <code>prompts/</code> and consider requiring at least one search (an OpenSpec change). Carried debates such as #14 (<code>carried_from: 13</code>) still contain old "usage limit" text from before the fix. That's inherited and expected.</li>
+
+<li><span class="tag watch">watch</span> <strong>Judge health and mutation, rounds 4–6.</strong>
+  From the reports' <em>Judge health</em> sections. Round 4 is the kept 11-24 run:
+  <table>
+    <tr><th>Signal</th><th>Round 3</th><th>Round 4</th><th>Reading</th></tr>
+    <tr><td>A-win: novelty / feasibility / promise</td><td>68 / 43 / 67%</td><td>58 / 50 / 56%</td><td>Position bias eased on every axis</td></tr>
+    <tr><td>Split pairs: nov / feas / prom</td><td>23 / 16 / 28 of 60</td><td>12 / 10 / 12 of 63</td><td>Much more stable, though one round is too few to call a trend</td></tr>
+    <tr><td>Prosecutor severities</td><td>serious 6, minor 4</td><td>serious 8, minor 3</td><td>Spread holding</td></tr>
+    <tr><td>Skeptic severities</td><td>serious 12</td><td>fatal 2, serious 9</td><td>Starting to spread</td></tr>
+    <tr><td>Taste critic</td><td>serious 10, minor 2</td><td>serious 10, minor 1</td><td>Still nearly uniform</td></tr>
+    <tr><td>Defense outcomes</td><td>all revised</td><td>defended 1, revised 10</td><td>The advocate almost always revises, and nothing is withdrawn</td></tr>
+    <tr><td>Children beating their parent</td><td>—</td><td>none; all 3 survivors are carried round-3 parents (11 of 12 children made)</td><td>Possible stagnation. Check round 5.</td></tr>
+  </table>
+  For Gabe's round-6 review, compile a short trend summary across rounds 3–6 (a vault note in <code>Notes/</code>). Don't change judging without an OpenSpec change.</li>
+
+<li><span class="tag do">do</span> <strong>Round viewer: turn the brief into an OpenSpec change.</strong>
+  Work on <code>feature/round-viewer2</code>. It breaks the one-change-per-branch rule until a change exists. Its PR goes into <code>develop</code>, not <code>main</code>. Once Claude Design's output comes back (ask Gabe for it):
+  <ul>
+    <li>Run <code>/opsx:propose round-viewer</code>. Pick the stack (a static site per round, a small local app, or an Obsidian-adjacent view) and record the choice in a vault Decision.</li>
+    <li>Model anything the viewer computes in LinkML first. Candidates are a per-round summary (cost, survivors, child-vs-parent results) and a lineage edge.</li>
+    <li>It reads YAML from the configured <code>paths.*</code>. It's local-first and read-only. Keep the three axes separate, and never show an "overall" score.</li>
+  </ul>
+  Context is in the vault note <code>Notes/Round Viewer UI.md</code>.</li>
+
+<li><span class="tag blocked">needs Gabe</span> <strong>Round-6 review and sign-off.</strong>
+  When <code>uv run seeker-schedule status</code> shows <code>awaiting_review</code>:
+  <ol>
+    <li>Copy the round 5–6 outputs from <code>/Users/gabrielwalsh/Sites/seeker-schedule</code> (<code>generations/</code>, <code>debates/</code>, <code>reports/</code>) into a feature branch in the main checkout, commit them, and merge through a PR. Ask Gabe which branch. Don't commit inside the workspace.</li>
+    <li>Once that PR merges, run <code>uv run seeker-schedule workspace update</code>. It moves the workspace to the new <code>develop</code>, dropping its untracked copies only where they match byte for byte. If it refuses because a file differs, find out why before changing anything.</li>
+    <li>Give Gabe the trend summary from step 2.</li>
+    <li>Gabe signs off himself: <code>uv run seeker-schedule approve debates/&lt;round-6&gt;.yaml --note "..."</code>.</li>
+  </ol>
+  After a sign-off that Gabe calls a real survivor review, tick <code>- [ ] Review survivors</code> in <code>docs/concept.md</code>. It's the last unchecked item.</li>
+
+<li><span class="tag watch">later</span> <strong>Open questions from the concept, not yet scheduled.</strong>
+  <ul>
+    <li>Other readings. Only the <code>literal</code> lineage is running. <code>loose</code> and <code>metaphorical</code> were compared once in round 1 (vault <code>Notes/2026-11-04 Round 1 vs round 2 — literal vs metaphorical.md</code>).</li>
+    <li>Moving the run to the cloud. Only "once it proves out", and that's Gabe's call.</li>
+  </ul></li>
+</ol>
+
+<h2>Useful commands</h2>
+<pre>uv run seeker-schedule status        # workspace, lineage head, gate, last trigger; no API call
+uv run seeker-schedule workspace update   # after a review's rounds merge into develop
+make lint &amp;&amp; make schema &amp;&amp; make test
+gh pr list --state open
+git log --oneline develop -10</pre>
+
+<h2>Key files</h2>
+<table>
+  <tr><th>Path</th><th>What</th></tr>
+  <tr><td><code>docs/concept.md</code></td><td>Concept of record and checklist</td></tr>
+  <tr><td><code>docs/debating.md</code>, <code>mutating.md</code>, <code>scheduling.md</code></td><td>How each stage works</td></tr>
+  <tr><td><code>reports/*.md</code></td><td>Per-round reports. Read the <em>Judge health</em> section.</td></tr>
+  <tr><td><code>seeker-schedule/runs/*.yaml</code></td><td>One record per scheduled trigger (git-ignored), in the workspace</td></tr>
+  <tr><td><code>seeker.yaml</code></td><td>All paths, prices, budget, schedule</td></tr>
+  <tr><td><code>docs/design/round-viewer-handoff.md</code></td><td>Round viewer brief</td></tr>
+</table>
+
+</main>
+</body>
+</html>
