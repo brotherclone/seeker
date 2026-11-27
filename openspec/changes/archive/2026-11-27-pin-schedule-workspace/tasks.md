@@ -77,7 +77,7 @@
 
 ## 9. Integration
 
-- [ ] 9.1 Run `make lint`, `make schema` (no diff) and `make test`, and check that all pass. Then, on Gabe's Mac with his go-ahead, follow design.md's migration plan:
+- [x] 9.1 Run `make lint`, `make schema` (no diff) and `make test`, and check that all pass. Then, on Gabe's Mac with his go-ahead, follow design.md's migration plan:
   - discard the 2026-11-26 record;
   - set `SEEKER_SCHEDULE_WORKSPACE`;
   - run `workspace create`;
